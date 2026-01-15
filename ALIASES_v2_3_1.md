@@ -134,15 +134,17 @@
 
 ---
 
-### `/commit` - Save to Git
+### `/commit` - Save to Git (Auto-Push)
+**MANDATORY: Always includes push - never commit without pushing**
+
 **Behavior:**
 1. Stages all changes
 2. Generates commit message
 3. Commits changes
-4. **AUTO-PUSHES to origin/main**
-5. Reports hash
+4. **AUTOMATICALLY PUSHES to origin/master (or current branch)**
+5. Reports hash and push status
 
-**One command = stage + commit + push**
+**One command = stage + commit + push (always)**
 
 ---
 

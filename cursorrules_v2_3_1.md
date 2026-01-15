@@ -262,14 +262,15 @@ Ready for external analysis or fresh perspective.
 5. Provide concrete test data
 6. Suggest /debug command
 
-#### `/commit` - Git Operations
+#### `/commit` - Git Operations (Auto-Push)
+**MANDATORY: This command ALWAYS includes push - never commit without pushing**
 1. **Show what will be committed**
 2. Generate commit message preview
 3. **Request confirmation**
 4. Stage all changes (`git add .`)
 5. Commit with message
-6. Push to origin/main
-7. Report commit hash
+6. **AUTOMATICALLY push to origin/master (or origin/main)**
+7. Report commit hash and push status
 
 ### Tier 3: Development (Automation with Transparency)
 
