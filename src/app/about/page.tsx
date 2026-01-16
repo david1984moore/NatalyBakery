@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-cream-50/30">
+    <main className="h-screen overflow-hidden bg-cream-50/30">
       <Navigation />
       
       {/* Home Button */}
@@ -22,11 +22,11 @@ export default function AboutPage() {
         </Link>
       </div>
       
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="h-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16 flex items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
           {/* Professional Photo */}
-          <div className="order-2 lg:order-1">
-            <div className="relative aspect-[3/4] w-full max-w-md mx-auto rounded-lg overflow-hidden border border-white/60 shadow-lg">
+          <div className="order-2 lg:order-1 h-full flex items-center justify-center">
+            <div className="relative w-full max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden border border-white/60 shadow-lg">
               <Image
                 src="/Images/IMG_5754.jpeg"
                 alt="Nataly Hernandez"
@@ -39,13 +39,13 @@ export default function AboutPage() {
           </div>
 
           {/* Story Content */}
-          <div className="order-1 lg:order-2 space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-warmgray-800 mb-6">
+          <div className="order-1 lg:order-2 space-y-4 lg:space-y-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif text-warmgray-800">
               About Nataly
             </h1>
             
             <div className="prose prose-lg max-w-none">
-              <p className="text-warmgray-700 text-lg md:text-xl leading-relaxed font-light">
+              <p className="text-warmgray-700 text-base md:text-lg lg:text-xl leading-relaxed font-light">
                 Nataly Hernandez, originally from Puebla, Mexico, grew up in a house of cooks. Since 2025, Nataly has been offering her homemade baked foods for the world to enjoy.
               </p>
             </div>

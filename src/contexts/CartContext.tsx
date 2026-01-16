@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react'
 import { CheckoutItem } from '@/types/checkout'
 
 interface CartItem extends CheckoutItem {
@@ -93,20 +93,24 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return Math.round((total - deposit) * 100) / 100
   }, [getTotalAmount, getDepositAmount])
 
+  // Memoize context value to prevent unnecessary re-renders
+  const value = useMemo(
+    () => ({
+      items,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clearCart,
+      getTotalItems,
+      getTotalAmount,
+      getDepositAmount,
+      getRemainingAmount,
+    }),
+    [items, addItem, removeItem, updateQuantity, clearCart, getTotalItems, getTotalAmount, getDepositAmount, getRemainingAmount]
+  )
+
   return (
-    <CartContext.Provider
-      value={{
-        items,
-        addItem,
-        removeItem,
-        updateQuantity,
-        clearCart,
-        getTotalItems,
-        getTotalAmount,
-        getDepositAmount,
-        getRemainingAmount,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   )

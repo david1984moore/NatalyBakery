@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useCart } from '@/contexts/CartContext'
 import { formatCurrency } from '@/lib/utils'
 import CheckoutForm from '@/components/CheckoutForm'
@@ -20,15 +21,56 @@ export default function CheckoutPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // DEBUG: Track items array stability
+  const itemsRef = useRef(items)
+  if (itemsRef.current !== items) {
+    console.log('⚠️ ITEMS ARRAY CHANGED REFERENCE', {
+      oldLength: itemsRef.current.length,
+      newLength: items.length,
+      timestamp: Date.now()
+    })
+    itemsRef.current = items
+  }
+
+  // DEBUG: Comprehensive render logging
+  console.log('=== CHECKOUT RENDER ===', {
+    itemsCount: items.length,
+    hasItems: items.length > 0,
+    isLoading,
+    customerInfoKeys: Object.keys(customerInfo),
+    hasError: !!error,
+    hasCheckoutData: !!checkoutData,
+    timestamp: Date.now()
+  })
+
   const totalAmount = getTotalAmount()
   const depositAmount = getDepositAmount()
   const remainingAmount = getRemainingAmount()
 
+  // Validate that all required fields are filled
+  const isFormValid = customerInfo.name.trim() !== '' && 
+                      customerInfo.email.trim() !== '' && 
+                      customerInfo.phone.trim() !== ''
+
+  // CRITICAL: Guard against empty cart - improved version
   useEffect(() => {
     if (items.length === 0) {
-      router.push('/')
+      console.log('🚫 Empty cart detected, redirecting to menu')
+      router.push('/menu')
     }
   }, [items.length, router])
+
+  // Don't render anything until we confirm cart has items
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-cream-50/30">
+        <div className="text-center">
+          <p className="text-warmgray-600 mb-4">Loading...</p>
+          <p className="text-sm text-warmgray-500">Redirecting to menu...</p>
+        </div>
+      </div>
+    )
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,7 +101,11 @@ export default function CheckoutPage() {
       const data: CheckoutResponse = await response.json()
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Checkout failed')
+        throw new Error(data.error || data.message || 'Checkout failed. Please try again.')
+      }
+
+      if (!data.clientSecret) {
+        throw new Error('Payment form could not be initialized. Please try again.')
       }
 
       setCheckoutData(data)
@@ -75,14 +121,22 @@ export default function CheckoutPage() {
     router.push(`/checkout/success?orderId=${checkoutData?.orderId}&orderNumber=${checkoutData?.orderNumber}`)
   }
 
-  if (items.length === 0) {
-    return null
-  }
-
   if (checkoutData?.clientSecret) {
     return (
       <div className="min-h-screen bg-cream-50/30 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
+          {/* Home Button */}
+          <div className="mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-200"
+              aria-label="Home"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            </Link>
+          </div>
           <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
             Complete Your Payment
           </h1>
@@ -97,9 +151,23 @@ export default function CheckoutPage() {
     )
   }
 
+  console.log('🏗️ Rendering page container')
+  
   return (
     <div className="min-h-screen bg-cream-50/30 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
+        {/* Home Button */}
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-200"
+            aria-label="Home"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+          </Link>
+        </div>
         <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
           Checkout
         </h1>
@@ -107,8 +175,11 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Customer Information Form */}
           <div className="bg-white rounded-lg shadow-sm p-6">
+            {console.log('📋 Rendering form container')}
             <h2 className="text-xl font-serif text-warmgray-800 mb-6">Customer Information</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {console.log('📝 Rendering form element')}
+              
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-warmgray-700 mb-1">
                   Full Name *
@@ -139,11 +210,12 @@ export default function CheckoutPage() {
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-warmgray-700 mb-1">
-                  Phone Number
+                  Phone Number *
                 </label>
                 <input
                   type="tel"
                   id="phone"
+                  required
                   value={customerInfo.phone}
                   onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
                   className="w-full px-3 py-2 border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
@@ -169,13 +241,42 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-warmgray-800 text-white py-2.5 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? 'Processing...' : 'Continue to Payment'}
-              </button>
+              {console.log('🔘 About to render button')}
+              <div className="mt-4" style={{ width: '100%' }}>
+                <button
+                  type="submit"
+                  disabled={isLoading || !isFormValid}
+                  style={{
+                    display: 'block',
+                    visibility: 'visible',
+                    opacity: (isLoading || !isFormValid) ? 0.5 : 1,
+                    width: '100%',
+                    minHeight: '44px',
+                    padding: '12px 16px',
+                    backgroundColor: '#1f2937', // warmgray-800 equivalent
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '6px',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    cursor: (isLoading || !isFormValid) ? 'not-allowed' : 'pointer',
+                    transition: 'background-color 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isLoading && isFormValid) {
+                      e.currentTarget.style.backgroundColor = '#374151' // warmgray-700
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isLoading && isFormValid) {
+                      e.currentTarget.style.backgroundColor = '#1f2937' // warmgray-800
+                    }
+                  }}
+                >
+                  {isLoading ? 'Processing...' : 'Continue to Payment'}
+                </button>
+              </div>
+              {console.log('✅ Button should be rendered')}
             </form>
           </div>
 

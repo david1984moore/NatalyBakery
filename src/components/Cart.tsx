@@ -16,6 +16,17 @@ export default function Cart() {
   const depositAmount = getDepositAmount()
   const remainingAmount = getRemainingAmount()
 
+  // Diagnostic logging
+  if (typeof window !== 'undefined' && isMenuPage && isOpen) {
+    console.log('=== CART RENDER ===', {
+      itemsLength: items.length,
+      hasItems: items.length > 0,
+      isOpen,
+      items: items,
+      timestamp: Date.now()
+    })
+  }
+
   // Listen for cart toggle from menu page navigation bar
   useEffect(() => {
     if (isMenuPage) {
@@ -39,9 +50,9 @@ export default function Cart() {
     
     return (
       <div className="fixed top-16 right-4 z-[99]">
-        <div className="w-80 md:w-96 bg-white rounded-lg shadow-xl max-h-[80vh] overflow-hidden flex flex-col border border-warmgray-200">
+        <div className="w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 5rem)' }}>
           {/* Cart Header */}
-          <div className="px-6 py-4 border-b border-warmgray-200">
+          <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-serif text-warmgray-800">Shopping Cart</h2>
               <button
@@ -63,13 +74,14 @@ export default function Cart() {
 
           {/* Cart Items */}
           {items.length === 0 ? (
-            <div className="px-6 py-8">
+            <div className="px-6 py-8 flex-shrink-0">
               <p className="text-warmgray-600 text-center">Your cart is empty</p>
             </div>
           ) : (
-            <div className="flex-1 overflow-y-auto px-6 py-4">
-              <div className="space-y-4">
-                {items.map((item, index) => (
+            <div className="flex flex-col" style={{ flex: '1 1 auto', minHeight: 0 }}>
+              <div className="overflow-y-auto px-6 py-4" style={{ flex: '1 1 0%', minHeight: 0, maxHeight: 'calc(100vh - 5rem - 220px)' }}>
+                <div className="space-y-4">
+                  {items.map((item, index) => (
                 <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex items-start gap-4 pb-4 border-b border-warmgray-100 last:border-0">
                   <div className="flex-1">
                     <h3 className="text-sm font-medium text-warmgray-800 mb-1">
@@ -113,42 +125,55 @@ export default function Cart() {
                     </p>
                     <button
                       onClick={() => removeItem(item.productName, item.variantName)}
-                      className="text-xs text-warmgray-400 hover:text-red-500 transition-colors"
+                      className="flex items-center gap-1 text-xs text-red-500 hover:text-red-700 transition-colors font-medium"
                       aria-label="Remove item"
                     >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
                       Remove
                     </button>
                   </div>
                 </div>
-              ))}
-              </div>
-            </div>
-          )}
-
-          {/* Cart Summary */}
-          {items.length > 0 && (
-            <div className="px-6 py-4 border-t border-warmgray-200 bg-cream-50/50">
-              <div className="space-y-2 mb-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-warmgray-600">Total:</span>
-                  <span className="font-medium text-warmgray-800">{formatCurrency(totalAmount)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-warmgray-600">Deposit (50%):</span>
-                  <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
-                </div>
-                <div className="flex justify-between text-xs text-warmgray-500">
-                  <span>Remaining (due at pickup):</span>
-                  <span>{formatCurrency(remainingAmount)}</span>
+                  ))}
                 </div>
               </div>
-              <Link
+                {/* Cart Summary - Always visible when items exist */}
+                <div className="px-6 py-4 border-t border-warmgray-200 bg-cream-50/50 flex-shrink-0">
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-warmgray-600">Total:</span>
+                    <span className="font-medium text-warmgray-800">{formatCurrency(totalAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-warmgray-600">Deposit (50%):</span>
+                    <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-warmgray-500">
+                    <span>Remaining (due at pickup):</span>
+                    <span>{formatCurrency(remainingAmount)}</span>
+                  </div>
+                  </div>
+                <Link
                 href="/checkout"
                 onClick={() => setIsOpen(false)}
-                className="block w-full bg-warmgray-800 text-white text-center py-2.5 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium text-sm"
+                className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg relative z-10"
+                style={{ 
+                  display: 'block !important',
+                  width: '100%',
+                  minHeight: '44px',
+                  height: 'auto',
+                  padding: '12px',
+                  backgroundColor: '#1f2937',
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  visibility: 'visible',
+                  opacity: '1'
+                }}
               >
-                Proceed to Checkout
+                Checkout
               </Link>
+              </div>
             </div>
           )}
         </div>
@@ -216,9 +241,9 @@ export default function Cart() {
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-full right-0 mb-2 w-80 md:w-96 bg-white rounded-lg shadow-xl max-h-[80vh] overflow-hidden flex flex-col">
+        <div className="absolute bottom-full right-0 mb-2 w-80 md:w-96 bg-white rounded-lg shadow-xl flex flex-col" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
           {/* Cart Header */}
-          <div className="px-6 py-4 border-b border-warmgray-200">
+          <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-serif text-warmgray-800">Shopping Cart</h2>
               <button
@@ -239,86 +264,96 @@ export default function Cart() {
           </div>
 
           {/* Cart Items */}
-          <div className="flex-1 overflow-y-auto px-6 py-4">
-            <div className="space-y-4">
-              {items.map((item, index) => (
-                <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex items-start gap-4 pb-4 border-b border-warmgray-100 last:border-0">
-                  <div className="flex-1">
-                    <h3 className="text-sm font-medium text-warmgray-800 mb-1">
-                      {item.productName}
-                    </h3>
-                    {item.variantName && (
-                      <p className="text-xs text-warmgray-500 mb-1">
-                        {item.variantName}
+          <div className="flex flex-col flex-1 min-h-0">
+            <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
+              <div className="space-y-4">
+                {items.map((item, index) => (
+                  <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex items-start gap-4 pb-4 border-b border-warmgray-100 last:border-0">
+                    <div className="flex-1">
+                      <h3 className="text-sm font-medium text-warmgray-800 mb-1">
+                        {item.productName}
+                      </h3>
+                      {item.variantName && (
+                        <p className="text-xs text-warmgray-500 mb-1">
+                          {item.variantName}
+                        </p>
+                      )}
+                      <p className="text-xs text-warmgray-600 mb-2">
+                        {formatCurrency(item.unitPrice)} each
                       </p>
-                    )}
-                    <p className="text-xs text-warmgray-600 mb-2">
-                      {formatCurrency(item.unitPrice)} each
-                    </p>
-                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => updateQuantity(item.productName, item.quantity - 1, item.variantName)}
+                          className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
+                          aria-label="Decrease quantity"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                          </svg>
+                        </button>
+                        <span className="text-sm text-warmgray-700 w-8 text-center">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(item.productName, item.quantity + 1, item.variantName)}
+                          className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
+                          aria-label="Increase quantity"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium text-warmgray-800 mb-2">
+                        {formatCurrency(item.quantity * item.unitPrice)}
+                      </p>
                       <button
-                        onClick={() => updateQuantity(item.productName, item.quantity - 1, item.variantName)}
-                        className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
-                        aria-label="Decrease quantity"
+                        onClick={() => removeItem(item.productName, item.variantName)}
+                        className="flex items-center gap-1 text-xs text-red-500 hover:text-red-700 transition-colors font-medium"
+                        aria-label="Remove item"
                       >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
-                      </button>
-                      <span className="text-sm text-warmgray-700 w-8 text-center">
-                        {item.quantity}
-                      </span>
-                      <button
-                        onClick={() => updateQuantity(item.productName, item.quantity + 1, item.variantName)}
-                        className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
-                        aria-label="Increase quantity"
-                      >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
+                        Remove
                       </button>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-warmgray-800 mb-2">
-                      {formatCurrency(item.quantity * item.unitPrice)}
-                    </p>
-                    <button
-                      onClick={() => removeItem(item.productName, item.variantName)}
-                      className="text-xs text-warmgray-400 hover:text-red-500 transition-colors"
-                      aria-label="Remove item"
-                    >
-                      Remove
-                    </button>
-                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Cart Summary - Always visible */}
+            <div className="px-6 py-4 border-t border-warmgray-200 bg-cream-50/50 flex-shrink-0">
+              <div className="space-y-2 mb-4">
+                <div className="flex justify-between text-sm">
+                  <span className="text-warmgray-600">Total:</span>
+                  <span className="font-medium text-warmgray-800">{formatCurrency(totalAmount)}</span>
                 </div>
-              ))}
+                <div className="flex justify-between text-sm">
+                  <span className="text-warmgray-600">Deposit (50%):</span>
+                  <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
+                </div>
+                <div className="flex justify-between text-xs text-warmgray-500">
+                  <span>Remaining (due at pickup):</span>
+                  <span>{formatCurrency(remainingAmount)}</span>
+                </div>
+              </div>
+              <Link
+                href="/checkout"
+                onClick={() => setIsOpen(false)}
+                className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg"
+                style={{ 
+                  display: 'block',
+                  width: '100%',
+                  minHeight: '44px',
+                  lineHeight: '44px'
+                }}
+              >
+                Checkout
+              </Link>
             </div>
-          </div>
-
-          {/* Cart Summary */}
-          <div className="px-6 py-4 border-t border-warmgray-200 bg-cream-50/50">
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between text-sm">
-                <span className="text-warmgray-600">Total:</span>
-                <span className="font-medium text-warmgray-800">{formatCurrency(totalAmount)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-warmgray-600">Deposit (50%):</span>
-                <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
-              </div>
-              <div className="flex justify-between text-xs text-warmgray-500">
-                <span>Remaining (due at pickup):</span>
-                <span>{formatCurrency(remainingAmount)}</span>
-              </div>
-            </div>
-            <Link
-              href="/checkout"
-              onClick={() => setIsOpen(false)}
-              className="block w-full bg-warmgray-800 text-white text-center py-2.5 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium text-sm"
-            >
-              Proceed to Checkout
-            </Link>
           </div>
         </div>
       )}

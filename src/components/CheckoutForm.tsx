@@ -94,8 +94,14 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
           disabled={!stripe || isProcessing}
           className="w-full bg-warmgray-800 text-white py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isProcessing ? 'Processing...' : `Pay Deposit ${formatCurrency(depositAmount)}`}
+          {isProcessing ? 'Processing...' : !stripe ? 'Loading payment form...' : `Pay Deposit ${formatCurrency(depositAmount)}`}
         </button>
+        
+        {!stripe && (
+          <p className="text-xs text-warmgray-500 text-center mt-2">
+            Please wait while we load the secure payment form...
+          </p>
+        )}
 
         <p className="text-xs text-warmgray-500 text-center">
           Your payment is secure and encrypted. We never store your card details.
