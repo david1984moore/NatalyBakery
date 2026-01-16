@@ -15,7 +15,7 @@ const playfairDisplay = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Nataly's Home Bakery - Artisan Baked Goods Made with Love",
+  title: "Caramel & Jo - Artisan Baked Goods Made with Love",
   description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes. Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, Conchas, and more.',
 }
 

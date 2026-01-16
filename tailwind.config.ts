@@ -62,6 +62,15 @@ const config: Config = {
           400: '#a38670',
           500: '#856650',
         },
+        // Pastel colors for minimalist aesthetic
+        pink: {
+          50: '#fdf2f8',
+          100: '#fce7f3',
+          200: '#fbcfe8',
+          300: '#f9a8d4',
+          400: '#f472b6',
+          500: '#ec4899',
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
