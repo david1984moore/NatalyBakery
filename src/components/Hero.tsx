@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import ProductCard from './ProductCard'
 
@@ -56,17 +55,11 @@ export default function Hero() {
 
       {/* Hero Content - All visible in viewport */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex flex-col justify-between py-6 md:py-8 lg:py-10">
-        {/* Top Section - Brand Name and CTA */}
+        {/* Top Section - Brand Name */}
         <div className="flex-shrink-0">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-tight mb-2 md:mb-3 drop-shadow-md">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-serif font-bold text-white leading-tight mb-2 md:mb-3 drop-shadow-md">
             Caramel & Jo
           </h1>
-          <Link
-            href="/menu"
-            className="inline-block px-5 py-2 md:px-6 md:py-2 bg-terracotta-500/90 border border-white/60 text-white font-light text-xs md:text-sm tracking-wide rounded-sm hover:bg-terracotta-500 transition-colors duration-200"
-          >
-            SHOP NOW
-          </Link>
         </div>
 
         {/* Bottom Section - Products */}

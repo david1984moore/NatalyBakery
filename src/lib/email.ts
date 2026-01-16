@@ -4,8 +4,8 @@ import { formatCurrency } from './utils'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const EMAIL_FROM = process.env.EMAIL_FROM || 'noreply@natalysbakery.com'
-const EMAIL_TO = process.env.EMAIL_TO || 'orders@natalysbakery.com'
+const EMAIL_FROM = process.env.EMAIL_FROM || 'caramelcakeJo@gmail.com'
+const EMAIL_TO = process.env.EMAIL_TO || 'caramelcakeJo@gmail.com'
 
 type OrderWithItems = Order & {
   items: OrderItem[]
@@ -30,7 +30,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems) {
     const emailContent = `
 Dear ${order.customerName},
 
-Thank you for your order at Nataly's Home Bakery! We've received your order and are excited to prepare your treats.
+Thank you for your order at Caramel & Jo! We've received your order and are excited to prepare your treats.
 
 Order Details:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -59,11 +59,11 @@ Payment Status:
 We'll notify you once your order is ready for pickup. If you have any questions, please don't hesitate to contact us.
 
 With love,
-Nataly's Home Bakery
+Caramel & Jo
 `
 
     await resend.emails.send({
-      from: `Nataly's Bakery <${EMAIL_FROM}>`,
+      from: `Caramel & Jo <${EMAIL_FROM}>`,
       to: order.customerEmail,
       subject: `Order Confirmation - ${order.orderNumber}`,
       text: emailContent,
@@ -78,7 +78,7 @@ Nataly's Home Bakery
 }
 
 /**
- * Send order notification email to vendor (Nataly)
+ * Send order notification email to vendor
  */
 export async function sendOrderNotificationEmail(order: OrderWithItems) {
   try {
@@ -129,7 +129,7 @@ Payment:
 
 Please confirm this order and begin preparation.
 
-View order details: ${process.env.NEXT_PUBLIC_APP_URL || 'https://natalysbakery.com'}/admin/orders/${order.id}
+View order details: ${process.env.NEXT_PUBLIC_APP_URL || 'https://caramelandjo.com'}/admin/orders/${order.id}
 `
 
     await resend.emails.send({
@@ -179,10 +179,10 @@ Please respond to: ${email}
 
     // Send confirmation to customer
     await resend.emails.send({
-      from: `Nataly's Bakery <${EMAIL_FROM}>`,
+      from: `Caramel & Jo <${EMAIL_FROM}>`,
       to: email,
-      subject: `Thank you for contacting Nataly's Bakery`,
-      text: `Dear ${name},\n\nThank you for reaching out! We've received your message and will get back to you soon.\n\nBest regards,\nNataly's Home Bakery`,
+      subject: `Thank you for contacting Caramel & Jo`,
+      text: `Dear ${name},\n\nThank you for reaching out! We've received your message and will get back to you soon.\n\nBest regards,\nCaramel & Jo`,
     })
 
     return { success: true }
