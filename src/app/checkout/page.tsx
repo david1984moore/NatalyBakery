@@ -1,0 +1,226 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useCart } from '@/contexts/CartContext'
+import { formatCurrency } from '@/lib/utils'
+import CheckoutForm from '@/components/CheckoutForm'
+import { CheckoutResponse } from '@/types/checkout'
+
+export default function CheckoutPage() {
+  const router = useRouter()
+  const { items, getTotalAmount, getDepositAmount, getRemainingAmount, clearCart } = useCart()
+  const [customerInfo, setCustomerInfo] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    notes: '',
+  })
+  const [checkoutData, setCheckoutData] = useState<CheckoutResponse | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const totalAmount = getTotalAmount()
+  const depositAmount = getDepositAmount()
+  const remainingAmount = getRemainingAmount()
+
+  useEffect(() => {
+    if (items.length === 0) {
+      router.push('/')
+    }
+  }, [items.length, router])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError(null)
+    setIsLoading(true)
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customerName: customerInfo.name,
+          customerEmail: customerInfo.email,
+          customerPhone: customerInfo.phone || undefined,
+          items: items.map((item) => ({
+            productName: item.variantName 
+              ? `${item.productName} - ${item.variantName}`
+              : item.productName,
+            quantity: item.quantity,
+            unitPrice: item.unitPrice,
+          })),
+          notes: customerInfo.notes || undefined,
+        }),
+      })
+
+      const data: CheckoutResponse = await response.json()
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Checkout failed')
+      }
+
+      setCheckoutData(data)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handlePaymentSuccess = () => {
+    clearCart()
+    router.push(`/checkout/success?orderId=${checkoutData?.orderId}&orderNumber=${checkoutData?.orderNumber}`)
+  }
+
+  if (items.length === 0) {
+    return null
+  }
+
+  if (checkoutData?.clientSecret) {
+    return (
+      <div className="min-h-screen bg-cream-50/30 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
+            Complete Your Payment
+          </h1>
+          <CheckoutForm
+            clientSecret={checkoutData.clientSecret}
+            orderNumber={checkoutData.orderNumber || ''}
+            depositAmount={depositAmount}
+            onSuccess={handlePaymentSuccess}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-cream-50/30 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
+          Checkout
+        </h1>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Customer Information Form */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-serif text-warmgray-800 mb-6">Customer Information</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-warmgray-700 mb-1">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  value={customerInfo.name}
+                  onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
+                  className="w-full px-3 py-2 border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-warmgray-700 mb-1">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  value={customerInfo.email}
+                  onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
+                  className="w-full px-3 py-2 border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-warmgray-700 mb-1">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  value={customerInfo.phone}
+                  onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
+                  className="w-full px-3 py-2 border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="notes" className="block text-sm font-medium text-warmgray-700 mb-1">
+                  Special Instructions
+                </label>
+                <textarea
+                  id="notes"
+                  rows={3}
+                  value={customerInfo.notes}
+                  onChange={(e) => setCustomerInfo({ ...customerInfo, notes: e.target.value })}
+                  className="w-full px-3 py-2 border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                />
+              </div>
+
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-warmgray-800 text-white py-2.5 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? 'Processing...' : 'Continue to Payment'}
+              </button>
+            </form>
+          </div>
+
+          {/* Order Summary */}
+          <div className="bg-white rounded-lg shadow-sm p-6 h-fit">
+            <h2 className="text-xl font-serif text-warmgray-800 mb-6">Order Summary</h2>
+            <div className="space-y-4 mb-6">
+              {items.map((item, index) => (
+                <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex justify-between items-start pb-4 border-b border-warmgray-100">
+                  <div>
+                    <p className="text-sm font-medium text-warmgray-800">{item.productName}</p>
+                    {item.variantName && (
+                      <p className="text-xs text-warmgray-500">{item.variantName}</p>
+                    )}
+                    <p className="text-xs text-warmgray-600">Qty: {item.quantity}</p>
+                  </div>
+                  <p className="text-sm font-medium text-warmgray-800">
+                    {formatCurrency(item.quantity * item.unitPrice)}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-2 pt-4 border-t border-warmgray-200">
+              <div className="flex justify-between text-base">
+                <span className="text-warmgray-700">Total:</span>
+                <span className="font-semibold text-warmgray-800">{formatCurrency(totalAmount)}</span>
+              </div>
+              <div className="flex justify-between text-sm pt-2">
+                <span className="text-warmgray-600">Deposit (50%):</span>
+                <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
+              </div>
+              <div className="flex justify-between text-xs text-warmgray-500 pt-1">
+                <span>Remaining (due at pickup):</span>
+                <span>{formatCurrency(remainingAmount)}</span>
+              </div>
+              <div className="mt-4 p-3 bg-cream-100 rounded-md">
+                <p className="text-xs text-warmgray-600 text-center">
+                  You will pay the 50% deposit now. The remaining balance is due at pickup.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

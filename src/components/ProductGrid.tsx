@@ -1,39 +1,5 @@
 import ProductCard from './ProductCard'
-
-const products = [
-  {
-    name: 'Flan',
-    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&h=1000&fit=crop&q=80',
-  },
-  {
-    name: 'Choco-flan',
-    image: 'https://images.unsplash.com/photo-1607920591413-4ec007e70023?w=800&h=1000&fit=crop&q=80',
-  },
-  {
-    name: 'Cinnamon Rolls',
-    image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&h=1000&fit=crop&q=80',
-  },
-  {
-    name: 'Brownies',
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=800&h=1000&fit=crop&q=80',
-  },
-  {
-    name: 'Chocolate Matilda Cake',
-    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=1000&fit=crop&q=80',
-  },
-  {
-    name: 'Chocolate Cheesecake',
-    image: 'https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=800&h=1000&fit=crop&q=80',
-  },
-  {
-    name: 'Lemon Charlotte',
-    image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&h=1000&fit=crop&q=80',
-  },
-  {
-    name: 'Conchas',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&h=1000&fit=crop&q=80',
-  },
-]
+import { products } from '@/data/products'
 
 export default function ProductGrid() {
   return (
@@ -54,6 +20,7 @@ export default function ProductGrid() {
               key={product.name}
               name={product.name}
               image={product.image}
+              href={`/menu?product=${encodeURIComponent(product.name)}`}
             />
           ))}
         </div>

@@ -11,10 +11,10 @@ export default function Navigation() {
   }
 
   const navLinks = [
-    { href: '/about', label: 'About' },
-    { href: '/menu', label: 'Menu' },
     { href: '/gallery', label: 'Gallery' },
+    { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
+    { href: '/menu', label: 'Order' },
   ]
 
   return (
@@ -23,7 +23,7 @@ export default function Navigation() {
       <div className="hidden md:flex flex-col items-end gap-4 md:gap-5">
         {navLinks.map((link) => (
           <Link
-            key={link.href}
+            key={link.label}
             href={link.href}
             className="text-sm text-white hover:text-white transition-colors duration-200 font-semibold tracking-wide"
           >
@@ -74,7 +74,7 @@ export default function Navigation() {
         <div className="py-4 min-w-[200px]">
           {navLinks.map((link) => (
             <Link
-              key={link.href}
+              key={link.label}
               href={link.href}
               onClick={() => setIsOpen(false)}
               className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 transition-colors duration-200 font-light text-sm"

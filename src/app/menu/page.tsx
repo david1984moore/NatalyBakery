@@ -12,11 +12,13 @@ import Cart from '@/components/Cart'
 export default function MenuPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const { addItem } = useCart()
+  const { addItem, items } = useCart()
   const [featuredProduct, setFeaturedProduct] = useState<Product | null>(null)
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
   const [quantity, setQuantity] = useState(1)
   const isManualUpdate = useRef(false)
+  
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   useEffect(() => {
     // Skip if this is a manual update (handled in handleProductChange)
@@ -103,35 +105,67 @@ export default function MenuPage() {
         style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}
       >
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
-            {/* Home Button - Distinct circular icon style */}
-            <Link
-              href="/"
-              className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
-              aria-label="Home"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-            </Link>
-            
-            {products.map((product) => {
-              const isSelected = featuredProduct?.name === product.name
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1">
+              {/* Home Button - Distinct circular icon style */}
+              <Link
+                href="/"
+                className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
+                aria-label="Home"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </Link>
               
-              return (
-                <button
-                  key={product.name}
-                  onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                    isSelected
-                      ? 'bg-white border-2 border-warmgray-800 text-warmgray-900'  // Selected: darker border, dark text
-                      : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
-                  }`}
+              {products.map((product) => {
+                const isSelected = featuredProduct?.name === product.name
+                
+                return (
+                  <button
+                    key={product.name}
+                    onClick={() => handleProductChange(product.name)}
+                    className={`flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                      isSelected
+                        ? 'bg-gray-800 text-white shadow-md font-semibold'  // Selected: dark background, white text, shadow
+                        : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
+                    }`}
+                  >
+                    {product.name}
+                  </button>
+                )
+              })}
+            </div>
+            
+            {/* Cart Button - Top Right */}
+            <div className="flex-shrink-0 relative">
+              <button
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('cart:toggle'))
+                }}
+                className="bg-white/95 backdrop-blur-sm rounded-full p-2.5 shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  className="w-5 h-5 text-warmgray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {product.name}
-                </button>
-              )
-            })}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                    {itemCount}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
