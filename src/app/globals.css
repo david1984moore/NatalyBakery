@@ -7,6 +7,8 @@
   --foreground: #171717;
   --font-inter: 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
+  /* Font options for brand name */
+  --font-brand: var(--font-tangerine);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +29,110 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-hero-brand {
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 
+                 -1px -1px 2px rgba(0,0,0,0.9), 
+                 1px 1px 2px rgba(0,0,0,0.9), 
+                 0 0 10px rgba(0,0,0,0.5);
+    -webkit-text-stroke: 1.5px rgba(0,0,0,0.4);
+    paint-order: stroke fill;
+    font-family: var(--font-brand);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* Font class variants */
+  .font-brand-playfair { --font-brand: var(--font-playfair); }
+  .font-brand-cormorant { --font-brand: var(--font-cormorant); }
+  .font-brand-lora { --font-brand: var(--font-lora); }
+  .font-brand-libre { --font-brand: var(--font-libre); }
+  .font-brand-crimson { --font-brand: var(--font-crimson); }
+  .font-brand-merriweather { --font-brand: var(--font-merriweather); }
+  .font-brand-alegreya { --font-brand: var(--font-alegreya); }
+  .font-brand-cinzel { --font-brand: var(--font-cinzel); }
+  /* Whimsical and flowy fonts */
+  .font-brand-dancing { --font-brand: var(--font-dancing); }
+  .font-brand-pacifico { --font-brand: var(--font-pacifico); }
+  .font-brand-satisfy { --font-brand: var(--font-satisfy); }
+  .font-brand-caveat { --font-brand: var(--font-caveat); }
+  .font-brand-amatic { --font-brand: var(--font-amatic); }
+  .font-brand-shadows { --font-brand: var(--font-shadows); }
+  .font-brand-handlee { --font-brand: var(--font-handlee); }
+  .font-brand-greatvibes { --font-brand: var(--font-greatvibes); }
+  .font-brand-sacramento { --font-brand: var(--font-sacramento); }
+  .font-brand-fuzzy { --font-brand: var(--font-fuzzy); }
+  .font-brand-modak { --font-brand: var(--font-modak); }
+  /* Elegant, Royal, Cursive-like fonts */
+  .font-brand-stylescript { --font-brand: var(--font-stylescript); }
+  .font-brand-italianno { --font-brand: var(--font-italianno); }
+  .font-brand-niconne { --font-brand: var(--font-niconne); }
+  .font-brand-luxurious { --font-brand: var(--font-luxurious); }
+  .font-brand-petitformal { --font-brand: var(--font-petitformal); }
+  .font-brand-parisienne { --font-brand: var(--font-parisienne); }
+  .font-brand-allura { --font-brand: var(--font-allura); }
+  .font-brand-alexbrush { --font-brand: var(--font-alexbrush); }
+  .font-brand-marckscript { --font-brand: var(--font-marckscript); }
+  .font-brand-nothingyoucoulddo { --font-brand: var(--font-nothingyoucoulddo); }
+  .font-brand-tangerine { --font-brand: var(--font-tangerine); }
+  .font-brand-yellowtail { --font-brand: var(--font-yellowtail); }
+  .font-brand-zeyada { --font-brand: var(--font-zeyada); }
+  .font-brand-indieflower { --font-brand: var(--font-indieflower); }
+  .font-brand-architectsdaughter { --font-brand: var(--font-architectsdaughter); }
+  .font-brand-comingsoon { --font-brand: var(--font-comingsoon); }
+  .font-brand-coveredbyyourgrace { --font-brand: var(--font-coveredbyyourgrace); }
+  .font-brand-rocksalt { --font-brand: var(--font-rocksalt); }
+  .font-brand-swanky { --font-brand: var(--font-swanky); }
+  .font-brand-kalam { --font-brand: var(--font-kalam); }
+  .font-brand-reeniebeanie { --font-brand: var(--font-reeniebeanie); }
+  .font-brand-overtherainbow { --font-brand: var(--font-overtherainbow); }
+  
+  /* Navigation link styling */
+  .nav-link-elegant {
+    font-family: var(--font-playfair);
+    letter-spacing: 0.05em;
+    position: relative;
+  }
+  
+  .font-tangerine {
+    font-family: var(--font-tangerine);
+  }
+  
+  /* Navigation font classes */
+  .font-nav-playfair { font-family: var(--font-playfair); font-weight: 700; }
+  .font-nav-cormorant { font-family: var(--font-cormorant); font-weight: 600; }
+  .font-nav-lora { font-family: var(--font-lora); font-weight: 600; }
+  .font-nav-cinzel { font-family: var(--font-cinzel); font-weight: 600; }
+  .font-nav-tangerine { font-family: var(--font-tangerine); font-weight: 700; }
+  .font-nav-sacramento { font-family: var(--font-sacramento); }
+  .font-nav-greatvibes { font-family: var(--font-greatvibes); }
+  .font-nav-allura { font-family: var(--font-allura); }
+  .font-nav-dancing { font-family: var(--font-dancing); font-weight: 600; }
+  .font-nav-satisfy { font-family: var(--font-satisfy); }
+  .font-nav-caveat { font-family: var(--font-caveat); font-weight: 600; }
+  .font-nav-stylescript { font-family: var(--font-stylescript); }
+  .font-nav-italianno { font-family: var(--font-italianno); }
+  .font-nav-niconne { font-family: var(--font-niconne); }
+  .font-nav-luxurious { font-family: var(--font-luxurious); }
+  .font-nav-petitformal { font-family: var(--font-petitformal); }
+  .font-nav-parisienne { font-family: var(--font-parisienne); }
+  .font-nav-alexbrush { font-family: var(--font-alexbrush); }
+  .font-nav-marckscript { font-family: var(--font-marckscript); }
+  .font-nav-yellowtail { font-family: var(--font-yellowtail); }
+  
+  /* Shimmer animation for nav links */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 1.5s ease-in-out infinite;
   }
 }
 

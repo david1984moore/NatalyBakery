@@ -195,6 +195,45 @@ This document contains:
 Ready for external analysis or fresh perspective.
 ```
 
+### Template 7: Dev Environment Start (/start)
+```
+🚀 Starting Development Environment...
+
+📦 Dependency Check:
+   [✓/✗] node_modules exists [or: Installing dependencies...]
+   [✓/✗] Prisma client available
+
+🗄️  Database Setup:
+   [✓] Prisma client generated
+   [✓/⚠️] Schema pushed [or: ⚠️ Schema push skipped (DB not configured)]
+      Note: Run 'npm run db:push' when DB is ready
+
+🔐 Environment Variables:
+   [✓/.env.local found] [or: ⚠️ .env.local not found]
+      Required: DATABASE_URL, STRIPE_SECRET_KEY, etc.
+      See SETUP.md for details
+
+📄 Context Loaded:
+   [✓] SCOPE.md: [Project name] ([X] lines)
+   [✓] STATUS.md: [Current task] ([X]/200 lines)
+
+🌐 Starting Dev Server...
+   [✓] Port 3000 available [or: Killed existing process on port 3000]
+   [✓] Server starting...
+
+═══════════════════════════════════════
+   Development Server Ready!
+   URL: http://localhost:3000
+═══════════════════════════════════════
+
+🎯 Current Task: [Task from STATUS.md line 1]
+
+📋 Quick Actions:
+   - /next - Continue current task
+   - /debug - Test in browser
+   - /server - Restart server
+```
+
 ---
 
 ## 🎮 COMMAND SYSTEM
@@ -282,6 +321,59 @@ Ready for external analysis or fresh perspective.
 5. Start appropriate server
 6. Wait for ready signal
 7. Report URL and status
+
+#### `/start` - Complete Dev Environment Setup
+**Comprehensive development environment initialization**
+
+1. **Dependency Check:**
+   - Check if `node_modules/` exists
+   - If missing, run `npm install` (show progress)
+   - Verify `node_modules/@prisma/client` exists
+
+2. **Prisma Setup:**
+   - Run `npm run db:generate` (always - ensures client is current)
+   - Attempt `npm run db:push` (optional)
+   - If DB push fails (DB not configured), warn but continue
+   - Never block development due to missing DB
+
+3. **Environment Variables:**
+   - Check for `.env.local` file existence
+   - If missing, display warning with expected variables
+   - Reference `SETUP.md` for variable list
+   - Continue execution (frontend dev can proceed without env vars)
+
+4. **Context Loading:**
+   - Load `SCOPE_Natalys_Bakery.md` or `SCOPE.md`
+   - Load `STATUS_v2_3_1.md` or `STATUS.md`
+   - Display current task from STATUS.md line 1
+   - Show project context summary
+
+5. **Port Management:**
+   - Check ports 3000-3010 for existing processes
+   - Report what will be killed
+   - Kill only dev server processes (safe)
+   - Clear ports for new server
+
+6. **Server Start:**
+   - Start `npm run dev` in background
+   - Wait for ready signal (check for server response)
+   - Display server URL (http://localhost:3000)
+
+7. **Status Display:**
+   - Show formatted summary of all steps
+   - Display current task and project status
+   - Provide quick action suggestions
+   - Use visual indicators (✓ for success, ⚠️ for warnings)
+
+**Error Handling:**
+- Missing dependencies: Auto-install with progress display
+- Prisma generate failure: Show error, suggest checking schema.prisma
+- Database push failure: Display warning, continue execution
+- Port conflicts: Handle gracefully (kill processes)
+- Missing env vars: Display warning, continue execution
+
+**Output Format:**
+Use visual template with sections for each step, status indicators, and final server URL display.
 
 #### `/debug` - Browser Testing
 1. Check server status

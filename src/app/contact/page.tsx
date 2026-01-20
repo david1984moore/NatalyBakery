@@ -2,9 +2,12 @@
 
 import Navigation from '@/components/Navigation'
 import ContactForm from '@/components/ContactForm'
+import { useLanguage } from '@/contexts/LanguageContext'
 import Link from 'next/link'
 
 export default function ContactPage() {
+  const { t } = useLanguage()
+  
   return (
     <main className="min-h-screen bg-cream-50/30">
       <Navigation />
@@ -13,12 +16,10 @@ export default function ContactPage() {
       <div className="fixed top-4 left-4 z-50">
         <Link
           href="/"
-          className="flex-shrink-0 w-10 h-10 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center shadow-md"
+          className="flex-shrink-0 px-3 py-1.5"
           aria-label="Home"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
+          <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
         </Link>
       </div>
       
@@ -27,11 +28,10 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-warmgray-800">
-              Get in Touch
+              {t('contact.getInTouch')}
             </h1>
             <p className="text-lg md:text-xl text-warmgray-600 max-w-2xl mx-auto font-light">
-              Have a question, custom order request, or just want to say hello? 
-              We'd love to hear from you!
+              {t('contact.subtitle')}
             </p>
           </div>
 
@@ -43,10 +43,10 @@ export default function ContactPage() {
           {/* Additional Contact Information */}
           <div className="text-center space-y-2 pt-4">
             <p className="text-sm text-warmgray-500">
-              We typically respond within 24-48 hours.
+              {t('contact.responseTime')}
             </p>
             <p className="text-sm text-warmgray-500">
-              For urgent matters, please call us directly.
+              {t('contact.urgent')}
             </p>
           </div>
         </div>

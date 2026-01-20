@@ -1,20 +1,47 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useLanguage } from '@/contexts/LanguageContext'
+import LanguageToggle from './LanguageToggle'
+import NavFontSwitcher from './NavFontSwitcher'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = useLanguage()
+
+  useEffect(() => {
+    // Apply saved nav font on mount
+    if (typeof window === 'undefined') return
+    
+    const saved = localStorage.getItem('nav-font') || 'sacramento'
+    const navLinks = document.querySelectorAll('[data-nav-link]')
+    
+    if (navLinks.length > 0) {
+      // Remove all nav font classes
+      const navFontClasses = [
+        'font-nav-playfair', 'font-nav-cormorant', 'font-nav-lora', 'font-nav-cinzel',
+        'font-nav-tangerine', 'font-nav-sacramento', 'font-nav-greatvibes', 'font-nav-allura',
+        'font-nav-dancing', 'font-nav-satisfy', 'font-nav-caveat', 'font-nav-stylescript',
+        'font-nav-italianno', 'font-nav-niconne', 'font-nav-luxurious', 'font-nav-petitformal',
+        'font-nav-parisienne', 'font-nav-alexbrush', 'font-nav-marckscript', 'font-nav-yellowtail'
+      ]
+      
+      navLinks.forEach((link) => {
+        navFontClasses.forEach((cls) => link.classList.remove(cls))
+        link.classList.add(`font-nav-${saved}`)
+      })
+    }
+  }, [])
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
 
   const navLinks = [
-    { href: '/gallery', label: 'Gallery' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
-    { href: '/menu', label: 'Order' },
+    { href: '/gallery', labelKey: 'nav.gallery' as const },
+    { href: '/contact', labelKey: 'nav.contact' as const },
+    { href: '/menu', labelKey: 'nav.order' as const },
   ]
 
   return (
@@ -23,13 +50,16 @@ export default function Navigation() {
       <div className="hidden md:flex flex-col items-end gap-4 md:gap-5">
         {navLinks.map((link) => (
           <Link
-            key={link.label}
+            key={link.labelKey}
             href={link.href}
-            className="text-sm text-white hover:text-white transition-colors duration-200 font-semibold tracking-wide"
+            data-nav-link
+            className="text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-all duration-200 font-nav-sacramento tracking-wide"
           >
-            {link.label}
+            {t(link.labelKey)}
           </Link>
         ))}
+        <LanguageToggle />
+        <NavFontSwitcher />
       </div>
 
       {/* Mobile Menu Button */}
@@ -74,14 +104,16 @@ export default function Navigation() {
         <div className="py-4 min-w-[200px]">
           {navLinks.map((link) => (
             <Link
-              key={link.label}
+              key={link.labelKey}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 transition-colors duration-200 font-light text-sm"
+              data-nav-link
+              className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-all duration-200 font-light text-sm font-nav-sacramento"
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
+          <LanguageToggle variant="mobile" />
         </div>
       </div>
     </nav>

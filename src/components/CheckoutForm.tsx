@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
 
 const stripePromise = loadStripe(
@@ -19,8 +21,11 @@ interface CheckoutFormProps {
 function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: CheckoutFormProps) {
   const stripe = useStripe()
   const elements = useElements()
+  const { t } = useLanguage()
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,7 +45,7 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
         return
       }
 
-      const { error: confirmError } = await stripe.confirmPayment({
+      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
         elements,
         clientSecret,
         confirmParams: {
@@ -49,11 +54,30 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
         redirect: 'if_required',
       })
 
+      console.log('💳 Payment confirmation result:', {
+        hasError: !!confirmError,
+        error: confirmError?.message,
+        paymentIntentStatus: paymentIntent?.status,
+      })
+
       if (confirmError) {
+        console.error('❌ Payment confirmation error:', confirmError)
         setError(confirmError.message || 'Payment failed')
-      } else {
-        // Payment succeeded
+        setIsProcessing(false)
+        return
+      }
+
+      // Check payment intent status
+      if (paymentIntent?.status === 'succeeded') {
+        console.log('✅ Payment succeeded, calling onSuccess')
         onSuccess()
+      } else if (paymentIntent?.status === 'requires_action') {
+        // Payment requires additional action (like 3D Secure)
+        console.log('⚠️ Payment requires action')
+        setError('Payment requires additional authentication. Please complete the verification.')
+      } else {
+        console.log('⚠️ Payment status:', paymentIntent?.status)
+        setError(`Payment status: ${paymentIntent?.status}. Please check your payment method.`)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred')
@@ -65,20 +89,23 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl mx-auto">
       <div className="mb-6">
-        <h2 className="text-xl font-serif text-warmgray-800 mb-2">Payment Details</h2>
+        <h2 className="text-xl font-serif text-warmgray-800 mb-2">{t('checkout.paymentDetails')}</h2>
         <p className="text-sm text-warmgray-600">
-          Order: <span className="font-medium">{orderNumber}</span>
+          {t('nav.order')}: <span className="font-medium">{orderNumber}</span>
         </p>
         <p className="text-sm text-warmgray-600">
-          Deposit Amount: <span className="font-medium">{formatCurrency(depositAmount)}</span>
+          {t('checkout.depositAmount')} <span className="font-medium">{formatCurrency(depositAmount)}</span>
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="border border-warmgray-200 rounded-md p-4">
+      <form onSubmit={handleSubmit} className="space-y-6" id="payment-form">
+        <div className="border border-warmgray-200 rounded-md p-4" style={{ minHeight: '200px' }}>
           <PaymentElement
             options={{
               layout: 'tabs',
+              fields: {
+                billingDetails: 'auto',
+              },
             }}
           />
         </div>
@@ -89,24 +116,70 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
           </div>
         )}
 
-        <button
-          type="submit"
-          disabled={!stripe || isProcessing}
-          className="w-full bg-warmgray-800 text-white py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isProcessing ? 'Processing...' : !stripe ? 'Loading payment form...' : `Pay Deposit ${formatCurrency(depositAmount)}`}
-        </button>
-        
         {!stripe && (
           <p className="text-xs text-warmgray-500 text-center mt-2">
-            Please wait while we load the secure payment form...
+            {t('checkout.loadingPaymentForm')}
           </p>
         )}
 
-        <p className="text-xs text-warmgray-500 text-center">
-          Your payment is secure and encrypted. We never store your card details.
+        <p className="text-xs text-warmgray-500 text-center mt-4">
+          {t('checkout.securePayment')}
         </p>
       </form>
+
+      {/* Payment button OUTSIDE the form to avoid Stripe interference */}
+      <div 
+        className="mt-8 pt-6 border-t border-warmgray-300"
+      >
+        <button
+          type="button"
+          onClick={async (e) => {
+            e.preventDefault()
+            if (!stripe || !elements) {
+              setError('Payment form is not ready. Please wait a moment and try again.')
+              return
+            }
+            const form = document.getElementById('payment-form') as HTMLFormElement
+            if (form) {
+              form.requestSubmit()
+            }
+          }}
+          id="submit-payment-button"
+          disabled={!stripe || isProcessing}
+          style={{
+            width: '100%',
+            minHeight: '56px',
+            padding: '16px 24px',
+            backgroundColor: !stripe || isProcessing ? '#9ca3af' : '#1f2937',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '18px',
+            fontWeight: '600',
+            cursor: !stripe || isProcessing ? 'not-allowed' : 'pointer',
+            display: 'block',
+            transition: 'background-color 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            if (stripe && !isProcessing) {
+              e.currentTarget.style.backgroundColor = '#374151'
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (stripe && !isProcessing) {
+              e.currentTarget.style.backgroundColor = '#1f2937'
+            }
+          }}
+        >
+          {isProcessing ? (
+            t('checkout.processingPayment')
+          ) : !stripe ? (
+            t('checkout.loadingPaymentForm')
+          ) : (
+            `${t('checkout.payDeposit')} ${formatCurrency(depositAmount)}`
+          )}
+        </button>
+      </div>
     </div>
   )
 }

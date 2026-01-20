@@ -162,6 +162,23 @@
 
 ---
 
+### `/start` - Complete Dev Environment Setup
+**Behavior:**
+- Checks and installs dependencies if needed (`node_modules/`)
+- Generates Prisma client (`npm run db:generate`)
+- Optionally pushes database schema (`npm run db:push`) with graceful failure if DB not configured
+- Checks for environment variables (`.env.local`) - warns if missing but doesn't block
+- Loads SCOPE.md and STATUS.md for context
+- Checks ports 3000-3010 and kills dev processes if needed
+- Starts development server (`npm run dev`)
+- Displays comprehensive status with current task and quick actions
+
+**One command = Full dev environment ready**
+
+**Safe:** Won't fail if DB/env vars not configured (warns instead)
+
+---
+
 ### `/debug` - Browser Testing
 **Behavior:**
 - Checks server status
@@ -371,6 +388,16 @@ Proceed? (/commit to execute)
 7. /save     → Update progress
 ```
 
+**Or use /start for all-in-one setup:**
+```
+1. /start    → Complete dev environment ready
+2. /next     → Execute task
+3. /debug    → Test in browser
+4. /verify   → Check implementation
+5. /commit   → Save & push
+6. /save     → Update progress
+```
+
 ### Quick Fix
 ```
 /init → /next → /debug → /commit
@@ -416,6 +443,9 @@ Proceed? (/commit to execute)
 ```
 EVERY SESSION:
 /init → /server → /next → /debug → /verify → /commit → /save
+
+OR QUICK START:
+/start → /next → /debug → /verify → /commit → /save
 
 WHEN STUCK:
 /confer   - Create handoff document

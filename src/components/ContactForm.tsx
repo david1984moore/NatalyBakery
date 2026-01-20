@@ -5,8 +5,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { ContactFormRequest } from '@/types/contact'
+import { useLanguage } from '@/contexts/LanguageContext'
 
-// Validation schema matching the API
+// Validation schema - messages are basic since validation happens on submit
 const contactFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Valid email is required'),
@@ -22,6 +23,7 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ onSuccess }: ContactFormProps) {
+  const { t } = useLanguage()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<{
     type: 'success' | 'error' | null
@@ -85,7 +87,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       {/* Name Field */}
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-warmgray-700 mb-2">
-          Name <span className="text-red-500">*</span>
+          {t('contact.name')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <input
           type="text"
@@ -94,7 +96,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
           className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors ${
             errors.name ? 'border-red-300' : 'border-warmgray-300'
           }`}
-          placeholder="Your name"
+          placeholder={t('contact.placeholder.name')}
           disabled={isSubmitting}
         />
         {errors.name && (
@@ -105,7 +107,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       {/* Email Field */}
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-warmgray-700 mb-2">
-          Email <span className="text-red-500">*</span>
+          {t('contact.email')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <input
           type="email"
@@ -114,7 +116,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
           className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors ${
             errors.email ? 'border-red-300' : 'border-warmgray-300'
           }`}
-          placeholder="your.email@example.com"
+          placeholder={t('contact.placeholder.email')}
           disabled={isSubmitting}
         />
         {errors.email && (
@@ -125,7 +127,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       {/* Phone Field (Optional) */}
       <div>
         <label htmlFor="phone" className="block text-sm font-medium text-warmgray-700 mb-2">
-          Phone <span className="text-warmgray-500 text-xs">(optional)</span>
+          {t('contact.phone')} <span className="text-warmgray-500 text-xs">{t('contact.phoneOptional')}</span>
         </label>
         <input
           type="tel"
@@ -134,7 +136,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
           className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors ${
             errors.phone ? 'border-red-300' : 'border-warmgray-300'
           }`}
-          placeholder="(555) 123-4567"
+          placeholder={t('contact.placeholder.phone')}
           disabled={isSubmitting}
         />
         {errors.phone && (
@@ -145,7 +147,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       {/* Subject Field */}
       <div>
         <label htmlFor="subject" className="block text-sm font-medium text-warmgray-700 mb-2">
-          Subject <span className="text-red-500">*</span>
+          {t('contact.subject')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <input
           type="text"
@@ -154,7 +156,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
           className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors ${
             errors.subject ? 'border-red-300' : 'border-warmgray-300'
           }`}
-          placeholder="What is this regarding?"
+          placeholder={t('contact.placeholder.subject')}
           disabled={isSubmitting}
         />
         {errors.subject && (
@@ -165,7 +167,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       {/* Message Field */}
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-warmgray-700 mb-2">
-          Message <span className="text-red-500">*</span>
+          {t('contact.message')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <textarea
           id="message"
@@ -174,7 +176,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
           className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors resize-y ${
             errors.message ? 'border-red-300' : 'border-warmgray-300'
           }`}
-          placeholder="Tell us more about your inquiry..."
+          placeholder={t('contact.placeholder.message')}
           disabled={isSubmitting}
         />
         {errors.message && (
@@ -201,7 +203,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
         disabled={isSubmitting}
         className="w-full bg-warmbrown-500 text-white py-3 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isSubmitting ? 'Sending...' : 'Send Message'}
+        {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
       </button>
     </form>
   )

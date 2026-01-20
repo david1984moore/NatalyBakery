@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { useLanguage } from '@/contexts/LanguageContext'
+import LanguageToggle from '@/components/LanguageToggle'
 import Link from 'next/link'
-import { formatCurrency } from '@/lib/utils'
 
 interface OrderData {
   orderNumber: string
@@ -23,6 +24,7 @@ interface OrderData {
 export default function SuccessPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { t } = useLanguage()
   const orderId = searchParams.get('orderId')
   const orderNumber = searchParams.get('orderNumber')
   const [orderData, setOrderData] = useState<OrderData | null>(null)
@@ -44,82 +46,112 @@ export default function SuccessPage() {
       <div className="min-h-screen bg-cream-50/30 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-warmgray-800 mx-auto mb-4"></div>
-          <p className="text-warmgray-600">Loading order details...</p>
+          <p className="text-warmgray-600">{t('success.loadingOrder')}</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-cream-50/30 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-          {/* Success Icon */}
-          <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-            <svg
-              className="w-8 h-8 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+    <div className="min-h-screen bg-cream-50/30">
+      {/* Navigation Bar - Fixed at top */}
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <Link
+            href="/"
+            className="px-3 py-1.5"
+          >
+            <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
+          </Link>
+          
+          <div className="flex items-center gap-3">
+            <Link
+              href="/menu"
+              className="px-4 py-1.5 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-200 text-sm font-medium"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+              {t('nav.shop')}
+            </Link>
+            <LanguageToggle variant="menu" />
           </div>
+        </div>
+      </div>
 
-          <h1 className="text-3xl font-serif text-warmgray-800 mb-4">Order Confirmed!</h1>
-          <p className="text-warmgray-600 mb-8">
-            Thank you for your order. We've received your deposit payment and will begin preparing your order.
-          </p>
-
-          {orderNumber && (
-            <div className="bg-cream-50 rounded-md p-4 mb-6">
-              <p className="text-sm text-warmgray-600 mb-1">Order Number</p>
-              <p className="text-xl font-semibold text-warmgray-800">{orderNumber}</p>
+      <div className="pt-20 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+            {/* Success Icon */}
+            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+              <svg
+                className="w-8 h-8 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
             </div>
-          )}
 
-          <div className="bg-warmgray-50 rounded-md p-6 mb-6 text-left">
-            <h2 className="text-lg font-serif text-warmgray-800 mb-4">What's Next?</h2>
-            <ul className="space-y-2 text-sm text-warmgray-600">
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>You'll receive a confirmation email shortly with your order details.</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>We'll contact you when your order is ready for pickup.</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>The remaining balance will be due at pickup (cash or card accepted).</span>
-              </li>
-            </ul>
-          </div>
+            <h1 className="text-3xl font-serif text-warmgray-800 mb-4">{t('success.orderConfirmed')}</h1>
+            <p className="text-warmgray-600 mb-8">
+              {t('success.thankYou')}
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/"
-              className="px-6 py-2.5 bg-warmgray-800 text-white rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium"
-            >
-              Return to Home
-            </Link>
-            <Link
-              href="/contact"
-              className="px-6 py-2.5 bg-white border border-warmgray-300 text-warmgray-700 rounded-md hover:bg-cream-50 transition-colors duration-200 font-medium"
-            >
-              Contact Us
-            </Link>
+            {orderNumber && (
+              <div className="bg-cream-50 rounded-md p-4 mb-6">
+                <p className="text-sm text-warmgray-600 mb-1">{t('success.orderNumber')}</p>
+                <p className="text-xl font-semibold text-warmgray-800">{orderNumber}</p>
+              </div>
+            )}
+
+            <div className="bg-warmgray-50 rounded-md p-6 mb-6 text-left">
+              <h2 className="text-lg font-serif text-warmgray-800 mb-4">{t('success.whatsNext')}</h2>
+              <ul className="space-y-2 text-sm text-warmgray-600">
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>{t('success.confirmationEmail')}</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>{t('success.readyForPickup')}</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>{t('success.balanceDue')}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/"
+                className="px-6 py-2.5 bg-warmgray-800 text-white rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium"
+              >
+                {t('nav.home')}
+              </Link>
+              <Link
+                href="/menu"
+                className="px-6 py-2.5 bg-warmgray-800 text-white rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium"
+              >
+                {t('nav.shop')}
+              </Link>
+              <Link
+                href="/contact"
+                className="px-6 py-2.5 bg-white border border-warmgray-300 text-warmgray-700 rounded-md hover:bg-cream-50 transition-colors duration-200 font-medium"
+              >
+                {t('success.contactUs')}
+              </Link>
+            </div>
           </div>
         </div>
       </div>

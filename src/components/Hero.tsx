@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import ProductCard from './ProductCard'
+import FontSwitcher from './FontSwitcher'
 import { products } from '@/data/products'
 
 export default function Hero() {
@@ -19,11 +20,14 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/10" />
       </div>
 
+      {/* Font Switcher */}
+      <FontSwitcher />
+
       {/* Hero Content - All visible in viewport */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex flex-col justify-between py-6 md:py-8 lg:py-10">
+      <div className="relative z-10 max-w-7xl mx-auto pl-0 pr-4 sm:pr-6 lg:pr-8 w-full h-full flex flex-col justify-between py-6 md:py-8 lg:py-10">
         {/* Top Section - Brand Name */}
-        <div className="flex-shrink-0">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-serif font-bold text-white leading-tight mb-2 md:mb-3 drop-shadow-md">
+        <div className="flex-shrink-0 font-brand-tangerine -translate-x-8 md:-translate-x-12 lg:-translate-x-16" id="brand-name-wrapper">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] font-bold text-white leading-tight mb-2 md:mb-3 text-hero-brand">
             Caramel & Jo
           </h1>
         </div>

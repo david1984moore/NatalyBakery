@@ -6,19 +6,67 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { products, getProductByName, getDefaultVariant, getProductPriceRange, type Product, type ProductVariant } from '@/data/products'
 import { useCart } from '@/contexts/CartContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
+import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/productTranslations'
 import Cart from '@/components/Cart'
+import LanguageToggle from '@/components/LanguageToggle'
 
 export default function MenuPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { addItem, items } = useCart()
+  const { t } = useLanguage()
   const [featuredProduct, setFeaturedProduct] = useState<Product | null>(null)
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
   const [quantity, setQuantity] = useState(1)
   const isManualUpdate = useRef(false)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
   
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+
+  // Check scroll position
+  const checkScrollPosition = () => {
+    const container = scrollContainerRef.current
+    if (container) {
+      const { scrollLeft, scrollWidth, clientWidth } = container
+      setCanScrollLeft(scrollLeft > 1) // Use 1px tolerance
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1) // Use 1px tolerance
+    }
+  }
+
+  // Scroll functions
+  const scrollLeft = () => {
+    if (!canScrollLeft) return
+    const container = scrollContainerRef.current
+    if (container) {
+      container.scrollBy({ left: -200, behavior: 'smooth' })
+    }
+  }
+
+  const scrollRight = () => {
+    if (!canScrollRight) return
+    const container = scrollContainerRef.current
+    if (container) {
+      container.scrollBy({ left: 200, behavior: 'smooth' })
+    }
+  }
+
+  // Check scroll on mount and when products/language changes
+  useEffect(() => {
+    checkScrollPosition()
+    const container = scrollContainerRef.current
+    if (container) {
+      container.addEventListener('scroll', checkScrollPosition)
+      window.addEventListener('resize', checkScrollPosition)
+      return () => {
+        container.removeEventListener('scroll', checkScrollPosition)
+        window.removeEventListener('resize', checkScrollPosition)
+      }
+    }
+  }, [products, t])
 
   useEffect(() => {
     // Skip if this is a manual update (handled in handleProductChange)
@@ -55,7 +103,7 @@ export default function MenuPage() {
     if (featuredProduct && selectedVariant) {
       // For Conchas, validate minimum quantity
       if (featuredProduct.minQuantity && quantity < featuredProduct.minQuantity) {
-        alert(`Minimum order of ${featuredProduct.minQuantity} shells required for Conchas`)
+        alert(t('menu.minimumOrder', { min: featuredProduct.minQuantity }))
         setQuantity(featuredProduct.minQuantity)
         return
       }
@@ -101,83 +149,89 @@ export default function MenuPage() {
     <div className="h-screen bg-cream-50/30 flex flex-col overflow-hidden relative">
       {/* Product Navigation Bar - Fixed at top - Always visible */}
       <div 
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-2 shadow-sm"
+        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm py-4 border-b border-warmgray-200 shadow-sm"
         style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1">
-              {/* Home Button - Distinct circular icon style */}
-              <Link
-                href="/"
-                className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
-                aria-label="Home"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </Link>
+        {/* Home Button - Positioned on far left, outside centered container */}
+        <Link
+          href="/"
+          className="fixed left-4 sm:left-6 lg:left-8 top-4 flex-shrink-0 px-3 py-1.5 z-20"
+          aria-label="Home"
+        >
+          <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
+        </Link>
+        
+        {/* Centered container for scrollable product list */}
+        <div className="max-w-7xl mx-auto px-10 sm:px-12 lg:px-14 flex items-center gap-3 relative">
+          <div 
+            ref={scrollContainerRef}
+            className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden" 
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            {products.map((product) => {
+              const isSelected = featuredProduct?.name === product.name
+              const translationKey = productNameToTranslationKey[product.name] || product.name
+              const translatedName = translationKey.startsWith('product.') ? t(translationKey as any) : product.name
               
-              {products.map((product) => {
-                const isSelected = featuredProduct?.name === product.name
-                
-                return (
-                  <button
-                    key={product.name}
-                    onClick={() => handleProductChange(product.name)}
-                    className={`flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                      isSelected
-                        ? 'bg-gray-800 text-white shadow-md font-semibold'  // Selected: dark background, white text, shadow
-                        : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
-                    }`}
-                  >
-                    {product.name}
-                  </button>
-                )
-              })}
-            </div>
-            
-            {/* Cart Button - Top Right */}
-            <div className="flex-shrink-0 relative">
-              <button
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('cart:toggle'))
-                }}
-                className="bg-white/95 backdrop-blur-sm rounded-full p-2.5 shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
-                aria-label="Shopping cart"
-              >
-                <svg
-                  className="w-5 h-5 text-warmgray-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              return (
+                <button
+                  key={product.name}
+                  onClick={() => handleProductChange(product.name)}
+                  className={`flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                    isSelected
+                      ? 'bg-gray-800 text-white shadow-md font-semibold'  // Selected: dark background, white text, shadow
+                      : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
+                  }`}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {itemCount}
-                  </span>
-                )}
-              </button>
-            </div>
+                  {translatedName}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+        
+        {/* Language Toggle and Cart Button - Positioned on far right, outside centered container */}
+        <div className="fixed right-4 sm:right-6 lg:right-8 top-4 flex items-center gap-6 flex-shrink-0 z-20">
+          <LanguageToggle variant="menu" />
+          <div className="relative">
+            <button
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('cart:toggle'))
+              }}
+              className="bg-white/95 backdrop-blur-sm rounded-full p-2.5 shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+              aria-label="Shopping cart"
+            >
+              <svg
+                className="w-5 h-5 text-warmgray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  {itemCount}
+                </span>
+              )}
+            </button>
           </div>
         </div>
       </div>
 
       {/* Featured Product Section - Fit in viewport without scrolling */}
-      <section className="flex-1 overflow-hidden pt-14 flex items-center">
+      <section className="flex-1 overflow-hidden pt-20 flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-warmgray-800 mx-auto mb-4"></div>
-                <p className="text-warmgray-600">Loading menu...</p>
+                <p className="text-warmgray-600">{t('menu.loading')}</p>
               </div>
             </div>
           ) : (
@@ -197,7 +251,10 @@ export default function MenuPage() {
             <div className="space-y-2 flex flex-col h-full justify-center">
               <div>
                 <h1 className="text-2xl md:text-3xl font-serif text-warmgray-800 mb-1.5">
-                  {featuredProduct.name}
+                  {(() => {
+                    const translationKey = productNameToTranslationKey[featuredProduct.name] || featuredProduct.name
+                    return translationKey.startsWith('product.') ? t(translationKey as any) : featuredProduct.name
+                  })()}
                 </h1>
                 {featuredProduct.description && (
                   <p className="text-warmgray-600 text-sm md:text-base leading-relaxed">
@@ -210,7 +267,7 @@ export default function MenuPage() {
               {featuredProduct.hasVariants && featuredProduct.variants.length > 1 && (
                 <div>
                   <label className="block text-warmgray-700 font-medium mb-1.5 text-sm">
-                    Select Option:
+                    {t('menu.selectOption')}
                   </label>
                   <div className="space-y-1.5">
                     {featuredProduct.variants.map((variant) => (
@@ -231,7 +288,14 @@ export default function MenuPage() {
                           className="w-3.5 h-3.5 text-warmgray-800 focus:ring-warmgray-800"
                         />
                         <div className="flex-1">
-                          <span className="text-warmgray-800 font-medium text-sm">{variant.name}</span>
+                          <span className="text-warmgray-800 font-medium text-sm">
+                            {(() => {
+                              const translationKey = getVariantTranslationKey(variant.name)
+                              return translationKey.startsWith('variant.') || translationKey.startsWith('product.') 
+                                ? t(translationKey as any) 
+                                : variant.name
+                            })()}
+                          </span>
                         </div>
                         <span className="text-warmgray-700 font-semibold text-sm">
                           {formatCurrency(variant.price)}
@@ -262,7 +326,7 @@ export default function MenuPage() {
               {/* Quantity Selector */}
               <div className="flex items-center gap-2 flex-wrap">
                 <label htmlFor="quantity" className="text-warmgray-700 font-medium text-sm">
-                  Quantity:
+                  {t('menu.quantity')}
                 </label>
                 <div className="flex items-center gap-1.5">
                   <button
@@ -298,7 +362,7 @@ export default function MenuPage() {
                 </div>
                 {featuredProduct.minQuantity && (
                   <span className="text-xs text-warmgray-500">
-                    (Minimum {featuredProduct.minQuantity})
+                    {t('menu.minimum', { min: featuredProduct.minQuantity })}
                   </span>
                 )}
               </div>
@@ -307,7 +371,7 @@ export default function MenuPage() {
               <div className="pt-2 border-t border-warmgray-200">
                 {selectedVariant && (
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-warmgray-700 font-medium text-sm">Total:</span>
+                    <span className="text-warmgray-700 font-medium text-sm">{t('cart.total')}</span>
                     <span className="text-lg font-serif text-warmgray-800">
                       {formatCurrency(selectedVariant.price * quantity)}
                     </span>
@@ -320,7 +384,7 @@ export default function MenuPage() {
                   disabled={!selectedVariant}
                   className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-sm"
                 >
-                  Add to Cart
+                  {t('menu.addToCart')}
                 </button>
               </div>
             </div>

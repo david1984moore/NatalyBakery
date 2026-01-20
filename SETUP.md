@@ -7,7 +7,7 @@
 All environment variables have been configured:
 - ✅ Database (Supabase)
 - ✅ Stripe API keys and webhook
-- ✅ Resend email service
+- ✅ Gmail email service (Nodemailer)
 - ✅ Email addresses (caramelcakeJo@gmail.com)
 - ✅ Prisma client generated
 
@@ -24,10 +24,13 @@ STRIPE_SECRET_KEY="sk_test_..."
 STRIPE_WEBHOOK_SECRET="whsec_..."
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
 
-# Email Configuration (Resend)
-RESEND_API_KEY="re_..."
-EMAIL_FROM="caramelcakeJo@gmail.com"
-EMAIL_TO="caramelcakeJo@gmail.com"
+# Email Configuration (Gmail via Nodemailer)
+# IMPORTANT: Use a Gmail App Password, not your regular Gmail password
+# To create an App Password: https://myaccount.google.com/apppasswords
+GMAIL_USER="caramelcakejo@gmail.com"
+GMAIL_APP_PASSWORD="xxxx xxxx xxxx xxxx"  # 16-character App Password (spaces optional)
+EMAIL_FROM="caramelcakejo@gmail.com"
+EMAIL_TO="caramelcakejo@gmail.com"
 
 # Application URL
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
@@ -91,6 +94,7 @@ After setup, verify everything works:
 - Use Stripe CLI for local testing
 
 ### Email Issues
-- Verify Resend API key is correct
-- Check domain verification (for production)
-- Use test mode for development
+- Verify Gmail App Password is correct (not your regular password!)
+- Enable 2-Step Verification on Gmail account first (required for App Passwords)
+- Create App Password: https://myaccount.google.com/apppasswords
+- Check Gmail daily sending limits (~500/day for personal accounts)

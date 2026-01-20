@@ -51,6 +51,7 @@ STOP       # Emergency help
 
 ### Tier 3: Development
 ```bash
+/start     # Complete dev environment setup
 /server    # Fresh dev server
 /debug     # Open browser
 /archive   # Force cleanup
@@ -80,6 +81,11 @@ STOP       # Emergency help
 /init → /server → /next → /debug → /verify → /commit → /save
 ```
 **Time:** 5-10 min | **Tokens:** ~3.4K
+
+**Quick Start:**
+```bash
+/start     # One command = full dev environment ready
+```
 
 ## 🤝 When Stuck Workflow
 

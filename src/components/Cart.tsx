@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useCart } from '@/contexts/CartContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
+import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/productTranslations'
 import Link from 'next/link'
 
 export default function Cart() {
   const { items, removeItem, updateQuantity, getTotalAmount, getDepositAmount, getRemainingAmount } = useCart()
+  const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const isMenuPage = pathname === '/menu'
@@ -54,7 +57,7 @@ export default function Cart() {
           {/* Cart Header */}
           <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-serif text-warmgray-800">Shopping Cart</h2>
+              <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-warmgray-400 hover:text-warmgray-600 transition-colors"
@@ -75,7 +78,7 @@ export default function Cart() {
           {/* Cart Items */}
           {items.length === 0 ? (
             <div className="px-6 py-8 flex-shrink-0">
-              <p className="text-warmgray-600 text-center">Your cart is empty</p>
+              <p className="text-warmgray-600 text-center">{t('cart.empty')}</p>
             </div>
           ) : (
             <div className="flex flex-col" style={{ flex: '1 1 auto', minHeight: 0 }}>
@@ -85,15 +88,23 @@ export default function Cart() {
                 <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex items-start gap-4 pb-4 border-b border-warmgray-100 last:border-0">
                   <div className="flex-1">
                     <h3 className="text-sm font-medium text-warmgray-800 mb-1">
-                      {item.productName}
+                      {(() => {
+                        const translationKey = productNameToTranslationKey[item.productName] || item.productName
+                        return translationKey.startsWith('product.') ? t(translationKey as any) : item.productName
+                      })()}
                     </h3>
                     {item.variantName && (
                       <p className="text-xs text-warmgray-500 mb-1">
-                        {item.variantName}
+                        {(() => {
+                          const translationKey = getVariantTranslationKey(item.variantName)
+                          return translationKey.startsWith('variant.') || translationKey.startsWith('product.') 
+                            ? t(translationKey as any) 
+                            : item.variantName
+                        })()}
                       </p>
                     )}
                     <p className="text-xs text-warmgray-600 mb-2">
-                      {formatCurrency(item.unitPrice)} each
+                      {formatCurrency(item.unitPrice)} {t('cart.each')}
                     </p>
                     <div className="flex items-center gap-2">
                       <button
@@ -131,7 +142,7 @@ export default function Cart() {
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
-                      Remove
+                      {t('cart.remove')}
                     </button>
                   </div>
                 </div>
@@ -142,15 +153,15 @@ export default function Cart() {
                 <div className="px-6 py-4 border-t border-warmgray-200 bg-cream-50/50 flex-shrink-0">
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
-                    <span className="text-warmgray-600">Total:</span>
+                    <span className="text-warmgray-600">{t('cart.total')}</span>
                     <span className="font-medium text-warmgray-800">{formatCurrency(totalAmount)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-warmgray-600">Deposit (50%):</span>
+                    <span className="text-warmgray-600">{t('cart.deposit')}</span>
                     <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
                   </div>
                   <div className="flex justify-between text-xs text-warmgray-500">
-                    <span>Remaining (due at pickup):</span>
+                    <span>{t('cart.remaining')}</span>
                     <span>{formatCurrency(remainingAmount)}</span>
                   </div>
                   </div>
@@ -171,7 +182,7 @@ export default function Cart() {
                   opacity: '1'
                 }}
               >
-                Checkout
+                {t('cart.checkout')}
               </Link>
               </div>
             </div>
@@ -207,7 +218,7 @@ export default function Cart() {
         </button>
         {isOpen && (
           <div className="absolute bottom-full right-0 mb-2 w-80 bg-white rounded-lg shadow-xl p-6">
-            <p className="text-warmgray-600 text-center py-8">Your cart is empty</p>
+            <p className="text-warmgray-600 text-center py-8">{t('cart.empty')}</p>
           </div>
         )}
       </div>
@@ -245,7 +256,7 @@ export default function Cart() {
           {/* Cart Header */}
           <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-serif text-warmgray-800">Shopping Cart</h2>
+              <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-warmgray-400 hover:text-warmgray-600 transition-colors"
@@ -271,15 +282,22 @@ export default function Cart() {
                   <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex items-start gap-4 pb-4 border-b border-warmgray-100 last:border-0">
                     <div className="flex-1">
                       <h3 className="text-sm font-medium text-warmgray-800 mb-1">
-                        {item.productName}
+                        {(() => {
+                          const translationKey = productNameToTranslationKey[item.productName] || item.productName
+                          return translationKey.startsWith('product.') ? t(translationKey as any) : item.productName
+                        })()}
                       </h3>
                       {item.variantName && (
                         <p className="text-xs text-warmgray-500 mb-1">
-                          {item.variantName}
+                          {(() => {
+                            // If variant name matches a product translation key, translate it
+                            const variantTranslationKey = productNameToTranslationKey[item.variantName] || item.variantName
+                            return variantTranslationKey.startsWith('product.') ? t(variantTranslationKey as any) : item.variantName
+                          })()}
                         </p>
                       )}
                       <p className="text-xs text-warmgray-600 mb-2">
-                        {formatCurrency(item.unitPrice)} each
+                        {formatCurrency(item.unitPrice)} {t('cart.each')}
                       </p>
                       <div className="flex items-center gap-2">
                         <button
@@ -317,7 +335,7 @@ export default function Cart() {
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
-                        Remove
+                        {t('cart.remove')}
                       </button>
                     </div>
                   </div>
@@ -327,18 +345,18 @@ export default function Cart() {
             {/* Cart Summary - Always visible */}
             <div className="px-6 py-4 border-t border-warmgray-200 bg-cream-50/50 flex-shrink-0">
               <div className="space-y-2 mb-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-warmgray-600">Total:</span>
-                  <span className="font-medium text-warmgray-800">{formatCurrency(totalAmount)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-warmgray-600">Deposit (50%):</span>
-                  <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
-                </div>
-                <div className="flex justify-between text-xs text-warmgray-500">
-                  <span>Remaining (due at pickup):</span>
-                  <span>{formatCurrency(remainingAmount)}</span>
-                </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-warmgray-600">{t('cart.total')}</span>
+                    <span className="font-medium text-warmgray-800">{formatCurrency(totalAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-warmgray-600">{t('cart.deposit')}</span>
+                    <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-warmgray-500">
+                    <span>{t('cart.remaining')}</span>
+                    <span>{formatCurrency(remainingAmount)}</span>
+                  </div>
               </div>
               <Link
                 href="/checkout"
@@ -351,7 +369,7 @@ export default function Cart() {
                   lineHeight: '44px'
                 }}
               >
-                Checkout
+                {t('cart.checkout')}
               </Link>
             </div>
           </div>

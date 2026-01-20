@@ -37,11 +37,20 @@ export async function POST(request: NextRequest) {
 
     // Handle payment intent succeeded (deposit paid successfully)
     if (event.type === 'payment_intent.succeeded') {
+      console.log('📥 Received payment_intent.succeeded webhook')
       const paymentIntent = event.data.object as Stripe.PaymentIntent
       const orderId = paymentIntent.metadata.orderId
 
+      console.log('📦 Payment Intent details:', {
+        id: paymentIntent.id,
+        amount: paymentIntent.amount,
+        status: paymentIntent.status,
+        orderId,
+        metadata: paymentIntent.metadata,
+      })
+
       if (!orderId) {
-        console.error('Order ID missing from payment intent metadata', {
+        console.error('❌ Order ID missing from payment intent metadata', {
           paymentIntentId: paymentIntent.id,
           metadata: paymentIntent.metadata,
         })
@@ -49,6 +58,23 @@ export async function POST(request: NextRequest) {
       }
 
       try {
+        // First, check if order already has deposit paid (idempotency check)
+        const existingOrder = await prisma.order.findUnique({
+          where: { id: orderId },
+          select: { depositPaid: true, orderNumber: true },
+        })
+
+        if (!existingOrder) {
+          console.error(`❌ Order not found: ${orderId}`)
+          return NextResponse.json({ error: 'Order not found' }, { status: 404 })
+        }
+
+        // If deposit already paid, this is a duplicate webhook - skip email sending
+        if (existingOrder.depositPaid) {
+          console.log(`⚠️ Order ${existingOrder.orderNumber} already has deposit paid - skipping email sending (idempotency)`)
+          return NextResponse.json({ success: true, orderId, message: 'Order already processed' })
+        }
+
         // Update order status
         const order = await prisma.order.update({
           where: { id: orderId },
@@ -63,15 +89,34 @@ export async function POST(request: NextRequest) {
         })
 
         // Send confirmation emails asynchronously (don't wait for completion)
+        // Only sent once because we checked depositPaid above
         Promise.all([
           sendOrderConfirmationEmail(order),
           sendOrderNotificationEmail(order),
-        ]).catch((error) => {
-          console.error('Error sending confirmation emails:', error)
-          // Log but don't fail the webhook
-        })
+        ])
+          .then((results) => {
+            const customerResult = results[0]
+            const vendorResult = results[1]
+            
+            if (customerResult.success && vendorResult.success) {
+              console.log(`✅ All emails sent successfully for order ${order.orderNumber}`)
+            } else {
+              console.error(`⚠️ Email sending completed with errors for order ${order.orderNumber}:`, {
+                customerEmail: customerResult.success ? '✅' : `❌ ${customerResult.error}`,
+                vendorEmail: vendorResult.success ? '✅' : `❌ ${vendorResult.error}`,
+              })
+            }
+          })
+          .catch((error) => {
+            console.error('❌ Fatal error sending confirmation emails:', error)
+            console.error('Error details:', {
+              message: error instanceof Error ? error.message : 'Unknown error',
+              stack: error instanceof Error ? error.stack : undefined,
+            })
+            // Log but don't fail the webhook
+          })
 
-        console.log(`Order ${order.orderNumber} confirmed - deposit paid`)
+        console.log(`✅ Order ${order.orderNumber} confirmed - deposit paid`)
         return NextResponse.json({ success: true, orderId: order.id })
       } catch (dbError) {
         console.error('Database error updating order:', dbError)
