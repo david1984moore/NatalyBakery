@@ -18,8 +18,8 @@ export default function ProductCard({ name, image, href }: ProductCardProps) {
   const translatedName = translationKey.startsWith('product.') ? t(translationKey as any) : name
 
   return (
-    <Link href={productUrl}>
-      <div className="group relative rounded-md overflow-hidden border border-white/60 hover:border-white/80 hover:scale-105 hover:shadow-md transition-all duration-300 shadow-sm cursor-pointer">
+    <Link href={productUrl} className="w-full max-w-[100px] sm:max-w-[120px] md:max-w-[130px] lg:max-w-[140px]">
+      <div className="group relative rounded-md overflow-hidden border border-white/60 hover:border-white/80 hover:scale-105 hover:shadow-md transition-all duration-300 shadow-sm cursor-pointer w-full">
         {/* Product Image */}
         <div className="relative aspect-[3/4] w-full bg-white/90 backdrop-blur-sm">
           <Image
