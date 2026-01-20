@@ -28,8 +28,8 @@ export default function Navigation() {
             key={link.labelKey}
             href={link.href}
             data-nav-link
-            className="text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-all duration-200 font-brand-tangerine tracking-wide"
-            style={{ fontFamily: 'var(--font-tangerine)' }}
+            className="text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-all duration-200 font-nav-lora tracking-wide"
+            style={{ fontFamily: 'var(--font-lora)' }}
           >
             {t(link.labelKey)}
           </Link>
@@ -83,8 +83,8 @@ export default function Navigation() {
               href={link.href}
               onClick={() => setIsOpen(false)}
               data-nav-link
-              className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-all duration-200 font-light text-sm font-brand-tangerine"
-              style={{ fontFamily: 'var(--font-tangerine)' }}
+              className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-all duration-200 font-light text-sm font-nav-lora"
+              style={{ fontFamily: 'var(--font-lora)' }}
             >
               {t(link.labelKey)}
             </Link>
