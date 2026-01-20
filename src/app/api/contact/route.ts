@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Send email notification
-    const emailResult = await sendContactEmail(name, email, phone, subject, message)
+    const emailResult = await sendContactEmail(name, email, phone || null, subject, message)
 
     if (!emailResult.success) {
       console.error('Email sending failed:', emailResult.error)

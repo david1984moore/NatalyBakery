@@ -38,10 +38,8 @@ import {
   Coming_Soon,
   Covered_By_Your_Grace,
   Rock_Salt,
-  Swanky_and_Moo_Moo,
   Kalam,
-  Reenie_Beanie,
-  Over_the_Rainbow
+  Reenie_Beanie
 } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/contexts/CartContext'
@@ -308,13 +306,6 @@ const rockSalt = Rock_Salt({
   display: 'swap',
 })
 
-const swankyAndMooMoo = Swanky_and_Moo_Moo({
-  subsets: ['latin'],
-  variable: '--font-swanky',
-  weight: ['400'],
-  display: 'swap',
-})
-
 const kalam = Kalam({
   subsets: ['latin'],
   variable: '--font-kalam',
@@ -325,13 +316,6 @@ const kalam = Kalam({
 const reenieBeanie = Reenie_Beanie({
   subsets: ['latin'],
   variable: '--font-reeniebeanie',
-  weight: ['400'],
-  display: 'swap',
-})
-
-const overTheRainbow = Over_the_Rainbow({
-  subsets: ['latin'],
-  variable: '--font-overtherainbow',
   weight: ['400'],
   display: 'swap',
 })
@@ -386,10 +370,8 @@ export default function RootLayout({
       ${comingSoon.variable}
       ${coveredByYourGrace.variable}
       ${rockSalt.variable}
-      ${swankyAndMooMoo.variable}
       ${kalam.variable}
       ${reenieBeanie.variable}
-      ${overTheRainbow.variable}
     `}>
       <body>
         <LanguageProvider>

@@ -124,7 +124,7 @@ export default function CheckoutPage() {
       console.log('📦 Response data', data)
 
       if (!response.ok || !data.success) {
-        const errorMessage = data.error || data.message || 'Checkout failed. Please try again.'
+        const errorMessage = data.error || 'Checkout failed. Please try again.'
         console.error('❌ Checkout failed', errorMessage, data)
         throw new Error(errorMessage)
       }
