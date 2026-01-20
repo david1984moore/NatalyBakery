@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@/lib/prisma'
 import { sendContactEmail } from '@/lib/email'
+
+// Force dynamic rendering - prevents Next.js from trying to analyze this route during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 // Validation schema for contact form
 const contactSchema = z.object({
@@ -14,6 +17,9 @@ const contactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Import prisma dynamically to avoid build-time connection
+    const { prisma } = await import('@/lib/prisma')
+
     const body = await request.json()
 
     // Validate request body

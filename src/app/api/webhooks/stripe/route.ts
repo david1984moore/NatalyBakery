@@ -1,11 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { prisma } from '@/lib/prisma'
 import { sendOrderConfirmationEmail, sendOrderNotificationEmail } from '@/lib/email'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-})
+// Force dynamic rendering - prevents Next.js from trying to analyze this route during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
+// Initialize Stripe lazily to avoid connection during build
+let stripeInstance: Stripe | null = null
+
+function getStripe(): Stripe {
+  if (!stripeInstance) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('STRIPE_SECRET_KEY is not configured')
+    }
+    stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2025-02-24.acacia',
+    })
+  }
+  return stripeInstance
+}
 
 // This endpoint handles Stripe webhook events
 export async function POST(request: NextRequest) {
@@ -25,10 +39,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 })
     }
 
+    // Import prisma dynamically to avoid build-time connection
+    const { prisma } = await import('@/lib/prisma')
+
     // Verify webhook signature
     let event: Stripe.Event
     try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+      event = getStripe().webhooks.constructEvent(body, signature, webhookSecret)
     } catch (err) {
       const error = err instanceof Error ? err.message : 'Unknown error'
       console.error('Webhook signature verification failed:', error)

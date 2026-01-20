@@ -1,13 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { z } from 'zod'
-import { prisma } from '@/lib/prisma'
 import { generateOrderNumber, calculateDeposit } from '@/lib/utils'
 import { sendOrderConfirmationEmail, sendOrderNotificationEmail } from '@/lib/email'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-})
+// Force dynamic rendering - prevents Next.js from trying to analyze this route during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
+// Initialize Stripe lazily to avoid connection during build
+let stripeInstance: Stripe | null = null
+
+function getStripe(): Stripe {
+  if (!stripeInstance) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('STRIPE_SECRET_KEY is not configured')
+    }
+    stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2025-02-24.acacia',
+    })
+  }
+  return stripeInstance
+}
 
 // Validation schema for checkout
 const checkoutSchema = z.object({
@@ -92,6 +106,9 @@ export async function POST(request: NextRequest) {
     // Generate order number
     const orderNumber = generateOrderNumber()
 
+    // Import prisma dynamically to avoid build-time connection
+    const { prisma } = await import('@/lib/prisma')
+
     // Create order in database (before payment)
     let order
     try {
@@ -140,7 +157,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create Stripe payment intent (50% deposit only)
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await getStripe().paymentIntents.create({
       amount: Math.round(depositAmount * 100), // Convert to cents
       currency: 'usd',
       metadata: {
