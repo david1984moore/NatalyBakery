@@ -6,7 +6,7 @@ import { generateOrderNumber, calculateDeposit } from '@/lib/utils'
 import { sendOrderConfirmationEmail, sendOrderNotificationEmail } from '@/lib/email'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia',
+  apiVersion: '2025-02-24.acacia',
 })
 
 // Validation schema for checkout

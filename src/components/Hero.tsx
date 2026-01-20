@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import ProductCard from './ProductCard'
-import FontSwitcher from './FontSwitcher'
 import { products } from '@/data/products'
 
 export default function Hero() {
@@ -19,9 +18,6 @@ export default function Hero() {
         {/* Light overlay - minimal for visibility */}
         <div className="absolute inset-0 bg-black/10" />
       </div>
-
-      {/* Font Switcher */}
-      <FontSwitcher />
 
       {/* Hero Content - All visible in viewport */}
       <div className="relative z-10 max-w-7xl mx-auto pl-0 pr-4 sm:pr-6 lg:pr-8 w-full h-full flex flex-col justify-between py-6 md:py-8 lg:py-10">

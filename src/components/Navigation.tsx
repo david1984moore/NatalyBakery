@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from './LanguageToggle'
-import NavFontSwitcher from './NavFontSwitcher'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -59,7 +58,6 @@ export default function Navigation() {
           </Link>
         ))}
         <LanguageToggle />
-        <NavFontSwitcher />
       </div>
 
       {/* Mobile Menu Button */}
