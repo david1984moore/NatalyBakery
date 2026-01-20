@@ -13,6 +13,8 @@ const nextConfig = {
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
+  // Ensure Prisma client is treated as external during build
+  serverExternalPackages: ['@prisma/client'],
 }
 
 module.exports = nextConfig
