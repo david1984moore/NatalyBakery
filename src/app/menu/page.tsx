@@ -69,7 +69,8 @@ function MenuPageContent() {
       const activeContainer = isMobile ? mobileContainer : desktopContainer
       
       if (activeContainer) {
-        scrollContainerRef.current = activeContainer
+        // Type assertion to allow assignment to ref
+        ;(scrollContainerRef as React.MutableRefObject<HTMLDivElement | null>).current = activeContainer
         checkScrollPosition()
       }
     }
