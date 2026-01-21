@@ -17,6 +17,7 @@ export type TranslationKey =
   | 'cart.remaining'
   | 'cart.remainingDue'
   | 'cart.checkout'
+  | 'cart.continueShopping'
   | 'cart.remove'
   | 'cart.each'
   | 'cart.qty'
@@ -127,6 +128,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'cart.remaining': 'Remaining (due at pickup):',
     'cart.remainingDue': 'Remaining (due at pickup)',
     'cart.checkout': 'Checkout',
+    'cart.continueShopping': 'Continue Shopping',
     'cart.remove': 'Remove',
     'cart.each': 'each',
     'cart.qty': 'Qty:',
@@ -236,6 +238,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'cart.remaining': 'Restante (pagar al recoger):',
     'cart.remainingDue': 'Restante (pagar al recoger)',
     'cart.checkout': 'Finalizar Compra',
+    'cart.continueShopping': 'Seguir Comprando',
     'cart.remove': 'Eliminar',
     'cart.each': 'cada uno',
     'cart.qty': 'Cantidad:',

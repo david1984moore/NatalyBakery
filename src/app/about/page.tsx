@@ -9,31 +9,31 @@ export default function AboutPage() {
   const { t } = useLanguage()
   
   return (
-    <main className="h-screen overflow-hidden bg-cream-50/30">
+    <main className="min-h-screen bg-cream-50/30">
       <Navigation />
       
       {/* Home Button */}
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-3 sm:top-4 left-3 sm:left-4 z-50 safe-left safe-top">
         <Link
           href="/"
-          className="flex-shrink-0 px-3 py-1.5"
+          className="flex-shrink-0 px-2 sm:px-3 py-1.5"
           aria-label="Home"
         >
-          <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
+          <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
         </Link>
       </div>
       
       <div className="h-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16 flex items-center">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-center">
           {/* Professional Photo */}
-          <div className="order-2 lg:order-1 h-full flex items-center justify-center">
+          <div className="order-2 md:order-1 h-full flex items-center justify-center">
             <div className="relative w-full max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden border border-white/60 shadow-lg">
               <Image
                 src="/Images/IMG_5754.jpeg"
                 alt="Nataly Hernandez"
                 fill
                 className="object-cover"
-                priority
+                loading="lazy"
                 quality={90}
               />
             </div>

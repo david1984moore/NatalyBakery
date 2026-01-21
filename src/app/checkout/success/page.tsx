@@ -3,7 +3,9 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useCart } from '@/contexts/CartContext'
 import LanguageToggle from '@/components/LanguageToggle'
+import Cart from '@/components/Cart'
 import Link from 'next/link'
 
 interface OrderData {
@@ -25,10 +27,12 @@ function SuccessPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { t } = useLanguage()
+  const { items } = useCart()
   const orderId = searchParams.get('orderId')
   const orderNumber = searchParams.get('orderNumber')
   const [orderData, setOrderData] = useState<OrderData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   useEffect(() => {
     if (!orderId) {
@@ -45,7 +49,7 @@ function SuccessPageContent() {
     return (
       <div className="min-h-screen bg-cream-50/30 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-warmgray-800 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-2 border-warmgray-200 border-t-warmgray-800 mx-auto mb-4 will-change-transform"></div>
           <p className="text-warmgray-600">{t('success.loadingOrder')}</p>
         </div>
       </div>
@@ -54,29 +58,55 @@ function SuccessPageContent() {
 
   return (
     <div className="min-h-screen bg-cream-50/30">
-      {/* Navigation Bar - Fixed at top */}
+      <Cart />
+      {/* Navigation Bar - Fixed at top with uniform format */}
       <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Home Button */}
           <Link
             href="/"
-            className="px-3 py-1.5"
+            className="flex-shrink-0 px-2 sm:px-3 py-1.5"
+            aria-label="Home"
           >
-            <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
           </Link>
           
-          <div className="flex items-center gap-3">
-            <Link
-              href="/menu"
-              className="px-4 py-1.5 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-200 text-sm font-medium"
-            >
-              {t('nav.shop')}
-            </Link>
+          {/* Language Toggle and Cart Button */}
+          <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
             <LanguageToggle variant="menu" />
+            <div className="relative">
+              <button
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('cart:toggle'))
+                }}
+                className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  className="w-5 h-5 text-warmgray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                    {itemCount}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="pt-20 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="pt-16 sm:pt-20 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           <div className="bg-white rounded-lg shadow-sm p-8 text-center">
             {/* Success Icon */}
@@ -165,7 +195,7 @@ export default function SuccessPage() {
       fallback={
         <div className="min-h-screen bg-cream-50/30 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-warmgray-800 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-2 border-warmgray-200 border-t-warmgray-800 mx-auto mb-4 will-change-transform"></div>
             <p className="text-warmgray-600">Loading...</p>
           </div>
         </div>

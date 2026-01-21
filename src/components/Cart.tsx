@@ -14,6 +14,8 @@ export default function Cart() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const isMenuPage = pathname === '/menu'
+  const isContactPage = pathname === '/contact'
+  const isCheckoutPage = pathname === '/checkout' || pathname?.startsWith('/checkout/')
 
   const totalAmount = getTotalAmount()
   const depositAmount = getDepositAmount()
@@ -30,37 +32,37 @@ export default function Cart() {
     })
   }
 
-  // Listen for cart toggle from menu page navigation bar
+  // Listen for cart toggle from menu page, contact page, or checkout pages navigation bar
   useEffect(() => {
-    if (isMenuPage) {
+    if (isMenuPage || isContactPage || isCheckoutPage) {
       const handleCartToggle = () => {
         setIsOpen((prev) => !prev)
       }
       
-      // Listen for custom event from menu page
+      // Listen for custom event from menu page, contact page, or checkout pages
       window.addEventListener('cart:toggle', handleCartToggle)
       
       return () => {
         window.removeEventListener('cart:toggle', handleCartToggle)
       }
     }
-  }, [isMenuPage])
+  }, [isMenuPage, isContactPage, isCheckoutPage])
 
-  // Don't render floating button on menu page (it's in the nav bar)
-  if (isMenuPage) {
+  // Don't render floating button on menu page, contact page, or checkout pages (it's in the nav bar)
+  if (isMenuPage || isContactPage || isCheckoutPage) {
     // Render only the dropdown positioned from top-right
     if (!isOpen) return null
     
     return (
-      <div className="fixed top-16 right-4 z-[99]">
-        <div className="w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 5rem)' }}>
+      <div className="fixed top-16 right-2 sm:right-4 z-[99] safe-right">
+        <div className="w-[calc(100vw-1rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 5rem)' }}>
           {/* Cart Header */}
           <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-warmgray-400 hover:text-warmgray-600 transition-colors"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors"
                 aria-label="Close cart"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,10 +111,10 @@ export default function Cart() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => updateQuantity(item.productName, item.quantity - 1, item.variantName)}
-                        className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
+                        className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
                         aria-label="Decrease quantity"
                       >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                         </svg>
                       </button>
@@ -121,10 +123,10 @@ export default function Cart() {
                       </span>
                       <button
                         onClick={() => updateQuantity(item.productName, item.quantity + 1, item.variantName)}
-                        className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
+                        className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
                         aria-label="Increase quantity"
                       >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
                       </button>
@@ -136,7 +138,7 @@ export default function Cart() {
                     </p>
                     <button
                       onClick={() => removeItem(item.productName, item.variantName)}
-                      className="flex items-center gap-1 text-xs text-red-500 hover:text-red-700 transition-colors font-medium"
+                      className="min-h-[44px] flex items-center gap-1 px-2 py-2 text-xs text-red-500 hover:text-red-700 transition-colors font-medium"
                       aria-label="Remove item"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,25 +167,34 @@ export default function Cart() {
                     <span>{formatCurrency(remainingAmount)}</span>
                   </div>
                   </div>
-                <Link
-                href="/checkout"
-                onClick={() => setIsOpen(false)}
-                className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg relative z-10"
-                style={{ 
-                  display: 'block !important',
-                  width: '100%',
-                  minHeight: '44px',
-                  height: 'auto',
-                  padding: '12px',
-                  backgroundColor: '#1f2937',
-                  color: '#ffffff',
-                  textDecoration: 'none',
-                  visibility: 'visible',
-                  opacity: '1'
-                }}
-              >
-                {t('cart.checkout')}
-              </Link>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href="/menu"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-2.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
+                  >
+                    {t('cart.continueShopping')}
+                  </Link>
+                  <Link
+                    href="/checkout"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg relative z-10"
+                    style={{ 
+                      display: 'block !important',
+                      width: '100%',
+                      minHeight: '44px',
+                      height: 'auto',
+                      padding: '12px',
+                      backgroundColor: '#1f2937',
+                      color: '#ffffff',
+                      textDecoration: 'none',
+                      visibility: 'visible',
+                      opacity: '1'
+                    }}
+                  >
+                    {t('cart.checkout')}
+                  </Link>
+                </div>
               </div>
             </div>
           )}
@@ -195,11 +206,11 @@ export default function Cart() {
   // Render floating button for other pages
   if (items.length === 0) {
     return (
-      <div className="fixed bottom-4 right-4 z-50">
+      <div className="fixed bottom-4 right-4 z-50 safe-bottom safe-right">
         <button
           onClick={() => setIsOpen(!isOpen)}
           data-cart-toggle
-          className="bg-white/95 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white transition-colors duration-200"
+          className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-200"
           aria-label="Shopping cart"
         >
           <svg
@@ -217,7 +228,7 @@ export default function Cart() {
           </svg>
         </button>
         {isOpen && (
-          <div className="absolute bottom-full right-0 mb-2 w-80 bg-white rounded-lg shadow-xl p-6">
+          <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 bg-white rounded-lg shadow-xl p-6">
             <p className="text-warmgray-600 text-center py-8">{t('cart.empty')}</p>
           </div>
         )}
@@ -230,7 +241,7 @@ export default function Cart() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         data-cart-toggle
-        className="bg-white/95 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white transition-colors duration-200 relative"
+        className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-200 relative"
         aria-label="Shopping cart"
       >
         <svg
@@ -252,14 +263,14 @@ export default function Cart() {
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-full right-0 mb-2 w-80 md:w-96 bg-white rounded-lg shadow-xl flex flex-col" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
+        <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl flex flex-col" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
           {/* Cart Header */}
           <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-warmgray-400 hover:text-warmgray-600 transition-colors"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors"
                 aria-label="Close cart"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,10 +313,10 @@ export default function Cart() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(item.productName, item.quantity - 1, item.variantName)}
-                          className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
+                          className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
                           aria-label="Decrease quantity"
                         >
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                           </svg>
                         </button>
@@ -314,10 +325,10 @@ export default function Cart() {
                         </span>
                         <button
                           onClick={() => updateQuantity(item.productName, item.quantity + 1, item.variantName)}
-                          className="w-6 h-6 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
+                          className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded hover:bg-warmgray-100 transition-colors"
                           aria-label="Increase quantity"
                         >
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                           </svg>
                         </button>
@@ -358,19 +369,28 @@ export default function Cart() {
                     <span>{formatCurrency(remainingAmount)}</span>
                   </div>
               </div>
-              <Link
-                href="/checkout"
-                onClick={() => setIsOpen(false)}
-                className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg"
-                style={{ 
-                  display: 'block',
-                  width: '100%',
-                  minHeight: '44px',
-                  lineHeight: '44px'
-                }}
-              >
-                {t('cart.checkout')}
-              </Link>
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/menu"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-2.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
+                >
+                  {t('cart.continueShopping')}
+                </Link>
+                <Link
+                  href="/checkout"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg"
+                  style={{ 
+                    display: 'block',
+                    width: '100%',
+                    minHeight: '44px',
+                    lineHeight: '44px'
+                  }}
+                >
+                  {t('cart.checkout')}
+                </Link>
+              </div>
             </div>
           </div>
         </div>

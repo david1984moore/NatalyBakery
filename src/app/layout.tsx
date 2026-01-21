@@ -323,6 +323,12 @@ const reenieBeanie = Reenie_Beanie({
 export const metadata: Metadata = {
   title: "Caramel & Jo - Artisan Baked Goods Made with Love",
   description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes. Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, Conchas, and more.',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
 }
 
 export default function RootLayout({

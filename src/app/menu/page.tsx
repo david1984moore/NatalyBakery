@@ -147,25 +147,36 @@ function MenuPageContent() {
 
   return (
     <div className="h-screen bg-cream-50/30 flex flex-col overflow-hidden relative">
-      {/* Product Navigation Bar - Fixed at top - Always visible */}
+        {/* Product Navigation Bar - Fixed at top - Always visible */}
       <div 
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm py-4 border-b border-warmgray-200 shadow-sm"
+        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm py-4 border-b border-warmgray-200 shadow-sm flex items-center"
         style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}
       >
         {/* Home Button - Positioned on far left, outside centered container */}
         <Link
           href="/"
-          className="fixed left-4 sm:left-6 lg:left-8 top-4 flex-shrink-0 px-3 py-1.5 z-20"
+          className="fixed left-3 sm:left-4 md:left-6 lg:left-8 flex-shrink-0 px-2 sm:px-3 py-1.5 z-20 safe-left flex items-center h-full"
           aria-label="Home"
+          style={{ top: '50%', transform: 'translateY(-50%)' }}
         >
-          <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
+          <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
         </Link>
         
         {/* Centered container for scrollable product list */}
-        <div className="max-w-7xl mx-auto px-10 sm:px-12 lg:px-14 flex items-center gap-3 relative">
+        <div className="max-w-7xl mx-auto px-10 sm:px-12 lg:px-14 flex items-center gap-3 relative h-full flex-1">
+          {/* Left scroll indicator */}
+          {canScrollLeft && (
+            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
+          )}
+          
+          {/* Right scroll indicator */}
+          {canScrollRight && (
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
+          )}
+          
           <div 
             ref={scrollContainerRef}
-            className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden" 
+            className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll" 
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {products.map((product) => {
@@ -177,7 +188,7 @@ function MenuPageContent() {
                 <button
                   key={product.name}
                   onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                  className={`flex-shrink-0 min-h-[44px] px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
                     isSelected
                       ? 'bg-gray-800 text-white shadow-md font-semibold'  // Selected: dark background, white text, shadow
                       : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
@@ -191,14 +202,14 @@ function MenuPageContent() {
         </div>
         
         {/* Language Toggle and Cart Button - Positioned on far right, outside centered container */}
-        <div className="fixed right-4 sm:right-6 lg:right-8 top-4 flex items-center gap-6 flex-shrink-0 z-20">
+        <div className="fixed right-3 sm:right-4 md:right-6 lg:right-8 flex items-center gap-3 sm:gap-6 flex-shrink-0 z-20 safe-right" style={{ top: '50%', transform: 'translateY(-50%)' }}>
           <LanguageToggle variant="menu" />
           <div className="relative">
             <button
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="bg-white/95 backdrop-blur-sm rounded-full p-2.5 shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
               aria-label="Shopping cart"
             >
               <svg
@@ -229,22 +240,38 @@ function MenuPageContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-warmgray-800 mx-auto mb-4"></div>
-                <p className="text-warmgray-600">{t('menu.loading')}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">
+                {/* Skeleton Image */}
+                <div className="relative aspect-[3/4] w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto rounded-lg overflow-hidden bg-warmgray-200 animate-pulse">
+                  <div className="absolute inset-0 bg-gradient-to-br from-warmgray-200 via-warmgray-100 to-warmgray-200"></div>
+                </div>
+                
+                {/* Skeleton Content */}
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="h-8 bg-warmgray-200 rounded animate-pulse w-3/4"></div>
+                    <div className="h-4 bg-warmgray-100 rounded animate-pulse w-full"></div>
+                    <div className="h-4 bg-warmgray-100 rounded animate-pulse w-5/6"></div>
+                  </div>
+                  <div className="h-24 bg-warmgray-100 rounded animate-pulse"></div>
+                  <div className="h-12 bg-warmgray-200 rounded animate-pulse w-1/2"></div>
+                </div>
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center h-full w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center h-full w-full max-h-full">
             {/* Product Image */}
-            <div className="relative aspect-[3/4] w-full max-w-xs mx-auto rounded-lg overflow-hidden border border-white/60 shadow-lg">
-              <Image
-                src={featuredProduct.image}
-                alt={featuredProduct.name}
-                fill
-                className="object-cover"
-                priority
-              />
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto rounded-lg overflow-hidden border border-white/60 shadow-lg" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
+              <div className="relative w-full" style={{ aspectRatio: '3/4', maxHeight: 'calc(100vh - 8rem)' }}>
+                <Image
+                  src={featuredProduct.image}
+                  alt={featuredProduct.name}
+                  fill
+                  className="object-contain"
+                  priority
+                  sizes="(max-width: 768px) 300px, 400px"
+                />
+              </div>
             </div>
 
             {/* Product Details */}
@@ -273,7 +300,7 @@ function MenuPageContent() {
                     {featuredProduct.variants.map((variant) => (
                       <label
                         key={variant.id}
-                        className={`flex items-center gap-2 p-2 border rounded-md cursor-pointer transition-colors ${
+                        className={`flex items-center gap-2 min-h-[44px] p-3 sm:p-2 border rounded-md cursor-pointer transition-colors ${
                           selectedVariant.id === variant.id
                             ? 'border-warmgray-800 bg-cream-50'
                             : 'border-warmgray-300 hover:border-warmgray-400'
@@ -331,11 +358,11 @@ function MenuPageContent() {
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="w-8 h-8 flex items-center justify-center border border-warmgray-300 rounded-md hover:bg-warmgray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded-md hover:bg-warmgray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     aria-label="Decrease quantity"
                     disabled={featuredProduct.minQuantity ? quantity <= featuredProduct.minQuantity : quantity <= 1}
                   >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                     </svg>
                   </button>
@@ -348,14 +375,14 @@ function MenuPageContent() {
                       const val = parseInt(e.target.value) || (featuredProduct.minQuantity || 1)
                       setQuantity(Math.max(featuredProduct.minQuantity || 1, val))
                     }}
-                    className="w-16 text-center border border-warmgray-300 rounded-md py-1 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300"
+                    className="w-16 text-center border border-warmgray-300 rounded-md py-2 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-pink-300"
                   />
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="w-8 h-8 flex items-center justify-center border border-warmgray-300 rounded-md hover:bg-warmgray-100 transition-colors"
+                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded-md hover:bg-warmgray-100 transition-colors"
                     aria-label="Increase quantity"
                   >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
                   </button>
@@ -382,7 +409,7 @@ function MenuPageContent() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedVariant}
-                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-sm"
+                  className="w-full min-h-[44px] px-4 py-3 sm:py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
                 >
                   {t('menu.addToCart')}
                 </button>
@@ -403,9 +430,11 @@ export default function MenuPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-cream-50/30 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-warmgray-800 mx-auto mb-4"></div>
-            <p className="text-warmgray-600">Loading...</p>
+          <div className="text-center space-y-4">
+            <div className="relative">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-warmgray-200 border-t-warmgray-800 mx-auto"></div>
+            </div>
+            <p className="text-warmgray-600 animate-pulse">Loading...</p>
           </div>
         </div>
       }

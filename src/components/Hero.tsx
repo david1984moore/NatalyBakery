@@ -23,7 +23,7 @@ export default function Hero() {
       <div className="relative z-10 w-full h-full flex flex-col justify-between py-6 md:py-8 lg:py-10 px-4 sm:px-6 lg:px-8">
         {/* Top Section - Brand Name */}
         <div className="flex-shrink-0 font-brand-tangerine" id="brand-name-wrapper">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] font-bold text-white leading-tight mb-2 md:mb-3 text-hero-brand">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold text-white leading-tight mb-2 md:mb-3 text-hero-brand">
             Caramel & Jo
           </h1>
         </div>
@@ -32,7 +32,7 @@ export default function Hero() {
         <div className="flex-shrink-0 w-full px-0">
           {/* Product Grid - Centered and fully visible */}
           <div className="max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-3 lg:gap-4 justify-items-center items-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2 md:gap-3 lg:gap-4 justify-items-center items-stretch">
               {products.map((product) => (
                 <ProductCard
                   key={product.name}

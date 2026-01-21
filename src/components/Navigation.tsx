@@ -20,7 +20,7 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="fixed top-0 right-0 z-50 px-6 md:px-8 py-6 md:py-8">
+    <nav className="fixed top-0 right-0 z-50 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 lg:py-8 safe-top safe-right">
       {/* Desktop Navigation - Vertical links on right side */}
       <div className="hidden md:flex flex-col items-end gap-4 md:gap-5">
         {navLinks.map((link) => (
@@ -28,7 +28,7 @@ export default function Navigation() {
             key={link.labelKey}
             href={link.href}
             data-nav-link
-            className="text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-all duration-200 tracking-wide"
+            className="text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-transform duration-200 tracking-wide will-change-transform"
             style={{ fontFamily: 'var(--font-lora), serif', fontWeight: 400 }}
           >
             {t(link.labelKey)}
@@ -40,7 +40,7 @@ export default function Navigation() {
       {/* Mobile Menu Button */}
       <button
         onClick={toggleMenu}
-        className="md:hidden p-2 text-white hover:text-white transition-colors duration-200 focus:outline-none"
+        className="md:hidden min-w-[44px] min-h-[44px] p-3 flex items-center justify-center text-white hover:text-white transition-colors duration-200 focus:outline-none"
         aria-expanded={isOpen}
         aria-label="Toggle navigation menu"
       >
@@ -83,7 +83,7 @@ export default function Navigation() {
               href={link.href}
               onClick={() => setIsOpen(false)}
               data-nav-link
-              className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-all duration-200 font-light text-sm"
+              className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-[transform,background-color] duration-200 font-light text-sm will-change-transform"
               style={{ fontFamily: 'var(--font-lora), serif' }}
             >
               {t(link.labelKey)}

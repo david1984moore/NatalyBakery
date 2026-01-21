@@ -8,6 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
 import CheckoutForm from '@/components/CheckoutForm'
 import LanguageToggle from '@/components/LanguageToggle'
+import Cart from '@/components/Cart'
 import { CheckoutResponse } from '@/types/checkout'
 
 export default function CheckoutPage() {
@@ -161,29 +162,71 @@ export default function CheckoutPage() {
   }
 
   if (checkoutData?.clientSecret) {
+    const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+    
     return (
-      <div className="min-h-screen bg-cream-50/30 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Home Button and Language Toggle */}
-          <div className="mb-6 flex items-center justify-between">
+      <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
+        <Cart />
+        {/* Navigation Bar - Fixed at top with uniform format */}
+        <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            {/* Home Button */}
             <Link
               href="/"
-              className="inline-flex items-center px-3 py-1.5"
+              className="flex-shrink-0 px-2 sm:px-3 py-1.5"
               aria-label="Home"
             >
-              <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
+              <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
             </Link>
-            <LanguageToggle variant="menu" />
+            
+            {/* Language Toggle and Cart Button */}
+            <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+              <LanguageToggle variant="menu" />
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('cart:toggle'))
+                  }}
+                  className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+                  aria-label="Shopping cart"
+                >
+                  <svg
+                    className="w-5 h-5 text-warmgray-700"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                  {itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                      {itemCount}
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
-          <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
-            {t('checkout.completePayment')}
-          </h1>
-          <CheckoutForm
-            clientSecret={checkoutData.clientSecret}
-            orderNumber={checkoutData.orderNumber || ''}
-            depositAmount={depositAmount}
-            onSuccess={handlePaymentSuccess}
-          />
+        </div>
+        
+        {/* Main Content - Centered in viewport */}
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+          <div className="w-full max-w-4xl">
+            <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
+              {t('checkout.completePayment')}
+            </h1>
+            <CheckoutForm
+              clientSecret={checkoutData.clientSecret}
+              orderNumber={checkoutData.orderNumber || ''}
+              depositAmount={depositAmount}
+              onSuccess={handlePaymentSuccess}
+            />
+          </div>
         </div>
       </div>
     )
@@ -192,13 +235,13 @@ export default function CheckoutPage() {
   console.log('🏗️ Rendering page container')
   
   return (
-    <div className="h-screen bg-cream-50/30 overflow-hidden flex flex-col relative">
+    <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
       {/* Loading Overlay */}
       {isLoading && (
         <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 shadow-lg">
             <div className="flex items-center space-x-3">
-              <svg className="animate-spin h-6 w-6 text-warmgray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-6 w-6 text-warmgray-800 will-change-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
@@ -207,106 +250,151 @@ export default function CheckoutPage() {
           </div>
         </div>
       )}
-      <div className="flex-shrink-0 px-4 pt-4 pb-2">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+      <Cart />
+      {/* Navigation Bar - Fixed at top with uniform format */}
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Home Button */}
           <Link
             href="/"
-            className="inline-flex items-center px-3 py-1.5"
+            className="flex-shrink-0 px-2 sm:px-3 py-1.5"
             aria-label="Home"
           >
-            <span className="text-black font-nav-tangerine text-xl md:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
           </Link>
-          <h1 className="text-2xl font-serif text-warmgray-800">
+          
+          {/* Page Title (centered, hidden on mobile) */}
+          <h1 className="hidden md:block text-xl sm:text-2xl font-serif text-warmgray-800 text-center flex-1">
             {t('checkout.title')}
           </h1>
-          <div className="w-10 flex justify-end">
+          
+          {/* Language Toggle and Cart Button */}
+          <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
             <LanguageToggle variant="menu" />
+            <div className="relative">
+              <button
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('cart:toggle'))
+                }}
+                className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  className="w-5 h-5 text-warmgray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                    {items.reduce((sum, item) => sum + item.quantity, 0)}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="flex-1 overflow-hidden px-4 pb-4">
-        <div className="max-w-4xl mx-auto h-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+      
+      {/* Main Content - Centered in viewport */}
+      <div className="flex-1 flex items-center justify-center px-4 py-8 md:py-12">
+        <div className="w-full max-w-4xl">
+          {/* Page Title (visible on mobile only) */}
+          <div className="mb-6 md:hidden">
+            <h1 className="text-xl sm:text-2xl font-serif text-warmgray-800 text-center">
+              {t('checkout.title')}
+            </h1>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
             {/* Customer Information Form */}
-            <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 flex flex-col">
               <h2 className="text-lg font-serif text-warmgray-800 mb-4">{t('checkout.customerInfo')}</h2>
-              <form onSubmit={handleSubmit} id="checkout-form" className="space-y-3">
-                <div>
-                  <label htmlFor="name" className="block text-xs font-medium text-warmgray-700 mb-1">
-                    {t('checkout.fullName')}
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    value={customerInfo.name}
-                    onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
-                    className="w-full px-2 py-1.5 text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
-                  />
-                </div>
+              <form onSubmit={handleSubmit} id="checkout-form" className="space-y-3 flex-1 flex flex-col">
+                <div className="space-y-3">
+                  <div>
+                    <label htmlFor="name" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.fullName')}
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      required
+                      value={customerInfo.name}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
+                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-xs font-medium text-warmgray-700 mb-1">
-                    {t('checkout.email')}
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    value={customerInfo.email}
-                    onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
-                    className="w-full px-2 py-1.5 text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.email')}
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      required
+                      value={customerInfo.email}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
+                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="phone" className="block text-xs font-medium text-warmgray-700 mb-1">
-                    {t('checkout.phone')}
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    required
-                    value={customerInfo.phone}
-                    onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-                    className="w-full px-2 py-1.5 text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.phone')}
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      required
+                      value={customerInfo.phone}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
+                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="notes" className="block text-xs font-medium text-warmgray-700 mb-1">
-                    {t('checkout.specialInstructions')}
-                  </label>
-                  <textarea
-                    id="notes"
-                    rows={2}
-                    value={customerInfo.notes}
-                    onChange={(e) => setCustomerInfo({ ...customerInfo, notes: e.target.value })}
-                    className="w-full px-2 py-1.5 text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent resize-none"
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="notes" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.specialInstructions')}
+                    </label>
+                    <textarea
+                      id="notes"
+                      rows={2}
+                      value={customerInfo.notes}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, notes: e.target.value })}
+                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent resize-none"
+                    />
+                  </div>
 
-                {error && (
-                  <div className="bg-red-50 border-2 border-red-300 text-red-800 px-4 py-3 rounded-md text-sm font-medium">
-                    <div className="flex items-start">
-                      <svg className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                      </svg>
-                      <div>
-                        <p className="font-semibold">{t('common.error')}</p>
-                        <p>{error}</p>
+                  {error && (
+                    <div className="bg-red-50 border-2 border-red-300 text-red-800 px-4 py-3 rounded-md text-sm font-medium">
+                      <div className="flex items-start">
+                        <svg className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        <div>
+                          <p className="font-semibold">{t('common.error')}</p>
+                          <p>{error}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </form>
             </div>
 
             {/* Order Summary */}
-            <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col">
-              <h2 className="text-lg font-serif text-warmgray-800 mb-3">{t('checkout.orderSummary')}</h2>
-              <div className="space-y-2 mb-3">
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 flex flex-col">
+              <h2 className="text-lg font-serif text-warmgray-800 mb-4">{t('checkout.orderSummary')}</h2>
+              <div className="space-y-2 mb-3 flex-1">
                 {items.map((item, index) => (
                   <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex justify-between items-start pb-2 border-b border-warmgray-100">
                     <div>
@@ -395,7 +483,7 @@ export default function CheckoutPage() {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white will-change-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>

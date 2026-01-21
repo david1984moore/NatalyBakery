@@ -194,9 +194,16 @@ export default function CheckoutForm(props: CheckoutFormProps) {
   if (!mounted) {
     return (
       <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl mx-auto">
-        <div className="animate-pulse">
-          <div className="h-8 bg-warmgray-200 rounded mb-4"></div>
-          <div className="h-32 bg-warmgray-200 rounded"></div>
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <div className="h-6 bg-warmgray-200 rounded animate-pulse w-2/3"></div>
+            <div className="h-4 bg-warmgray-100 rounded animate-pulse w-1/2"></div>
+          </div>
+          <div className="space-y-4 border border-warmgray-200 rounded-md p-4">
+            <div className="h-12 bg-warmgray-100 rounded animate-pulse"></div>
+            <div className="h-12 bg-warmgray-100 rounded animate-pulse"></div>
+            <div className="h-24 bg-warmgray-100 rounded animate-pulse"></div>
+          </div>
         </div>
       </div>
     )

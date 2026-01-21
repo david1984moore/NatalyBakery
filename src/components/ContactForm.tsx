@@ -93,7 +93,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
           type="text"
           id="name"
           {...register('name')}
-          className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors ${
+          className={`w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors ${
             errors.name ? 'border-red-300' : 'border-warmgray-300'
           }`}
           placeholder={t('contact.placeholder.name')}
@@ -173,7 +173,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
           id="message"
           {...register('message')}
           rows={6}
-          className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors resize-y ${
+          className={`w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border rounded-md focus:ring-2 focus:ring-warmbrown-400 focus:border-warmbrown-400 outline-none transition-colors resize-y ${
             errors.message ? 'border-red-300' : 'border-warmgray-300'
           }`}
           placeholder={t('contact.placeholder.message')}
@@ -201,7 +201,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-warmbrown-500 text-white py-3 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full min-h-[44px] bg-warmbrown-500 text-white py-3 sm:py-2 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-medium text-base sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
       </button>
