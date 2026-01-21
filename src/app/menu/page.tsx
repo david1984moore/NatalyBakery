@@ -56,15 +56,39 @@ function MenuPageContent() {
 
   // Check scroll on mount and when products/language changes
   useEffect(() => {
-    checkScrollPosition()
+    // Use a small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      checkScrollPosition()
+    }, 100)
+    
+    const updateScrollRef = () => {
+      // On mobile, use mobile container; on desktop, use desktop container
+      const mobileContainer = document.querySelector('.mobile-scroll-container') as HTMLDivElement
+      const desktopContainer = document.querySelector('.desktop-scroll-container') as HTMLDivElement
+      const isMobile = window.innerWidth < 768
+      const activeContainer = isMobile ? mobileContainer : desktopContainer
+      
+      if (activeContainer) {
+        scrollContainerRef.current = activeContainer
+        checkScrollPosition()
+      }
+    }
+    
+    updateScrollRef()
+    window.addEventListener('resize', updateScrollRef)
+    
     const container = scrollContainerRef.current
     if (container) {
       container.addEventListener('scroll', checkScrollPosition)
-      window.addEventListener('resize', checkScrollPosition)
       return () => {
+        clearTimeout(timer)
         container.removeEventListener('scroll', checkScrollPosition)
-        window.removeEventListener('resize', checkScrollPosition)
+        window.removeEventListener('resize', updateScrollRef)
       }
+    }
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', updateScrollRef)
     }
   }, [products, t])
 
@@ -147,36 +171,58 @@ function MenuPageContent() {
 
   return (
     <div className="h-screen bg-cream-50/30 flex flex-col overflow-hidden relative">
-        {/* Product Navigation Bar - Fixed at top - Always visible */}
+      {/* Product Navigation Bar - Fixed at top - Mobile optimized */}
       <div 
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm py-4 border-b border-warmgray-200 shadow-sm flex items-center"
-        style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}
+        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm"
+        style={{ minHeight: '64px' }}
       >
-        {/* Home Button - Positioned on far left, outside centered container */}
-        <Link
-          href="/"
-          className="fixed left-3 sm:left-4 md:left-6 lg:left-8 flex-shrink-0 px-2 sm:px-3 py-1.5 z-20 safe-left flex items-center h-full"
-          aria-label="Home"
-          style={{ top: '50%', transform: 'translateY(-50%)' }}
-        >
-          <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
-        </Link>
-        
-        {/* Centered container for scrollable product list */}
-        <div className="max-w-7xl mx-auto px-10 sm:px-12 lg:px-14 flex items-center gap-3 relative h-full flex-1">
-          {/* Left scroll indicator */}
-          {canScrollLeft && (
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
-          )}
+        {/* Mobile Layout (< 768px) */}
+        <div className="md:hidden flex items-center justify-between px-3 h-full" style={{ minHeight: '64px' }}>
+          {/* Home Button - Mobile */}
+          <Link
+            href="/"
+            className="flex-shrink-0 flex items-center"
+            aria-label="Home"
+          >
+            <span className="text-black font-nav-tangerine text-base font-bold">Caramel & Jo</span>
+          </Link>
           
-          {/* Right scroll indicator */}
-          {canScrollRight && (
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
-          )}
-          
+          {/* Right side buttons - Mobile */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <LanguageToggle variant="menu" />
+            <button
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('cart:toggle'))
+              }}
+              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+              aria-label="Shopping cart"
+            >
+              <svg
+                className="w-5 h-5 text-warmgray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Product Category Buttons - Mobile (below brand/buttons row) */}
+        <div className="md:hidden border-t border-warmgray-100">
           <div 
-            ref={scrollContainerRef}
-            className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll" 
+            className="flex items-center gap-2 overflow-x-auto scrollbar-hide px-3 py-2 touch-scroll mobile-scroll-container" 
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {products.map((product) => {
@@ -188,9 +234,9 @@ function MenuPageContent() {
                 <button
                   key={product.name}
                   onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 min-h-[44px] px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                  className={`flex-shrink-0 min-h-[36px] px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap ${
                     isSelected
-                      ? 'bg-gray-800 text-white shadow-md font-semibold'  // Selected: dark background, white text, shadow
+                      ? 'bg-gray-800 text-white shadow-md font-semibold'
                       : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
                   }`}
                 >
@@ -200,11 +246,60 @@ function MenuPageContent() {
             })}
           </div>
         </div>
-        
-        {/* Language Toggle and Cart Button - Positioned on far right, outside centered container */}
-        <div className="fixed right-3 sm:right-4 md:right-6 lg:right-8 flex items-center gap-3 sm:gap-6 flex-shrink-0 z-20 safe-right" style={{ top: '50%', transform: 'translateY(-50%)' }}>
-          <LanguageToggle variant="menu" />
-          <div className="relative">
+
+        {/* Desktop Layout (>= 768px) */}
+        <div className="hidden md:flex items-center h-full" style={{ minHeight: '64px' }}>
+          {/* Home Button - Desktop */}
+          <Link
+            href="/"
+            className="flex-shrink-0 px-4 lg:px-6 flex items-center h-full"
+            aria-label="Home"
+          >
+            <span className="text-black font-nav-tangerine text-xl lg:text-2xl font-bold">Caramel & Jo</span>
+          </Link>
+          
+          {/* Centered container for scrollable product list - Desktop */}
+          <div className="flex-1 flex items-center gap-3 relative h-full min-w-0 px-4">
+            {/* Left scroll indicator */}
+            {canScrollLeft && (
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
+            )}
+            
+            {/* Right scroll indicator */}
+            {canScrollRight && (
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
+            )}
+            
+            <div 
+              ref={scrollContainerRef}
+              className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container" 
+              style={{ WebkitOverflowScrolling: 'touch' }}
+            >
+              {products.map((product) => {
+                const isSelected = featuredProduct?.name === product.name
+                const translationKey = productNameToTranslationKey[product.name] || product.name
+                const translatedName = translationKey.startsWith('product.') ? t(translationKey as any) : product.name
+                
+                return (
+                  <button
+                    key={product.name}
+                    onClick={() => handleProductChange(product.name)}
+                    className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                      isSelected
+                        ? 'bg-gray-800 text-white shadow-md font-semibold'
+                        : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
+                    }`}
+                  >
+                    {translatedName}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+          
+          {/* Language Toggle and Cart Button - Desktop */}
+          <div className="flex items-center gap-4 lg:gap-6 flex-shrink-0 px-4 lg:px-6">
+            <LanguageToggle variant="menu" />
             <button
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
@@ -236,8 +331,9 @@ function MenuPageContent() {
       </div>
 
       {/* Featured Product Section - Fit in viewport without scrolling */}
-      <section className="flex-1 overflow-hidden pt-20 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center">
+      {/* Mobile: pt-[112px] accounts for brand row (64px) + category row (~48px), Desktop: pt-20 */}
+      <section className="flex-1 overflow-hidden pt-[112px] md:pt-20 flex items-center overflow-y-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center py-4 md:py-0">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">
@@ -259,10 +355,10 @@ function MenuPageContent() {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center h-full w-full max-h-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center w-full">
             {/* Product Image */}
-            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto rounded-lg overflow-hidden border border-white/60 shadow-lg" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
-              <div className="relative w-full" style={{ aspectRatio: '3/4', maxHeight: 'calc(100vh - 8rem)' }}>
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto rounded-lg overflow-hidden border border-white/60 shadow-lg">
+              <div className="relative w-full" style={{ aspectRatio: '3/4' }}>
                 <Image
                   src={featuredProduct.image}
                   alt={featuredProduct.name}
@@ -275,7 +371,7 @@ function MenuPageContent() {
             </div>
 
             {/* Product Details */}
-            <div className="space-y-2 flex flex-col h-full justify-center">
+            <div className="space-y-3 md:space-y-4 flex flex-col">
               <div>
                 <h1 className="text-2xl md:text-3xl font-serif text-warmgray-800 mb-1.5">
                   {(() => {

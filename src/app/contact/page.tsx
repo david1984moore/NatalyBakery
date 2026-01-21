@@ -14,19 +14,21 @@ export default function ContactPage() {
   
   return (
     <main className="min-h-screen bg-cream-50/30">
-      {/* Home Button */}
-      <div className="fixed top-3 sm:top-4 left-3 sm:left-4 z-50 safe-left safe-top">
-        <Link
-          href="/"
-          className="flex-shrink-0 px-2 sm:px-3 py-1.5"
-          aria-label="Home"
-        >
-          <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
-        </Link>
-      </div>
-      
-      {/* Language Toggle and Cart Button - Positioned in top right like menu page */}
-      <div className="fixed right-3 sm:right-4 md:right-6 lg:right-8 top-3 sm:top-4 flex items-center gap-3 sm:gap-6 flex-shrink-0 z-50 safe-right safe-top">
+      {/* Header Container - Fixed at top */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm" style={{ minHeight: '64px' }}>
+        {/* Home Button - Vertically centered */}
+        <div className="fixed left-3 sm:left-4 md:left-6 lg:left-8 safe-left" style={{ top: '50%', transform: 'translateY(-50%)' }}>
+          <Link
+            href="/"
+            className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
+            aria-label="Home"
+          >
+            <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
+          </Link>
+        </div>
+        
+        {/* Language Toggle and Cart Button - Vertically centered */}
+        <div className="fixed right-3 sm:right-4 md:right-6 lg:right-8 safe-right flex items-center gap-3 sm:gap-6 flex-shrink-0" style={{ top: '50%', transform: 'translateY(-50%)' }}>
         <LanguageToggle variant="menu" />
         <div className="relative">
           <button
@@ -55,6 +57,7 @@ export default function ContactPage() {
               </span>
             )}
           </button>
+        </div>
         </div>
       </div>
       

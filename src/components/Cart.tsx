@@ -54,8 +54,22 @@ export default function Cart() {
     if (!isOpen) return null
     
     return (
-      <div className="fixed top-16 right-2 sm:right-4 z-[99] safe-right">
-        <div className="w-[calc(100vw-1rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 5rem)' }}>
+      <>
+        {/* Backdrop overlay with blur effect - starts at header border */}
+        <div 
+          className="fixed left-0 right-0 bottom-0 bg-black/5 z-[98] transition-opacity duration-300"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+          style={{ 
+            top: '64px',
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)'
+          }}
+        />
+        
+        {/* Cart Modal */}
+        <div className="fixed top-20 sm:top-24 right-2 sm:right-4 md:right-6 lg:right-8 z-[99] safe-right cart-modal-enter">
+          <div className="w-[calc(100vw-1rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
           {/* Cart Header */}
           <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">
@@ -200,6 +214,7 @@ export default function Cart() {
           )}
         </div>
       </div>
+      </>
     )
   }
 

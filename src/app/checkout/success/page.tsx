@@ -60,12 +60,12 @@ function SuccessPageContent() {
     <div className="min-h-screen bg-cream-50/30">
       <Cart />
       {/* Navigation Bar - Fixed at top with uniform format */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm" style={{ minHeight: '64px' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between" style={{ height: '100%', minHeight: '64px' }}>
           {/* Home Button */}
           <Link
             href="/"
-            className="flex-shrink-0 px-2 sm:px-3 py-1.5"
+            className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
             aria-label="Home"
           >
             <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
