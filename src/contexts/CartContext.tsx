@@ -20,12 +20,15 @@ interface CartContextType {
   getTotalAmount: () => number
   getDepositAmount: () => number
   getRemainingAmount: () => number
+  openCartOnNextPage: boolean
+  setOpenCartOnNextPage: (value: boolean) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [openCartOnNextPage, setOpenCartOnNextPage] = useState(false)
 
   const addItem = useCallback((productName: string, unitPrice: number, quantity: number = 1, variantName?: string) => {
     setItems((prevItems) => {
@@ -105,8 +108,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       getTotalAmount,
       getDepositAmount,
       getRemainingAmount,
+      openCartOnNextPage,
+      setOpenCartOnNextPage,
     }),
-    [items, addItem, removeItem, updateQuantity, clearCart, getTotalItems, getTotalAmount, getDepositAmount, getRemainingAmount]
+    [items, addItem, removeItem, updateQuantity, clearCart, getTotalItems, getTotalAmount, getDepositAmount, getRemainingAmount, openCartOnNextPage]
   )
 
   return (

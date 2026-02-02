@@ -6,16 +6,18 @@ import Cart from '@/components/Cart'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function ContactPage() {
   const { t } = useLanguage()
-  const { items } = useCart()
+  const { items, setOpenCartOnNextPage } = useCart()
+  const router = useRouter()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
   
   return (
     <main className="min-h-screen bg-cream-50/30">
       {/* Header Container - Fixed at top */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm" style={{ minHeight: '64px' }}>
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm safe-top" style={{ minHeight: '64px' }}>
         {/* Home Button - Vertically centered */}
         <div className="fixed left-3 sm:left-4 md:left-6 lg:left-8 safe-left" style={{ top: '50%', transform: 'translateY(-50%)' }}>
           <Link
@@ -23,17 +25,24 @@ export default function ContactPage() {
             className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
             aria-label="Home"
           >
-            <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
           </Link>
         </div>
         
         {/* Language Toggle and Cart Button - Vertically centered */}
         <div className="fixed right-3 sm:right-4 md:right-6 lg:right-8 safe-right flex items-center gap-3 sm:gap-6 flex-shrink-0" style={{ top: '50%', transform: 'translateY(-50%)' }}>
+        <Link
+          href="/contact"
+          className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+        >
+          {t('nav.contact')}
+        </Link>
         <LanguageToggle variant="menu" />
         <div className="relative">
           <button
             onClick={() => {
-              window.dispatchEvent(new CustomEvent('cart:toggle'))
+              setOpenCartOnNextPage(true)
+              router.push('/menu')
             }}
             className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
             aria-label="Shopping cart"
@@ -67,7 +76,7 @@ export default function ContactPage() {
         <div className="space-y-8">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-warmgray-800">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-warmgray-800">
               {t('contact.getInTouch')}
             </h1>
             <p className="text-lg md:text-xl text-warmgray-600 max-w-2xl mx-auto font-light">

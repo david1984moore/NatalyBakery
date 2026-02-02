@@ -174,7 +174,7 @@ function MenuPageContent() {
     <div className="h-screen bg-cream-50/30 flex flex-col overflow-hidden relative">
       {/* Product Navigation Bar - Fixed at top - Mobile optimized */}
       <div 
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm"
+        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm safe-top"
         style={{ minHeight: '64px' }}
       >
         {/* Mobile Layout (< 768px) */}
@@ -185,11 +185,17 @@ function MenuPageContent() {
             className="flex-shrink-0 flex items-center"
             aria-label="Home"
           >
-            <span className="text-black font-nav-tangerine text-base font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-playfair text-base font-bold">Caramel & Jo</span>
           </Link>
           
           {/* Right side buttons - Mobile */}
           <div className="flex items-center gap-2 flex-shrink-0">
+            <Link
+              href="/contact"
+              className="min-h-[36px] px-3 py-1.5 rounded-md text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap flex items-center"
+            >
+              {t('nav.contact')}
+            </Link>
             <LanguageToggle variant="menu" />
             <button
               onClick={() => {
@@ -223,7 +229,7 @@ function MenuPageContent() {
         {/* Product Category Buttons - Mobile (below brand/buttons row) */}
         <div className="md:hidden border-t border-warmgray-100">
           <div 
-            className="flex items-center gap-2 overflow-x-auto scrollbar-hide px-3 py-2 touch-scroll mobile-scroll-container" 
+            className="flex items-center gap-2 overflow-x-auto scrollbar-hide pl-3 pr-6 py-2 touch-scroll mobile-scroll-container" 
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {products.map((product) => {
@@ -235,9 +241,9 @@ function MenuPageContent() {
                 <button
                   key={product.name}
                   onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 min-h-[36px] px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap ${
+                  className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap ${
                     isSelected
-                      ? 'bg-gray-800 text-white shadow-md font-semibold'
+                      ? 'bg-warmbrown-500 text-white shadow-md font-semibold'
                       : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
                   }`}
                 >
@@ -256,11 +262,11 @@ function MenuPageContent() {
             className="flex-shrink-0 px-4 lg:px-6 flex items-center h-full"
             aria-label="Home"
           >
-            <span className="text-black font-nav-tangerine text-xl lg:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-playfair text-xl lg:text-2xl font-bold">Caramel & Jo</span>
           </Link>
           
           {/* Centered container for scrollable product list - Desktop */}
-          <div className="flex-1 flex items-center gap-3 relative h-full min-w-0 px-4">
+          <div className="flex-1 flex items-center gap-3 relative h-full min-w-0 pl-4 pr-2">
             {/* Left scroll indicator */}
             {canScrollLeft && (
               <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
@@ -273,7 +279,7 @@ function MenuPageContent() {
             
             <div 
               ref={scrollContainerRef}
-              className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container" 
+              className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6" 
               style={{ WebkitOverflowScrolling: 'touch' }}
             >
               {products.map((product) => {
@@ -287,7 +293,7 @@ function MenuPageContent() {
                     onClick={() => handleProductChange(product.name)}
                     className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
                       isSelected
-                        ? 'bg-gray-800 text-white shadow-md font-semibold'
+                        ? 'bg-warmbrown-500 text-white shadow-md font-semibold'
                         : 'bg-white text-warmgray-700 hover:bg-warmgray-100 border border-warmgray-300'
                     }`}
                   >
@@ -299,7 +305,13 @@ function MenuPageContent() {
           </div>
           
           {/* Language Toggle and Cart Button - Desktop */}
-          <div className="flex items-center gap-4 lg:gap-6 flex-shrink-0 px-4 lg:px-6">
+          <div className="flex items-center gap-3 flex-shrink-0 pl-4 pr-4 lg:pr-6">
+            <Link
+              href="/contact"
+              className="flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap bg-black text-white hover:bg-gray-800 transition-colors duration-200 flex items-center"
+            >
+              {t('nav.contact')}
+            </Link>
             <LanguageToggle variant="menu" />
             <button
               onClick={() => {
@@ -358,7 +370,7 @@ function MenuPageContent() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center w-full">
             {/* Product Image */}
-            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto rounded-lg overflow-hidden border border-white/60 shadow-lg">
+            <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md mx-auto rounded-lg overflow-hidden border border-white/60 shadow-lg">
               <div className="relative w-full" style={{ aspectRatio: '3/4' }}>
                 <Image
                   src={featuredProduct.image}
@@ -455,7 +467,7 @@ function MenuPageContent() {
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded-md hover:bg-warmgray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-white border border-warmbrown-500 rounded-md hover:bg-warmbrown-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     aria-label="Decrease quantity"
                     disabled={featuredProduct.minQuantity ? quantity <= featuredProduct.minQuantity : quantity <= 1}
                   >
@@ -476,7 +488,7 @@ function MenuPageContent() {
                   />
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center border border-warmgray-300 rounded-md hover:bg-warmgray-100 transition-colors"
+                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-white border border-warmbrown-500 rounded-md hover:bg-warmbrown-600 transition-colors"
                     aria-label="Increase quantity"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -506,7 +518,8 @@ function MenuPageContent() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedVariant}
-                  className="w-full min-h-[44px] px-4 py-3 sm:py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                  className="w-full min-h-[44px] px-4 py-3 sm:py-2 bg-warmbrown-500 text-white rounded-md hover:bg-warmbrown-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                  style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {t('menu.addToCart')}
                 </button>

@@ -60,7 +60,7 @@ function SuccessPageContent() {
     <div className="min-h-screen bg-cream-50/30">
       <Cart />
       {/* Navigation Bar - Fixed at top with uniform format */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm" style={{ minHeight: '64px' }}>
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm safe-top" style={{ minHeight: '64px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between" style={{ height: '100%', minHeight: '64px' }}>
           {/* Home Button */}
           <Link
@@ -68,11 +68,17 @@ function SuccessPageContent() {
             className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
             aria-label="Home"
           >
-            <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
           </Link>
           
           {/* Language Toggle and Cart Button */}
           <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+            <Link
+              href="/contact"
+              className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+            >
+              {t('nav.contact')}
+            </Link>
             <LanguageToggle variant="menu" />
             <div className="relative">
               <button
@@ -108,7 +114,7 @@ function SuccessPageContent() {
 
       <div className="pt-16 sm:pt-20 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+          <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8 text-center">
             {/* Success Icon */}
             <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
               <svg
@@ -162,22 +168,22 @@ function SuccessPageContent() {
               </ul>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center">
               <Link
                 href="/"
-                className="px-6 py-2.5 bg-warmgray-800 text-white rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium"
+                className="min-h-[44px] px-6 py-2.5 flex items-center justify-center bg-warmgray-800 text-white rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium"
               >
                 {t('nav.home')}
               </Link>
               <Link
                 href="/menu"
-                className="px-6 py-2.5 bg-warmgray-800 text-white rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium"
+                className="min-h-[44px] px-6 py-2.5 flex items-center justify-center bg-warmgray-800 text-white rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-medium"
               >
                 {t('nav.shop')}
               </Link>
               <Link
                 href="/contact"
-                className="px-6 py-2.5 bg-white border border-warmgray-300 text-warmgray-700 rounded-md hover:bg-cream-50 transition-colors duration-200 font-medium"
+                className="min-h-[44px] px-6 py-2.5 flex items-center justify-center bg-white border border-warmgray-300 text-warmgray-700 rounded-md hover:bg-cream-50 transition-colors duration-200 font-medium"
               >
                 {t('success.contactUs')}
               </Link>

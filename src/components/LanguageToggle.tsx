@@ -17,8 +17,8 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     return (
       <button
         onClick={toggleLanguage}
-        className="min-h-[44px] px-6 py-3 text-sm text-warmgray-700 hover:bg-cream-100 transition-colors duration-200 border-t border-warmgray-200 mt-2 font-amatic"
-        style={{ fontFamily: 'var(--font-amatic)' }}
+        className="min-h-[44px] px-6 py-3 text-sm text-warmgray-700 hover:bg-cream-100 transition-colors duration-200 border-t border-warmgray-200 mt-2"
+        style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       >
@@ -31,8 +31,8 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     return (
       <button
         onClick={toggleLanguage}
-        className="min-h-[44px] px-3 py-2 sm:py-1.5 text-sm bg-white text-warmgray-900 border border-warmgray-300 rounded-md hover:bg-warmgray-50 transition-colors duration-200 shadow-sm font-medium"
-        style={{ fontFamily: 'var(--font-amatic)' }}
+        className="min-h-[44px] px-3 py-2 sm:py-1.5 text-sm bg-black text-white rounded-md hover:bg-gray-800 transition-colors duration-200 font-medium"
+        style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       >
@@ -44,8 +44,8 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
   return (
     <button
       onClick={toggleLanguage}
-      className="px-4 py-2 text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-all duration-200 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/40 hover:bg-white/30 hover:border-white/60 shadow-lg hover:shadow-xl"
-      style={{ fontFamily: 'var(--font-amatic)' }}
+      className="px-3 py-1 text-lg md:text-xl text-white hover:text-white hover:scale-105 transition-all duration-200 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/25 hover:border-white/50"
+      style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif', fontWeight: 400 }}
       aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
     >

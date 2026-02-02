@@ -61,6 +61,7 @@ const config: Config = {
           300: '#c0ab9a',
           400: '#a38670',
           500: '#856650',
+          600: '#6b5344',
         },
         // Pastel colors for minimalist aesthetic
         pink: {
@@ -73,8 +74,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-serif)', 'Georgia', 'serif'],
+        sans: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'system-ui', 'sans-serif'],
+        playfair: ['var(--font-playfair)', 'Georgia', 'serif'],
       },
     },
   },

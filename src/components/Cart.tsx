@@ -9,7 +9,7 @@ import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/pro
 import Link from 'next/link'
 
 export default function Cart() {
-  const { items, removeItem, updateQuantity, getTotalAmount, getDepositAmount, getRemainingAmount } = useCart()
+  const { items, removeItem, updateQuantity, getTotalAmount, getDepositAmount, getRemainingAmount, openCartOnNextPage, setOpenCartOnNextPage } = useCart()
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
@@ -48,6 +48,14 @@ export default function Cart() {
     }
   }, [isMenuPage, isContactPage, isCheckoutPage])
 
+  // Open cart when navigating from another page with openCartOnNextPage flag (e.g. contact page cart button)
+  useEffect(() => {
+    if (isMenuPage && openCartOnNextPage) {
+      setIsOpen(true)
+      setOpenCartOnNextPage(false)
+    }
+  }, [isMenuPage, openCartOnNextPage, setOpenCartOnNextPage])
+
   // Don't render floating button on menu page, contact page, or checkout pages (it's in the nav bar)
   if (isMenuPage || isContactPage || isCheckoutPage) {
     // Render only the dropdown positioned from top-right
@@ -61,14 +69,17 @@ export default function Cart() {
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
           style={{ 
-            top: '64px',
+            top: 'calc(64px + env(safe-area-inset-top, 0px))',
             backdropFilter: 'blur(3px)',
             WebkitBackdropFilter: 'blur(3px)'
           }}
         />
         
         {/* Cart Modal */}
-        <div className="fixed top-20 sm:top-24 right-2 sm:right-4 md:right-6 lg:right-8 z-[99] safe-right cart-modal-enter">
+        <div 
+          className="fixed right-2 sm:right-4 md:right-6 lg:right-8 z-[99] safe-right safe-x cart-modal-enter"
+          style={{ top: 'calc(64px + env(safe-area-inset-top, 0px))' }}
+        >
           <div className="w-[calc(100vw-1rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
           {/* Cart Header */}
           <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
@@ -186,6 +197,7 @@ export default function Cart() {
                     href="/menu"
                     onClick={() => setIsOpen(false)}
                     className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-2.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
+                    style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >
                     {t('cart.continueShopping')}
                   </Link>
@@ -194,6 +206,7 @@ export default function Cart() {
                     onClick={() => setIsOpen(false)}
                     className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg relative z-10"
                     style={{ 
+                      fontFamily: 'var(--font-ui), sans-serif',
                       display: 'block !important',
                       width: '100%',
                       minHeight: '44px',
@@ -252,7 +265,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 z-50 safe-bottom safe-right">
       <button
         onClick={() => setIsOpen(!isOpen)}
         data-cart-toggle
@@ -397,6 +410,7 @@ export default function Cart() {
                   onClick={() => setIsOpen(false)}
                   className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg"
                   style={{ 
+                    fontFamily: 'var(--font-ui), sans-serif',
                     display: 'block',
                     width: '100%',
                     minHeight: '44px',

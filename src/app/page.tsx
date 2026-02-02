@@ -1,11 +1,13 @@
-import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
+import FeaturedProducts from '@/components/FeaturedProducts'
+import StickyNav from '@/components/StickyNav'
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">
-      <Navigation />
       <Hero />
+      <FeaturedProducts />
+      <StickyNav />
     </main>
   )
 }

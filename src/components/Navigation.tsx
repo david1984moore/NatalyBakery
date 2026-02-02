@@ -14,7 +14,6 @@ export default function Navigation() {
   }
 
   const navLinks = [
-    { href: '/gallery', labelKey: 'nav.gallery' as const },
     { href: '/contact', labelKey: 'nav.contact' as const },
     { href: '/menu', labelKey: 'nav.order' as const },
   ]
@@ -28,8 +27,8 @@ export default function Navigation() {
             key={link.labelKey}
             href={link.href}
             data-nav-link
-            className="text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-transform duration-200 tracking-wide will-change-transform"
-            style={{ fontFamily: 'var(--font-lora), serif', fontWeight: 400 }}
+            className="font-ui text-2xl md:text-3xl text-white hover:text-white hover:scale-105 transition-transform duration-200 tracking-wide will-change-transform"
+            style={{ fontWeight: 400 }}
           >
             {t(link.labelKey)}
           </Link>
@@ -83,8 +82,7 @@ export default function Navigation() {
               href={link.href}
               onClick={() => setIsOpen(false)}
               data-nav-link
-              className="block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-[transform,background-color] duration-200 font-light text-sm will-change-transform"
-              style={{ fontFamily: 'var(--font-lora), serif' }}
+              className="font-ui block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-[transform,background-color] duration-200 font-light text-sm will-change-transform"
             >
               {t(link.labelKey)}
             </Link>

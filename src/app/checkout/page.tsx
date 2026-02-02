@@ -176,11 +176,17 @@ export default function CheckoutPage() {
               className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
               aria-label="Home"
             >
-              <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
+              <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
             </Link>
             
             {/* Language Toggle and Cart Button */}
             <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+              <Link
+                href="/contact"
+                className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+              >
+                {t('nav.contact')}
+              </Link>
               <LanguageToggle variant="menu" />
               <div className="relative">
                 <button
@@ -238,8 +244,8 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
       {/* Loading Overlay */}
       {isLoading && (
-        <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 shadow-lg">
+        <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-6 shadow-lg max-w-[calc(100vw-2rem)]">
             <div className="flex items-center space-x-3">
               <svg className="animate-spin h-6 w-6 text-warmgray-800 will-change-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -252,7 +258,7 @@ export default function CheckoutPage() {
       )}
       <Cart />
       {/* Navigation Bar - Fixed at top with uniform format */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm">
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm safe-top">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Home Button */}
           <Link
@@ -260,7 +266,7 @@ export default function CheckoutPage() {
             className="flex-shrink-0 px-2 sm:px-3 py-1.5"
             aria-label="Home"
           >
-            <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
           </Link>
           
           {/* Page Title (centered, hidden on mobile) */}
@@ -270,6 +276,12 @@ export default function CheckoutPage() {
           
           {/* Language Toggle and Cart Button */}
           <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+            <Link
+              href="/contact"
+              className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+            >
+              {t('nav.contact')}
+            </Link>
             <LanguageToggle variant="menu" />
             <div className="relative">
               <button

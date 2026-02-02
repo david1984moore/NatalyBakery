@@ -19,7 +19,7 @@ export default function AboutPage() {
           className="flex-shrink-0 px-2 sm:px-3 py-1.5"
           aria-label="Home"
         >
-          <span className="text-black font-nav-tangerine text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
+          <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
         </Link>
       </div>
       
@@ -27,7 +27,7 @@ export default function AboutPage() {
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-center">
           {/* Professional Photo */}
           <div className="order-2 md:order-1 h-full flex items-center justify-center">
-            <div className="relative w-full max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden border border-white/60 shadow-lg">
+            <div className="relative w-full max-w-[280px] sm:max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden border border-white/60 shadow-lg">
               <Image
                 src="/Images/IMG_5754.jpeg"
                 alt="Nataly Hernandez"
@@ -41,7 +41,7 @@ export default function AboutPage() {
 
           {/* Story Content */}
           <div className="order-1 lg:order-2 space-y-4 lg:space-y-6">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif text-warmgray-800">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-warmgray-800">
               {t('about.title')}
             </h1>
             

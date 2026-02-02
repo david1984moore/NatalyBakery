@@ -87,7 +87,7 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl mx-auto">
+    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-2xl mx-auto">
       <div className="mb-6">
         <h2 className="text-xl font-serif text-warmgray-800 mb-2">{t('checkout.paymentDetails')}</h2>
         <p className="text-sm text-warmgray-600">
@@ -193,7 +193,7 @@ export default function CheckoutForm(props: CheckoutFormProps) {
 
   if (!mounted) {
     return (
-      <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl mx-auto">
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-2xl mx-auto">
         <div className="space-y-6">
           <div className="space-y-2">
             <div className="h-6 bg-warmgray-200 rounded animate-pulse w-2/3"></div>

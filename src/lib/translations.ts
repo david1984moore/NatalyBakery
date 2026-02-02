@@ -2,11 +2,11 @@ import { Language } from '@/contexts/LanguageContext'
 
 export type TranslationKey = 
   // Navigation
-  | 'nav.gallery'
   | 'nav.contact'
   | 'nav.order'
   | 'nav.home'
   | 'nav.shop'
+  | 'nav.menu'
   
   // Cart
   | 'cart.shoppingCart'
@@ -113,11 +113,11 @@ export type TranslationKey =
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
     // Navigation
-    'nav.gallery': 'Gallery',
     'nav.contact': 'Contact',
     'nav.order': 'Order',
     'nav.home': 'Home',
     'nav.shop': 'Shop',
+    'nav.menu': 'Menu',
     
     // Cart
     'cart.shoppingCart': 'Shopping Cart',
@@ -223,11 +223,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
   },
   es: {
     // Navigation
-    'nav.gallery': 'Galería',
     'nav.contact': 'Contacto',
     'nav.order': 'Pedido',
     'nav.home': 'Inicio',
     'nav.shop': 'Tienda',
+    'nav.menu': 'Menú',
     
     // Cart
     'cart.shoppingCart': 'Carrito de Compras',
