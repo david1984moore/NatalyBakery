@@ -54,14 +54,18 @@ const config: Config = {
           400: '#92a892',
           500: '#6e866e',
         },
+        tan: {
+          DEFAULT: '#d2b48c',
+          600: '#c4a574',
+        },
         warmbrown: {
           50: '#f7f4f1',
           100: '#ede6df',
           200: '#d9ccc0',
           300: '#c0ab9a',
           400: '#a38670',
-          500: '#856650',
-          600: '#6b5344',
+          500: '#d2b48c', /* tan - matches site palette */
+          600: '#c4a574', /* tan hover */
         },
         // Pastel colors for minimalist aesthetic
         pink: {

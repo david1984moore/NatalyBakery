@@ -47,10 +47,9 @@ export default function StickyNav() {
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }
           }}
-          className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 leading-tight inline-block"
+          className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap"
         >
-          <span className="block">Caramel</span>
-          <span className="block text-center">& Jo</span>
+          Caramel & Jo
         </Link>
 
         {/* Desktop - Horizontal links */}
@@ -59,7 +58,7 @@ export default function StickyNav() {
             <Link
               key={link.labelKey}
               href={link.href}
-              className="font-ui text-warmgray-700 hover:text-warmgray-900 font-medium text-sm tracking-wide"
+              className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
             >
               {t(link.labelKey)}
             </Link>

@@ -21,17 +21,16 @@ export default function Hero() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 w-full h-full flex items-center px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8">
         {/* Nav - absolute right, vertically centered */}
         <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-4 md:right-6 lg:right-8">
           <HeroNav />
         </div>
 
-        {/* Brand Name - centered vertically, shifted right to sit on golden part of cake */}
-        <div id="brand-name-wrapper" className="font-brand-playfair max-w-[85vw] pl-12 sm:pl-[5.5rem] md:pl-[8.5rem] lg:pl-[10.5rem] xl:pl-[12.5rem]">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white leading-tight text-hero-brand inline-block">
-            <span className="block">Caramel</span>
-            <span className="block text-center">& Jo</span>
+        {/* Brand Name - vertically centered, left side */}
+        <div id="brand-name-wrapper" className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 lg:left-8 font-brand-playfair">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap">
+            Caramel & Jo
           </h1>
         </div>
       </div>

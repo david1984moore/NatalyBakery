@@ -6,12 +6,10 @@ import Cart from '@/components/Cart'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function ContactPage() {
   const { t } = useLanguage()
-  const { items, setOpenCartOnNextPage } = useCart()
-  const router = useRouter()
+  const { items } = useCart()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
   
   return (
@@ -29,26 +27,29 @@ export default function ContactPage() {
           </Link>
         </div>
         
-        {/* Language Toggle and Cart Button - Vertically centered */}
+        {/* Nav links, Language Toggle and Cart - Vertically centered */}
         <div className="fixed right-3 sm:right-4 md:right-6 lg:right-8 safe-right flex items-center gap-3 sm:gap-6 flex-shrink-0" style={{ top: '50%', transform: 'translateY(-50%)' }}>
         <Link
-          href="/contact"
-          className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+          href="/menu"
+          className="min-h-[44px] px-3 py-2 sm:py-1.5 flex items-center text-sm border border-warmgray-300 bg-transparent text-warmgray-700 rounded-md hover:bg-tan hover:border-tan hover:text-white transition-colors duration-200 font-medium whitespace-nowrap"
         >
-          {t('nav.contact')}
+          {t('nav.menu')}
+        </Link>
+        <Link
+          href="/menu"
+          className="min-h-[44px] px-3 py-2 sm:py-1.5 flex items-center text-sm border border-warmgray-300 bg-transparent text-warmgray-700 rounded-md hover:bg-tan hover:border-tan hover:text-white transition-colors duration-200 font-medium whitespace-nowrap"
+        >
+          {t('nav.order')}
         </Link>
         <LanguageToggle variant="menu" />
         <div className="relative">
           <button
-            onClick={() => {
-              setOpenCartOnNextPage(true)
-              router.push('/menu')
-            }}
-            className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white transition-colors duration-200 relative border border-warmgray-200"
+            onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+            className="group min-w-[44px] min-h-[44px] px-3 py-2 sm:py-1.5 flex items-center justify-center text-sm border border-warmgray-300 bg-transparent text-warmgray-700 rounded-md hover:bg-tan hover:border-tan hover:text-white transition-colors duration-200 font-medium"
             aria-label="Shopping cart"
           >
             <svg
-              className="w-5 h-5 text-warmgray-700"
+              className="w-5 h-5 text-warmgray-700 group-hover:text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

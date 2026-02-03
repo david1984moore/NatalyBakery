@@ -26,7 +26,7 @@ export default function FeaturedProducts() {
           ))}
         </div>
         <Link href="/menu" className="mt-8 flex justify-center">
-          <span className="font-ui inline-flex items-center justify-center min-h-[44px] px-6 py-3 text-sm font-medium tracking-wide uppercase text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-300 rounded-md shadow-md">
+          <span className="font-ui inline-flex items-center justify-center min-h-[44px] px-6 py-3 text-sm font-medium tracking-wide uppercase text-black bg-white/10 backdrop-blur-sm hover:bg-tan transition-colors duration-300 rounded-md shadow-md">
             Menu
           </span>
         </Link>

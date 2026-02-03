@@ -238,11 +238,11 @@ export default function Cart() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           data-cart-toggle
-          className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-200"
+          className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 group"
           aria-label="Shopping cart"
         >
           <svg
-            className="w-6 h-6 text-warmgray-700"
+            className="w-6 h-6 text-warmgray-700 group-hover:text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -269,11 +269,11 @@ export default function Cart() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         data-cart-toggle
-        className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-200 relative"
+        className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 relative group"
         aria-label="Shopping cart"
       >
         <svg
-          className="w-6 h-6 text-warmgray-700"
+          className="w-6 h-6 text-warmgray-700 group-hover:text-white"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

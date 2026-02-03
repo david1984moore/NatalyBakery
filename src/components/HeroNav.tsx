@@ -24,7 +24,7 @@ export default function HeroNav() {
           <Link
             key={link.labelKey}
             href={link.href}
-            className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full border border-transparent hover:border-white hover:bg-white/15"
+            className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full border border-transparent bg-transparent hover:border-white/50 hover:bg-tan"
             style={{ fontWeight: 500 }}
           >
             {t(link.labelKey)}
