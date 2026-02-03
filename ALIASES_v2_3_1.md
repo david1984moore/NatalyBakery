@@ -138,13 +138,30 @@
 **MANDATORY: Always includes push - never commit without pushing**
 
 **Behavior:**
-1. Stages all changes
-2. Generates commit message
-3. Commits changes
-4. **AUTOMATICALLY PUSHES to origin/master (or current branch)**
-5. Reports hash and push status
+1. **Runs `git status` first** - Shows what will be committed
+2. Runs `git diff --stat` - Shows summary of changes
+3. Stages all changes
+4. Generates descriptive commit message based on changes
+5. Commits changes
+6. **AUTOMATICALLY PUSHES to origin/master (or current branch)**
+7. Reports hash and push status
 
-**One command = stage + commit + push (always)**
+**One command = status + stage + commit + push (always)**
+
+**Output:**
+```
+📊 Git Status Check:
+   Modified: 3 files
+   - src/components/Hero.tsx
+   - src/app/menu/page.tsx
+   - tailwind.config.ts
+
+📝 Committing: "Update UI styling and layout"
+✓ Committed: 61a7959
+✓ Pushed to origin/master
+
+Hash: 61a7959
+```
 
 ---
 
@@ -423,7 +440,7 @@ Proceed? (/commit to execute)
 ## ⚠️ Critical Behaviors
 
 **ALWAYS:**
-- `/commit` auto-pushes (no separate push)
+- `/commit` runs `git status` first, then auto-pushes (no separate push)
 - `/next` executes immediately (no options)
 - `/save` and `/init` check archives (mandatory)
 - Archive at 200 lines (automatic)
