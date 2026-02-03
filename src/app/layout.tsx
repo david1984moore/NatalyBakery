@@ -3,6 +3,7 @@ import { Inter, Roboto, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/contexts/CartContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { MobileMenuProvider } from '@/contexts/MobileMenuContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -44,7 +45,9 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${roboto.variable} ${playfairDisplay.variable}`}>
       <body>
         <LanguageProvider>
-          <CartProvider>{children}</CartProvider>
+          <MobileMenuProvider>
+            <CartProvider>{children}</CartProvider>
+          </MobileMenuProvider>
         </LanguageProvider>
       </body>
     </html>

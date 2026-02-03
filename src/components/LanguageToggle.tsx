@@ -3,7 +3,7 @@
 import { useLanguage } from '@/contexts/LanguageContext'
 
 interface LanguageToggleProps {
-  variant?: 'desktop' | 'mobile' | 'menu'
+  variant?: 'desktop' | 'mobile' | 'menu' | 'mobileMenu'
 }
 
 export default function LanguageToggle({ variant = 'desktop' }: LanguageToggleProps) {
@@ -18,6 +18,20 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
       <button
         onClick={toggleLanguage}
         className="min-h-[44px] px-6 py-3 text-sm text-warmgray-700 hover:bg-cream-100 transition-colors duration-200 border-t border-warmgray-200 mt-2"
+        style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
+        aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
+        title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
+      >
+        {language === 'en' ? 'español' : 'english'}
+      </button>
+    )
+  }
+
+  if (variant === 'mobileMenu') {
+    return (
+      <button
+        onClick={toggleLanguage}
+        className="min-h-[44px] px-3 py-2 text-sm border border-white/40 bg-white/20 backdrop-blur-sm text-white rounded-md hover:bg-white/30 transition-colors duration-200 font-medium"
         style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}

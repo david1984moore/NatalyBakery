@@ -21,7 +21,7 @@ export default function Hero() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8 safe-top">
         {/* Nav - top-right on mobile (aligned with brand), vertically centered on desktop */}
         <div className="absolute top-4 right-4 md:top-1/2 md:-translate-y-1/2 md:right-6 lg:right-8">
           <HeroNav />
