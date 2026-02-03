@@ -22,13 +22,13 @@ export default function Hero() {
 
       {/* Hero Content */}
       <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8">
-        {/* Nav - absolute right, vertically centered */}
-        <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-4 md:right-6 lg:right-8">
+        {/* Nav - top-right on mobile (aligned with brand), vertically centered on desktop */}
+        <div className="absolute top-4 right-4 md:top-1/2 md:-translate-y-1/2 md:right-6 lg:right-8">
           <HeroNav />
         </div>
 
-        {/* Brand Name - vertically centered, left side */}
-        <div id="brand-name-wrapper" className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 lg:left-8 font-brand-playfair">
+        {/* Brand Name - top-left on mobile, vertically centered on desktop */}
+        <div id="brand-name-wrapper" className="absolute top-4 left-4 md:top-1/2 md:-translate-y-1/2 md:left-6 lg:left-8 font-brand-playfair">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap">
             Caramel & Jo
           </h1>
