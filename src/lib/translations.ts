@@ -29,6 +29,7 @@ export type TranslationKey =
   | 'menu.minimum'
   | 'menu.addToCart'
   | 'menu.minimumOrder'
+  | 'menu.deliveryNote'
   
   // Checkout
   | 'checkout.title'
@@ -37,6 +38,7 @@ export type TranslationKey =
   | 'checkout.email'
   | 'checkout.phone'
   | 'checkout.phoneNumber'
+  | 'checkout.deliveryLocation'
   | 'checkout.specialInstructions'
   | 'checkout.orderSummary'
   | 'checkout.continueToPayment'
@@ -140,6 +142,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'menu.minimum': '(Minimum {min})',
     'menu.addToCart': 'Add to Cart',
     'menu.minimumOrder': 'Minimum order of {min} shells required for Conchas',
+    'menu.deliveryNote': 'All orders will be delivered to you. We deliver orders between 6:30pm and 9:30pm daily. Local delivery (Christiana, Newark, southern Wilmington, New Castle, Bear) is free. Any delivery outside of New Castle county, Delaware will be an additional $15.',
     
     // Checkout
     'checkout.title': 'Checkout',
@@ -148,6 +151,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.email': 'Email *',
     'checkout.phone': 'Phone Number *',
     'checkout.phoneNumber': 'Phone Number',
+    'checkout.deliveryLocation': 'Delivery Location *',
     'checkout.specialInstructions': 'Special Instructions',
     'checkout.orderSummary': 'Order Summary',
     'checkout.continueToPayment': 'Continue to Payment',
@@ -250,6 +254,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'menu.minimum': '(Mínimo {min})',
     'menu.addToCart': 'Agregar al Carrito',
     'menu.minimumOrder': 'Pedido mínimo de {min} piezas requerido para Conchas',
+    'menu.deliveryNote': 'Todos los pedidos serán entregados a domicilio. Entregamos entre 6:30pm y 9:30pm diariamente. La entrega local (Christiana, Newark, sur de Wilmington, New Castle, Bear) es gratis. Cualquier entrega fuera del condado de New Castle, Delaware tendrá un cargo adicional de $15.',
     
     // Checkout
     'checkout.title': 'Finalizar Compra',
@@ -258,6 +263,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.email': 'Correo Electrónico *',
     'checkout.phone': 'Número de Teléfono *',
     'checkout.phoneNumber': 'Número de Teléfono',
+    'checkout.deliveryLocation': 'Ubicación de Entrega *',
     'checkout.specialInstructions': 'Instrucciones Especiales',
     'checkout.orderSummary': 'Resumen del Pedido',
     'checkout.continueToPayment': 'Continuar al Pago',

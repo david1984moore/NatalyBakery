@@ -45,7 +45,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     return (
       <button
         onClick={toggleLanguage}
-        className="min-h-[44px] px-3 py-2 sm:py-1.5 text-sm border border-warmgray-300 bg-transparent text-warmgray-700 rounded-md hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 font-medium"
+        className="min-h-[44px] px-3 py-1.5 text-sm border border-warmgray-300 bg-transparent text-warmgray-700 rounded-md md:hover:bg-warmbrown-500 md:hover:border-warmbrown-500 md:hover:text-white transition-colors duration-200 font-medium"
         style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}

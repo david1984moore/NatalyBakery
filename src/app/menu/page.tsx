@@ -192,7 +192,7 @@ function MenuPageContent() {
           <div className="flex items-center gap-2 flex-shrink-0">
             <Link
               href="/contact"
-              className="min-h-[36px] px-3 py-1.5 rounded-md text-sm font-medium border border-warmgray-300 bg-transparent text-warmgray-700 hover:bg-warmbrown-500 hover:text-white hover:border-warmbrown-500 transition-colors duration-200 whitespace-nowrap flex items-center"
+              className="min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium border border-warmgray-300 bg-transparent text-warmgray-700 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500 transition-colors duration-200 whitespace-nowrap flex items-center"
             >
               {t('nav.contact')}
             </Link>
@@ -201,11 +201,11 @@ function MenuPageContent() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
+              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md md:hover:bg-tan md:hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
               aria-label="Shopping cart"
             >
               <svg
-                className="w-5 h-5 text-warmgray-700 group-hover:text-white"
+                className="w-5 h-5 text-warmgray-700 md:group-hover:text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -244,7 +244,7 @@ function MenuPageContent() {
                   className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border ${
                     isSelected
                       ? 'bg-warmbrown-500 text-white border-warmbrown-500 shadow-md font-semibold'
-                      : 'bg-transparent text-warmgray-700 border-warmgray-300 hover:bg-warmbrown-500 hover:text-white hover:border-warmbrown-500'
+                      : 'bg-transparent text-warmgray-700 border-warmgray-300 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500'
                   }`}
                 >
                   {translatedName}
@@ -294,7 +294,7 @@ function MenuPageContent() {
                     className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
                       isSelected
                         ? 'bg-warmbrown-500 text-white border-warmbrown-500 shadow-md font-semibold'
-                        : 'bg-transparent text-warmgray-700 border-warmgray-300 hover:bg-warmbrown-500 hover:text-white hover:border-warmbrown-500'
+                        : 'bg-transparent text-warmgray-700 border-warmgray-300 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500'
                     }`}
                   >
                     {translatedName}
@@ -308,7 +308,7 @@ function MenuPageContent() {
           <div className="flex items-center gap-3 flex-shrink-0 pl-4 pr-4 lg:pr-6">
             <Link
               href="/contact"
-              className="flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap border border-warmgray-300 bg-transparent text-warmgray-700 hover:bg-warmbrown-500 hover:text-white hover:border-warmbrown-500 transition-colors duration-200 flex items-center"
+              className="flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap border border-warmgray-300 bg-transparent text-warmgray-700 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500 transition-colors duration-200 flex items-center"
             >
               {t('nav.contact')}
             </Link>
@@ -317,11 +317,11 @@ function MenuPageContent() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
+              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md md:hover:bg-tan md:hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
               aria-label="Shopping cart"
             >
               <svg
-                className="w-5 h-5 text-warmgray-700 group-hover:text-white"
+                className="w-5 h-5 text-warmgray-700 md:group-hover:text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -343,10 +343,9 @@ function MenuPageContent() {
         </div>
       </div>
 
-      {/* Featured Product Section - Fit in viewport without scrolling */}
-      {/* Mobile: pt-[112px] accounts for brand row (64px) + category row (~48px), Desktop: pt-20 */}
-      <section className="flex-1 overflow-hidden pt-[112px] md:pt-20 flex items-center overflow-y-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center py-4 md:py-0">
+      {/* Featured Product Section - items-start ensures image top is never hidden behind header */}
+      <section className="flex-1 overflow-hidden menu-content-top flex items-start overflow-y-auto safe-bottom">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full flex items-start md:items-center pt-2 pb-24 md:pt-6 md:pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">
@@ -368,32 +367,32 @@ function MenuPageContent() {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center w-full">
-            {/* Product Image */}
-            <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md mx-auto rounded-2xl overflow-hidden border border-white/60 shadow-lg">
-              <div className="relative w-full rounded-2xl overflow-hidden" style={{ aspectRatio: '3/4' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 items-center w-full">
+            {/* Product Image - compact on mobile to reduce scrolling */}
+            <div className="relative w-full max-w-[180px] sm:max-w-[240px] md:max-w-md mx-auto rounded-2xl overflow-hidden border border-white/60 shadow-lg">
+              <div className="relative w-full rounded-2xl overflow-hidden aspect-[3/4]">
                 <Image
                   src={featuredProduct.image}
                   alt={featuredProduct.name}
                   fill
                   className="object-cover"
                   priority
-                  sizes="(max-width: 768px) 300px, 400px"
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 240px, 400px"
                 />
               </div>
             </div>
 
             {/* Product Details */}
-            <div className="space-y-3 md:space-y-4 flex flex-col">
+            <div className="space-y-2 md:space-y-4 flex flex-col">
               <div>
-                <h1 className="text-2xl md:text-3xl font-serif text-warmgray-800 mb-1.5">
+                <h1 className="text-xl md:text-3xl font-serif text-warmgray-800 mb-0.5 md:mb-1.5">
                   {(() => {
                     const translationKey = productNameToTranslationKey[featuredProduct.name] || featuredProduct.name
                     return translationKey.startsWith('product.') ? t(translationKey as any) : featuredProduct.name
                   })()}
                 </h1>
                 {featuredProduct.description && (
-                  <p className="text-warmgray-600 text-sm md:text-base leading-relaxed">
+                  <p className="text-warmgray-600 text-sm md:text-base leading-snug md:leading-relaxed">
                     {featuredProduct.description}
                   </p>
                 )}
@@ -402,17 +401,17 @@ function MenuPageContent() {
               {/* Variant Selection */}
               {featuredProduct.hasVariants && featuredProduct.variants.length > 1 && (
                 <div>
-                  <label className="block text-warmgray-700 font-medium mb-1.5 text-sm">
+                  <label className="block text-warmgray-700 font-medium mb-1 text-sm">
                     {t('menu.selectOption')}
                   </label>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     {featuredProduct.variants.map((variant) => (
                       <label
                         key={variant.id}
-                        className={`flex items-center gap-2 min-h-[44px] p-3 sm:p-2 border rounded-md cursor-pointer transition-colors ${
+                        className={`flex items-center gap-2 min-h-[44px] p-2 sm:p-2 border rounded-md cursor-pointer transition-colors ${
                           selectedVariant.id === variant.id
                             ? 'border-warmgray-800 bg-cream-50'
-                            : 'border-warmgray-300 hover:border-warmgray-400'
+                            : 'border-warmgray-300 md:hover:border-warmgray-400'
                         }`}
                       >
                         <input
@@ -460,14 +459,14 @@ function MenuPageContent() {
               )}
 
               {/* Quantity Selector */}
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-x-2 gap-y-1 flex-wrap">
                 <label htmlFor="quantity" className="text-warmgray-700 font-medium text-sm">
                   {t('menu.quantity')}
                 </label>
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md hover:bg-warmbrown-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md md:hover:bg-warmbrown-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     aria-label="Decrease quantity"
                     disabled={featuredProduct.minQuantity ? quantity <= featuredProduct.minQuantity : quantity <= 1}
                   >
@@ -488,7 +487,7 @@ function MenuPageContent() {
                   />
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md hover:bg-warmbrown-600 transition-colors"
+                    className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md md:hover:bg-warmbrown-600 transition-colors"
                     aria-label="Increase quantity"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -504,9 +503,9 @@ function MenuPageContent() {
               </div>
 
               {/* Total Price Display */}
-              <div className="pt-2 border-t border-warmgray-200">
+              <div className="pt-1.5 border-t border-warmgray-200">
                 {selectedVariant && (
-                  <div className="flex justify-between items-center mb-2">
+                  <div className="flex justify-between items-center mb-1.5">
                     <span className="text-warmgray-700 font-medium text-sm">{t('cart.total')}</span>
                     <span className="text-lg font-serif text-warmgray-800">
                       {formatCurrency(selectedVariant.price * quantity)}
@@ -518,11 +517,14 @@ function MenuPageContent() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedVariant}
-                  className="w-full min-h-[44px] px-4 py-3 sm:py-2 bg-warmbrown-500 text-warmgray-800 rounded-md hover:bg-warmbrown-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                  className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-warmbrown-500 text-warmgray-800 rounded-md md:hover:bg-warmbrown-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
                   style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {t('menu.addToCart')}
                 </button>
+                <p className="text-xs text-warmgray-500 mt-2 leading-relaxed" role="note">
+                  * {t('menu.deliveryNote')}
+                </p>
               </div>
             </div>
           </div>

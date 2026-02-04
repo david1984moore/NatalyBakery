@@ -27,7 +27,8 @@ function getStripe(): Stripe {
 const checkoutSchema = z.object({
   customerName: z.string().min(1, 'Name is required'),
   customerEmail: z.string().email('Valid email is required'),
-  customerPhone: z.string().optional(),
+  customerPhone: z.string().min(1, 'Phone number is required'),
+  deliveryLocation: z.string().min(1, 'Delivery location is required'),
   items: z
     .array(
       z.object({
@@ -91,7 +92,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { customerName, customerEmail, customerPhone, items, notes } = validationResult.data
+    const { customerName, customerEmail, customerPhone, deliveryLocation, items, notes } = validationResult.data
 
     // Calculate totals
     const itemsWithTotals = items.map((item) => ({
@@ -117,7 +118,8 @@ export async function POST(request: NextRequest) {
           orderNumber,
           customerName,
           customerEmail,
-          customerPhone: customerPhone || null,
+          customerPhone,
+          deliveryLocation,
           totalAmount,
           depositAmount,
           remainingAmount,

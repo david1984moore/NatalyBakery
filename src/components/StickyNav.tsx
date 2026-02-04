@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { useMobileMenu } from '@/contexts/MobileMenuContext'
 import LanguageToggle from './LanguageToggle'
 
 const navLinks = [
@@ -15,7 +14,6 @@ const navLinks = [
 export default function StickyNav() {
   const [isVisible, setIsVisible] = useState(false)
   const { t } = useLanguage()
-  const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen, toggleMenu } = useMobileMenu()
 
   useEffect(() => {
     const sentinel = document.getElementById('nav-sentinel')
@@ -61,7 +59,7 @@ export default function StickyNav() {
             <Link
               key={link.labelKey}
               href={link.href}
-              className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
+              className="font-ui min-h-[44px] px-3 py-1.5 flex items-center rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
             >
               {t(link.labelKey)}
             </Link>
@@ -69,23 +67,18 @@ export default function StickyNav() {
           <LanguageToggle variant="menu" />
         </div>
 
-        {/* Mobile - Hamburger */}
+        {/* Mobile - Hamburger (navigates directly to menu page) */}
         <div className="md:hidden flex items-center gap-2">
           <LanguageToggle variant="menu" />
-          <button
-            onClick={toggleMenu}
+          <Link
+            href="/menu"
             className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700"
-            aria-expanded={isMobileMenuOpen}
-            aria-label="Toggle menu"
+            aria-label="Go to menu"
           >
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              )}
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

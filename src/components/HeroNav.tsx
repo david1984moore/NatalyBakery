@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { useMobileMenu } from '@/contexts/MobileMenuContext'
 import LanguageToggle from './LanguageToggle'
 
 const navLinks = [
@@ -13,7 +12,6 @@ const navLinks = [
 
 export default function HeroNav() {
   const { t } = useLanguage()
-  const { isOpen, toggleMenu } = useMobileMenu()
 
   return (
     <nav className="relative px-0 md:px-4 lg:px-5 py-0 md:py-4 lg:py-5 safe-right">
@@ -32,12 +30,11 @@ export default function HeroNav() {
         ))}
       </div>
 
-      {/* Mobile - Hamburger (triggers sticky nav menu) */}
-      <button
-        onClick={toggleMenu}
+      {/* Mobile - Hamburger (navigates directly to menu page) */}
+      <Link
+        href="/menu"
         className="md:hidden min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-white focus:outline-none"
-        aria-expanded={isOpen}
-        aria-label="Toggle navigation menu"
+        aria-label="Go to menu"
       >
         <svg
           className="h-8 w-8"
@@ -51,13 +48,9 @@ export default function HeroNav() {
             filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
           }}
         >
-          {isOpen ? (
-            <path d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          )}
+          <path d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-      </button>
+      </Link>
     </nav>
   )
 }

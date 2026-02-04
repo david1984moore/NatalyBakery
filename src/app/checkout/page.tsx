@@ -19,6 +19,7 @@ export default function CheckoutPage() {
     name: '',
     email: '',
     phone: '',
+    deliveryLocation: '',
     notes: '',
   })
   const [checkoutData, setCheckoutData] = useState<CheckoutResponse | null>(null)
@@ -54,7 +55,8 @@ export default function CheckoutPage() {
   // Validate that all required fields are filled
   const isFormValid = customerInfo.name.trim() !== '' && 
                       customerInfo.email.trim() !== '' && 
-                      customerInfo.phone.trim() !== ''
+                      customerInfo.phone.trim() !== '' &&
+                      customerInfo.deliveryLocation.trim() !== ''
 
   // CRITICAL: Guard against empty cart - but don't redirect if we're completing payment
   const [isCompletingPayment, setIsCompletingPayment] = useState(false)
@@ -93,7 +95,8 @@ export default function CheckoutPage() {
       const requestBody = {
         customerName: customerInfo.name,
         customerEmail: customerInfo.email,
-        customerPhone: customerInfo.phone || undefined,
+        customerPhone: customerInfo.phone,
+        deliveryLocation: customerInfo.deliveryLocation,
         items: items.map((item) => ({
           productName: item.variantName 
             ? `${item.productName} - ${item.variantName}`
@@ -369,6 +372,20 @@ export default function CheckoutPage() {
                       required
                       value={customerInfo.phone}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
+                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="deliveryLocation" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.deliveryLocation')}
+                    </label>
+                    <input
+                      type="text"
+                      id="deliveryLocation"
+                      required
+                      value={customerInfo.deliveryLocation}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryLocation: e.target.value })}
                       className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
                     />
                   </div>

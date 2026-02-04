@@ -3,7 +3,6 @@ import { Inter, Roboto, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/contexts/CartContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
-import { MobileMenuProvider } from '@/contexts/MobileMenuContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,8 +31,13 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
-  title: "Caramel & Jo - Artisan Baked Goods Made with Love",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://caramelandjo.onrender.com'),
+  title: "Caramel & Jo - Where caramel dreams become cake",
   description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes. Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, Conchas, and more.',
+  openGraph: {
+    title: "Caramel & Jo - Where caramel dreams become cake",
+    description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes.',
+  },
 }
 
 export default function RootLayout({
@@ -45,9 +49,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${roboto.variable} ${playfairDisplay.variable}`}>
       <body>
         <LanguageProvider>
-          <MobileMenuProvider>
-            <CartProvider>{children}</CartProvider>
-          </MobileMenuProvider>
+          <CartProvider>{children}</CartProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -72,6 +72,7 @@ Deposit Paid (50%): ${depositAmount}
 Remaining Balance (50%): ${remainingAmount}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+Delivery Location:\n${order.deliveryLocation}\n\n
 ${order.notes ? `Special Instructions:\n${order.notes}\n\n` : ''}
 Payment Status:
 ✅ Deposit of ${depositAmount} has been received.
@@ -148,7 +149,8 @@ Customer Information:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Name: ${order.customerName}
 Email: ${order.customerEmail}
-${order.customerPhone ? `Phone: ${order.customerPhone}` : ''}
+Phone: ${order.customerPhone}
+${order.deliveryLocation ? `Delivery Location: ${order.deliveryLocation}` : ''}
 
 Order Details:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

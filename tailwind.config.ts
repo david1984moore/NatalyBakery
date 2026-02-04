@@ -84,6 +84,11 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Disable hover effects on touch devices (mobile) - prevents sticky hover state on tap
+    function ({ addVariant }: { addVariant: (name: string, value: string) => void }) {
+      addVariant('hover', '@media (hover: hover) { &:hover }')
+    },
+  ],
 }
 export default config
