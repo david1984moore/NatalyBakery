@@ -13,9 +13,11 @@ export interface CheckoutRequest {
   customerName: string
   customerEmail: string
   customerPhone: string
-  deliveryLocation: string
+  deliveryAddress: string
+  deliveryDate: string
+  deliveryTime: string
   items: CheckoutItem[]
-  notes?: string
+  specialInstructions?: string
 }
 
 export interface CheckoutResponse {

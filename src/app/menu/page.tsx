@@ -11,6 +11,8 @@ import { formatCurrency } from '@/lib/utils'
 import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/productTranslations'
 import Cart from '@/components/Cart'
 import LanguageToggle from '@/components/LanguageToggle'
+import ProductImageGallery from '@/components/ProductImageGallery'
+import ProductImage from '@/components/ProductImage'
 
 function MenuPageContent() {
   const searchParams = useSearchParams()
@@ -368,18 +370,22 @@ function MenuPageContent() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 items-center w-full">
-            {/* Product Image - compact on mobile to reduce scrolling */}
+            {/* Product Image - gallery for products with multiple images, single image otherwise */}
             <div className="relative w-full max-w-[180px] sm:max-w-[240px] md:max-w-md mx-auto rounded-2xl overflow-hidden border border-white/60 shadow-lg">
-              <div className="relative w-full rounded-2xl overflow-hidden aspect-[3/4]">
-                <Image
-                  src={featuredProduct.image}
+              {featuredProduct.images && featuredProduct.images.length > 0 ? (
+                <ProductImageGallery
+                  images={featuredProduct.images}
                   alt={featuredProduct.name}
-                  fill
-                  className="object-cover"
-                  priority
                   sizes="(max-width: 640px) 180px, (max-width: 768px) 240px, 400px"
                 />
-              </div>
+              ) : (
+                <ProductImage
+                  key={featuredProduct.name}
+                  src={featuredProduct.image}
+                  alt={featuredProduct.name}
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 240px, 400px"
+                />
+              )}
             </div>
 
             {/* Product Details */}

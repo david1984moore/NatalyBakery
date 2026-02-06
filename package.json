@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && npm run optimize-images && next build",
     "start": "next start",
+    "optimize-images": "node scripts/optimize-images.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -27,6 +28,7 @@
     "react-hook-form": "^7.54.2",
     "stripe": "^17.3.1",
     "tailwind-merge": "^3.4.0",
+    "yet-another-react-lightbox": "^3.28.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -41,6 +43,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.3",
     "prisma": "^5.20.0",
+    "sharp": "^0.33.5",
     "tailwindcss": "^3.4.9",
     "typescript": "^5.5.4"
   },

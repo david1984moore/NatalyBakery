@@ -28,7 +28,9 @@ const checkoutSchema = z.object({
   customerName: z.string().min(1, 'Name is required'),
   customerEmail: z.string().email('Valid email is required'),
   customerPhone: z.string().min(1, 'Phone number is required'),
-  deliveryLocation: z.string().min(1, 'Delivery location is required'),
+  deliveryAddress: z.string().min(1, 'Delivery address is required'),
+  deliveryDate: z.string().min(1, 'Delivery date is required'),
+  deliveryTime: z.string().min(1, 'Delivery time is required'),
   items: z
     .array(
       z.object({
@@ -38,7 +40,7 @@ const checkoutSchema = z.object({
       })
     )
     .min(1, 'At least one item is required'),
-  notes: z.string().optional(),
+  specialInstructions: z.string().optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -92,7 +94,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { customerName, customerEmail, customerPhone, deliveryLocation, items, notes } = validationResult.data
+    const { customerName, customerEmail, customerPhone, deliveryAddress, deliveryDate, deliveryTime, items, specialInstructions } = validationResult.data
 
     // Calculate totals
     const itemsWithTotals = items.map((item) => ({
@@ -113,19 +115,24 @@ export async function POST(request: NextRequest) {
     // Create order in database (before payment)
     let order
     try {
+      // Parse delivery date to DateTime (store as start of day in local timezone)
+      const deliveryDateObj = new Date(deliveryDate + 'T12:00:00')
+
       order = await prisma.order.create({
         data: {
           orderNumber,
           customerName,
           customerEmail,
           customerPhone,
-          deliveryLocation,
+          deliveryLocation: deliveryAddress,
+          deliveryDate: deliveryDateObj,
+          deliveryTime,
           totalAmount,
           depositAmount,
           remainingAmount,
           depositPaid: false,
           status: 'PENDING',
-          notes: notes || null,
+          notes: specialInstructions || null,
           items: {
             create: itemsWithTotals.map((item) => ({
               productName: item.productName,

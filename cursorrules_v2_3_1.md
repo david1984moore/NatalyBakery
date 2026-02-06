@@ -314,13 +314,14 @@ Ready for external analysis or fresh perspective.
 ### Tier 3: Development (Automation with Transparency)
 
 #### `/server` - Dev Server Management
-1. Check ports 3000-3010
-2. **Report what processes will be killed**
-3. Kill only dev server processes
-4. Detect project type
-5. Start appropriate server
-6. Wait for ready signal
-7. Report URL and status
+1. **Automatically kill all existing dev server processes** (ports 3000-3010)
+2. Remove Next.js dev lock file (`.next/dev/lock`) if present
+3. Detect project type
+4. Start a fresh development server
+5. Wait for ready signal
+6. Report URL and status
+
+**Always kill-then-start** - ensures a clean server with no port or lock conflicts.
 
 #### `/start` - Complete Dev Environment Setup
 **Comprehensive development environment initialization**

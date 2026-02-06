@@ -38,8 +38,15 @@ export type TranslationKey =
   | 'checkout.email'
   | 'checkout.phone'
   | 'checkout.phoneNumber'
+  | 'checkout.deliveryAddress'
   | 'checkout.deliveryLocation'
+  | 'checkout.deliveryDate'
+  | 'checkout.deliveryTime'
+  | 'checkout.deliveryTimeWindow'
   | 'checkout.specialInstructions'
+  | 'checkout.placeholder.address'
+  | 'checkout.placeholder.specialInstructions'
+  | 'checkout.selectTime'
   | 'checkout.orderSummary'
   | 'checkout.continueToPayment'
   | 'checkout.processing'
@@ -85,6 +92,16 @@ export type TranslationKey =
   // About
   | 'about.title'
   | 'about.bio'
+  
+  // Admin
+  | 'admin.orders'
+  | 'admin.orderDetails'
+  | 'admin.confirmDelivery'
+  | 'admin.deliveryConfirmed'
+  | 'admin.pendingConfirmation'
+  | 'admin.login'
+  | 'admin.password'
+  | 'admin.loginRequired'
   
   // Common
   | 'common.loading'
@@ -151,8 +168,15 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.email': 'Email *',
     'checkout.phone': 'Phone Number *',
     'checkout.phoneNumber': 'Phone Number',
+    'checkout.deliveryAddress': 'Delivery Address *',
     'checkout.deliveryLocation': 'Delivery Location *',
+    'checkout.deliveryDate': 'Delivery Date *',
+    'checkout.deliveryTime': 'Delivery Time *',
+    'checkout.deliveryTimeWindow': 'We deliver between 6:30pm and 9:30pm daily.',
     'checkout.specialInstructions': 'Special Instructions',
+    'checkout.placeholder.address': 'Street address, city, state, zip',
+    'checkout.placeholder.specialInstructions': 'Gate code, building instructions, leave at door, etc.',
+    'checkout.selectTime': 'Select a time',
     'checkout.orderSummary': 'Order Summary',
     'checkout.continueToPayment': 'Continue to Payment',
     'checkout.processing': 'Processing your order...',
@@ -198,6 +222,16 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     // About
     'about.title': 'About Nataly',
     'about.bio': 'Nataly Hernandez, originally from Puebla, Mexico, grew up in a house of cooks. Since 2025, Nataly has been offering her homemade baked foods for the world to enjoy.',
+    
+    // Admin
+    'admin.orders': 'Orders',
+    'admin.orderDetails': 'Order Details',
+    'admin.confirmDelivery': 'Confirm Delivery',
+    'admin.deliveryConfirmed': 'Delivery Confirmed',
+    'admin.pendingConfirmation': 'Pending Confirmation',
+    'admin.login': 'Log In',
+    'admin.password': 'Password',
+    'admin.loginRequired': 'Admin login required',
     
     // Common
     'common.loading': 'Loading...',
@@ -263,8 +297,15 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.email': 'Correo Electrónico *',
     'checkout.phone': 'Número de Teléfono *',
     'checkout.phoneNumber': 'Número de Teléfono',
+    'checkout.deliveryAddress': 'Dirección de Entrega *',
     'checkout.deliveryLocation': 'Ubicación de Entrega *',
+    'checkout.deliveryDate': 'Fecha de Entrega *',
+    'checkout.deliveryTime': 'Hora de Entrega *',
+    'checkout.deliveryTimeWindow': 'Entregamos entre 6:30pm y 9:30pm diariamente.',
     'checkout.specialInstructions': 'Instrucciones Especiales',
+    'checkout.placeholder.address': 'Dirección, ciudad, estado, código postal',
+    'checkout.placeholder.specialInstructions': 'Código de acceso, instrucciones del edificio, dejar en la puerta, etc.',
+    'checkout.selectTime': 'Seleccionar hora',
     'checkout.orderSummary': 'Resumen del Pedido',
     'checkout.continueToPayment': 'Continuar al Pago',
     'checkout.processing': 'Procesando tu pedido...',
@@ -310,6 +351,16 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     // About
     'about.title': 'Acerca de Nataly',
     'about.bio': 'Nataly Hernandez, originaria de Puebla, México, creció en una casa de cocineros. Desde 2025, Nataly ha estado ofreciendo sus alimentos horneados caseros para que el mundo disfrute.',
+    
+    // Admin
+    'admin.orders': 'Pedidos',
+    'admin.orderDetails': 'Detalles del Pedido',
+    'admin.confirmDelivery': 'Confirmar Entrega',
+    'admin.deliveryConfirmed': 'Entrega Confirmada',
+    'admin.pendingConfirmation': 'Confirmación Pendiente',
+    'admin.login': 'Iniciar Sesión',
+    'admin.password': 'Contraseña',
+    'admin.loginRequired': 'Inicio de sesión de administrador requerido',
     
     // Common
     'common.loading': 'Cargando...',

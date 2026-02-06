@@ -35,6 +35,9 @@ EMAIL_TO="caramelcakejo@gmail.com"
 # Application URL
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 NODE_ENV="development"
+
+# Admin (for order management and delivery confirmation)
+ADMIN_PASSWORD="your-secure-admin-password"
 ```
 
 ## 🚀 Quick Start

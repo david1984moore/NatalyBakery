@@ -72,7 +72,8 @@ Deposit Paid (50%): ${depositAmount}
 Remaining Balance (50%): ${remainingAmount}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Delivery Location:\n${order.deliveryLocation}\n\n
+Delivery Address:\n${order.deliveryLocation}\n\n
+${order.deliveryDate && order.deliveryTime ? `Requested Delivery:\n${new Date(order.deliveryDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} at ${order.deliveryTime}\n\n` : ''}
 ${order.notes ? `Special Instructions:\n${order.notes}\n\n` : ''}
 Payment Status:
 ✅ Deposit of ${depositAmount} has been received.
@@ -150,7 +151,8 @@ Customer Information:
 Name: ${order.customerName}
 Email: ${order.customerEmail}
 Phone: ${order.customerPhone}
-${order.deliveryLocation ? `Delivery Location: ${order.deliveryLocation}` : ''}
+${order.deliveryLocation ? `Delivery Address: ${order.deliveryLocation}` : ''}
+${order.deliveryDate && order.deliveryTime ? `Requested Delivery: ${new Date(order.deliveryDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} at ${order.deliveryTime}` : ''}
 
 Order Details:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -162,12 +164,12 @@ Deposit Paid (50%): ${depositAmount}
 Remaining Due (50%): ${remainingAmount}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-${order.notes ? `Customer Notes:\n${order.notes}\n\n` : ''}
+${order.notes ? `Special Instructions:\n${order.notes}\n\n` : ''}
 Payment:
 ✅ ${depositAmount} deposit received via Stripe
 💰 ${remainingAmount} due at pickup
 
-Please confirm this order and begin preparation.
+Please confirm this order and the delivery time/day, then begin preparation.
 
 View order details: ${process.env.NEXT_PUBLIC_APP_URL || 'https://caramelandjo.com'}/admin/orders/${order.id}
 `

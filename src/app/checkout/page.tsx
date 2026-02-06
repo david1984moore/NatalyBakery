@@ -19,8 +19,10 @@ export default function CheckoutPage() {
     name: '',
     email: '',
     phone: '',
-    deliveryLocation: '',
-    notes: '',
+    deliveryAddress: '',
+    deliveryDate: '',
+    deliveryTime: '',
+    specialInstructions: '',
   })
   const [checkoutData, setCheckoutData] = useState<CheckoutResponse | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -52,11 +54,19 @@ export default function CheckoutPage() {
   const depositAmount = getDepositAmount()
   const remainingAmount = getRemainingAmount()
 
+  // Delivery time options: 6:30pm - 9:30pm in 30-min increments
+  const deliveryTimeOptions = ['6:30pm', '7:00pm', '7:30pm', '8:00pm', '8:30pm', '9:00pm', '9:30pm']
+
+  // Get minimum date (today) for delivery date picker
+  const today = new Date().toISOString().split('T')[0]
+
   // Validate that all required fields are filled
   const isFormValid = customerInfo.name.trim() !== '' && 
                       customerInfo.email.trim() !== '' && 
                       customerInfo.phone.trim() !== '' &&
-                      customerInfo.deliveryLocation.trim() !== ''
+                      customerInfo.deliveryAddress.trim() !== '' &&
+                      customerInfo.deliveryDate.trim() !== '' &&
+                      customerInfo.deliveryTime.trim() !== ''
 
   // CRITICAL: Guard against empty cart - but don't redirect if we're completing payment
   const [isCompletingPayment, setIsCompletingPayment] = useState(false)
@@ -96,7 +106,9 @@ export default function CheckoutPage() {
         customerName: customerInfo.name,
         customerEmail: customerInfo.email,
         customerPhone: customerInfo.phone,
-        deliveryLocation: customerInfo.deliveryLocation,
+        deliveryAddress: customerInfo.deliveryAddress,
+        deliveryDate: customerInfo.deliveryDate,
+        deliveryTime: customerInfo.deliveryTime,
         items: items.map((item) => ({
           productName: item.variantName 
             ? `${item.productName} - ${item.variantName}`
@@ -104,7 +116,7 @@ export default function CheckoutPage() {
           quantity: item.quantity,
           unitPrice: item.unitPrice,
         })),
-        notes: customerInfo.notes || undefined,
+        specialInstructions: customerInfo.specialInstructions || undefined,
       }
 
       console.log('📤 Sending request to /api/checkout', requestBody)
@@ -377,28 +389,64 @@ export default function CheckoutPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="deliveryLocation" className="block text-xs font-medium text-warmgray-700 mb-1">
-                      {t('checkout.deliveryLocation')}
+                    <label htmlFor="deliveryAddress" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.deliveryAddress')}
                     </label>
                     <input
                       type="text"
-                      id="deliveryLocation"
+                      id="deliveryAddress"
                       required
-                      value={customerInfo.deliveryLocation}
-                      onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryLocation: e.target.value })}
+                      placeholder={t('checkout.placeholder.address')}
+                      value={customerInfo.deliveryAddress}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryAddress: e.target.value })}
                       className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="notes" className="block text-xs font-medium text-warmgray-700 mb-1">
+                    <label htmlFor="deliveryDate" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.deliveryDate')}
+                    </label>
+                    <input
+                      type="date"
+                      id="deliveryDate"
+                      required
+                      min={today}
+                      value={customerInfo.deliveryDate}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryDate: e.target.value })}
+                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="deliveryTime" className="block text-xs font-medium text-warmgray-700 mb-1">
+                      {t('checkout.deliveryTime')}
+                    </label>
+                    <p className="text-xs text-warmgray-500 mb-1">{t('checkout.deliveryTimeWindow')}</p>
+                    <select
+                      id="deliveryTime"
+                      required
+                      value={customerInfo.deliveryTime}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryTime: e.target.value })}
+                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                    >
+                      <option value="">{t('checkout.selectTime')}</option>
+                      {deliveryTimeOptions.map((time) => (
+                        <option key={time} value={time}>{time}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="specialInstructions" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.specialInstructions')}
                     </label>
                     <textarea
-                      id="notes"
+                      id="specialInstructions"
                       rows={2}
-                      value={customerInfo.notes}
-                      onChange={(e) => setCustomerInfo({ ...customerInfo, notes: e.target.value })}
+                      placeholder={t('checkout.placeholder.specialInstructions')}
+                      value={customerInfo.specialInstructions}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, specialInstructions: e.target.value })}
                       className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent resize-none"
                     />
                   </div>

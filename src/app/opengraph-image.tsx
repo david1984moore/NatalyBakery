@@ -48,21 +48,28 @@ export default async function Image() {
             background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%)',
           }}
         />
-        {/* Brand name - top left, like on website */}
+        {/* Brand name - centered, Caramel above & Jo, no hamburger in share preview */}
         <div
           style={{
             position: 'absolute',
-            top: 40,
-            left: 40,
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
             fontFamily: 'Georgia, serif',
-            fontSize: 56,
+            fontSize: 72,
             fontWeight: 700,
             color: 'white',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
+            textShadow: '4px 4px 8px rgba(0,0,0,0.8), 2px 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.5)',
             letterSpacing: '0.03em',
           }}
         >
-          Caramel & Jo
+          <span>Caramel</span>
+          <span>& Jo</span>
         </div>
         {/* Tagline bar at bottom - warm brown like current design */}
         <div

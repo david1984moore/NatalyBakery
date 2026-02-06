@@ -169,13 +169,13 @@ Hash: 61a7959
 
 ### `/server` - Dev Server
 **Behavior:**
-- Checks ports 3000-3010
-- Kills ONLY dev processes
+- **Automatically kills all existing dev server processes** (ports 3000-3010, Next.js lock) before starting
+- Clears any stale lock files (e.g. `.next/dev/lock`)
 - Detects project type
-- Starts appropriate server
+- Starts a fresh development server
 - Reports URL
 
-**Safe:** Won't kill other Node processes
+**Always starts fresh** - no need to manually stop first. Safe: only kills dev server processes, not other Node processes.
 
 ---
 

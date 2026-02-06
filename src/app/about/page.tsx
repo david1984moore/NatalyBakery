@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
 import Image from 'next/image'
 import Link from 'next/link'
+import { BLUR_DATA_URL } from '@/lib/image-utils'
 
 export default function AboutPage() {
   const { t } = useLanguage()
@@ -34,7 +35,10 @@ export default function AboutPage() {
                 fill
                 className="object-cover"
                 loading="lazy"
-                quality={90}
+                quality={75}
+                sizes="(max-width: 640px) 280px, 384px"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
               />
             </div>
           </div>

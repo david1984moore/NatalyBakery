@@ -8,13 +8,17 @@ datasource db {
 }
 
 model Order {
-  id                String      @id @default(cuid())
-  orderNumber       String      @unique
-  customerName      String
-  customerEmail     String
-  customerPhone     String
-  deliveryLocation  String
-  status            OrderStatus @default(PENDING)
+  id                   String      @id @default(cuid())
+  orderNumber          String      @unique
+  customerName         String
+  customerEmail        String
+  customerPhone        String
+  deliveryLocation     String
+  deliveryDate         DateTime?
+  deliveryTime         String?
+  deliveryConfirmed    Boolean     @default(false)
+  deliveryConfirmedAt  DateTime?
+  status               OrderStatus @default(PENDING)
   totalAmount     Float
   depositAmount   Float
   remainingAmount Float

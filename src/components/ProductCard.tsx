@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { getProductTranslationKey } from '@/lib/productTranslations'
+import { BLUR_DATA_URL } from '@/lib/image-utils'
 
 interface ProductCardProps {
   name: string
@@ -30,6 +31,9 @@ export default function ProductCard({ name, image, href, variant = 'hero' }: Pro
             fill
             className="object-cover"
             loading="lazy"
+            quality={75}
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
             sizes="(max-width: 640px) 140px, (max-width: 768px) 120px, 140px"
           />
           {/* Product name overlay - gradient from transparent to dark for readability, no visible strip */}

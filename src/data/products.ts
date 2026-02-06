@@ -13,6 +13,8 @@ export interface ProductVariant {
 export interface Product {
   name: string
   image: string
+  /** Optional gallery images - first is main/hero, rest in order. When set, enables gallery UI. */
+  images?: string[]
   description?: string
   variants: ProductVariant[]
   hasVariants: boolean
@@ -22,7 +24,7 @@ export interface Product {
 export const products: Product[] = [
   {
     name: 'Flan',
-    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&h=1000&fit=crop&q=80',
+    image: '/Images/IMG_7616.jpeg',
     hasVariants: true,
     variants: [
       {
@@ -49,7 +51,8 @@ export const products: Product[] = [
   },
   {
     name: 'Choco-flan',
-    image: 'https://images.unsplash.com/photo-1607920591413-4ec007e70023?w=800&h=1000&fit=crop&q=80',
+    image: '/Images/flan_1.jpeg',
+    images: ['/Images/flan_1.jpeg', '/Images/flan_2.jpeg', '/Images/IMG_7624.jpeg', '/Images/IMG_7626.jpeg'],
     hasVariants: true,
     variants: [
       {
@@ -136,7 +139,8 @@ export const products: Product[] = [
   },
   {
     name: 'Conchas',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&h=1000&fit=crop&q=80',
+    image: '/Images/conchas_3.jpeg',
+    images: ['/Images/conchas_3.jpeg', '/Images/conchas_1.jpeg', '/Images/conchas_2.jpeg', '/Images/conchas_4.jpeg'],
     hasVariants: false,
     variants: [
       {
