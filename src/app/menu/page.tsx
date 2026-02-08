@@ -173,41 +173,43 @@ function MenuPageContent() {
   }
 
   return (
-    <div className="h-screen bg-cream-50/30 flex flex-col overflow-hidden relative">
+    <div className="h-screen bg-white flex flex-col overflow-hidden relative">
       {/* Product Navigation Bar - Fixed at top - Mobile optimized */}
       <div 
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm safe-top"
-        style={{ minHeight: '64px' }}
+        className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
+        style={{ minHeight: '52px' }}
       >
+        {/* Header row - tan background (mobile & desktop) */}
+        <div className="bg-warmbrown-500 border-b border-warmbrown-600">
         {/* Mobile Layout (< 768px) */}
-        <div className="md:hidden flex items-center justify-between px-3 h-full" style={{ minHeight: '64px' }}>
+        <div className="md:hidden flex items-center justify-between px-2.5 h-full min-h-[40px]">
           {/* Home Button - Mobile */}
           <Link
             href="/"
             className="flex-shrink-0 flex items-center"
             aria-label="Home"
           >
-            <span className="text-black font-nav-playfair text-base font-bold">Caramel & Jo</span>
+            <span className="text-white font-nav-playfair text-base font-bold">Caramel & Jo</span>
           </Link>
           
           {/* Right side buttons - Mobile */}
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-1.5 flex-shrink-0">
             <Link
               href="/contact"
-              className="min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium border border-warmgray-300 bg-transparent text-warmgray-700 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500 transition-colors duration-200 whitespace-nowrap flex items-center"
+              className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
             >
               {t('nav.contact')}
             </Link>
-            <LanguageToggle variant="menu" />
+            <LanguageToggle variant="menuHeader" />
             <button
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md md:hover:bg-tan md:hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
+              className="min-w-[34px] min-h-[34px] bg-white/20 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-white/30 transition-colors duration-200 relative border border-white/50 group"
               aria-label="Shopping cart"
             >
               <svg
-                className="w-5 h-5 text-warmgray-700 md:group-hover:text-white"
+                className="w-3.5 h-3.5 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -228,55 +230,27 @@ function MenuPageContent() {
           </div>
         </div>
 
-        {/* Product Category Buttons - Mobile (below brand/buttons row) */}
-        <div className="md:hidden border-t border-warmgray-100">
-          <div 
-            className="flex items-center gap-2 overflow-x-auto scrollbar-hide pl-3 pr-6 py-2 touch-scroll mobile-scroll-container" 
-            style={{ WebkitOverflowScrolling: 'touch' }}
-          >
-            {products.map((product) => {
-              const isSelected = featuredProduct?.name === product.name
-              const translationKey = productNameToTranslationKey[product.name] || product.name
-              const translatedName = translationKey.startsWith('product.') ? t(translationKey as any) : product.name
-              
-              return (
-                <button
-                  key={product.name}
-                  onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border ${
-                    isSelected
-                      ? 'bg-warmbrown-500 text-white border-warmbrown-500 shadow-md font-semibold'
-                      : 'bg-transparent text-warmgray-700 border-warmgray-300 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500'
-                  }`}
-                >
-                  {translatedName}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
         {/* Desktop Layout (>= 768px) */}
-        <div className="hidden md:flex items-center h-full" style={{ minHeight: '64px' }}>
+        <div className="hidden md:flex items-center h-full" style={{ minHeight: '52px' }}>
           {/* Home Button - Desktop */}
           <Link
             href="/"
             className="flex-shrink-0 px-4 lg:px-6 flex items-center h-full"
             aria-label="Home"
           >
-            <span className="text-black font-nav-playfair text-xl lg:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-white font-nav-playfair text-2xl lg:text-3xl font-bold">Caramel & Jo</span>
           </Link>
           
           {/* Centered container for scrollable product list - Desktop */}
           <div className="flex-1 flex items-center gap-3 relative h-full min-w-0 pl-4 pr-2">
             {/* Left scroll indicator */}
             {canScrollLeft && (
-              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-warmbrown-500 via-warmbrown-500/80 to-transparent pointer-events-none z-10" />
             )}
             
             {/* Right scroll indicator */}
             {canScrollRight && (
-              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 via-white/80 to-transparent pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent via-warmbrown-500/80 to-warmbrown-500 pointer-events-none z-10" />
             )}
             
             <div 
@@ -295,8 +269,8 @@ function MenuPageContent() {
                     onClick={() => handleProductChange(product.name)}
                     className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
                       isSelected
-                        ? 'bg-warmbrown-500 text-white border-warmbrown-500 shadow-md font-semibold'
-                        : 'bg-transparent text-warmgray-700 border-warmgray-300 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500'
+                        ? 'bg-white text-warmgray-800 border-white shadow-md font-semibold'
+                        : 'bg-transparent text-white border-white/50 hover:bg-white/20 hover:border-white/30'
                     }`}
                   >
                     {translatedName}
@@ -310,20 +284,20 @@ function MenuPageContent() {
           <div className="flex items-center gap-3 flex-shrink-0 pl-4 pr-4 lg:pr-6">
             <Link
               href="/contact"
-              className="flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap border border-warmgray-300 bg-transparent text-warmgray-700 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500 transition-colors duration-200 flex items-center"
+              className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
             >
               {t('nav.contact')}
             </Link>
-            <LanguageToggle variant="menu" />
+            <LanguageToggle variant="menuHeader" />
             <button
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md md:hover:bg-tan md:hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
+              className="min-w-[40px] min-h-[40px] bg-white/20 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-white/30 transition-colors duration-200 relative border border-white/50 group"
               aria-label="Shopping cart"
             >
               <svg
-                className="w-5 h-5 text-warmgray-700 md:group-hover:text-white"
+                className="w-4 h-4 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -343,11 +317,40 @@ function MenuPageContent() {
             </button>
           </div>
         </div>
+        </div>
+
+        {/* Product Category Buttons - Mobile (below brand/buttons row) */}
+        <div className="md:hidden bg-white border-b border-warmgray-200">
+          <div 
+            className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pl-2.5 pr-4 py-1.5 touch-scroll mobile-scroll-container" 
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            {products.map((product) => {
+              const isSelected = featuredProduct?.name === product.name
+              const translationKey = productNameToTranslationKey[product.name] || product.name
+              const translatedName = translationKey.startsWith('product.') ? t(translationKey as any) : product.name
+              
+              return (
+                <button
+                  key={product.name}
+                  onClick={() => handleProductChange(product.name)}
+                  className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border ${
+                    isSelected
+                      ? 'bg-warmbrown-500 text-white border-warmbrown-500 shadow-md font-semibold'
+                      : 'bg-transparent text-warmgray-700 border-warmgray-300 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500'
+                  }`}
+                >
+                  {translatedName}
+                </button>
+              )
+            })}
+          </div>
+        </div>
       </div>
 
       {/* Featured Product Section - items-start ensures image top is never hidden behind header */}
-      <section className="flex-1 overflow-hidden menu-content-top flex items-start overflow-y-auto safe-bottom">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full flex items-start md:items-center pt-2 pb-24 md:pt-6 md:pb-4">
+      <section className="flex-1 overflow-hidden menu-content-top flex items-start overflow-y-auto safe-bottom relative z-0 [scrollbar-gutter:stable]">
+        <div className="max-w-7xl mx-auto pl-3 pr-5 sm:pl-6 sm:pr-8 lg:pl-8 lg:pr-10 w-full flex items-start md:items-center pt-2 pb-24 md:pt-6 md:pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">

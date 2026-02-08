@@ -75,12 +75,12 @@ export default function Cart() {
           }}
         />
         
-        {/* Cart Modal */}
+        {/* Cart Modal - centered on mobile, right-aligned on larger screens */}
         <div 
-          className="fixed right-2 sm:right-4 md:right-6 lg:right-8 z-[99] safe-right safe-x cart-modal-enter"
+          className="fixed left-4 right-4 sm:left-auto sm:right-4 md:right-6 lg:right-8 z-[99] safe-x cart-modal-enter"
           style={{ top: 'calc(64px + env(safe-area-inset-top, 0px))' }}
         >
-          <div className="w-[calc(100vw-1rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
+          <div className="w-full max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
           {/* Cart Header */}
           <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
             <div className="flex items-center justify-between">

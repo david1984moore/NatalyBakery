@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from './LanguageToggle'
@@ -11,9 +11,16 @@ const navLinks = [
   { href: '/menu', labelKey: 'nav.menu' as const },
 ]
 
+const dropdownLinks = [
+  { href: '/contact', labelKey: 'nav.contact' as const },
+  { href: '/menu', labelKey: 'nav.menu' as const },
+]
+
 export default function StickyNav() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const { t } = useLanguage()
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const sentinel = document.getElementById('nav-sentinel')
@@ -27,6 +34,16 @@ export default function StickyNav() {
     )
     observer.observe(sentinel)
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
   }, [])
 
   if (!isVisible) return null
@@ -48,7 +65,7 @@ export default function StickyNav() {
               window.location.href = '/'
             }
           }}
-          className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap cursor-pointer flex items-center min-h-[44px]"
+          className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 md:hover:text-gray-700 whitespace-nowrap cursor-pointer flex items-center min-h-[44px]"
         >
           Caramel & Jo
         </a>
@@ -67,18 +84,46 @@ export default function StickyNav() {
           <LanguageToggle variant="menu" />
         </div>
 
-        {/* Mobile - Hamburger (navigates directly to menu page) */}
+        {/* Mobile - Hamburger with dropdown (Contact, Menu) */}
         <div className="md:hidden flex items-center gap-2">
           <LanguageToggle variant="menu" />
-          <Link
-            href="/menu"
-            className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700"
-            aria-label="Go to menu"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </Link>
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700"
+              aria-expanded={isDropdownOpen}
+              aria-label="Toggle navigation menu"
+              aria-haspopup="true"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                {isDropdownOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+
+            {/* Dropdown - shaded glass effect */}
+            <div
+              className={`absolute top-full right-0 mt-2 w-48 z-50 rounded-xl overflow-hidden backdrop-blur-xl border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-200 ease-out ${
+                isDropdownOpen ? 'opacity-100 visible bg-[#3d3429]/45' : 'opacity-0 invisible bg-[#3d3429]/30'
+              }`}
+            >
+              <div className="py-2 px-2 flex flex-col gap-1">
+                {dropdownLinks.map((link) => (
+                  <Link
+                    key={link.labelKey}
+                    href={link.href}
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="font-playfair font-medium min-h-[44px] px-4 py-2.5 flex items-center text-base text-white rounded-lg md:hover:bg-white/20"
+                  >
+                    {t(link.labelKey)}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

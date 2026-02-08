@@ -7,9 +7,21 @@ export const alt = 'Caramel & Jo - Where caramel dreams become cake'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+async function loadPlayfairDisplay() {
+  const url = `https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&text=${encodeURIComponent('Caramel&Jo')}&display=swap`
+  const css = await (await fetch(url)).text()
+  const match = css.match(/url\((https:\/\/[^)]+)\)\s+format\('([^']+)'\)/)
+  if (!match) throw new Error('Failed to extract font URL from Google Fonts CSS')
+  const fontRes = await fetch(match[1])
+  if (!fontRes.ok) throw new Error('Failed to fetch Playfair Display font')
+  return await fontRes.arrayBuffer()
+}
+
 export default async function Image() {
-  const imagePath = join(process.cwd(), 'public/Images/IMG_7616.jpeg')
-  const imageData = await readFile(imagePath, 'base64')
+  const [imageData, fontData] = await Promise.all([
+    readFile(join(process.cwd(), 'public/Images/IMG_7616.jpeg'), 'base64'),
+    loadPlayfairDisplay(),
+  ])
   const imageSrc = `data:image/jpeg;base64,${imageData}`
 
   return new ImageResponse(
@@ -48,7 +60,7 @@ export default async function Image() {
             background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%)',
           }}
         />
-        {/* Brand name - centered, Caramel above & Jo, no hamburger in share preview */}
+        {/* Brand name - Playfair Display to match site, Caramel above & Jo centered */}
         <div
           style={{
             position: 'absolute',
@@ -60,7 +72,7 @@ export default async function Image() {
             alignItems: 'center',
             justifyContent: 'center',
             textAlign: 'center',
-            fontFamily: 'Georgia, serif',
+            fontFamily: 'Playfair Display',
             fontSize: 72,
             fontWeight: 700,
             color: 'white',
@@ -71,7 +83,7 @@ export default async function Image() {
           <span>Caramel</span>
           <span>& Jo</span>
         </div>
-        {/* Tagline bar at bottom - warm brown like current design */}
+        {/* Brown/gold bar at bottom with slogan */}
         <div
           style={{
             position: 'absolute',
@@ -87,7 +99,7 @@ export default async function Image() {
         >
           <span
             style={{
-              fontFamily: 'Georgia, serif',
+              fontFamily: 'Playfair Display',
               fontSize: 32,
               fontWeight: 500,
               color: 'white',
@@ -100,6 +112,16 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'Playfair Display',
+          data: fontData,
+          style: 'normal',
+          weight: 700,
+        },
+      ],
+    }
   )
 }

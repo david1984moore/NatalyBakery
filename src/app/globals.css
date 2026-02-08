@@ -35,14 +35,17 @@ body {
   }
 
   .text-hero-brand {
-    /* Natural, subtle grey shadows - direction matches photo lighting (shadow stretching left) */
+    /* Natural grey shadows - direction matches photo lighting (shadow stretching left) */
     text-shadow: 
-      -3px 1px 2px rgba(50,50,50,0.4),
-      -6px 2px 4px rgba(50,50,50,0.35),
-      -9px 3px 6px rgba(50,50,50,0.3),
-      -12px 4px 10px rgba(50,50,50,0.25);
+      -2px 0 4px rgba(20,20,20,0.75),
+      -4px 1px 8px rgba(20,20,20,0.7),
+      -6px 2px 12px rgba(20,20,20,0.65),
+      -10px 3px 16px rgba(20,20,20,0.6),
+      -14px 5px 24px rgba(20,20,20,0.55),
+      -20px 7px 32px rgba(20,20,20,0.45),
+      0 3px 8px rgba(0,0,0,0.4);
     /* Slightly darker stroke for clean edges */
-    -webkit-text-stroke: 0.5px rgba(50,50,50,0.4);
+    -webkit-text-stroke: 0.5px rgba(40,40,40,0.6);
     paint-order: stroke fill;
     font-family: var(--font-brand);
     font-weight: 700;
@@ -252,10 +255,10 @@ html {
 
 /* Menu page: content clears fixed header on mobile (safe-area + brand row + category row) */
 .menu-content-top {
-  padding-top: max(185px, calc(124px + env(safe-area-inset-top, 0px)));
+  padding-top: max(132px, calc(88px + env(safe-area-inset-top, 0px)));
 }
 @media (min-width: 768px) {
   .menu-content-top {
-    padding-top: 5rem; /* pt-20 */
+    padding-top: 4rem; /* pt-16 - matches reduced header */
   }
 }

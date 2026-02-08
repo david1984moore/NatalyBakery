@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import HeroNav from './HeroNav'
 
 export default function Hero() {
@@ -36,6 +37,14 @@ export default function Hero() {
             Caramel & Jo
           </h1>
         </div>
+
+        {/* Mobile Order - warm dark glass, brand-matched text */}
+        <Link
+          href="/menu"
+          className="md:hidden absolute left-1/2 -translate-x-1/2 bottom-[28%] font-brand-playfair font-bold text-3xl text-white text-hero-brand min-h-[64px] px-14 flex items-center justify-center rounded-full bg-[#3d3429]/40 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.1)] md:hover:bg-[#3d3429]/55 md:hover:border-white/30 md:hover:shadow-[0_12px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.15)]"
+        >
+          order
+        </Link>
       </div>
     </section>
   )
