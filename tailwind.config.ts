@@ -76,11 +76,6 @@ const config: Config = {
           500: '#c9b08a', /* subtle caramel */
           600: '#c0a67e', /* warmbrown hover */
         },
-        // Hero and menu page fill - light wood tone (matches hero fade)
-        hero: {
-          DEFAULT: '#d4c4a8',
-          600: '#b8a88a', /* darker for border/hover */
-        },
         // Pastel colors for minimalist aesthetic
         pink: {
           50: '#fdf2f8',
