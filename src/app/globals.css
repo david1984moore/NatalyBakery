@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #faf7f2;
-  --foreground: #171717;
+  --background: #faf7f1;
+  --foreground: #2d2822;
   --font-inter: 'Inter', system-ui, sans-serif;
   /* --font-roboto is set by next/font in layout.tsx */
   --font-serif: var(--font-roboto);
@@ -16,8 +16,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f8f5f0;
-    --foreground: #171717;
+    --background: #f8f5ee;
+    --foreground: #2d2822;
   }
 }
 
@@ -240,16 +240,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #faf9f7;
+  background: #f7f3ec;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d9d3c8;
+  background: #d5c9b4;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #c7bfb0;
+  background: #c7bb9e;
 }
 
 /* Hide scrollbar for horizontal navigation */

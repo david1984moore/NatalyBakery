@@ -9,33 +9,37 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm neutrals and earth tones for rustic warmth
+        // Warm neutrals and earth tones - pastel brownish palette
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        // Warm neutrals
+        // Warm neutrals - soft caramel undertones
         beige: {
-          50: '#faf9f7',
-          100: '#f5f3f0',
-          200: '#e8e4dd',
-          300: '#d9d3c8',
-          400: '#c7bfb0',
-          500: '#b5ab97',
+          50: '#faf7f1',
+          100: '#f5f0e7',
+          200: '#e8e0d3',
+          300: '#d9cdba',
+          400: '#c7b79c',
+          500: '#b5a084',
         },
         cream: {
-          50: '#fcf9f5',
-          100: '#f8f4ee',
-          200: '#f5efe5',
-          300: '#f0e8dc',
-          400: '#e8dfd0',
-          500: '#e0d4c4',
+          50: '#fcf8f2',
+          100: '#f8f3eb',
+          200: '#f5efe2',
+          300: '#efe6d7',
+          400: '#e6dac6',
+          500: '#ddcdb6',
         },
         warmgray: {
-          50: '#f7f6f4',
-          100: '#edeae6',
-          200: '#ddd8d1',
-          300: '#c9c2b8',
-          400: '#b0a899',
-          500: '#948a78',
+          50: '#f7f5f1',
+          100: '#edebe4',
+          200: '#ddd8cd',
+          300: '#c9c2b3',
+          400: '#b0a694',
+          500: '#948a74',
+          600: '#7a6f5a',
+          700: '#5f5645',
+          800: '#4a4336',
+          900: '#352f26',
         },
         // Earth tones
         terracotta: {
@@ -55,17 +59,17 @@ const config: Config = {
           500: '#6e866e',
         },
         tan: {
-          DEFAULT: '#c9a574', /* subtle caramel warmth - slightly more brown */
-          600: '#c09d6a', /* tan hover */
+          DEFAULT: '#c9b08a', /* subtle caramel */
+          600: '#c0a67e', /* tan hover */
         },
         warmbrown: {
-          50: '#f7f4f1',
-          100: '#ede6df',
-          200: '#d9ccc0',
-          300: '#c0ab9a',
-          400: '#a38670',
-          500: '#c9a574', /* subtle caramel warmth - slightly more brown */
-          600: '#c09d6a', /* tan hover */
+          50: '#f7f4ef',
+          100: '#edebe3',
+          200: '#ddd6c6',
+          300: '#c9bda8',
+          400: '#b5a486',
+          500: '#c9b08a', /* subtle caramel */
+          600: '#c0a67e', /* warmbrown hover */
         },
         // Pastel colors for minimalist aesthetic
         pink: {
