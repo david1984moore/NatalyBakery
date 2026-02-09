@@ -72,8 +72,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
   return (
     <button
       onClick={toggleLanguage}
-      className="px-3 py-1 text-lg md:text-xl text-white hover:text-white hover:scale-105 transition-all duration-200 bg-white/15 backdrop-blur-sm rounded-full border border-white/50 hover:bg-tan hover:border-white/50"
-      style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif', fontWeight: 400 }}
+      className="font-brand-playfair font-bold text-lg md:text-xl text-white tracking-wide lowercase px-3 py-2 rounded-full border border-transparent bg-transparent hover:border-white/50 hover:bg-tan transition-all duration-300"
       aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
     >

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { z } from 'zod'
+import { prisma } from '@/lib/prisma'
 import { generateOrderNumber, calculateDeposit } from '@/lib/utils'
 import { sendOrderConfirmationEmail, sendOrderNotificationEmail } from '@/lib/email'
 
@@ -96,6 +97,25 @@ export async function POST(request: NextRequest) {
 
     const { customerName, customerEmail, customerPhone, deliveryAddress, deliveryDate, deliveryTime, items, specialInstructions } = validationResult.data
 
+    // Validate delivery date: orders for today only allowed if placed before 9:00am
+    const tz = process.env.BAKERY_TIMEZONE || undefined
+    const dateOptions = tz ? { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' } : { year: 'numeric', month: '2-digit', day: '2-digit' }
+    const hourOptions = tz ? { timeZone: tz, hour: 'numeric', hour12: false } : { hour: 'numeric', hour12: false }
+    const todayStr = new Intl.DateTimeFormat('en-CA', dateOptions).format(new Date()) // YYYY-MM-DD
+    const currentHour = parseInt(new Intl.DateTimeFormat('en-US', hourOptions).format(new Date()), 10)
+    const isToday = deliveryDate === todayStr
+    const isAfterCutoff = currentHour >= 9
+    if (isToday && isAfterCutoff) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Same-day ordering cutoff has passed',
+          message: 'Orders for today must be placed before 9:00am. Please select tomorrow or a later date for delivery.',
+        },
+        { status: 400 }
+      )
+    }
+
     // Calculate totals
     const itemsWithTotals = items.map((item) => ({
       ...item,
@@ -108,9 +128,6 @@ export async function POST(request: NextRequest) {
 
     // Generate order number
     const orderNumber = generateOrderNumber()
-
-    // Import prisma dynamically to avoid build-time connection
-    const { prisma } = await import('@/lib/prisma')
 
     // Create order in database (before payment)
     let order

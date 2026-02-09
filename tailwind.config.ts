@@ -22,12 +22,12 @@ const config: Config = {
           500: '#b5ab97',
         },
         cream: {
-          50: '#fffefb',
-          100: '#fffcf5',
-          200: '#fff9eb',
-          300: '#fff5e1',
-          400: '#fff1d7',
-          500: '#ffedcd',
+          50: '#fcf9f5',
+          100: '#f8f4ee',
+          200: '#f5efe5',
+          300: '#f0e8dc',
+          400: '#e8dfd0',
+          500: '#e0d4c4',
         },
         warmgray: {
           50: '#f7f6f4',
@@ -55,8 +55,8 @@ const config: Config = {
           500: '#6e866e',
         },
         tan: {
-          DEFAULT: '#d2b48c',
-          600: '#c4a574',
+          DEFAULT: '#c9a574', /* subtle caramel warmth - slightly more brown */
+          600: '#c09d6a', /* tan hover */
         },
         warmbrown: {
           50: '#f7f4f1',
@@ -64,8 +64,8 @@ const config: Config = {
           200: '#d9ccc0',
           300: '#c0ab9a',
           400: '#a38670',
-          500: '#d2b48c', /* tan - matches site palette */
-          600: '#c4a574', /* tan hover */
+          500: '#c9a574', /* subtle caramel warmth - slightly more brown */
+          600: '#c09d6a', /* tan hover */
         },
         // Pastel colors for minimalist aesthetic
         pink: {
@@ -85,9 +85,10 @@ const config: Config = {
     },
   },
   plugins: [
-    // Disable hover effects on touch devices (mobile) - prevents sticky hover state on tap
+    // Disable hover effects on mobile (screens < 768px) - no hover animations on touch
     function ({ addVariant }: { addVariant: (name: string, value: string) => void }) {
-      addVariant('hover', '@media (hover: hover) { &:hover }')
+      addVariant('hover', '@media (min-width: 768px) { &:hover }')
+      addVariant('group-hover', '@media (min-width: 768px) { .group:hover & }')
     },
   ],
 }

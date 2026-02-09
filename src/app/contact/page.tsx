@@ -27,7 +27,7 @@ export default function ContactPage() {
               className="flex-shrink-0 flex items-center"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-base font-bold">Caramel & Jo</span>
+              <span className="text-white font-nav-playfair text-lg font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
             <div className="flex items-center gap-1.5 flex-shrink-0">
               <Link
@@ -77,7 +77,7 @@ export default function ContactPage() {
               className="flex-shrink-0 flex items-center h-full"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-2xl lg:text-3xl font-bold">Caramel & Jo</span>
+              <span className="text-white font-nav-playfair text-2xl lg:text-3xl xl:text-4xl font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
             <div className="flex items-center gap-3 flex-shrink-0">
               <Link

@@ -65,7 +65,7 @@ export default function StickyNav() {
               window.location.href = '/'
             }
           }}
-          className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 md:hover:text-gray-700 whitespace-nowrap cursor-pointer flex items-center min-h-[44px]"
+          className="font-nav-playfair text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 md:hover:text-gray-700 whitespace-nowrap cursor-pointer flex items-center min-h-[44px] brand-header-shadow"
         >
           Caramel & Jo
         </a>

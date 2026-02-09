@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { prisma } from '@/lib/prisma'
 import { sendOrderConfirmationEmail, sendOrderNotificationEmail } from '@/lib/email'
 
 // Force dynamic rendering - prevents Next.js from trying to analyze this route during build
@@ -38,9 +39,6 @@ export async function POST(request: NextRequest) {
       console.error('Missing STRIPE_WEBHOOK_SECRET environment variable')
       return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 })
     }
-
-    // Import prisma dynamically to avoid build-time connection
-    const { prisma } = await import('@/lib/prisma')
 
     // Verify webhook signature
     let event: Stripe.Event

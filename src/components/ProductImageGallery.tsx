@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
@@ -13,6 +13,8 @@ interface ProductImageGalleryProps {
   className?: string
   imageClassName?: string
   sizes?: string
+  /** Mobile only: fill hero area, use scroll-snap carousel for multiple images */
+  mobileHero?: boolean
 }
 
 export default function ProductImageGallery({
@@ -21,6 +23,7 @@ export default function ProductImageGallery({
   className = '',
   imageClassName = '',
   sizes = '(max-width: 640px) 180px, (max-width: 768px) 240px, 400px',
+  mobileHero = false,
 }: ProductImageGalleryProps) {
   const [index, setIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -73,92 +76,160 @@ export default function ProductImageGallery({
   }
 
   const slides = images.map((src) => ({ src, alt }))
+  const useMobileCarousel = mobileHero && isMobile && images.length > 1
+  const useMobileHero = mobileHero && isMobile
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  // Sync scroll position to index for dots when using scroll-snap carousel
+  const handleScroll = useCallback(() => {
+    if (!scrollRef.current || !useMobileCarousel) return
+    const { scrollLeft, clientWidth } = scrollRef.current
+    const newIndex = Math.round(scrollLeft / clientWidth)
+    if (newIndex >= 0 && newIndex < images.length) setIndex(newIndex)
+  }, [useMobileCarousel, images.length])
 
   return (
     <>
-      <div className={`relative w-full ${className}`}>
-        {/* Desktop: click zones - left half = prev, right half = next */}
-        <div className="hidden md:grid md:grid-cols-2 absolute inset-0 z-10">
-          <button
-            type="button"
-            onClick={goPrev}
-            className="cursor-pointer focus:outline-none"
-            aria-label="Previous image"
-          />
-          <button
-            type="button"
-            onClick={goNext}
-            className="cursor-pointer focus:outline-none"
-            aria-label="Next image"
-          />
-        </div>
+      <div className={`relative w-full ${mobileHero ? 'h-full' : ''} ${className}`}>
+        {/* Mobile hero: scroll-snap carousel - iPhone-like swipe */}
+        {useMobileCarousel ? (
+          <div className="md:hidden flex flex-col h-full min-h-0">
+            <div
+              ref={scrollRef}
+              className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth touch-pan-x overscroll-x-contain [-webkit-overflow-scrolling:touch] flex-1 min-h-0 scrollbar-hide"
+              style={{ scrollSnapType: 'x mandatory' }}
+              onScroll={handleScroll}
+            >
+              {images.map((src, i) => (
+                <div
+                  key={i}
+                  className="relative flex-shrink-0 w-full basis-full snap-center"
+                  onClick={() => setLightboxOpen(true)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') setLightboxOpen(true)
+                  }}
+                  aria-label={`View image ${i + 1} full screen, swipe to change photo`}
+                >
+                  <Image
+                    src={src}
+                    alt={`${alt} ${i + 1} of ${images.length}`}
+                    fill
+                    className="object-cover object-center"
+                    sizes="100vw"
+                    priority={i === 0}
+                    quality={70}
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={i === 0 ? 'high' : undefined}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-center gap-1.5 mt-2 py-2 flex-shrink-0">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => {
+                    if (scrollRef.current) {
+                      const w = scrollRef.current.clientWidth
+                      scrollRef.current.scrollTo({ left: i * w, behavior: 'smooth' })
+                    }
+                    setIndex(i)
+                  }}
+                  className={`rounded-full transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
+                    i === index ? 'w-2.5 h-2.5 bg-warmbrown-500' : 'w-2 h-2 bg-warmgray-300'
+                  }`}
+                  aria-label={`Go to image ${i + 1}`}
+                  aria-current={i === index ? 'true' : undefined}
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Desktop: click zones - left half = prev, right half = next */}
+            <div className="hidden md:grid md:grid-cols-2 absolute inset-0 z-10">
+              <button type="button" onClick={goPrev} className="cursor-pointer focus:outline-none" aria-label="Previous image" />
+              <button type="button" onClick={goNext} className="cursor-pointer focus:outline-none" aria-label="Next image" />
+            </div>
 
-        {/* Image container - aspect ratio matches each image to eliminate letterboxing */}
-        <div
-          className={`relative w-full rounded-2xl overflow-hidden select-none ${isMobile ? 'touch-pan-y cursor-pointer' : ''}`}
-          style={{ aspectRatio: aspectRatio }}
-          onTouchStart={isMobile ? onTouchStart : undefined}
-          onTouchMove={isMobile ? onTouchMove : undefined}
-          onTouchEnd={isMobile ? onTouchEnd : undefined}
-          role={isMobile ? 'button' : undefined}
-          tabIndex={isMobile ? 0 : undefined}
-          onKeyDown={(e) => {
-            if (isMobile && (e.key === 'Enter' || e.key === ' ')) {
-              e.preventDefault()
-              setLightboxOpen(true)
-            }
-          }}
-          aria-label={isMobile ? 'Tap to view full screen, swipe to change photo' : undefined}
-        >
-          <div key={index} className="absolute inset-0 animate-fade-in">
-            <Image
-              src={images[index]}
-              alt={`${alt} ${index + 1} of ${images.length}`}
-              fill
-              className={`object-contain ${imageClassName}`}
-              sizes={sizes}
-              priority={index === 0}
-              quality={75}
-              placeholder="blur"
-              blurDataURL={BLUR_DATA_URL}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              fetchPriority={index === 0 ? 'high' : undefined}
-              onLoad={(e) => {
-                const img = e.target as HTMLImageElement
-                if (img?.naturalWidth && img?.naturalHeight) {
-                  setAspectRatio(img.naturalWidth / img.naturalHeight)
+            {/* Image container - desktop or non-hero mobile */}
+            <div
+              className={`relative w-full overflow-hidden select-none ${useMobileHero ? 'min-h-full rounded-none cursor-pointer md:rounded-2xl' : 'rounded-2xl'} ${isMobile && !mobileHero ? 'touch-pan-y cursor-pointer' : ''}`}
+              style={{ aspectRatio: useMobileHero ? undefined : aspectRatio }}
+              onClick={useMobileHero ? () => setLightboxOpen(true) : undefined}
+              onTouchStart={isMobile && !mobileHero ? onTouchStart : undefined}
+              onTouchMove={isMobile && !mobileHero ? onTouchMove : undefined}
+              onTouchEnd={isMobile && !mobileHero ? onTouchEnd : undefined}
+              role={isMobile || useMobileHero ? 'button' : undefined}
+              tabIndex={isMobile || useMobileHero ? 0 : undefined}
+              onKeyDown={(e) => {
+                if ((isMobile || useMobileHero) && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault()
+                  setLightboxOpen(true)
                 }
               }}
-            />
-          </div>
-        </div>
+              aria-label={isMobile || useMobileHero ? 'Tap to view full screen, swipe to change photo' : undefined}
+            >
+              <div key={index} className={`absolute inset-0 ${useMobileHero ? '' : 'animate-fade-in'}`}>
+                <Image
+                  src={images[index]}
+                  alt={`${alt} ${index + 1} of ${images.length}`}
+                  fill
+                  className={`${useMobileHero ? 'object-cover object-center' : 'object-contain'} ${imageClassName}`}
+                  sizes={sizes}
+                  priority={index === 0}
+                  quality={mobileHero ? 70 : 75}
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : undefined}
+                  onLoad={(e) => {
+                    const img = e.target as HTMLImageElement
+                    if (img?.naturalWidth && img?.naturalHeight) {
+                      setAspectRatio(img.naturalWidth / img.naturalHeight)
+                    }
+                  }}
+                />
+              </div>
+            </div>
 
-        {/* Dots indicator */}
-        <div className="flex justify-center gap-1.5 mt-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => {
-                setIndex(i)
-                setAspectRatio(4 / 3)
-              }}
-              className={`rounded-full transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
-                i === index
-                  ? 'w-2.5 h-2.5 bg-warmbrown-500'
-                  : 'w-2 h-2 bg-warmgray-300 hover:bg-warmgray-400'
-              }`}
-              aria-label={`Go to image ${i + 1}`}
-              aria-current={i === index ? 'true' : undefined}
-            />
-          ))}
-        </div>
+            {/* Dots indicator - desktop and non-carousel mobile */}
+            <div className="flex justify-center gap-1.5 mt-2">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => {
+                    setIndex(i)
+                    setAspectRatio(4 / 3)
+                  }}
+                  className={`rounded-full transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
+                    i === index ? 'w-2.5 h-2.5 bg-warmbrown-500' : 'w-2 h-2 bg-warmgray-300 hover:bg-warmgray-400'
+                  }`}
+                  aria-label={`Go to image ${i + 1}`}
+                  aria-current={i === index ? 'true' : undefined}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Full-screen lightbox - mobile tap to open, pinch zoom, swipe */}
       <Lightbox
         open={lightboxOpen}
-        close={() => setLightboxOpen(false)}
+        close={() => {
+          setLightboxOpen(false)
+          if (useMobileCarousel && scrollRef.current) {
+            const w = scrollRef.current.clientWidth
+            scrollRef.current.scrollTo({ left: index * w })
+          }
+        }}
         slides={slides}
         index={index}
         on={{

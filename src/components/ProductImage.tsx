@@ -10,6 +10,8 @@ interface ProductImageProps {
   sizes?: string
   className?: string
   priority?: boolean
+  /** Mobile only: fill hero area with object-cover */
+  mobileHero?: boolean
 }
 
 export default function ProductImage({
@@ -18,22 +20,23 @@ export default function ProductImage({
   sizes = '(max-width: 640px) 180px, (max-width: 768px) 240px, 400px',
   className = '',
   priority = true,
+  mobileHero = false,
 }: ProductImageProps) {
   const [aspectRatio, setAspectRatio] = useState(4 / 3)
 
   return (
     <div
-      className={`relative w-full rounded-2xl overflow-hidden ${className}`}
-      style={{ aspectRatio }}
+      className={`relative w-full overflow-hidden ${className} ${mobileHero ? 'h-full min-h-0 md:h-auto md:min-h-0 md:rounded-2xl rounded-none' : 'rounded-2xl'}`}
+      style={mobileHero ? undefined : { aspectRatio }}
     >
       <Image
         src={src}
         alt={alt}
         fill
-        className="object-contain"
+        className={mobileHero ? 'object-cover object-center md:object-contain md:object-center' : 'object-contain'}
         sizes={sizes}
         priority={priority}
-        quality={75}
+        quality={mobileHero ? 70 : 75}
         placeholder="blur"
         blurDataURL={BLUR_DATA_URL}
         fetchPriority={priority ? 'high' : undefined}

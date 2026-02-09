@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-const HEADER_BG = '#d2b48c' // warmbrown-500 - matches menu header
+const HEADER_BG = '#d1b080' // warmbrown-500 - matches menu header
 
 export default function MenuBackgroundSync() {
   useEffect(() => {

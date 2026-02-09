@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
@@ -9,6 +9,7 @@ import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/pro
 import Link from 'next/link'
 
 export default function Cart() {
+  const router = useRouter()
   const { items, removeItem, updateQuantity, getTotalAmount, getDepositAmount, getRemainingAmount, openCartOnNextPage, setOpenCartOnNextPage } = useCart()
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
@@ -65,49 +66,48 @@ export default function Cart() {
       <>
         {/* Backdrop overlay with blur effect - starts at header border */}
         <div 
-          className="fixed left-0 right-0 bottom-0 bg-black/5 z-[98] transition-opacity duration-300"
+          className={`fixed left-0 right-0 bottom-0 bg-black/5 z-[98] transition-opacity duration-300 ${isMenuPage ? 'cart-modal-top-menu' : 'cart-modal-top-default'}`}
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
           style={{ 
-            top: 'calc(64px + env(safe-area-inset-top, 0px))',
             backdropFilter: 'blur(3px)',
             WebkitBackdropFilter: 'blur(3px)'
           }}
         />
         
-        {/* Cart Modal - centered on mobile, right-aligned on larger screens */}
+        {/* Cart Modal - centered when empty, top-aligned when has items */}
         <div 
-          className="fixed left-4 right-4 sm:left-auto sm:right-4 md:right-6 lg:right-8 z-[99] safe-x cart-modal-enter"
-          style={{ top: 'calc(64px + env(safe-area-inset-top, 0px))' }}
+          className={`fixed left-4 right-4 sm:w-80 md:w-96 z-[99] safe-x ${
+            items.length === 0 
+              ? 'cart-modal-centered cart-modal-enter-centered' 
+              : `sm:left-1/2 sm:right-auto sm:-translate-x-1/2 cart-modal-enter ${isMenuPage ? 'cart-modal-top-menu' : 'cart-modal-top-default'}`
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          <div className="w-full max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
-          {/* Cart Header */}
-          <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors"
-                aria-label="Close cart"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-
+          <div className="relative w-full bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
           {/* Cart Items */}
           {items.length === 0 ? (
             <div className="px-6 py-8 flex-shrink-0">
+              <h2 className="text-lg font-serif text-warmgray-800 text-center mb-4">{t('cart.shoppingCart')}</h2>
               <p className="text-warmgray-600 text-center">{t('cart.empty')}</p>
             </div>
           ) : (
+            <>
+          {/* Header with title and close button */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-warmgray-100 flex-shrink-0">
+            <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors rounded-full hover:bg-warmgray-100"
+              aria-label="Close cart"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Cart Items */}
             <div className="flex flex-col" style={{ flex: '1 1 auto', minHeight: 0 }}>
               <div className="overflow-y-auto px-6 py-4" style={{ flex: '1 1 0%', minHeight: 0, maxHeight: 'calc(100vh - 5rem - 220px)' }}>
                 <div className="space-y-4">
@@ -196,34 +196,33 @@ export default function Cart() {
                   <Link
                     href="/menu"
                     onClick={() => setIsOpen(false)}
-                    className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-2.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
+                    className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
                     style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >
                     {t('cart.continueShopping')}
                   </Link>
-                  <Link
-                    href="/checkout"
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg relative z-10"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      router.push('/checkout')
+                    }}
+                    className="block w-full bg-warmbrown-500 text-white text-center py-3 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-semibold text-lg shadow-md hover:shadow-lg relative z-10"
                     style={{ 
                       fontFamily: 'var(--font-ui), sans-serif',
-                      display: 'block !important',
+                      display: 'block',
                       width: '100%',
                       minHeight: '44px',
                       height: 'auto',
                       padding: '12px',
-                      backgroundColor: '#1f2937',
-                      color: '#ffffff',
-                      textDecoration: 'none',
-                      visibility: 'visible',
-                      opacity: '1'
+                      touchAction: 'manipulation'
                     }}
                   >
                     {t('cart.checkout')}
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
+            </>
           )}
         </div>
       </div>
@@ -292,25 +291,18 @@ export default function Cart() {
 
       {isOpen && (
         <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl flex flex-col" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
-          {/* Cart Header */}
-          <div className="px-6 py-4 border-b border-warmgray-200 flex-shrink-0">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors"
-                aria-label="Close cart"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
+          {/* Header with title and close button */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-warmgray-100 flex-shrink-0">
+            <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors rounded-full hover:bg-warmgray-100"
+              aria-label="Close cart"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
 
           {/* Cart Items */}
@@ -401,24 +393,25 @@ export default function Cart() {
                 <Link
                   href="/menu"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-2.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
+                  className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
                 >
                   {t('cart.continueShopping')}
                 </Link>
-                <Link
-                  href="/checkout"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full bg-warmgray-800 text-white text-center py-3 rounded-md hover:bg-warmgray-700 transition-colors duration-200 font-semibold text-sm shadow-md hover:shadow-lg"
+                <button
+                  type="button"
+                  onClick={() => router.push('/checkout')}
+                  className="block w-full bg-warmbrown-500 text-white text-center py-3 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-semibold text-lg shadow-md hover:shadow-lg"
                   style={{ 
                     fontFamily: 'var(--font-ui), sans-serif',
                     display: 'block',
                     width: '100%',
                     minHeight: '44px',
-                    lineHeight: '44px'
+                    lineHeight: '44px',
+                    touchAction: 'manipulation'
                   }}
                 >
                   {t('cart.checkout')}
-                </Link>
+                </button>
               </div>
             </div>
           </div>

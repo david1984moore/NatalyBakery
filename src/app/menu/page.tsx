@@ -173,7 +173,7 @@ function MenuPageContent() {
   }
 
   return (
-    <div className="h-screen bg-white flex flex-col overflow-hidden relative">
+    <div className="h-screen bg-cream-50 flex flex-col overflow-hidden relative">
       {/* Product Navigation Bar - Fixed at top - Mobile optimized */}
       <div 
         className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
@@ -189,7 +189,7 @@ function MenuPageContent() {
             className="flex-shrink-0 flex items-center"
             aria-label="Home"
           >
-            <span className="text-white font-nav-playfair text-base font-bold">Caramel & Jo</span>
+            <span className="text-white font-nav-playfair text-lg font-extrabold brand-header-shadow">Caramel & Jo</span>
           </Link>
           
           {/* Right side buttons - Mobile */}
@@ -238,7 +238,7 @@ function MenuPageContent() {
             className="flex-shrink-0 px-4 lg:px-6 flex items-center h-full"
             aria-label="Home"
           >
-            <span className="text-white font-nav-playfair text-2xl lg:text-3xl font-bold">Caramel & Jo</span>
+            <span className="text-white font-nav-playfair text-2xl lg:text-3xl xl:text-4xl font-extrabold brand-header-shadow">Caramel & Jo</span>
           </Link>
           
           {/* Centered container for scrollable product list - Desktop */}
@@ -320,7 +320,7 @@ function MenuPageContent() {
         </div>
 
         {/* Product Category Buttons - Mobile (below brand/buttons row) */}
-        <div className="md:hidden bg-white border-b border-warmgray-200">
+        <div className="md:hidden bg-cream-50 border-b border-warmgray-200">
           <div 
             className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pl-2.5 pr-4 py-1.5 touch-scroll mobile-scroll-container" 
             style={{ WebkitOverflowScrolling: 'touch' }}
@@ -373,20 +373,22 @@ function MenuPageContent() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 items-center w-full">
-            {/* Product Image - gallery for products with multiple images, single image otherwise */}
-            <div className="relative w-full max-w-[180px] sm:max-w-[240px] md:max-w-md mx-auto rounded-2xl overflow-hidden border border-white/60 shadow-lg">
+            {/* Product Image - mobile: spans header bottom to above product name; desktop: compact */}
+            <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-[100vw] md:h-auto md:min-h-0 md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0">
               {featuredProduct.images && featuredProduct.images.length > 0 ? (
                 <ProductImageGallery
                   images={featuredProduct.images}
                   alt={featuredProduct.name}
-                  sizes="(max-width: 640px) 180px, (max-width: 768px) 240px, 400px"
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
+                  mobileHero
                 />
               ) : (
                 <ProductImage
                   key={featuredProduct.name}
                   src={featuredProduct.image}
                   alt={featuredProduct.name}
-                  sizes="(max-width: 640px) 180px, (max-width: 768px) 240px, 400px"
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
+                  mobileHero
                 />
               )}
             </div>
@@ -526,7 +528,7 @@ function MenuPageContent() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedVariant}
-                  className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-warmbrown-500 text-warmgray-800 rounded-md md:hover:bg-warmbrown-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                  className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-warmbrown-500 text-white rounded-md md:hover:bg-warmbrown-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
                   style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {t('menu.addToCart')}

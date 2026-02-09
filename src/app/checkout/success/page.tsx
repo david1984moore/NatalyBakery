@@ -68,7 +68,7 @@ function SuccessPageContent() {
             className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
             aria-label="Home"
           >
-            <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
+            <span className="text-black font-nav-playfair text-xl sm:text-2xl md:text-3xl font-extrabold brand-header-shadow">Caramel & Jo</span>
           </Link>
           
           {/* Language Toggle and Cart Button */}

@@ -57,8 +57,21 @@ export default function CheckoutPage() {
   // Delivery time options: 6:30pm - 9:30pm in 30-min increments
   const deliveryTimeOptions = ['6:30pm', '7:00pm', '7:30pm', '8:00pm', '8:30pm', '9:00pm', '9:30pm']
 
-  // Get minimum date (today) for delivery date picker
-  const today = new Date().toISOString().split('T')[0]
+  // Get minimum date for delivery date picker based on 9am cutoff:
+  // - Before 9:00am: can order for today
+  // - 9:00am or later: earliest delivery is tomorrow
+  const now = new Date()
+  const cutOffHour = 9
+  const isBeforeCutoff = now.getHours() < cutOffHour
+  const formatLocalDate = (d: Date) => {
+    const y = d.getFullYear()
+    const m = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${y}-${m}-${day}`
+  }
+  const tomorrow = new Date(now)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const minDeliveryDate = isBeforeCutoff ? formatLocalDate(now) : formatLocalDate(tomorrow)
 
   // Validate that all required fields are filled
   const isFormValid = customerInfo.name.trim() !== '' && 
@@ -182,37 +195,104 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
         <Cart />
-        {/* Navigation Bar - Fixed at top with uniform format */}
-        <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm" style={{ minHeight: '64px' }}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between" style={{ height: '100%', minHeight: '64px' }}>
-            {/* Home Button */}
-            <Link
-              href="/"
-              className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
-              aria-label="Home"
-            >
-              <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
-            </Link>
-            
-            {/* Language Toggle and Cart Button */}
-            <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+        {/* Navigation Bar - Updated header (matches menu/contact pages) */}
+        <div
+          className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
+          style={{ minHeight: '52px' }}
+        >
+          <div className="bg-warmbrown-500 border-b border-warmbrown-600">
+            {/* Mobile Layout (< 768px) */}
+            <div className="md:hidden flex items-center justify-between px-2.5 h-full min-h-[40px] py-1.5">
               <Link
-                href="/contact"
-                className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+                href="/"
+                className="flex-shrink-0 flex items-center"
+                aria-label="Home"
               >
-                {t('nav.contact')}
+                <span className="text-white font-nav-playfair text-lg font-extrabold brand-header-shadow">Caramel & Jo</span>
               </Link>
-              <LanguageToggle variant="menu" />
-              <div className="relative">
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <Link
+                  href="/menu"
+                  className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
+                >
+                  {t('nav.menu')}
+                </Link>
+                <Link
+                  href="/menu"
+                  className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
+                >
+                  {t('nav.order')}
+                </Link>
+                <Link
+                  href="/contact"
+                  className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
+                >
+                  {t('nav.contact')}
+                </Link>
+                <LanguageToggle variant="menuHeader" />
                 <button
-                  onClick={() => {
-                    window.dispatchEvent(new CustomEvent('cart:toggle'))
-                  }}
-                  className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
+                  onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+                  className="min-w-[34px] min-h-[34px] bg-white/20 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-white/30 transition-colors duration-200 relative border border-white/50"
                   aria-label="Shopping cart"
                 >
                   <svg
-                    className="w-5 h-5 text-warmgray-700 group-hover:text-white"
+                    className="w-3.5 h-3.5 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                  {itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                      {itemCount}
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Desktop Layout (>= 768px) */}
+            <div className="hidden md:flex items-center h-full justify-between px-4 lg:px-6" style={{ minHeight: '52px' }}>
+              <Link
+                href="/"
+                className="flex-shrink-0 flex items-center h-full"
+                aria-label="Home"
+              >
+                <span className="text-white font-nav-playfair text-2xl lg:text-3xl xl:text-4xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+              </Link>
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <Link
+                  href="/menu"
+                  className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
+                >
+                  {t('nav.menu')}
+                </Link>
+                <Link
+                  href="/menu"
+                  className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
+                >
+                  {t('nav.order')}
+                </Link>
+                <Link
+                  href="/contact"
+                  className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
+                >
+                  {t('nav.contact')}
+                </Link>
+                <LanguageToggle variant="menuHeader" />
+                <button
+                  onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+                  className="min-w-[40px] min-h-[40px] bg-white/20 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-white/30 transition-colors duration-200 relative border border-white/50"
+                  aria-label="Shopping cart"
+                >
+                  <svg
+                    className="w-4 h-4 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -236,7 +316,7 @@ export default function CheckoutPage() {
         </div>
         
         {/* Main Content - Centered in viewport */}
-        <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-8 md:pb-12">
           <div className="w-full max-w-4xl">
             <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
               {t('checkout.completePayment')}
@@ -272,42 +352,104 @@ export default function CheckoutPage() {
         </div>
       )}
       <Cart />
-      {/* Navigation Bar - Fixed at top with uniform format */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 px-4 sm:px-6 lg:px-8 py-3 shadow-sm safe-top">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Home Button */}
-          <Link
-            href="/"
-            className="flex-shrink-0 px-2 sm:px-3 py-1.5"
-            aria-label="Home"
-          >
-            <span className="text-black font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold">Caramel & Jo</span>
-          </Link>
-          
-          {/* Page Title (centered, hidden on mobile) */}
-          <h1 className="hidden md:block text-xl sm:text-2xl font-serif text-warmgray-800 text-center flex-1">
-            {t('checkout.title')}
-          </h1>
-          
-          {/* Language Toggle and Cart Button */}
-          <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+      {/* Navigation Bar - Updated header (matches menu/contact pages) */}
+      <div
+        className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
+        style={{ minHeight: '52px' }}
+      >
+        <div className="bg-warmbrown-500 border-b border-warmbrown-600">
+          {/* Mobile Layout (< 768px) */}
+          <div className="md:hidden flex items-center justify-between px-2.5 h-full min-h-[40px] py-1.5">
             <Link
-              href="/contact"
-              className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+              href="/"
+              className="flex-shrink-0 flex items-center"
+              aria-label="Home"
             >
-              {t('nav.contact')}
+              <span className="text-white font-nav-playfair text-lg font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
-            <LanguageToggle variant="menu" />
-            <div className="relative">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <Link
+                href="/menu"
+                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
+              >
+                {t('nav.menu')}
+              </Link>
+              <Link
+                href="/menu"
+                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
+              >
+                {t('nav.order')}
+              </Link>
+              <Link
+                href="/contact"
+                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
+              >
+                {t('nav.contact')}
+              </Link>
+              <LanguageToggle variant="menuHeader" />
               <button
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('cart:toggle'))
-                }}
-                className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
+                onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+                className="min-w-[34px] min-h-[34px] bg-white/20 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-white/30 transition-colors duration-200 relative border border-white/50"
                 aria-label="Shopping cart"
               >
                 <svg
-                  className="w-5 h-5 text-warmgray-700 group-hover:text-white"
+                  className="w-3.5 h-3.5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                    {items.reduce((sum, item) => sum + item.quantity, 0)}
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Desktop Layout (>= 768px) */}
+          <div className="hidden md:flex items-center h-full justify-between px-4 lg:px-6" style={{ minHeight: '52px' }}>
+            <Link
+              href="/"
+              className="flex-shrink-0 flex items-center h-full"
+              aria-label="Home"
+            >
+              <span className="text-white font-nav-playfair text-2xl lg:text-3xl xl:text-4xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+            </Link>
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <Link
+                href="/menu"
+                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
+              >
+                {t('nav.menu')}
+              </Link>
+              <Link
+                href="/menu"
+                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
+              >
+                {t('nav.order')}
+              </Link>
+              <Link
+                href="/contact"
+                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
+              >
+                {t('nav.contact')}
+              </Link>
+              <LanguageToggle variant="menuHeader" />
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+                className="min-w-[40px] min-h-[40px] bg-white/20 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-white/30 transition-colors duration-200 relative border border-white/50"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  className="w-4 h-4 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -331,7 +473,7 @@ export default function CheckoutPage() {
       </div>
       
       {/* Main Content - Centered in viewport */}
-      <div className="flex-1 flex items-center justify-center px-4 py-8 md:py-12">
+      <div className="flex-1 flex items-center justify-center px-4 pt-20 sm:pt-24 pb-8 md:pb-12">
         <div className="w-full max-w-4xl">
           {/* Page Title (visible on mobile only) */}
           <div className="mb-6 md:hidden">
@@ -411,7 +553,7 @@ export default function CheckoutPage() {
                       type="date"
                       id="deliveryDate"
                       required
-                      min={today}
+                      min={minDeliveryDate}
                       value={customerInfo.deliveryDate}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryDate: e.target.value })}
                       className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"

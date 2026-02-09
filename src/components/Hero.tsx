@@ -8,13 +8,24 @@ export default function Hero() {
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
 
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Image - mobile: berry cake; desktop: flan */}
+      <div
+        className="absolute inset-0 z-0 md:hidden bg-no-repeat"
+        style={{
+          backgroundImage: "url('/Images/choco_5.jpeg')",
+          backgroundSize: '130%',
+          backgroundPosition: 'center 30%',
+        }}
+        role="img"
+        aria-label="Layered cake with fresh berries"
+      />
+      <div className="absolute inset-0 z-0 md:hidden bg-black/10" aria-hidden />
+      <div className="absolute inset-0 z-0 hidden md:block">
         <Image
           src="/Images/IMG_7616.jpeg"
           alt="Caramel flan dessert with fresh berries"
           fill
-          className="object-cover"
+          className="object-cover object-[center_30%]"
           priority
           quality={70}
           sizes="(min-width: 1025px) 1920px, 100vw"
@@ -26,25 +37,25 @@ export default function Hero() {
 
       {/* Hero Content */}
       <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8 safe-top">
-        {/* Nav - top-right on mobile (aligned with brand), vertically centered on desktop */}
-        <div className="absolute top-4 right-4 md:top-1/2 md:-translate-y-1/2 md:right-6 lg:right-8">
+        {/* Nav - centered on top */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2">
           <HeroNav />
         </div>
 
-        {/* Brand Name - top-left on mobile, vertically centered on desktop */}
-        <div id="brand-name-wrapper" className="absolute top-4 left-4 md:top-1/2 md:-translate-y-1/2 md:left-6 lg:left-8 font-brand-playfair">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap">
-            Caramel & Jo
+        {/* Brand Name + Order - centered, stacked */}
+        <div id="brand-name-wrapper" className="absolute top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-10 font-brand-playfair text-center">
+          <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[9rem] xl:text-[11rem] 2xl:text-[14rem] font-bold text-white leading-tight text-hero-brand">
+            <span className="block">Caramel</span>
+            <span className="block">& Jo</span>
           </h1>
+          {/* Mobile Order - sits under brand */}
+          <Link
+            href="/menu"
+            className="md:hidden font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-full bg-[#3d3429]/40 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.1)]"
+          >
+            order
+          </Link>
         </div>
-
-        {/* Mobile Order - warm dark glass, brand-matched text */}
-        <Link
-          href="/menu"
-          className="md:hidden absolute left-1/2 -translate-x-1/2 bottom-[28%] font-brand-playfair font-bold text-3xl text-white text-hero-brand min-h-[64px] px-14 flex items-center justify-center rounded-full bg-[#3d3429]/40 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.1)] md:hover:bg-[#3d3429]/55 md:hover:border-white/30 md:hover:shadow-[0_12px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.15)]"
-        >
-          order
-        </Link>
       </div>
     </section>
   )

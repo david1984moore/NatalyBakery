@@ -16,8 +16,11 @@ All environment variables have been configured:
 Your `.env.local` file should contain:
 
 ```env
-# Database
+# Database (Supabase)
+# For Render: Add ?pgbouncer=true&connection_limit=1 to prevent memory leaks
 DATABASE_URL="postgresql://..."
+# Direct connection for migrations (required for Prisma). Use port 5432 for Supabase.
+DIRECT_URL="postgresql://..."
 
 # Stripe Payment Configuration
 STRIPE_SECRET_KEY="sk_test_..."
