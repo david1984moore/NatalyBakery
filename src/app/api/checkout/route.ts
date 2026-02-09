@@ -99,8 +99,8 @@ export async function POST(request: NextRequest) {
 
     // Validate delivery date: orders for today only allowed if placed before 9:00am
     const tz = process.env.BAKERY_TIMEZONE || undefined
-    const dateOptions = tz ? { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' } : { year: 'numeric', month: '2-digit', day: '2-digit' }
-    const hourOptions = tz ? { timeZone: tz, hour: 'numeric', hour12: false } : { hour: 'numeric', hour12: false }
+    const dateOptions: Intl.DateTimeFormatOptions = tz ? { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' } : { year: 'numeric', month: '2-digit', day: '2-digit' }
+    const hourOptions: Intl.DateTimeFormatOptions = tz ? { timeZone: tz, hour: 'numeric', hour12: false } : { hour: 'numeric', hour12: false }
     const todayStr = new Intl.DateTimeFormat('en-CA', dateOptions).format(new Date()) // YYYY-MM-DD
     const currentHour = parseInt(new Intl.DateTimeFormat('en-US', hourOptions).format(new Date()), 10)
     const isToday = deliveryDate === todayStr
