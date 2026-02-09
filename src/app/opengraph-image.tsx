@@ -4,7 +4,7 @@ import { join } from 'node:path'
 
 export const runtime = 'nodejs'
 export const alt = 'Caramel & Jo - Where caramel dreams become cake'
-export const size = { width: 1200, height: 630 }
+export const size = { width: 1200, height: 1200 }
 export const contentType = 'image/png'
 
 async function loadPlayfairDisplay() {
@@ -49,18 +49,7 @@ export default async function Image() {
             objectFit: 'cover',
           }}
         />
-        {/* Dark gradient overlay for brand name readability */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '40%',
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%)',
-          }}
-        />
-        {/* Brand name - Playfair Display to match site, Caramel above & Jo centered */}
+        {/* Brand name only - larger, centered, Caramel over & Jo on hero image */}
         <div
           style={{
             position: 'absolute',
@@ -73,7 +62,7 @@ export default async function Image() {
             justifyContent: 'center',
             textAlign: 'center',
             fontFamily: 'Playfair Display',
-            fontSize: 72,
+            fontSize: 112,
             fontWeight: 700,
             color: 'white',
             textShadow: '4px 4px 8px rgba(0,0,0,0.8), 2px 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.5)',
@@ -83,7 +72,7 @@ export default async function Image() {
           <span>Caramel</span>
           <span>& Jo</span>
         </div>
-        {/* Brown/gold bar at bottom with slogan */}
+        {/* Brown footer: slogan + URL only */}
         <div
           style={{
             position: 'absolute',
@@ -91,23 +80,36 @@ export default async function Image() {
             left: 0,
             right: 0,
             background: 'linear-gradient(180deg, #a08040 0%, #8B6914 100%)',
-            padding: '24px 40px',
+            padding: '24px 40px 16px',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            gap: 8,
           }}
         >
           <span
             style={{
               fontFamily: 'Playfair Display',
-              fontSize: 32,
+              fontSize: 28,
               fontWeight: 500,
               color: 'white',
               textAlign: 'center',
               letterSpacing: '0.02em',
             }}
           >
-            Where caramel dreams become cake
+            Where caramel dreams become cake!
+          </span>
+          <span
+            style={{
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontSize: 18,
+              fontWeight: 400,
+              color: 'rgba(255,255,255,0.95)',
+              textAlign: 'center',
+            }}
+          >
+            caramelandjo.onrender.com
           </span>
         </div>
       </div>

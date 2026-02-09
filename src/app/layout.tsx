@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   title: "Caramel & Jo - Where caramel dreams become cake",
   description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes. Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, Conchas, and more.',
   openGraph: {
-    title: 'Where caramel dreams become cake',
-    description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes.',
+    title: 'Where caramel dreams become cake!',
+    description: 'caramelandjo.onrender.com',
   },
 }
 
