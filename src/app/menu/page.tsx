@@ -176,11 +176,11 @@ function MenuPageContent() {
     <div className="h-screen bg-background flex flex-col overflow-hidden relative">
       {/* Product Navigation Bar - Fixed at top - Mobile optimized */}
       <div 
-        className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
+        className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
         style={{ minHeight: '40px' }}
       >
         {/* Header row - tan background (mobile & desktop) */}
-        <div className="bg-warmbrown-500 border-b border-warmbrown-600 flex flex-col min-h-[40px]">
+        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
         {/* Mobile Layout (< 768px) */}
         <div className="md:hidden flex flex-1 items-center justify-between px-2.5 min-h-[40px] -translate-y-1.5">
           {/* Home Button - Mobile */}
@@ -196,7 +196,7 @@ function MenuPageContent() {
           <div className="flex items-center gap-2 flex-shrink-0">
             <Link
               href="/contact"
-              className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
+              className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
             >
               {t('nav.contact')}
             </Link>
@@ -205,7 +205,7 @@ function MenuPageContent() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[38px] min-h-[38px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center shadow-md md:hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70 group"
+              className="min-w-[38px] min-h-[38px] ml-1 bg-stone-800/30 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 transition-colors duration-200 relative border-[3px] border-white/70 group"
               aria-label="Shopping cart"
             >
               <svg
@@ -245,12 +245,12 @@ function MenuPageContent() {
           <div className="flex-1 flex items-center gap-3 relative h-full min-w-0 pl-4 pr-2">
             {/* Left scroll indicator */}
             {canScrollLeft && (
-              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-warmbrown-500 via-warmbrown-500/80 to-transparent pointer-events-none z-10" />
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-hero via-hero/80 to-transparent pointer-events-none z-10" />
             )}
             
             {/* Right scroll indicator */}
             {canScrollRight && (
-              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent via-warmbrown-500/80 to-warmbrown-500 pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent via-hero/80 to-hero pointer-events-none z-10" />
             )}
             
             <div 
@@ -267,10 +267,10 @@ function MenuPageContent() {
                   <button
                     key={product.name}
                     onClick={() => handleProductChange(product.name)}
-                    className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
+                    className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border-[3px] ${
                       isSelected
-                        ? 'bg-white text-warmgray-800 border-white shadow-md font-semibold'
-                        : 'bg-transparent text-white border-white/50 hover:bg-white/20 hover:border-white/30'
+                        ? 'border-white/70 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white/90'
+                        : 'border-warmgray-400 bg-transparent text-warmgray-900 md:hover:border-warmgray-500'
                     }`}
                   >
                     {translatedName}
@@ -284,7 +284,7 @@ function MenuPageContent() {
           <div className="flex items-center gap-4 flex-shrink-0 pl-4 pr-4 lg:pr-6">
             <Link
               href="/contact"
-              className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
+              className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white/90 transition-colors duration-200 flex items-center"
             >
               {t('nav.contact')}
             </Link>
@@ -293,7 +293,7 @@ function MenuPageContent() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[44px] min-h-[44px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70 group"
+              className="min-w-[44px] min-h-[44px] ml-1 bg-stone-800/30 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-stone-700/40 transition-colors duration-200 relative border-[3px] border-white/70 group"
               aria-label="Shopping cart"
             >
               <svg
@@ -334,10 +334,10 @@ function MenuPageContent() {
                 <button
                   key={product.name}
                   onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border ${
+                  className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border-[3px] ${
                     isSelected
-                      ? 'bg-warmbrown-500 text-white border-warmbrown-500 shadow-md font-semibold'
-                      : 'bg-transparent text-warmgray-700 border-warmgray-300 md:hover:bg-warmbrown-500 md:hover:text-white md:hover:border-warmbrown-500'
+                      ? 'border-white/70 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white/90'
+                      : 'border-warmgray-400 bg-transparent text-warmgray-900 hover:border-warmgray-500'
                   }`}
                 >
                   {translatedName}
@@ -528,7 +528,7 @@ function MenuPageContent() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedVariant}
-                  className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-warmbrown-500 text-white rounded-md md:hover:bg-warmbrown-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                  className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-hero text-warmgray-800 rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
                   style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {t('menu.addToCart')}

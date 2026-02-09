@@ -12,6 +12,11 @@ const config: Config = {
         // Warm neutrals and earth tones - pastel brownish palette
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        // Hero and menu page fill - light wood tone (matches hero fade)
+        hero: {
+          DEFAULT: '#d4c4a8',
+          600: '#b8a88a', /* darker for border/hover */
+        },
         // Warm neutrals - soft caramel undertones
         beige: {
           50: '#faf7f1',
@@ -70,6 +75,11 @@ const config: Config = {
           400: '#b5a486',
           500: '#c9b08a', /* subtle caramel */
           600: '#c0a67e', /* warmbrown hover */
+        },
+        // Hero and menu page fill - light wood tone (matches hero fade)
+        hero: {
+          DEFAULT: '#d4c4a8',
+          600: '#b8a88a', /* darker for border/hover */
         },
         // Pastel colors for minimalist aesthetic
         pink: {

@@ -15,11 +15,11 @@ export default function Hero() {
       {/* Background - light wood tone to match table (visible in faded areas) */}
       <div className="absolute inset-0 z-0 bg-[#d4c4a8]" aria-hidden />
 
-      {/* Full-viewport gradient: very long fade bands, transparent only in narrow middle */}
+      {/* Full-viewport gradient: fade bands only at top/bottom; center (cake) stays clear */}
       <div
         className="absolute inset-0 z-[1] pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, rgba(212,196,168,0.998) 0%, rgba(212,196,168,0.99) 0.3%, rgba(212,196,168,0.98) 0.8%, rgba(212,196,168,0.95) 2%, rgba(212,196,168,0.9) 4%, rgba(212,196,168,0.82) 7%, rgba(212,196,168,0.72) 11%, rgba(212,196,168,0.58) 16%, rgba(212,196,168,0.44) 22%, rgba(212,196,168,0.3) 29%, rgba(212,196,168,0.18) 37%, rgba(212,196,168,0.08) 46%, transparent 48%, transparent 52%, rgba(212,196,168,0.08) 54%, rgba(212,196,168,0.18) 63%, rgba(212,196,168,0.3) 71%, rgba(212,196,168,0.44) 78%, rgba(212,196,168,0.58) 84%, rgba(212,196,168,0.72) 89%, rgba(212,196,168,0.82) 93%, rgba(212,196,168,0.9) 96%, rgba(212,196,168,0.95) 98%, rgba(212,196,168,0.98) 99.2%, rgba(212,196,168,0.99) 99.7%, rgba(212,196,168,0.998) 100%)',
+          background: 'linear-gradient(to bottom, rgba(212,196,168,0.998) 0%, rgba(212,196,168,0.95) 8%, rgba(212,196,168,0.82) 18%, rgba(212,196,168,0.5) 24%, transparent 28%, transparent 72%, rgba(212,196,168,0.5) 76%, rgba(212,196,168,0.82) 82%, rgba(212,196,168,0.95) 92%, rgba(212,196,168,0.998) 100%)',
         }}
         aria-hidden
       />
@@ -28,18 +28,18 @@ export default function Hero() {
       <div
         className="absolute inset-0 z-[2] pointer-events-none backdrop-blur-xl"
         style={{
-          maskImage: 'linear-gradient(to bottom, black 0%, black 18%, rgba(0,0,0,0.95) 22%, rgba(0,0,0,0.82) 26%, rgba(0,0,0,0.55) 29%, transparent 32%, transparent 68%, rgba(0,0,0,0.55) 71%, rgba(0,0,0,0.82) 74%, rgba(0,0,0,0.95) 78%, black 82%, black 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 18%, rgba(0,0,0,0.95) 22%, rgba(0,0,0,0.82) 26%, rgba(0,0,0,0.55) 29%, transparent 32%, transparent 68%, rgba(0,0,0,0.55) 71%, rgba(0,0,0,0.82) 74%, rgba(0,0,0,0.95) 78%, black 82%, black 100%)',
+          maskImage: 'linear-gradient(to bottom, black 0%, black 14%, rgba(0,0,0,0.9) 18%, rgba(0,0,0,0.6) 22%, transparent 26%, transparent 74%, rgba(0,0,0,0.6) 78%, rgba(0,0,0,0.9) 82%, black 86%, black 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 14%, rgba(0,0,0,0.9) 18%, rgba(0,0,0,0.6) 22%, transparent 26%, transparent 74%, rgba(0,0,0,0.6) 78%, rgba(0,0,0,0.9) 82%, black 86%, black 100%)',
         }}
         aria-hidden
       />
 
-      {/* Photo: extra-long fade (28% each side) so edges disappear into blur/tint */}
+      {/* Photo: fade only at very top/bottom so cake stays fully visible */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.015) 0.2%, rgba(0,0,0,0.05) 1%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.18) 6%, rgba(0,0,0,0.28) 10%, rgba(0,0,0,0.4) 15%, rgba(0,0,0,0.54) 20%, rgba(0,0,0,0.68) 25%, black 28%, black 72%, rgba(0,0,0,0.68) 75%, rgba(0,0,0,0.54) 80%, rgba(0,0,0,0.4) 85%, rgba(0,0,0,0.28) 90%, rgba(0,0,0,0.18) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0.05) 99%, rgba(0,0,0,0.015) 99.8%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.015) 0.2%, rgba(0,0,0,0.05) 1%, rgba(0,0,0,0.1) 3%, rgba(0,0,0,0.18) 6%, rgba(0,0,0,0.28) 10%, rgba(0,0,0,0.4) 15%, rgba(0,0,0,0.54) 20%, rgba(0,0,0,0.68) 25%, black 28%, black 72%, rgba(0,0,0,0.68) 75%, rgba(0,0,0,0.54) 80%, rgba(0,0,0,0.4) 85%, rgba(0,0,0,0.28) 90%, rgba(0,0,0,0.18) 94%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0.05) 99%, rgba(0,0,0,0.015) 99.8%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 8%, rgba(0,0,0,0.6) 18%, black 24%, black 76%, rgba(0,0,0,0.6) 82%, rgba(0,0,0,0.2) 92%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 8%, rgba(0,0,0,0.6) 18%, black 24%, black 76%, rgba(0,0,0,0.6) 82%, rgba(0,0,0,0.2) 92%, transparent 100%)',
         }}
       >
         <Image
@@ -55,43 +55,42 @@ export default function Hero() {
         />
       </div>
 
-      {/* Top section: tint only (no blur to avoid blur-edge line), fades gradually */}
+      {/* Top section: tint only above cake (no overlap with cake) */}
       <div
-        className="absolute top-0 left-0 right-0 z-10 min-h-[36%] pt-4 pb-12 flex flex-col justify-start"
+        className="absolute top-0 left-0 right-0 z-10 h-[24%] min-h-0 pt-4 pb-12 flex flex-col justify-start pointer-events-none"
         style={{
           background: 'linear-gradient(to bottom, rgba(212,196,168,0.35) 0%, rgba(212,196,168,0.12) 60%, transparent 100%)',
-          maskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.997) 1%, rgba(0,0,0,0.99) 3%, rgba(0,0,0,0.97) 6%, rgba(0,0,0,0.94) 10%, rgba(0,0,0,0.89) 16%, rgba(0,0,0,0.82) 24%, rgba(0,0,0,0.72) 34%, rgba(0,0,0,0.6) 46%, rgba(0,0,0,0.46) 58%, rgba(0,0,0,0.32) 70%, rgba(0,0,0,0.18) 82%, rgba(0,0,0,0.06) 94%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.997) 1%, rgba(0,0,0,0.99) 3%, rgba(0,0,0,0.97) 6%, rgba(0,0,0,0.94) 10%, rgba(0,0,0,0.89) 16%, rgba(0,0,0,0.82) 24%, rgba(0,0,0,0.72) 34%, rgba(0,0,0,0.6) 46%, rgba(0,0,0,0.46) 58%, rgba(0,0,0,0.32) 70%, rgba(0,0,0,0.18) 82%, rgba(0,0,0,0.06) 94%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.6) 70%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.6) 70%, transparent 100%)',
         }}
-      >
-        <div className="flex justify-center">
-          <HeroNav />
-        </div>
-      </div>
+      />
 
       {/* Brand name - centered over photo */}
-      <div id="brand-name-wrapper" className="absolute top-[16%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center pointer-events-none">
+      <div id="brand-name-wrapper" className="absolute top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center pointer-events-none">
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand">
           <span className="block">Caramel</span>
           <span className="block -mt-5">& Jo</span>
         </h1>
       </div>
 
-      {/* Bottom section: tint only (no blur to avoid blur-edge line), fades gradually */}
+      {/* Bottom section: order button + nav links, tint only below cake (no overlap with cake) */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-10 min-h-[36%] pb-6 pt-14 flex flex-col items-center justify-end"
+        className="absolute bottom-0 left-0 right-0 z-10 h-[28%] min-h-0 pb-6 pt-14 flex flex-col items-center justify-end gap-7"
         style={{
           background: 'linear-gradient(to top, rgba(212,196,168,0.35) 0%, rgba(212,196,168,0.12) 60%, transparent 100%)',
-          maskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.997) 1%, rgba(0,0,0,0.99) 3%, rgba(0,0,0,0.97) 6%, rgba(0,0,0,0.94) 10%, rgba(0,0,0,0.89) 16%, rgba(0,0,0,0.82) 24%, rgba(0,0,0,0.72) 34%, rgba(0,0,0,0.6) 46%, rgba(0,0,0,0.46) 58%, rgba(0,0,0,0.32) 70%, rgba(0,0,0,0.18) 82%, rgba(0,0,0,0.06) 94%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.997) 1%, rgba(0,0,0,0.99) 3%, rgba(0,0,0,0.97) 6%, rgba(0,0,0,0.94) 10%, rgba(0,0,0,0.89) 16%, rgba(0,0,0,0.82) 24%, rgba(0,0,0,0.72) 34%, rgba(0,0,0,0.6) 46%, rgba(0,0,0,0.46) 58%, rgba(0,0,0,0.32) 70%, rgba(0,0,0,0.18) 82%, rgba(0,0,0,0.06) 94%, transparent 100%)',
+          maskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.6) 70%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.6) 70%, transparent 100%)',
         }}
       >
         <Link
           href="/menu"
-          className="md:hidden font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-md border-[3px] border-white/70 bg-white/20 md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200"
+          className="font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-xl border-4 border-white/85 bg-stone-800/30 md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200"
         >
           {t('nav.order')}
         </Link>
+        <div className="flex justify-center">
+          <HeroNav />
+        </div>
       </div>
     </section>
   )

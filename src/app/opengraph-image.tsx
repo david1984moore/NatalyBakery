@@ -34,9 +34,10 @@ export default async function Image() {
           flexDirection: 'column',
           position: 'relative',
           overflow: 'hidden',
+          background: '#d4c4a8',
         }}
       >
-        {/* Background image */}
+        {/* Hero image - same as homepage: contain so cake is focal, wood visible at edges */}
         <img
           src={imageSrc}
           alt=""
@@ -46,32 +47,18 @@ export default async function Image() {
             left: 0,
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
+            objectFit: 'contain',
           }}
         />
-        {/* Brand name only - larger, centered, Caramel over & Jo on hero image */}
+        {/* Top/bottom gradient fades like homepage hero (no logo strip) */}
         <div
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            fontFamily: 'Playfair Display',
-            fontSize: 112,
-            fontWeight: 700,
-            color: 'white',
-            textShadow: '4px 4px 8px rgba(0,0,0,0.8), 2px 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.5)',
-            letterSpacing: '0.03em',
+            inset: 0,
+            background: 'linear-gradient(to bottom, rgba(212,196,168,0.98) 0%, rgba(212,196,168,0.95) 8%, rgba(212,196,168,0.82) 18%, rgba(212,196,168,0.5) 24%, transparent 28%, transparent 72%, rgba(212,196,168,0.5) 76%, rgba(212,196,168,0.82) 82%, rgba(212,196,168,0.95) 92%, rgba(212,196,168,0.98) 100%)',
+            pointerEvents: 'none',
           }}
-        >
-          <span>Caramel</span>
-          <span>& Jo</span>
-        </div>
+        />
         {/* Brown footer: slogan + URL only */}
         <div
           style={{

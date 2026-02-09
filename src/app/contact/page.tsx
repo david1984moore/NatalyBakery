@@ -32,20 +32,20 @@ export default function ContactPage() {
             <div className="flex items-center gap-2 flex-shrink-0">
               <Link
                 href="/menu"
-                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
+                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
               >
                 {t('nav.menu')}
               </Link>
               <Link
                 href="/menu"
-                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
+                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
               >
                 {t('nav.order')}
               </Link>
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[38px] min-h-[38px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center shadow-md md:hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70"
+                className="min-w-[38px] min-h-[38px] ml-1 bg-stone-800/30 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 transition-colors duration-200 relative border-[3px] border-white/70"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -82,20 +82,20 @@ export default function ContactPage() {
             <div className="flex items-center gap-4 flex-shrink-0">
               <Link
                 href="/menu"
-                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
+                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white/90 transition-colors duration-200 flex items-center"
               >
                 {t('nav.menu')}
               </Link>
               <Link
                 href="/menu"
-                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
+                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white/90 transition-colors duration-200 flex items-center"
               >
                 {t('nav.order')}
               </Link>
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[44px] min-h-[44px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70"
+                className="min-w-[44px] min-h-[44px] ml-1 bg-stone-800/30 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-stone-700/40 transition-colors duration-200 relative border-[3px] border-white/70"
                 aria-label="Shopping cart"
               >
                 <svg
