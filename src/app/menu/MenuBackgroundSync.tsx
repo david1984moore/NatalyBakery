@@ -2,15 +2,14 @@
 
 import { useEffect } from 'react'
 
-const HEADER_BG = '#d1b080' // warmbrown-500 - matches menu header
-
 export default function MenuBackgroundSync() {
   useEffect(() => {
     const html = document.documentElement
     const body = document.body
 
-    html.style.background = HEADER_BG
-    body.style.background = HEADER_BG
+    // Use CSS variable so globals.css controls the body background
+    html.style.background = 'var(--background)'
+    body.style.background = 'var(--background)'
 
     return () => {
       html.style.background = ''

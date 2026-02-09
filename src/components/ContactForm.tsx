@@ -201,7 +201,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full min-h-[44px] bg-warmbrown-500 text-warmgray-800 py-3 sm:py-2 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-medium text-base sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full min-h-[44px] bg-warmbrown-500 text-white py-3 sm:py-2 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-medium text-base sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
       </button>

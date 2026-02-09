@@ -22,12 +22,12 @@ const config: Config = {
           500: '#b5a084',
         },
         cream: {
-          50: '#fcf8f2',
-          100: '#f8f3eb',
-          200: '#f5efe2',
-          300: '#efe6d7',
-          400: '#e6dac6',
-          500: '#ddcdb6',
+          50: '#fcf9f5',
+          100: '#f8f4ee',
+          200: '#f5efe5',
+          300: '#f0e8dc',
+          400: '#e8dfd0',
+          500: '#e0d4c4',
         },
         warmgray: {
           50: '#f7f5f1',

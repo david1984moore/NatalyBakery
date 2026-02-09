@@ -13,13 +13,13 @@ export default function HeroNav() {
   const { t } = useLanguage()
 
   return (
-    <nav className="relative flex items-center justify-center gap-4 md:gap-6 safe-right">
+    <nav className="relative flex items-center justify-center gap-2 md:gap-3 safe-right">
       <LanguageToggle />
       {navLinks.map((link) => (
         <Link
           key={link.labelKey}
           href={link.href}
-          className="font-brand-playfair font-bold text-lg md:text-xl text-white tracking-wide lowercase px-3 py-2 rounded-full border border-transparent bg-transparent hover:border-white/50 hover:bg-tan transition-all duration-300"
+          className="font-ui font-bold text-sm md:text-base text-white tracking-wide lowercase min-h-[32px] px-4 py-1.5 flex items-center justify-center rounded-md border-[3px] border-white/70 bg-white/20 md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200"
         >
           {t(link.labelKey)}
         </Link>

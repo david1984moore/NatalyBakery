@@ -1,36 +1,62 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import HeroNav from './HeroNav'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Hero() {
+  const { t } = useLanguage()
   return (
     <section className="relative h-screen flex flex-col overflow-hidden">
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
 
       {/* Background Image - mobile: berry cake; desktop: flan */}
-      <div
-        className="absolute inset-0 z-0 md:hidden bg-no-repeat"
-        style={{
-          backgroundImage: "url('/Images/choco_5.jpeg')",
-          backgroundSize: '130%',
-          backgroundPosition: 'center 30%',
-        }}
-        role="img"
-        aria-label="Layered cake with fresh berries"
-      />
+      {/* Mobile: sharp base + blurred top overlay */}
+      <div className="absolute inset-0 z-0 md:hidden" role="img" aria-label="Layered cake with fresh berries">
+        <div
+          className="absolute inset-0 bg-no-repeat bg-cover"
+          style={{
+            backgroundImage: "url('/Images/choco_5.jpeg')",
+            backgroundSize: '130%',
+            backgroundPosition: 'center 15%',
+          }}
+        />
+        <div
+          className="absolute -inset-[20px] bg-no-repeat bg-cover blur-xl"
+          style={{
+            backgroundImage: "url('/Images/choco_5.jpeg')",
+            backgroundSize: '130%',
+            backgroundPosition: 'center 15%',
+            maskImage: 'linear-gradient(to bottom, black 0%, black 2%, transparent 78%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 2%, transparent 78%)',
+          }}
+        />
+      </div>
       <div className="absolute inset-0 z-0 md:hidden bg-black/10" aria-hidden />
+      {/* Desktop: sharp base + blurred top overlay */}
       <div className="absolute inset-0 z-0 hidden md:block">
         <Image
           src="/Images/IMG_7616.jpeg"
           alt="Caramel flan dessert with fresh berries"
           fill
-          className="object-cover object-[center_30%]"
+          className="object-cover object-[center_15%]"
           priority
           quality={70}
           sizes="(min-width: 1025px) 1920px, 100vw"
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwA/8AAI/9k="
+        />
+        <div
+          className="absolute -inset-[20px] bg-no-repeat bg-cover blur-xl"
+          style={{
+            backgroundImage: "url('/Images/IMG_7616.jpeg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 15%',
+            maskImage: 'linear-gradient(to bottom, black 0%, black 2%, transparent 78%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 2%, transparent 78%)',
+          }}
         />
         <div className="absolute inset-0 bg-black/10" />
       </div>
@@ -43,17 +69,17 @@ export default function Hero() {
         </div>
 
         {/* Brand Name + Order - centered, stacked */}
-        <div id="brand-name-wrapper" className="absolute top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-10 font-brand-playfair text-center">
-          <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[9rem] xl:text-[11rem] 2xl:text-[14rem] font-bold text-white leading-tight text-hero-brand">
+        <div id="brand-name-wrapper" className="absolute top-[32%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-10 font-brand-playfair text-center">
+          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[8rem] xl:text-[10rem] 2xl:text-[12rem] font-bold text-white leading-tight text-hero-brand">
             <span className="block">Caramel</span>
-            <span className="block">& Jo</span>
+            <span className="block -mt-5">& Jo</span>
           </h1>
           {/* Mobile Order - sits under brand */}
           <Link
             href="/menu"
-            className="md:hidden font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-full bg-[#3d3429]/40 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.1)]"
+            className="md:hidden font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 mt-8 flex items-center justify-center rounded-md border-[3px] border-white/70 bg-white/20 md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200"
           >
-            order
+            {t('nav.order')}
           </Link>
         </div>
       </div>

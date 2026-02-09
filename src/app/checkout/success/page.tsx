@@ -60,19 +60,19 @@ function SuccessPageContent() {
     <div className="min-h-screen bg-cream-50/30">
       <Cart />
       {/* Navigation Bar - Fixed at top with uniform format */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm safe-top" style={{ minHeight: '64px' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between" style={{ height: '100%', minHeight: '64px' }}>
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm safe-top flex items-center min-h-[40px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between w-full min-h-[40px] -translate-y-1.5">
           {/* Home Button */}
           <Link
             href="/"
-            className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center"
+            className="flex-shrink-0 px-2 sm:px-3 py-1.5 flex items-center h-full"
             aria-label="Home"
           >
-            <span className="text-black font-nav-playfair text-xl sm:text-2xl md:text-3xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+            <span className="text-black font-nav-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
           </Link>
           
           {/* Language Toggle and Cart Button */}
-          <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+          <div className="flex items-center gap-4 sm:gap-6 flex-shrink-0">
             <Link
               href="/contact"
               className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
@@ -80,16 +80,16 @@ function SuccessPageContent() {
               {t('nav.contact')}
             </Link>
             <LanguageToggle variant="menu" />
-            <div className="relative">
+            <div className="relative ml-1 flex items-center">
               <button
                 onClick={() => {
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
                 }}
-                className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border border-warmgray-200 group"
+                className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border-2 border-warmgray-200 group"
                 aria-label="Shopping cart"
               >
                 <svg
-                  className="w-5 h-5 text-warmgray-700 group-hover:text-white"
+                  className="w-6 h-6 text-warmgray-700 group-hover:text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -97,7 +97,7 @@ function SuccessPageContent() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>

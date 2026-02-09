@@ -173,30 +173,30 @@ function MenuPageContent() {
   }
 
   return (
-    <div className="h-screen bg-cream-50 flex flex-col overflow-hidden relative">
+    <div className="h-screen bg-background flex flex-col overflow-hidden relative">
       {/* Product Navigation Bar - Fixed at top - Mobile optimized */}
       <div 
         className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
-        style={{ minHeight: '52px' }}
+        style={{ minHeight: '40px' }}
       >
         {/* Header row - tan background (mobile & desktop) */}
-        <div className="bg-warmbrown-500 border-b border-warmbrown-600">
+        <div className="bg-warmbrown-500 border-b border-warmbrown-600 flex flex-col min-h-[40px]">
         {/* Mobile Layout (< 768px) */}
-        <div className="md:hidden flex items-center justify-between px-2.5 h-full min-h-[40px]">
+        <div className="md:hidden flex flex-1 items-center justify-between px-2.5 min-h-[40px] -translate-y-1.5">
           {/* Home Button - Mobile */}
           <Link
             href="/"
-            className="flex-shrink-0 flex items-center"
+            className="flex-shrink-0 flex items-center h-full"
             aria-label="Home"
           >
-            <span className="text-white font-nav-playfair text-lg font-extrabold brand-header-shadow">Caramel & Jo</span>
+            <span className="text-white font-nav-playfair text-2xl font-extrabold brand-header-shadow">Caramel & Jo</span>
           </Link>
           
           {/* Right side buttons - Mobile */}
-          <div className="flex items-center gap-1.5 flex-shrink-0">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <Link
               href="/contact"
-              className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border border-white/50 bg-transparent text-white md:hover:bg-white/20 md:hover:border-white/30 transition-colors duration-200 whitespace-nowrap flex items-center"
+              className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
             >
               {t('nav.contact')}
             </Link>
@@ -205,11 +205,11 @@ function MenuPageContent() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[34px] min-h-[34px] bg-white/20 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-white/30 transition-colors duration-200 relative border border-white/50 group"
+              className="min-w-[38px] min-h-[38px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center shadow-md md:hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70 group"
               aria-label="Shopping cart"
             >
               <svg
-                className="w-3.5 h-3.5 text-white"
+                className="w-7 h-7 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -217,7 +217,7 @@ function MenuPageContent() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={2.5}
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
@@ -231,14 +231,14 @@ function MenuPageContent() {
         </div>
 
         {/* Desktop Layout (>= 768px) */}
-        <div className="hidden md:flex items-center h-full" style={{ minHeight: '52px' }}>
+        <div className="hidden md:flex flex-1 items-center -translate-y-1.5" style={{ minHeight: '40px' }}>
           {/* Home Button - Desktop */}
           <Link
             href="/"
             className="flex-shrink-0 px-4 lg:px-6 flex items-center h-full"
             aria-label="Home"
           >
-            <span className="text-white font-nav-playfair text-2xl lg:text-3xl xl:text-4xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+            <span className="text-white font-nav-playfair text-4xl lg:text-5xl xl:text-6xl font-extrabold brand-header-shadow">Caramel & Jo</span>
           </Link>
           
           {/* Centered container for scrollable product list - Desktop */}
@@ -281,10 +281,10 @@ function MenuPageContent() {
           </div>
           
           {/* Language Toggle and Cart Button - Desktop */}
-          <div className="flex items-center gap-3 flex-shrink-0 pl-4 pr-4 lg:pr-6">
+          <div className="flex items-center gap-4 flex-shrink-0 pl-4 pr-4 lg:pr-6">
             <Link
               href="/contact"
-              className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/20 hover:border-white/30 transition-colors duration-200 flex items-center"
+              className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
             >
               {t('nav.contact')}
             </Link>
@@ -293,11 +293,11 @@ function MenuPageContent() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }}
-              className="min-w-[40px] min-h-[40px] bg-white/20 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-white/30 transition-colors duration-200 relative border border-white/50 group"
+              className="min-w-[44px] min-h-[44px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70 group"
               aria-label="Shopping cart"
             >
               <svg
-                className="w-4 h-4 text-white"
+                className="w-7 h-7 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -305,7 +305,7 @@ function MenuPageContent() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={2.5}
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
@@ -320,7 +320,7 @@ function MenuPageContent() {
         </div>
 
         {/* Product Category Buttons - Mobile (below brand/buttons row) */}
-        <div className="md:hidden bg-cream-50 border-b border-warmgray-200">
+        <div className="md:hidden bg-background border-b border-warmgray-200">
           <div 
             className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pl-2.5 pr-4 py-1.5 touch-scroll mobile-scroll-container" 
             style={{ WebkitOverflowScrolling: 'touch' }}
@@ -421,7 +421,7 @@ function MenuPageContent() {
                         key={variant.id}
                         className={`flex items-center gap-2 min-h-[44px] p-2 sm:p-2 border rounded-md cursor-pointer transition-colors ${
                           selectedVariant.id === variant.id
-                            ? 'border-warmgray-800 bg-cream-50'
+                            ? 'border-warmgray-800 bg-background'
                             : 'border-warmgray-300 md:hover:border-warmgray-400'
                         }`}
                       >
@@ -552,7 +552,7 @@ export default function MenuPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-cream-50/30 flex items-center justify-center">
+        <div className="min-h-screen bg-background/30 flex items-center justify-center">
           <div className="text-center space-y-4">
             <div className="relative">
               <div className="animate-spin rounded-full h-12 w-12 border-2 border-warmgray-200 border-t-warmgray-800 mx-auto"></div>

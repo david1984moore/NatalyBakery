@@ -20,7 +20,7 @@ export default function AboutPage() {
           className="flex-shrink-0 px-2 sm:px-3 py-1.5"
           aria-label="Home"
         >
-          <span className="text-black font-nav-playfair text-xl sm:text-2xl md:text-3xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+          <span className="text-black font-nav-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
         </Link>
       </div>
       

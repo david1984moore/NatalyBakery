@@ -87,7 +87,16 @@ export default function Cart() {
           <div className="relative w-full bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
           {/* Cart Items */}
           {items.length === 0 ? (
-            <div className="px-6 py-8 flex-shrink-0">
+            <div className="relative px-6 py-8 flex-shrink-0">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute top-4 right-4 min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors rounded-full hover:bg-warmgray-100"
+                aria-label="Close cart"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
               <h2 className="text-lg font-serif text-warmgray-800 text-center mb-4">{t('cart.shoppingCart')}</h2>
               <p className="text-warmgray-600 text-center">{t('cart.empty')}</p>
             </div>
@@ -233,15 +242,15 @@ export default function Cart() {
   // Render floating button for other pages
   if (items.length === 0) {
     return (
-      <div className="fixed bottom-4 right-4 z-50 safe-bottom safe-right">
+      <div className="fixed bottom-5 right-5 z-50 safe-bottom safe-right">
         <button
           onClick={() => setIsOpen(!isOpen)}
           data-cart-toggle
-          className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 group"
+          className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border-2 border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 group"
           aria-label="Shopping cart"
         >
           <svg
-            className="w-6 h-6 text-warmgray-700 group-hover:text-white"
+            className="w-7 h-7 text-warmgray-700 group-hover:text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -249,13 +258,22 @@ export default function Cart() {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
+              strokeWidth={2.5}
               d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
             />
           </svg>
         </button>
         {isOpen && (
-          <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 bg-white rounded-lg shadow-xl p-6">
+          <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 bg-white rounded-lg shadow-xl relative p-6">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors rounded-full hover:bg-warmgray-100"
+              aria-label="Close cart"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
             <p className="text-warmgray-600 text-center py-8">{t('cart.empty')}</p>
           </div>
         )}
@@ -264,15 +282,15 @@ export default function Cart() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 safe-bottom safe-right">
+    <div className="fixed bottom-5 right-5 z-50 safe-bottom safe-right">
       <button
         onClick={() => setIsOpen(!isOpen)}
         data-cart-toggle
-        className="min-w-[44px] min-h-[44px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 relative group"
+        className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border-2 border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 relative group"
         aria-label="Shopping cart"
       >
         <svg
-          className="w-6 h-6 text-warmgray-700 group-hover:text-white"
+          className="w-7 h-7 text-warmgray-700 group-hover:text-white"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -280,7 +298,7 @@ export default function Cart() {
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth={2.5}
             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
           />
         </svg>
