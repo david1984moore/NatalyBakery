@@ -10,7 +10,7 @@ const heroFooterLinks = [{ href: '/contact', labelKey: 'nav.contact' as const }]
 export default function Hero() {
   const { t } = useLanguage()
   return (
-    <section className="relative h-svh w-full flex flex-col overflow-hidden">
+    <section className="relative h-[100svh] max-h-[100dvh] w-full flex flex-col overflow-hidden shrink-0">
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
 
@@ -41,10 +41,18 @@ export default function Hero() {
       </div>
 
       {/* Brand name - centered over photo. Padding gives text-shadow room so it isn't clipped. */}
-      <div id="brand-name-wrapper" className="absolute top-[18%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center px-8 py-6 sm:px-10 sm:py-8">
+      <div id="brand-name-wrapper" className="absolute top-[18%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-4 px-8 py-6 sm:px-10 sm:py-8">
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none">
           Caramel & Jo
         </h1>
+        <Link
+          href="/menu"
+          prefetch={true}
+          className="min-h-[36px] py-1.5 px-6 sm:px-8 flex items-center justify-center text-white text-base font-medium lowercase border-2 border-white/85 bg-stone-800/45 backdrop-blur-sm rounded-2xl md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
+          style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
+        >
+          {t('nav.order')}
+        </Link>
       </div>
 
       {/* Footer bar - Order, language, Contact with equal spacing; safe area as padding. */}

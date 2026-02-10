@@ -439,7 +439,7 @@ export default function CheckoutPage() {
             <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 flex flex-col min-w-0 overflow-hidden">
               <form onSubmit={handleSubmit} id="checkout-form" className="space-y-3 flex-1 flex flex-col min-w-0 overflow-hidden">
                 <div className="space-y-3 min-w-0 overflow-hidden">
-                  <div>
+                  <div className="min-w-0 w-full">
                     <label htmlFor="name" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.fullName')}
                     </label>
@@ -449,11 +449,11 @@ export default function CheckoutPage() {
                       required
                       value={customerInfo.name}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
-                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                      className="w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
                     />
                   </div>
 
-                  <div>
+                  <div className="min-w-0 w-full">
                     <label htmlFor="email" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.email')}
                     </label>
@@ -463,11 +463,11 @@ export default function CheckoutPage() {
                       required
                       value={customerInfo.email}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
-                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                      className="w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
                     />
                   </div>
 
-                  <div>
+                  <div className="min-w-0 w-full">
                     <label htmlFor="phone" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.phone')}
                     </label>
@@ -477,11 +477,11 @@ export default function CheckoutPage() {
                       required
                       value={customerInfo.phone}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                      className="w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
                     />
                   </div>
 
-                  <div>
+                  <div className="min-w-0 w-full">
                     <label htmlFor="deliveryAddress" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.deliveryAddress')}
                     </label>
@@ -492,7 +492,7 @@ export default function CheckoutPage() {
                       placeholder={t('checkout.placeholder.address')}
                       value={customerInfo.deliveryAddress}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryAddress: e.target.value })}
-                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                      className="w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
                     />
                   </div>
 
@@ -516,7 +516,7 @@ export default function CheckoutPage() {
                     )}
                   </div>
 
-                  <div className="min-w-0">
+                  <div className="min-w-0 w-full">
                     <label htmlFor="deliveryTime" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.deliveryTime')}
                     </label>
@@ -535,7 +535,7 @@ export default function CheckoutPage() {
                     </select>
                   </div>
 
-                  <div>
+                  <div className="min-w-0 w-full">
                     <label htmlFor="specialInstructions" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.specialInstructions')}
                     </label>
@@ -545,7 +545,7 @@ export default function CheckoutPage() {
                       placeholder={t('checkout.placeholder.specialInstructions')}
                       value={customerInfo.specialInstructions}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, specialInstructions: e.target.value })}
-                      className="w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent resize-none"
+                      className="w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent resize-none box-border"
                     />
                   </div>
 

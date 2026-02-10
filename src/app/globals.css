@@ -82,17 +82,24 @@ body {
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
   }
 
-  /* Keep checkout delivery date input within container (prevents overflow on mobile) */
+  /* Keep checkout inputs within container (prevents overflow/clipping on mobile) */
   .checkout-delivery-date-input {
     width: 100%;
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
   }
-  /* Mobile: force date input to stay inside viewport (browsers often give it a large intrinsic width) */
+  /* Mobile: force checkout form inputs to stay inside viewport (prevents right-side clipping of rounded corners) */
   @media (max-width: 768px) {
     .checkout-delivery-date-input {
       max-width: min(100%, 100vw);
+    }
+    #checkout-form input,
+    #checkout-form select,
+    #checkout-form textarea {
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
     }
   }
   

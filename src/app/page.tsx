@@ -4,7 +4,7 @@ import StickyNav from '@/components/StickyNav'
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-[100svh] flex flex-col md:min-h-screen">
       <Hero />
       <FeaturedProducts />
       <StickyNav />
