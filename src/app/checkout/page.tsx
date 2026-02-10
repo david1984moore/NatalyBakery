@@ -197,42 +197,44 @@ export default function CheckoutPage() {
         <Cart />
         {/* Navigation Bar - Updated header (matches menu/contact pages) */}
         <div
-          className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
+          className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
           style={{ minHeight: '40px' }}
         >
-          <div className="bg-warmbrown-500 border-b border-warmbrown-600 flex flex-col min-h-[40px]">
+          <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
             {/* Mobile Layout (< 768px) */}
-            <div className="md:hidden flex flex-1 items-center justify-between px-2.5 min-h-[40px] -translate-y-1.5">
+            <div className="md:hidden flex flex-1 items-center justify-between pl-2.5 pr-5 min-h-[40px] -translate-y-1.5">
               <Link
                 href="/"
                 className="flex-shrink-0 flex items-center h-full"
                 aria-label="Home"
               >
-                <span className="text-white font-nav-playfair text-2xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+                <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
               </Link>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <Link
-                  href="/menu"
-                  className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
-                >
-                  {t('nav.menu')}
-                </Link>
-                <Link
-                  href="/menu"
-                  className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
-                >
-                  {t('nav.order')}
-                </Link>
-                <Link
-                  href="/contact"
-                  className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
-                >
-                  {t('nav.contact')}
-                </Link>
+              <div className="flex items-center gap-3 flex-shrink-0">
                 <LanguageToggle variant="menuHeader" />
+                <div className="flex items-center gap-1">
+                  <Link
+                    href="/menu"
+                    className="min-h-[30px] px-1.5 py-0.5 rounded-xl lowercase text-xs font-medium border-[3px] border-white/85 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 whitespace-nowrap flex items-center"
+                  >
+                    {t('nav.menu')}
+                  </Link>
+                  <Link
+                    href="/menu"
+                    className="min-h-[30px] px-1.5 py-0.5 rounded-xl lowercase text-xs font-medium border-[3px] border-white/85 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 whitespace-nowrap flex items-center"
+                  >
+                    {t('nav.order')}
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="min-h-[30px] px-1.5 py-0.5 rounded-xl text-xs font-medium border-[3px] border-white/85 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 whitespace-nowrap flex items-center"
+                  >
+                    {t('nav.contact')}
+                  </Link>
+                </div>
                 <button
                   onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                  className="min-w-[38px] min-h-[38px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center shadow-md md:hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70"
+                  className="min-w-[34px] min-h-[34px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-4 border-white/85"
                   aria-label="Shopping cart"
                 >
                   <svg
@@ -258,37 +260,39 @@ export default function CheckoutPage() {
             </div>
 
             {/* Desktop Layout (>= 768px) */}
-            <div className="hidden md:flex flex-1 items-center justify-between px-4 lg:px-6 min-h-[40px] -translate-y-1.5">
+            <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 min-h-[40px] -translate-y-1.5">
               <Link
                 href="/"
                 className="flex-shrink-0 flex items-center h-full"
                 aria-label="Home"
               >
-                <span className="text-white font-nav-playfair text-4xl lg:text-5xl xl:text-6xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+                <span className="text-white font-nav-playfair text-3xl lg:text-4xl xl:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
               </Link>
-              <div className="flex items-center gap-4 flex-shrink-0">
-                <Link
-                  href="/menu"
-                  className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
-                >
-                  {t('nav.menu')}
-                </Link>
-                <Link
-                  href="/menu"
-                  className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
-                >
-                  {t('nav.order')}
-                </Link>
-                <Link
-                  href="/contact"
-                  className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
-                >
-                  {t('nav.contact')}
-                </Link>
+              <div className="flex items-center gap-5 flex-shrink-0">
                 <LanguageToggle variant="menuHeader" />
+                <div className="flex items-center gap-1">
+                  <Link
+                    href="/menu"
+                    className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
+                  >
+                    {t('nav.menu')}
+                  </Link>
+                  <Link
+                    href="/menu"
+                    className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
+                  >
+                    {t('nav.order')}
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
+                  >
+                    {t('nav.contact')}
+                  </Link>
+                </div>
                 <button
                   onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                  className="min-w-[44px] min-h-[44px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70"
+                  className="min-w-[40px] min-h-[40px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-4 border-white/85"
                   aria-label="Shopping cart"
                 >
                   <svg
@@ -354,42 +358,44 @@ export default function CheckoutPage() {
       <Cart />
       {/* Navigation Bar - Updated header (matches menu/contact pages) */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] bg-warmbrown-500 shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
+        className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
         style={{ minHeight: '40px' }}
       >
-        <div className="bg-warmbrown-500 border-b border-warmbrown-600 flex flex-col min-h-[40px]">
+        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
           {/* Mobile Layout (< 768px) */}
-          <div className="md:hidden flex items-center justify-between px-2.5 min-h-[40px] -translate-y-1.5">
+          <div className="md:hidden flex items-center justify-between pl-2.5 pr-5 min-h-[40px] -translate-y-1.5">
             <Link
               href="/"
               className="flex-shrink-0 flex items-center h-full"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-2xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <Link
-                href="/menu"
-                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
-              >
-                {t('nav.menu')}
-              </Link>
-              <Link
-                href="/menu"
-                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
-              >
-                {t('nav.order')}
-              </Link>
-              <Link
-                href="/contact"
-                className="min-h-[34px] px-2 py-0.5 rounded-md text-xs font-medium border-[3px] border-white/70 bg-white/20 text-white md:hover:bg-white/40 md:hover:border-white/90 transition-colors duration-200 whitespace-nowrap flex items-center"
-              >
-                {t('nav.contact')}
-              </Link>
+            <div className="flex items-center gap-3 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />
+              <div className="flex items-center gap-1">
+                <Link
+                  href="/menu"
+                  className="min-h-[30px] px-1.5 py-0.5 rounded-xl lowercase text-xs font-medium border-[3px] border-white/85 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 whitespace-nowrap flex items-center"
+                >
+                  {t('nav.menu')}
+                </Link>
+                <Link
+                  href="/menu"
+                  className="min-h-[30px] px-1.5 py-0.5 rounded-xl lowercase text-xs font-medium border-[3px] border-white/85 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 whitespace-nowrap flex items-center"
+                >
+                  {t('nav.order')}
+                </Link>
+                <Link
+                  href="/contact"
+                  className="min-h-[30px] px-1.5 py-0.5 rounded-xl text-xs font-medium border-[3px] border-white/85 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 whitespace-nowrap flex items-center"
+                >
+                  {t('nav.contact')}
+                </Link>
+              </div>
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[38px] min-h-[38px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center shadow-md md:hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70"
+                className="min-w-[34px] min-h-[34px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-4 border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -415,37 +421,39 @@ export default function CheckoutPage() {
           </div>
 
           {/* Desktop Layout (>= 768px) */}
-          <div className="hidden md:flex flex-1 items-center justify-between px-4 lg:px-6 min-h-[40px] -translate-y-1.5">
+          <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 min-h-[40px] -translate-y-1.5">
             <Link
               href="/"
               className="flex-shrink-0 flex items-center h-full"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-4xl lg:text-5xl xl:text-6xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+              <span className="text-white font-nav-playfair text-3xl lg:text-4xl xl:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
-            <div className="flex items-center gap-4 flex-shrink-0">
-              <Link
-                href="/menu"
-                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
-              >
-                {t('nav.menu')}
-              </Link>
-              <Link
-                href="/menu"
-                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
-              >
-                {t('nav.order')}
-              </Link>
-              <Link
-                href="/contact"
-                className="flex-shrink-0 min-h-[40px] px-3 py-1 rounded-md text-sm font-medium whitespace-nowrap border-[3px] border-white/70 bg-white/20 text-white hover:bg-white/40 hover:border-white/90 transition-colors duration-200 flex items-center"
-              >
-                {t('nav.contact')}
-              </Link>
+            <div className="flex items-center gap-5 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />
+              <div className="flex items-center gap-1">
+                <Link
+                  href="/menu"
+                  className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
+                >
+                  {t('nav.menu')}
+                </Link>
+                <Link
+                  href="/menu"
+                  className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
+                >
+                  {t('nav.order')}
+                </Link>
+                <Link
+                  href="/contact"
+                  className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
+                >
+                  {t('nav.contact')}
+                </Link>
+              </div>
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[44px] min-h-[44px] ml-1 bg-white/20 backdrop-blur-sm rounded-full p-2.5 flex items-center justify-center shadow-md hover:bg-white/40 transition-colors duration-200 relative border-[3px] border-white/70"
+                className="min-w-[40px] min-h-[40px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-4 border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg

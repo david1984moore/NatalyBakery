@@ -40,21 +40,21 @@ export default function Hero() {
         />
       </div>
 
-      {/* Brand name - centered over photo */}
-      <div id="brand-name-wrapper" className="absolute top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center pointer-events-none">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand whitespace-nowrap">
+      {/* Brand name + order button - centered over photo. Padding gives text-shadow room so it isn't clipped. */}
+      <div id="brand-name-wrapper" className="absolute top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-6 px-8 py-6 sm:px-10 sm:py-8">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none">
           Caramel & Jo
         </h1>
-      </div>
-
-      {/* Bottom section: order button + nav links */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 h-[28%] min-h-0 pb-6 pt-14 flex flex-col items-center justify-end gap-7">
         <Link
           href="/menu"
-          className="font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-xl border-4 border-white/85 bg-stone-800/30 md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200"
+          className="font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-2xl border-4 border-white/85 bg-stone-800/50 md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
         >
           {t('nav.order')}
         </Link>
+      </div>
+
+      {/* Bottom section: nav links */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 h-[28%] min-h-0 pb-6 pt-14 flex flex-col items-center justify-end gap-7">
         <div className="flex justify-center">
           <HeroNav />
         </div>

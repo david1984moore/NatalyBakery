@@ -132,7 +132,7 @@ export type TranslationKey =
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
     // Navigation
-    'nav.contact': 'Contact',
+    'nav.contact': 'contact',
     'nav.order': 'Order',
     'nav.home': 'Home',
     'nav.shop': 'Shop',
@@ -261,7 +261,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
   },
   es: {
     // Navigation
-    'nav.contact': 'Contacto',
+    'nav.contact': 'contacto',
     'nav.order': 'Pedido',
     'nav.home': 'Inicio',
     'nav.shop': 'Tienda',

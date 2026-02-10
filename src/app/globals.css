@@ -35,20 +35,9 @@ body {
   }
 
   .text-hero-brand {
-    /* Light shadow for readability - moderate drop */
-    text-shadow:
-      0 1px 2px rgba(0,0,0,0.85),
-      0 2px 4px rgba(0,0,0,0.75),
-      0 4px 8px rgba(0,0,0,0.65),
-      0 6px 12px rgba(0,0,0,0.55),
-      0 8px 16px rgba(0,0,0,0.45);
-    /* Stroke for clean edges */
-    -webkit-text-stroke: 0.5px rgba(40,40,40,0.5);
-    paint-order: stroke fill;
     font-family: var(--font-brand);
     font-weight: 700;
     letter-spacing: 0.03em;
-    /* Smooth rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -106,6 +95,15 @@ body {
   .animate-fade-in {
     animation: fade-in 0.3s ease-out forwards;
   }
+}
+
+/* Hero brand name text shadow - outside @layer so it is not overridden by Tailwind utilities */
+#brand-name-wrapper h1 {
+  text-shadow:
+    0 1px 4px rgba(0,0,0,0.95),
+    0 2px 8px rgba(0,0,0,0.85),
+    0 4px 16px rgba(0,0,0,0.75),
+    0 8px 24px rgba(0,0,0,0.6);
 }
 
 /* Home page: uses Roboto (--font-ui) for all text except brand name */

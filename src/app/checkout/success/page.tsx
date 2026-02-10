@@ -85,7 +85,7 @@ function SuccessPageContent() {
                 onClick={() => {
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
                 }}
-                className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border-2 border-warmgray-200 group"
+                className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-md hover:bg-tan hover:border-tan transition-colors duration-200 relative border-4 border-warmgray-200 group"
                 aria-label="Shopping cart"
               >
                 <svg

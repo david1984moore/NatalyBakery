@@ -14,8 +14,8 @@ const config: Config = {
         foreground: 'var(--foreground)',
         // Hero and menu page fill - light wood tone (matches hero fade)
         hero: {
-          DEFAULT: '#d4c4a8',
-          600: '#b8a88a', /* darker for border/hover */
+          DEFAULT: '#c5b896',
+          600: '#a89878', /* darker for border/hover */
         },
         // Warm neutrals - soft caramel undertones
         beige: {

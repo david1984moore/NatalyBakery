@@ -19,7 +19,7 @@ export default function HeroNav() {
         <Link
           key={link.labelKey}
           href={link.href}
-          className="font-ui font-bold text-xs md:text-sm text-white tracking-wide lowercase min-h-[26px] px-3 py-1 flex items-center justify-center rounded-xl border-4 border-white/85 bg-stone-800/30 md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200"
+          className="font-ui font-bold text-xs md:text-sm text-white tracking-wide lowercase min-h-[26px] px-3 py-1 flex items-center justify-center rounded-xl border-4 border-white/85 bg-stone-800/50 md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
         >
           {t(link.labelKey)}
         </Link>

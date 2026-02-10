@@ -84,7 +84,7 @@ export default function Cart() {
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative w-full bg-white rounded-lg shadow-xl border border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
+          <div className="relative w-full bg-white rounded-lg shadow-xl border-4 border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
           {/* Cart Items */}
           {items.length === 0 ? (
             <div className="relative px-6 py-8 flex-shrink-0">
@@ -246,7 +246,7 @@ export default function Cart() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           data-cart-toggle
-          className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border-2 border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 group"
+          className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border-4 border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 group"
           aria-label="Shopping cart"
         >
           <svg
@@ -264,7 +264,7 @@ export default function Cart() {
           </svg>
         </button>
         {isOpen && (
-          <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 bg-white rounded-lg shadow-xl relative p-6">
+          <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 bg-white rounded-lg shadow-xl border-4 border-warmgray-200 relative p-6">
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-4 right-4 min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors rounded-full hover:bg-warmgray-100"
@@ -286,7 +286,7 @@ export default function Cart() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         data-cart-toggle
-        className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border-2 border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 relative group"
+        className="min-w-[48px] min-h-[48px] bg-white/95 backdrop-blur-sm rounded-full p-3 flex items-center justify-center shadow-lg border-4 border-transparent hover:bg-tan hover:border-tan transition-colors duration-200 relative group"
         aria-label="Shopping cart"
       >
         <svg
@@ -308,7 +308,7 @@ export default function Cart() {
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl flex flex-col" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
+        <div className="absolute bottom-full right-0 mb-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80 md:w-96 bg-white rounded-lg shadow-xl border-4 border-warmgray-200 flex flex-col" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
           {/* Header with title and close button */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-warmgray-100 flex-shrink-0">
             <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
