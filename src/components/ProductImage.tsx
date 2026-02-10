@@ -12,6 +12,8 @@ interface ProductImageProps {
   priority?: boolean
   /** Mobile only: fill hero area with object-cover */
   mobileHero?: boolean
+  /** Per-image blur placeholder. Falls back to generic blur if not provided. */
+  blurDataURL?: string
 }
 
 export default function ProductImage({
@@ -21,6 +23,7 @@ export default function ProductImage({
   className = '',
   priority = true,
   mobileHero = false,
+  blurDataURL: blurDataURLProp,
 }: ProductImageProps) {
   const [aspectRatio, setAspectRatio] = useState(4 / 3)
 
@@ -36,10 +39,10 @@ export default function ProductImage({
         className={mobileHero ? 'object-cover object-center md:object-contain md:object-center' : 'object-contain'}
         sizes={sizes}
         priority={priority}
-        quality={mobileHero ? 70 : 75}
+        quality={90}
         placeholder="blur"
-        blurDataURL={BLUR_DATA_URL}
-        fetchPriority={priority ? 'high' : undefined}
+        blurDataURL={blurDataURLProp || BLUR_DATA_URL}
+        fetchPriority={priority ? 'high' : 'auto'}
         onLoad={(e) => {
           const img = e.target as HTMLImageElement
           if (img?.naturalWidth && img?.naturalHeight) {

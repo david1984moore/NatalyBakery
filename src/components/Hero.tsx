@@ -21,6 +21,7 @@ export default function Hero() {
           fill
           className="object-cover object-center block md:hidden"
           priority
+          fetchPriority="high"
           quality={70}
           sizes="100vw"
           placeholder="blur"
@@ -33,6 +34,7 @@ export default function Hero() {
           fill
           className="object-cover object-center hidden md:block"
           priority
+          fetchPriority="high"
           quality={70}
           sizes="(min-width: 1025px) 1440px, 100vw"
           placeholder="blur"
@@ -47,6 +49,7 @@ export default function Hero() {
         </h1>
         <Link
           href="/menu"
+          prefetch={true}
           className="font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-2xl border-4 border-white/85 bg-stone-800/65 md:hover:bg-stone-700/65 md:hover:border-white transition-colors duration-200"
         >
           {t('nav.order')}

@@ -45,6 +45,7 @@ export default function MobileMenu() {
             <Link
               key={link.labelKey}
               href={link.href}
+              prefetch={true}
               onClick={() => setIsOpen(false)}
               className="font-ui w-full flex items-center justify-center px-4 min-h-[44px] py-2 rounded-md border border-white/40 bg-white/20 backdrop-blur-sm text-white font-medium text-sm tracking-wide hover:bg-white/30 transition-colors duration-200"
             >
@@ -56,13 +57,14 @@ export default function MobileMenu() {
         {/* Product cards grid */}
         <div className="flex-1 py-6">
           <div className="grid grid-cols-3 gap-2 justify-items-center">
-            {products.slice(0, FEATURED_PRODUCT_COUNT).map((product) => (
+            {products.slice(0, FEATURED_PRODUCT_COUNT).map((product, index) => (
               <ProductCard
                 key={product.name}
                 name={product.name}
                 image={product.image}
                 href={`/menu?product=${encodeURIComponent(product.name)}`}
                 variant="light"
+                priority={index < 4}
               />
             ))}
           </div>

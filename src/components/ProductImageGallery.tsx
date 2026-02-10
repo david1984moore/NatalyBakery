@@ -15,6 +15,8 @@ interface ProductImageGalleryProps {
   sizes?: string
   /** Mobile only: fill hero area, use scroll-snap carousel for multiple images */
   mobileHero?: boolean
+  /** Per-image blur placeholder for main image. Falls back to generic blur if not provided. */
+  blurDataURL?: string
 }
 
 export default function ProductImageGallery({
@@ -24,6 +26,7 @@ export default function ProductImageGallery({
   imageClassName = '',
   sizes = '(max-width: 640px) 180px, (max-width: 768px) 240px, 400px',
   mobileHero = false,
+  blurDataURL: blurDataURLProp,
 }: ProductImageGalleryProps) {
   const [index, setIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -123,11 +126,11 @@ export default function ProductImageGallery({
                     className="object-contain object-center"
                     sizes="100vw"
                     priority={i === 0}
-                    quality={70}
+                    quality={90}
                     placeholder="blur"
-                    blurDataURL={BLUR_DATA_URL}
+                    blurDataURL={blurDataURLProp || BLUR_DATA_URL}
                     loading={i === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={i === 0 ? 'high' : undefined}
+                    fetchPriority={i === 0 ? 'high' : 'auto'}
                   />
                 </div>
               ))}
@@ -187,11 +190,11 @@ export default function ProductImageGallery({
                   className={`object-contain object-center ${imageClassName}`}
                   sizes={sizes}
                   priority={index === 0}
-                  quality={mobileHero ? 70 : 75}
+                  quality={90}
                   placeholder="blur"
-                  blurDataURL={BLUR_DATA_URL}
+                  blurDataURL={blurDataURLProp || BLUR_DATA_URL}
                   loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchPriority={index === 0 ? 'high' : undefined}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
                   onLoad={(e) => {
                     const img = e.target as HTMLImageElement
                     if (img?.naturalWidth && img?.naturalHeight) {

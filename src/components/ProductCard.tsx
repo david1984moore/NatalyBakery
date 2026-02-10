@@ -11,9 +11,13 @@ interface ProductCardProps {
   image: string
   href?: string
   variant?: 'hero' | 'light'
+  /** Above-fold images: preload immediately. Use for first 4–6 in grid. */
+  priority?: boolean
+  /** Per-image blur placeholder. Falls back to generic blur if not provided. */
+  blurDataURL?: string
 }
 
-export default function ProductCard({ name, image, href, variant = 'hero' }: ProductCardProps) {
+export default function ProductCard({ name, image, href, variant = 'hero', priority = false, blurDataURL }: ProductCardProps) {
   const { t } = useLanguage()
   const productUrl = href || `/menu?product=${encodeURIComponent(name)}`
   const translationKey = getProductTranslationKey(name)
@@ -30,10 +34,12 @@ export default function ProductCard({ name, image, href, variant = 'hero' }: Pro
             alt={translatedName}
             fill
             className="object-cover"
-            loading="lazy"
-            quality={75}
+            priority={priority}
+            loading={priority ? 'eager' : 'lazy'}
+            quality={90}
             placeholder="blur"
-            blurDataURL={BLUR_DATA_URL}
+            blurDataURL={blurDataURL || BLUR_DATA_URL}
+            fetchPriority={priority ? 'high' : undefined}
             sizes="(max-width: 640px) 140px, (max-width: 768px) 120px, 140px"
           />
           {/* Product name overlay - gradient from transparent to dark for readability, no visible strip */}

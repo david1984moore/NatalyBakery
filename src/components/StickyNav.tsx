@@ -76,6 +76,7 @@ export default function StickyNav() {
             <Link
               key={link.labelKey}
               href={link.href}
+              prefetch={true}
               className="font-ui min-h-[44px] px-3 py-1.5 flex items-center rounded-md border-2 border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
             >
               {t(link.labelKey)}
@@ -115,6 +116,7 @@ export default function StickyNav() {
                   <Link
                     key={link.labelKey}
                     href={link.href}
+                    prefetch={true}
                     onClick={() => setIsDropdownOpen(false)}
                     className="font-playfair font-medium min-h-[44px] px-4 py-2.5 flex items-center text-base text-white rounded-lg md:hover:bg-white/20"
                   >
