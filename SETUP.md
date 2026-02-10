@@ -71,6 +71,16 @@ After setup, verify everything works:
 4. ✅ Development server - Should start without errors
 5. ✅ Stripe webhook - Test with Stripe CLI (local) or dashboard (production)
 
+## 🖼️ Adding New Images
+
+When you add new photos to `public/Images/`, run the optimizer so the site stays fast and doesn’t hit memory limits:
+
+```bash
+npm run optimize-images
+```
+
+This resizes and compresses images; the build can also run it. See `PHOTO-PERFORMANCE-INVESTIGATION-REPORT.md` for the full image strategy.
+
 ## 📚 Project Documentation
 
 - **Payment Implementation:** See `PAYMENT_IMPLEMENTATION_PLAN.md`

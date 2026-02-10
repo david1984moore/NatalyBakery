@@ -27,14 +27,15 @@ export default function Hero() {
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwA/8AAI/9k="
         />
-        {/* Desktop: caramel flan with berries */}
+        {/* Desktop: caramel flan with berries - lazy so only one hero image is priority (LCP) */}
         <Image
           src="/Images/IMG_7616.jpeg"
           alt="Caramel flan dessert with fresh berries"
           fill
           className="object-cover object-center hidden md:block"
-          priority
-          fetchPriority="high"
+          priority={false}
+          loading="lazy"
+          fetchPriority="low"
           quality={70}
           sizes="(min-width: 1025px) 1440px, 100vw"
           placeholder="blur"

@@ -1,5 +1,7 @@
 # Render Memory Leak Fix - Caramelandjo
 
+**For recurring "Ran out of memory (used over 512MB)" events (Feb 2026+):** See **MEMORY-OOM-INVESTIGATION-REPORT.md** for full root-cause analysis. The main fix is in `src/lib/image-utils.server.ts`: blur placeholders are now computed **sequentially** and **cached** via `unstable_cache` to avoid parallel full-image loads and repeated work. Also consider adding `NODE_OPTIONS=--max-old-space-size=384` in Render → Environment (documented in Phase 4 below).
+
 ## Problem Summary
 
 **Issue:** Render instance crashed with "Ran out of memory (used over 512MB)" error  
@@ -210,6 +212,11 @@ DIRECT_URL=postgresql://user:password@host.supabase.co:5432/postgres
 **Critical parameters:**
 - `connection_limit=1` - Limits each Node.js instance to 1 connection (prevents pool exhaustion)
 - `pgbouncer=true` - Uses Supabase's connection pooler (if available)
+
+**Optional – cap Node heap (recommended if OOM persists):**
+- Add `NODE_OPTIONS=--max-old-space-size=384` in Render Dashboard → Environment.
+- This limits the V8 heap so total process memory (RSS) is less likely to exceed 512MB; leaves headroom for native modules (e.g. Sharp), buffers, and the rest of the process.
+- See **MEMORY-OOM-INVESTIGATION-REPORT.md** for full OOM root-cause analysis and blur-placeholder fixes.
 
 **@cursor - Determine:**
 - Does the existing DATABASE_URL use Supabase's pooler endpoint (port 6543)?

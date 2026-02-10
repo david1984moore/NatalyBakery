@@ -11,7 +11,7 @@ const nextConfig = {
     qualities: [50, 70, 75, 80],
     deviceSizes: [384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 180, 240, 256, 384],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 31536000, // 1 year - stable portfolio images
     remotePatterns: [
       {
         protocol: 'https',
