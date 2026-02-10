@@ -50,7 +50,7 @@ export default async function Image() {
             objectFit: 'contain',
           }}
         />
-        {/* Top/bottom gradient fades like homepage hero (no logo strip) */}
+        {/* Top/bottom gradient fades like homepage hero */}
         <div
           style={{
             position: 'absolute',
@@ -59,7 +59,36 @@ export default async function Image() {
             pointerEvents: 'none',
           }}
         />
-        {/* Brown footer: slogan + URL only */}
+        {/* Brand name: centered, ~18% from top to match hero */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '18%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: 'Playfair Display',
+              fontSize: 96,
+              fontWeight: 700,
+              color: 'white',
+              textAlign: 'center',
+              textShadow: '0 2px 8px rgba(0,0,0,0.35)',
+              letterSpacing: '0.02em',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Caramel & Jo
+          </span>
+        </div>
+        {/* Footer: slogan only (no nav, no buttons, no URL, no green section) */}
         <div
           style={{
             position: 'absolute',
@@ -67,12 +96,10 @@ export default async function Image() {
             left: 0,
             right: 0,
             background: 'linear-gradient(180deg, #a08040 0%, #8B6914 100%)',
-            padding: '24px 40px 16px',
+            padding: '24px 40px',
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 8,
           }}
         >
           <span
@@ -86,17 +113,6 @@ export default async function Image() {
             }}
           >
             Where caramel dreams become cake!
-          </span>
-          <span
-            style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: 18,
-              fontWeight: 400,
-              color: 'rgba(255,255,255,0.95)',
-              textAlign: 'center',
-            }}
-          >
-            caramelandjo.onrender.com
           </span>
         </div>
       </div>

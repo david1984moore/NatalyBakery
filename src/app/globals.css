@@ -73,6 +73,11 @@ body {
       0 3px 6px rgba(0,0,0,0.6),
       0 4px 8px rgba(0,0,0,0.5);
   }
+
+  /* Softer shadow on checkout only - avoids boxy/border-like look */
+  .brand-header-shadow-checkout {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
   
   /* Shimmer animation for nav links */
   @keyframes shimmer {

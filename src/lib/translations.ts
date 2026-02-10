@@ -133,7 +133,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
     // Navigation
     'nav.contact': 'contact',
-    'nav.order': 'Order',
+    'nav.order': 'order',
     'nav.home': 'Home',
     'nav.shop': 'Shop',
     'nav.menu': 'Menu',
