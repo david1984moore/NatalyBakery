@@ -43,6 +43,7 @@ export type TranslationKey =
   | 'checkout.deliveryDate'
   | 'checkout.deliveryTime'
   | 'checkout.deliveryTimeWindow'
+  | 'checkout.sameDayCutoffNote'
   | 'checkout.specialInstructions'
   | 'checkout.placeholder.address'
   | 'checkout.placeholder.specialInstructions'
@@ -173,6 +174,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.deliveryDate': 'Delivery Date *',
     'checkout.deliveryTime': 'Delivery Time *',
     'checkout.deliveryTimeWindow': 'We deliver between 6:30pm and 9:30pm daily.',
+    'checkout.sameDayCutoffNote': 'Same-day delivery must be ordered before 9:00am. Please select tomorrow or a later date.',
     'checkout.specialInstructions': 'Special Instructions',
     'checkout.placeholder.address': 'Street address, city, state, zip',
     'checkout.placeholder.specialInstructions': 'Gate code, building instructions, leave at door, etc.',
@@ -302,6 +304,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.deliveryDate': 'Fecha de Entrega *',
     'checkout.deliveryTime': 'Hora de Entrega *',
     'checkout.deliveryTimeWindow': 'Entregamos entre 6:30pm y 9:30pm diariamente.',
+    'checkout.sameDayCutoffNote': 'Los pedidos para hoy deben realizarse antes de las 9:00am. Por favor selecciona mañana o una fecha posterior.',
     'checkout.specialInstructions': 'Instrucciones Especiales',
     'checkout.placeholder.address': 'Dirección, ciudad, estado, código postal',
     'checkout.placeholder.specialInstructions': 'Código de acceso, instrucciones del edificio, dejar en la puerta, etc.',

@@ -23,9 +23,6 @@ import ProductImageGallery from '@/components/ProductImageGallery'
 import ProductImage from '@/components/ProductImage'
 import type { ProductWithBlur } from './page'
 
-const menuNavDropdownLinks = [
-  { href: '/contact', labelKey: 'nav.contact' as const },
-]
 
 interface MenuPageContentProps {
   productsWithBlur: ProductWithBlur[]
@@ -46,24 +43,10 @@ export default function MenuPageContent({
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
-  const [isNavOpen, setIsNavOpen] = useState(false)
-  const navMobileRef = useRef<HTMLDivElement>(null)
-  const navDesktopRef = useRef<HTMLDivElement>(null)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   const getBlurForProduct = (productName: string) =>
     productsWithBlur.find((p) => p.name === productName)?.blurDataURL
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as Node
-      const insideMobile = navMobileRef.current?.contains(target)
-      const insideDesktop = navDesktopRef.current?.contains(target)
-      if (!insideMobile && !insideDesktop) setIsNavOpen(false)
-    }
-    document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
-  }, [])
 
   const checkScrollPosition = () => {
     const container = scrollContainerRef.current
@@ -202,13 +185,20 @@ export default function MenuPageContent({
                 Caramel & Jo
               </span>
             </Link>
-            <div className="flex items-center gap-3 flex-shrink-0 pr-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 pr-3">
+              <Link
+                href="/contact"
+                prefetch={true}
+                className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center"
+              >
+                {t('nav.contact')}
+              </Link>
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
                 }
-                className="min-w-[34px] min-h-[34px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-4 border-white/85"
+                className="min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -230,58 +220,6 @@ export default function MenuPageContent({
                   </span>
                 )}
               </button>
-              <div className="relative" ref={navMobileRef}>
-                <button
-                  onClick={() => setIsNavOpen(!isNavOpen)}
-                  className="min-w-[34px] min-h-[34px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
-                  aria-expanded={isNavOpen}
-                  aria-label="Toggle navigation menu"
-                  aria-haspopup="true"
-                >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    {isNavOpen ? (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    ) : (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    )}
-                  </svg>
-                </button>
-                <div
-                  className={`absolute top-full right-0 mt-2 w-48 z-[101] rounded-xl overflow-hidden backdrop-blur-xl border border-white/30 shadow-lg origin-top-right transition-all duration-200 ease-out ${
-                    isNavOpen
-                      ? 'opacity-100 visible scale-100 translate-y-0 bg-stone-800/95'
-                      : 'opacity-0 invisible scale-95 translate-y-1 pointer-events-none'
-                  }`}
-                >
-                  <div className="py-2 px-2 flex flex-col gap-1">
-                    {menuNavDropdownLinks.map((link) => (
-                      <Link
-                        key={link.labelKey}
-                        href={link.href}
-                        prefetch={true}
-                        onClick={() => setIsNavOpen(false)}
-                        className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20"
-                      >
-                        {t(link.labelKey)}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -336,12 +274,19 @@ export default function MenuPageContent({
               </div>
             </div>
             <div className="flex items-center gap-5 flex-shrink-0 pl-4 pr-8 lg:pr-10">
+              <Link
+                href="/contact"
+                prefetch={true}
+                className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center"
+              >
+                {t('nav.contact')}
+              </Link>
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
                 }
-                className="min-w-[40px] min-h-[40px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-4 border-white/85"
+                className="min-w-[44px] min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -363,58 +308,6 @@ export default function MenuPageContent({
                   </span>
                 )}
               </button>
-              <div className="relative" ref={navDesktopRef}>
-                <button
-                  onClick={() => setIsNavOpen(!isNavOpen)}
-                  className="min-w-[40px] min-h-[40px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
-                  aria-expanded={isNavOpen}
-                  aria-label="Toggle navigation menu"
-                  aria-haspopup="true"
-                >
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    {isNavOpen ? (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    ) : (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    )}
-                  </svg>
-                </button>
-                <div
-                  className={`absolute top-full right-0 mt-2 w-48 z-[101] rounded-xl overflow-hidden backdrop-blur-xl border border-white/30 shadow-lg origin-top-right transition-all duration-200 ease-out ${
-                    isNavOpen
-                      ? 'opacity-100 visible scale-100 translate-y-0 bg-stone-800/95'
-                      : 'opacity-0 invisible scale-95 translate-y-1 pointer-events-none'
-                  }`}
-                >
-                  <div className="py-2 px-2 flex flex-col gap-1">
-                    {menuNavDropdownLinks.map((link) => (
-                      <Link
-                        key={link.labelKey}
-                        href={link.href}
-                        prefetch={true}
-                        onClick={() => setIsNavOpen(false)}
-                        className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20"
-                      >
-                        {t(link.labelKey)}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

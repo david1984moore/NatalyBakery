@@ -47,7 +47,7 @@ export default function MobileMenu() {
               href={link.href}
               prefetch={true}
               onClick={() => setIsOpen(false)}
-              className="font-ui w-full flex items-center justify-center px-4 min-h-[44px] py-2 rounded-md border border-white/40 bg-white/20 backdrop-blur-sm text-white font-medium text-sm tracking-wide hover:bg-white/30 transition-colors duration-200"
+              className="font-ui w-full flex items-center justify-center min-h-[44px] px-3 py-2 rounded-md border border-white/40 bg-white/20 backdrop-blur-sm text-white font-medium text-sm tracking-wide hover:bg-white/30 transition-colors duration-200"
             >
               {t(link.labelKey)}
             </Link>

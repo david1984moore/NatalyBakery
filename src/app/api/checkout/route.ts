@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
 
     const { customerName, customerEmail, customerPhone, deliveryAddress, deliveryDate, deliveryTime, items, specialInstructions } = validationResult.data
 
-    // Validate delivery date: orders for today only allowed if placed before 9:00am
+    // Validate delivery date: same-day orders only allowed if placed before 9:00am (bakery local time).
     const tz = process.env.BAKERY_TIMEZONE || undefined
     const dateOptions: Intl.DateTimeFormatOptions = tz ? { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' } : { year: 'numeric', month: '2-digit', day: '2-digit' }
     const hourOptions: Intl.DateTimeFormatOptions = tz ? { timeZone: tz, hour: 'numeric', hour12: false } : { hour: 'numeric', hour12: false }

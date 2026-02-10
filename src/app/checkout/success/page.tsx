@@ -75,7 +75,7 @@ function SuccessPageContent() {
           <div className="flex items-center gap-4 sm:gap-6 flex-shrink-0">
             <Link
               href="/contact"
-              className="text-warmgray-700 hover:text-warmgray-900 font-medium text-sm whitespace-nowrap"
+              className="font-ui min-h-[46px] md:min-h-[52px] px-2.5 md:px-3 py-2 md:py-2.5 flex items-center rounded-xl border-2 border-warmgray-300 bg-transparent text-warmgray-700 font-medium text-xs md:text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 whitespace-nowrap"
             >
               {t('nav.contact')}
             </Link>

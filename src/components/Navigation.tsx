@@ -84,7 +84,7 @@ export default function Navigation() {
               prefetch={true}
               onClick={() => setIsOpen(false)}
               data-nav-link
-              className="font-ui block px-6 py-2 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-[transform,background-color] duration-200 font-light text-sm will-change-transform"
+              className="font-ui flex items-center min-h-[44px] px-6 py-3 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-[transform,background-color] duration-200 font-light text-sm will-change-transform"
             >
               {t(link.labelKey)}
             </Link>
