@@ -20,7 +20,7 @@ export default function HeroNav() {
           key={link.labelKey}
           href={link.href}
           prefetch={true}
-          className="font-ui font-bold text-lg md:text-xl text-white tracking-wide lowercase min-h-[44px] md:min-h-[52px] px-5 py-2.5 md:px-6 md:py-3 flex items-center justify-center rounded-2xl border-4 border-white/85 bg-stone-800/65 md:hover:bg-stone-700/65 md:hover:border-white transition-colors duration-200"
+          className="font-ui font-bold text-base md:text-lg text-white tracking-wide lowercase min-h-[32px] md:min-h-[36px] px-4 py-1.5 md:px-5 md:py-2 flex items-center justify-center rounded-xl border-2 border-white/85 bg-stone-800/65 md:hover:bg-stone-700/65 md:hover:border-white transition-colors duration-200"
         >
           {t(link.labelKey)}
         </Link>

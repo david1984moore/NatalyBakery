@@ -57,7 +57,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom section: nav links */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 h-[28%] min-h-0 pb-6 pt-14 flex flex-col items-center justify-end gap-7">
+      <div className="absolute bottom-0 left-0 right-0 z-10 h-[28%] min-h-0 pb-6 pt-14 flex flex-col items-center justify-end gap-4">
         <div className="flex justify-center">
           <HeroNav />
         </div>
