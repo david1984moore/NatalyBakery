@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run optimize-images && next dev",
     "build": "prisma generate && npm run optimize-images && next build",
     "start": "next start",
-    "optimize-images": "node scripts/optimize-images.js",
+    "optimize-images": "node scripts/optimize-images-enhanced.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -33,6 +33,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "glob": "^10.4.6",
     "@hookform/resolvers": "^3.9.1",
     "@types/node": "^22.5.0",
     "@types/react": "^18.3.5",

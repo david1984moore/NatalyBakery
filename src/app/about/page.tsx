@@ -2,9 +2,8 @@
 
 import Navigation from '@/components/Navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
-import Image from 'next/image'
 import Link from 'next/link'
-import { BLUR_DATA_URL } from '@/lib/image-utils'
+import { OptimizedImage } from '@/components/OptimizedImage'
 
 export default function AboutPage() {
   const { t } = useLanguage()
@@ -29,16 +28,12 @@ export default function AboutPage() {
           {/* Professional Photo */}
           <div className="order-2 md:order-1 h-full flex items-center justify-center">
             <div className="relative w-full max-w-[280px] sm:max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden border border-white/60 shadow-lg">
-              <Image
+              <OptimizedImage
                 src="/Images/IMG_5754.jpeg"
                 alt="Nataly Hernandez"
                 fill
-                className="object-cover"
-                loading="lazy"
-                quality={75}
                 sizes="(max-width: 640px) 280px, 384px"
-                placeholder="blur"
-                blurDataURL={BLUR_DATA_URL}
+                objectFit="cover"
               />
             </div>
           </div>

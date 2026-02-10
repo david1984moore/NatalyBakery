@@ -1,9 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
+import { OptimizedImage } from '@/components/OptimizedImage'
 
 const heroFooterLinks = [
   { href: '/contact', labelKey: 'nav.contact' as const },
@@ -20,32 +20,27 @@ export default function Hero() {
       {/* Photo - edge-to-edge, no borders or overlays */}
       <div className="absolute inset-0 z-[1]">
         {/* Mobile: top-down orange cake with berries */}
-        <Image
-          src="/Images/new_hero_1.jpeg"
-          alt="Orange cake dessert with fresh berries"
-          fill
-          className="object-cover object-center block md:hidden"
-          priority
-          fetchPriority="high"
-          quality={70}
-          sizes="100vw"
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwA/8AAI/9k="
-        />
+        <div className="relative block h-full w-full md:hidden">
+          <OptimizedImage
+            src="/Images/new_hero_1.jpeg"
+            alt="Orange cake dessert with fresh berries"
+            fill
+            priority
+            sizes="100vw"
+            objectFit="cover"
+          />
+        </div>
         {/* Desktop: caramel flan with berries - lazy so only one hero image is priority (LCP) */}
-        <Image
-          src="/Images/IMG_7616.jpeg"
-          alt="Caramel flan dessert with fresh berries"
-          fill
-          className="object-cover object-center hidden md:block"
-          priority={false}
-          loading="lazy"
-          fetchPriority="low"
-          quality={70}
-          sizes="(min-width: 1025px) 1440px, 100vw"
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwA/8AAI/9k="
-        />
+        <div className="relative hidden h-full w-full md:block">
+          <OptimizedImage
+            src="/Images/IMG_7616.jpeg"
+            alt="Caramel flan dessert with fresh berries"
+            fill
+            priority={false}
+            sizes="(min-width: 1025px) 1440px, 100vw"
+            objectFit="cover"
+          />
+        </div>
       </div>
 
       {/* Brand name + order button - centered over photo. Padding gives text-shadow room so it isn't clipped. */}

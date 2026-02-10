@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import ProductCard from './ProductCard'
 import { products } from '@/data/products'
-import { addBlurPlaceholders } from '@/lib/image-utils.server'
 
 const FEATURED_PRODUCT_COUNT = 6
 
-export default async function FeaturedProducts() {
-  const productsWithBlur = await addBlurPlaceholders(products.slice(0, FEATURED_PRODUCT_COUNT))
+export default function FeaturedProducts() {
+  const featured = products.slice(0, FEATURED_PRODUCT_COUNT)
 
   return (
     <section
@@ -18,7 +17,7 @@ export default async function FeaturedProducts() {
     >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 md:gap-3 lg:gap-4 justify-items-center items-stretch">
-          {productsWithBlur.map((product, index) => (
+          {featured.map((product, index) => (
             <ProductCard
               key={product.name}
               name={product.name}
@@ -26,7 +25,6 @@ export default async function FeaturedProducts() {
               href={`/menu?product=${encodeURIComponent(product.name)}`}
               variant="light"
               priority={index < 4}
-              blurDataURL={product.blurDataURL}
             />
           ))}
         </div>

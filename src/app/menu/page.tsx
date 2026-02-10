@@ -1,13 +1,8 @@
 import { Suspense } from 'react'
 import { products } from '@/data/products'
-import { addBlurPlaceholders } from '@/lib/image-utils.server'
 import MenuPageContent from './MenuPageContent'
 
-export type ProductWithBlur = (typeof products)[number] & { blurDataURL?: string }
-
-export default async function MenuPage() {
-  const productsWithBlur = await addBlurPlaceholders(products)
-
+export default function MenuPage() {
   return (
     <Suspense
       fallback={
@@ -21,7 +16,7 @@ export default async function MenuPage() {
         </div>
       }
     >
-      <MenuPageContent productsWithBlur={productsWithBlur} />
+      <MenuPageContent products={products} />
     </Suspense>
   )
 }

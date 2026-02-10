@@ -1,11 +1,23 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import 'yet-another-react-lightbox/styles.css'
-import { BLUR_DATA_URL, getOptimizedImageUrl } from '@/lib/image-utils'
+import { getOptimizedImageUrl } from '@/lib/image-utils'
+import imageManifest from '@/data/image-blur-data.json'
+import { OptimizedImage } from '@/components/OptimizedImage'
+
+type ImageManifest = Record<string, { sizes?: Record<string, Record<string, string>> }>
+
+function getLightboxImageUrl(src: string): string {
+  if (src.startsWith('http')) return getOptimizedImageUrl(src, 1920, 75)
+  const filename = src.split('/').pop()?.replace(/\.[^/.]+$/, '') || ''
+  const data = (imageManifest as ImageManifest)[filename]
+  const xlWebp = data?.sizes?.['-xl']?.webp
+  if (xlWebp) return xlWebp
+  return getOptimizedImageUrl(src, 1920, 75)
+}
 
 interface ProductImageGalleryProps {
   images: string[]
@@ -15,8 +27,6 @@ interface ProductImageGalleryProps {
   sizes?: string
   /** Mobile only: fill hero area, use scroll-snap carousel for multiple images */
   mobileHero?: boolean
-  /** Per-image blur placeholder for main image. Falls back to generic blur if not provided. */
-  blurDataURL?: string
 }
 
 export default function ProductImageGallery({
@@ -26,7 +36,6 @@ export default function ProductImageGallery({
   imageClassName = '',
   sizes = '(max-width: 640px) 180px, (max-width: 768px) 240px, 400px',
   mobileHero = false,
-  blurDataURL: blurDataURLProp,
 }: ProductImageGalleryProps) {
   const [index, setIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -78,9 +87,9 @@ export default function ProductImageGallery({
     setTouchEnd(null)
   }
 
-  // Use Next.js optimized URLs so lightbox loads resized WebP/AVIF, not raw files
+  // Use build-time optimized URLs when available, else Next.js image API (e.g. remote)
   const slides = images.map((src) => ({
-    src: getOptimizedImageUrl(src, 1920, 75),
+    src: getLightboxImageUrl(src),
     alt,
   }))
   const useMobileCarousel = mobileHero && isMobile && images.length > 1
@@ -119,18 +128,13 @@ export default function ProductImageGallery({
                   }}
                   aria-label={`View image ${i + 1} full screen, swipe to change photo`}
                 >
-                  <Image
+                  <OptimizedImage
                     src={src}
                     alt={`${alt} ${i + 1} of ${images.length}`}
                     fill
-                    className="object-contain object-center"
                     sizes="100vw"
                     priority={i === 0}
-                    quality={90}
-                    placeholder="blur"
-                    blurDataURL={blurDataURLProp || BLUR_DATA_URL}
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={i === 0 ? 'high' : 'auto'}
+                    objectFit="contain"
                   />
                 </div>
               ))}
@@ -183,24 +187,14 @@ export default function ProductImageGallery({
               aria-label={isMobile || useMobileHero ? 'Tap to view full screen, swipe to change photo' : undefined}
             >
               <div key={index} className={`absolute inset-0 ${useMobileHero ? '' : 'animate-fade-in'}`}>
-                <Image
+                <OptimizedImage
                   src={images[index]}
                   alt={`${alt} ${index + 1} of ${images.length}`}
                   fill
-                  className={`object-contain object-center ${imageClassName}`}
+                  className={imageClassName}
                   sizes={sizes}
                   priority={index === 0}
-                  quality={90}
-                  placeholder="blur"
-                  blurDataURL={blurDataURLProp || BLUR_DATA_URL}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchPriority={index === 0 ? 'high' : 'auto'}
-                  onLoad={(e) => {
-                    const img = e.target as HTMLImageElement
-                    if (img?.naturalWidth && img?.naturalHeight) {
-                      setAspectRatio(img.naturalWidth / img.naturalHeight)
-                    }
-                  }}
+                  objectFit="contain"
                 />
               </div>
             </div>

@@ -21,15 +21,13 @@ import Cart from '@/components/Cart'
 import LanguageToggle from '@/components/LanguageToggle'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import ProductImage from '@/components/ProductImage'
-import type { ProductWithBlur } from './page'
-
 
 interface MenuPageContentProps {
-  productsWithBlur: ProductWithBlur[]
+  products: Product[]
 }
 
 export default function MenuPageContent({
-  productsWithBlur,
+  products,
 }: MenuPageContentProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -44,9 +42,6 @@ export default function MenuPageContent({
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
-
-  const getBlurForProduct = (productName: string) =>
-    productsWithBlur.find((p) => p.name === productName)?.blurDataURL
 
   const checkScrollPosition = () => {
     const container = scrollContainerRef.current
@@ -371,7 +366,6 @@ export default function MenuPageContent({
                     alt={featuredProduct.name}
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
                     mobileHero
-                    blurDataURL={getBlurForProduct(featuredProduct.name)}
                   />
                 ) : (
                   <ProductImage
@@ -380,7 +374,6 @@ export default function MenuPageContent({
                     alt={featuredProduct.name}
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
                     mobileHero
-                    blurDataURL={getBlurForProduct(featuredProduct.name)}
                   />
                 )}
               </div>
