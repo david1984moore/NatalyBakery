@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import 'yet-another-react-lightbox/styles.css'
-import { BLUR_DATA_URL } from '@/lib/image-utils'
+import { BLUR_DATA_URL, getOptimizedImageUrl } from '@/lib/image-utils'
 
 interface ProductImageGalleryProps {
   images: string[]
@@ -75,7 +75,11 @@ export default function ProductImageGallery({
     setTouchEnd(null)
   }
 
-  const slides = images.map((src) => ({ src, alt }))
+  // Use Next.js optimized URLs so lightbox loads resized WebP/AVIF, not raw files
+  const slides = images.map((src) => ({
+    src: getOptimizedImageUrl(src, 1920, 75),
+    alt,
+  }))
   const useMobileCarousel = mobileHero && isMobile && images.length > 1
   const useMobileHero = mobileHero && isMobile
   const scrollRef = useRef<HTMLDivElement>(null)

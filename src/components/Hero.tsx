@@ -34,20 +34,20 @@ export default function Hero() {
           className="object-cover object-center hidden md:block"
           priority
           quality={70}
-          sizes="(min-width: 1025px) 1920px, 100vw"
+          sizes="(min-width: 1025px) 1440px, 100vw"
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwA/8AAI/9k="
         />
       </div>
 
       {/* Brand name + order button - centered over photo. Padding gives text-shadow room so it isn't clipped. */}
-      <div id="brand-name-wrapper" className="absolute top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-6 px-8 py-6 sm:px-10 sm:py-8">
+      <div id="brand-name-wrapper" className="absolute top-[18%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-6 px-8 py-6 sm:px-10 sm:py-8">
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none">
           Caramel & Jo
         </h1>
         <Link
           href="/menu"
-          className="font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-2xl border-4 border-white/85 bg-stone-800/50 md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
+          className="font-brand-playfair font-bold text-2xl text-white min-h-[52px] px-10 flex items-center justify-center rounded-2xl border-4 border-white/85 bg-stone-800/65 md:hover:bg-stone-700/65 md:hover:border-white transition-colors duration-200"
         >
           {t('nav.order')}
         </Link>
