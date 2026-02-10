@@ -8,7 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 export default function Hero() {
   const { t } = useLanguage()
   return (
-    <section className="relative h-screen w-full flex flex-col overflow-hidden">
+    <section className="relative h-svh w-full flex flex-col overflow-hidden">
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
 
@@ -42,9 +42,8 @@ export default function Hero() {
 
       {/* Brand name - centered over photo */}
       <div id="brand-name-wrapper" className="absolute top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center pointer-events-none">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand">
-          <span className="block">Caramel</span>
-          <span className="block -mt-5">& Jo</span>
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand whitespace-nowrap">
+          Caramel & Jo
         </h1>
       </div>
 
