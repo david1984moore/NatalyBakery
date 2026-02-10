@@ -44,6 +44,7 @@ export function OptimizedImage({
   const manifest = imageManifest as ImageManifest
   const imageData = manifest[filename]
 
+  // Fallback: image not in manifest (e.g. remote URLs like Unsplash) — use Next.js Image
   if (!imageData) {
     return (
       <Image
@@ -63,8 +64,23 @@ export function OptimizedImage({
   }
 
   const blurDataURL = imageData.blur ?? undefined
-  const defaultSrc =
-    imageData.sizes['-xl']?.webp ?? imageData.sizes['-lg']?.webp ?? src
+
+  // Build responsive srcsets for AVIF and WebP — browser picks correct size by viewport
+  const avifSrcSet = [
+    imageData.sizes['-sm']?.avif && `${imageData.sizes['-sm'].avif} 384w`,
+    imageData.sizes['-md']?.avif && `${imageData.sizes['-md'].avif} 640w`,
+    imageData.sizes['-lg']?.avif && `${imageData.sizes['-lg'].avif} 1080w`,
+    imageData.sizes['-xl']?.avif && `${imageData.sizes['-xl'].avif} 1920w`,
+  ].filter(Boolean).join(', ')
+
+  const webpSrcSet = [
+    imageData.sizes['-sm']?.webp && `${imageData.sizes['-sm'].webp} 384w`,
+    imageData.sizes['-md']?.webp && `${imageData.sizes['-md'].webp} 640w`,
+    imageData.sizes['-lg']?.webp && `${imageData.sizes['-lg'].webp} 1080w`,
+    imageData.sizes['-xl']?.webp && `${imageData.sizes['-xl'].webp} 1920w`,
+  ].filter(Boolean).join(', ')
+
+  const fallbackSrc = imageData.sizes['-md']?.webp ?? imageData.sizes['-lg']?.webp ?? imageData.original
 
   const handleLoad = () => setLoadState('loaded')
   const handleError = () => {
@@ -79,36 +95,65 @@ export function OptimizedImage({
     return (
       <div
         className={`flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300 ${className}`}
-        style={fill ? { position: 'absolute', inset: 0 } : { width, height }}
+        style={
+          fill
+            ? { position: 'absolute', inset: 0 }
+            : { width, height }
+        }
       >
         <span className="px-4 text-center text-sm text-gray-500">{alt}</span>
       </div>
     )
   }
 
+  const containerStyle: React.CSSProperties = fill
+    ? { position: 'absolute', inset: 0, width: '100%', height: '100%' }
+    : { width, height }
+
+  const imageStyle: React.CSSProperties = {
+    width: '100%',
+    height: '100%',
+    objectFit,
+    opacity: loadState === 'loaded' ? 1 : 0,
+    transition: 'opacity 0.3s ease-in-out',
+  }
+
   return (
-    <>
-      <Image
-        key={retryCount}
-        src={defaultSrc}
-        alt={alt}
-        fill={fill}
-        width={fill ? undefined : width}
-        height={fill ? undefined : height}
-        priority={priority}
-        quality={75}
-        placeholder={blurDataURL ? 'blur' : 'empty'}
-        blurDataURL={blurDataURL}
-        className={className}
-        style={{
-          objectFit,
-          opacity: loadState === 'loaded' ? 1 : 0,
-          transition: 'opacity 0.3s ease-in-out',
-        }}
-        sizes={sizes ?? '100vw'}
-        onLoad={handleLoad}
-        onError={handleError}
-      />
+    <div className={`relative ${className}`} style={containerStyle}>
+      {blurDataURL && loadState === 'loading' && (
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url("${blurDataURL}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(20px)',
+            transform: 'scale(1.1)',
+          }}
+          aria-hidden
+        />
+      )}
+
+      <picture key={retryCount} className="absolute inset-0 block w-full h-full">
+        {avifSrcSet && (
+          <source type="image/avif" srcSet={avifSrcSet} sizes={sizes ?? '100vw'} />
+        )}
+        {webpSrcSet && (
+          <source type="image/webp" srcSet={webpSrcSet} sizes={sizes ?? '100vw'} />
+        )}
+        <img
+          src={fallbackSrc}
+          alt={alt}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          fetchPriority={priority ? 'high' : 'auto'}
+          style={imageStyle}
+          onLoad={handleLoad}
+          onError={handleError}
+          className="w-full h-full"
+        />
+      </picture>
+
       {loadState === 'loading' && (
         <div
           className="absolute inset-0 animate-shimmer bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"
@@ -116,6 +161,6 @@ export function OptimizedImage({
           aria-hidden
         />
       )}
-    </>
+    </div>
   )
 }
