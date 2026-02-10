@@ -136,7 +136,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'nav.order': 'order',
     'nav.home': 'Home',
     'nav.shop': 'Shop',
-    'nav.menu': 'Menu',
+    'nav.menu': 'menu',
     
     // Cart
     'cart.shoppingCart': 'Shopping Cart',
@@ -265,7 +265,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'nav.order': 'Pedido',
     'nav.home': 'Inicio',
     'nav.shop': 'Tienda',
-    'nav.menu': 'Menú',
+    'nav.menu': 'menú',
     
     // Cart
     'cart.shoppingCart': 'Carrito de Compras',

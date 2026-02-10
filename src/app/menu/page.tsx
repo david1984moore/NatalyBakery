@@ -2,6 +2,11 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, useRef, Suspense } from 'react'
+
+// On menu page, dropdown only shows contact (user is already on menu/order)
+const menuNavDropdownLinks = [
+  { href: '/contact', labelKey: 'nav.contact' as const },
+]
 import Image from 'next/image'
 import Link from 'next/link'
 import { products, getProductByName, getDefaultVariant, getProductPriceRange, type Product, type ProductVariant } from '@/data/products'
@@ -26,8 +31,21 @@ function MenuPageContent() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
-  
+  const [isNavOpen, setIsNavOpen] = useState(false)
+  const navMobileRef = useRef<HTMLDivElement>(null)
+  const navDesktopRef = useRef<HTMLDivElement>(null)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node
+      const insideMobile = navMobileRef.current?.contains(target)
+      const insideDesktop = navDesktopRef.current?.contains(target)
+      if (!insideMobile && !insideDesktop) setIsNavOpen(false)
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
 
   // Check scroll position
   const checkScrollPosition = () => {
@@ -176,11 +194,11 @@ function MenuPageContent() {
     <div className="h-screen bg-background flex flex-col overflow-hidden relative">
       {/* Product Navigation Bar - Fixed at top - Mobile optimized */}
       <div 
-        className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-x-hidden"
+        className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
         style={{ minHeight: '40px' }}
       >
-        {/* Header row - tan background (mobile & desktop) */}
-        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
+        {/* Header row - tan background (mobile & desktop); z-10 so dropdown stacks above product tabs */}
+        <div className="relative z-10 bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
         {/* Mobile Layout (< 768px) */}
         <div className="md:hidden flex flex-1 items-center justify-between pl-2.5 pr-5 min-h-[40px] -translate-y-1.5">
           {/* Home Button - Mobile */}
@@ -192,22 +210,12 @@ function MenuPageContent() {
             <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
           </Link>
           
-          {/* Right side buttons - Mobile */}
-          <div className="flex items-center gap-3 flex-shrink-0">
+          {/* Right side: language, cart, hamburger - Mobile */}
+          <div className="flex items-center gap-3 flex-shrink-0 pr-3">
             <LanguageToggle variant="menuHeader" />
-            <div className="flex items-center gap-1">
-              <Link
-                href="/contact"
-                className="min-h-[30px] px-1.5 py-0.5 rounded-xl text-xs font-medium border-[3px] border-white/85 bg-stone-800/30 text-white md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 whitespace-nowrap flex items-center"
-              >
-                {t('nav.contact')}
-              </Link>
-            </div>
             <button
-              onClick={() => {
-                window.dispatchEvent(new CustomEvent('cart:toggle'))
-              }}
-              className="min-w-[34px] min-h-[34px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-4 border-white/85 group"
+              onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+              className="min-w-[34px] min-h-[34px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-4 border-white/85"
               aria-label="Shopping cart"
             >
               <svg
@@ -229,6 +237,41 @@ function MenuPageContent() {
                 </span>
               )}
             </button>
+            <div className="relative" ref={navMobileRef}>
+              <button
+                onClick={() => setIsNavOpen(!isNavOpen)}
+                className="min-w-[34px] min-h-[34px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
+                aria-expanded={isNavOpen}
+                aria-label="Toggle navigation menu"
+                aria-haspopup="true"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  {isNavOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+              <div
+                className={`absolute top-full right-0 mt-2 w-48 z-[101] rounded-xl overflow-hidden backdrop-blur-xl border border-white/30 shadow-lg origin-top-right transition-all duration-200 ease-out ${
+                  isNavOpen ? 'opacity-100 visible scale-100 translate-y-0 bg-stone-800/95' : 'opacity-0 invisible scale-95 translate-y-1 pointer-events-none'
+                }`}
+              >
+                <div className="py-2 px-2 flex flex-col gap-1">
+                  {menuNavDropdownLinks.map((link) => (
+                    <Link
+                      key={link.labelKey}
+                      href={link.href}
+                      onClick={() => setIsNavOpen(false)}
+                      className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20"
+                    >
+                      {t(link.labelKey)}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -271,7 +314,7 @@ function MenuPageContent() {
                     onClick={() => handleProductChange(product.name)}
                     className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
                       isSelected
-                        ? 'border-2 border-warmgray-400 bg-hero text-warmgray-800 md:hover:bg-hero-600'
+                        ? 'border-2 border-warmgray-400 bg-hero text-white md:hover:bg-hero-600'
                         : 'border-warmgray-400 bg-transparent text-warmgray-900 md:hover:border-warmgray-500'
                     }`}
                   >
@@ -282,22 +325,12 @@ function MenuPageContent() {
             </div>
           </div>
           
-          {/* Language Toggle and Cart Button - Desktop */}
+          {/* Language, Cart, Hamburger - Desktop */}
           <div className="flex items-center gap-5 flex-shrink-0 pl-4 pr-8 lg:pr-10">
             <LanguageToggle variant="menuHeader" />
-            <div className="flex items-center gap-1">
-              <Link
-                href="/contact"
-                className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
-              >
-                {t('nav.contact')}
-              </Link>
-            </div>
             <button
-              onClick={() => {
-                window.dispatchEvent(new CustomEvent('cart:toggle'))
-              }}
-              className="min-w-[40px] min-h-[40px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-4 border-white/85 group"
+              onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+              className="min-w-[40px] min-h-[40px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-4 border-white/85"
               aria-label="Shopping cart"
             >
               <svg
@@ -319,12 +352,47 @@ function MenuPageContent() {
                 </span>
               )}
             </button>
+            <div className="relative" ref={navDesktopRef}>
+              <button
+                onClick={() => setIsNavOpen(!isNavOpen)}
+                className="min-w-[40px] min-h-[40px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
+                aria-expanded={isNavOpen}
+                aria-label="Toggle navigation menu"
+                aria-haspopup="true"
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  {isNavOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+              <div
+                className={`absolute top-full right-0 mt-2 w-48 z-[101] rounded-xl overflow-hidden backdrop-blur-xl border border-white/30 shadow-lg origin-top-right transition-all duration-200 ease-out ${
+                  isNavOpen ? 'opacity-100 visible scale-100 translate-y-0 bg-stone-800/95' : 'opacity-0 invisible scale-95 translate-y-1 pointer-events-none'
+                }`}
+              >
+                <div className="py-2 px-2 flex flex-col gap-1">
+                  {menuNavDropdownLinks.map((link) => (
+                    <Link
+                      key={link.labelKey}
+                      href={link.href}
+                      onClick={() => setIsNavOpen(false)}
+                      className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20"
+                    >
+                      {t(link.labelKey)}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         </div>
 
-        {/* Product Category Buttons - Mobile (below brand/buttons row) */}
-        <div className="md:hidden bg-background border-b border-warmgray-200">
+        {/* Product Category Buttons - Mobile (below brand/buttons row); z-0 so header dropdown can overlay */}
+        <div className="relative z-0 md:hidden bg-background border-b border-warmgray-200">
           <div 
             className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pl-2.5 pr-4 py-1.5 touch-scroll mobile-scroll-container" 
             style={{ WebkitOverflowScrolling: 'touch' }}
@@ -340,7 +408,7 @@ function MenuPageContent() {
                   onClick={() => handleProductChange(product.name)}
                   className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border ${
                     isSelected
-                      ? 'border-2 border-warmgray-400 bg-hero text-warmgray-800 hover:bg-hero-600'
+                      ? 'border-2 border-warmgray-400 bg-hero text-white hover:bg-hero-600'
                       : 'border-warmgray-400 bg-transparent text-warmgray-900 hover:border-warmgray-500'
                   }`}
                 >
@@ -532,7 +600,7 @@ function MenuPageContent() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedVariant}
-                  className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-hero text-warmgray-800 rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                  className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-hero text-white rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
                   style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {t('menu.addToCart')}

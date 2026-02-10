@@ -28,7 +28,8 @@ export default function CheckoutPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false)
-  const navMenuRef = useRef<HTMLDivElement>(null)
+  const navMenuMobileRef = useRef<HTMLDivElement>(null)
+  const navMenuDesktopRef = useRef<HTMLDivElement>(null)
 
   // DEBUG: Track items array stability
   const itemsRef = useRef(items)
@@ -95,9 +96,10 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (navMenuRef.current && !navMenuRef.current.contains(e.target as Node)) {
-        setIsNavMenuOpen(false)
-      }
+      const target = e.target as Node
+      const insideMobile = navMenuMobileRef.current?.contains(target)
+      const insideDesktop = navMenuDesktopRef.current?.contains(target)
+      if (!insideMobile && !insideDesktop) setIsNavMenuOpen(false)
     }
     const id = setTimeout(() => {
       document.addEventListener('click', handleClickOutside)
@@ -218,7 +220,7 @@ export default function CheckoutPage() {
           style={{ minHeight: '40px' }}
         >
           <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible">
-            {/* Mobile Layout (< 768px) - brand left; cart then hamburger right; nav in dropdown */}
+            {/* Mobile Layout (< 768px) - brand left; language, cart, hamburger right; nav in dropdown */}
             <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
               <Link
                 href="/"
@@ -227,7 +229,8 @@ export default function CheckoutPage() {
               >
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
               </Link>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <LanguageToggle variant="menuHeader" />
                 <button
                   onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
                   className="shrink-0 min-w-[34px] min-h-[34px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-4 border-white/85"
@@ -252,7 +255,7 @@ export default function CheckoutPage() {
                     </span>
                   )}
                 </button>
-                <div className="relative" ref={navMenuRef}>
+                <div className="relative" ref={navMenuMobileRef}>
                   <button
                     onClick={() => setIsNavMenuOpen(!isNavMenuOpen)}
                     className="min-w-[34px] min-h-[34px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
@@ -276,9 +279,6 @@ export default function CheckoutPage() {
                     }`}
                   >
                     <div className="py-2 px-2 flex flex-col gap-1">
-                      <div className="px-3 py-2 border-b border-white/20">
-                        <LanguageToggle variant="menuHeader" />
-                      </div>
                       <Link href="/menu" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
                         {t('nav.menu')}
                       </Link>
@@ -294,7 +294,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Desktop Layout (>= 768px) - smaller brand on checkout */}
+            {/* Desktop Layout (>= 768px) - brand left; language, cart, hamburger right; nav in dropdown */}
             <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 min-h-[40px] -translate-y-1.5">
               <Link
                 href="/"
@@ -305,26 +305,6 @@ export default function CheckoutPage() {
               </Link>
               <div className="flex items-center gap-5 flex-shrink-0">
                 <LanguageToggle variant="menuHeader" />
-                <div className="flex items-center gap-1">
-                  <Link
-                    href="/menu"
-                    className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
-                  >
-                    {t('nav.menu')}
-                  </Link>
-                  <Link
-                    href="/menu"
-                    className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
-                  >
-                    {t('nav.order')}
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
-                  >
-                    {t('nav.contact')}
-                  </Link>
-                </div>
                 <button
                   onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
                   className="min-w-[40px] min-h-[40px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-4 border-white/85"
@@ -349,6 +329,40 @@ export default function CheckoutPage() {
                     </span>
                   )}
                 </button>
+                <div className="relative" ref={navMenuDesktopRef}>
+                  <button
+                    onClick={() => setIsNavMenuOpen(!isNavMenuOpen)}
+                    className="min-w-[40px] min-h-[40px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
+                    aria-expanded={isNavMenuOpen}
+                    aria-label="Toggle navigation menu"
+                    aria-haspopup="true"
+                  >
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      {isNavMenuOpen ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      ) : (
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                      )}
+                    </svg>
+                  </button>
+                  <div
+                    className={`absolute top-full right-0 mt-2 w-48 z-[101] rounded-xl overflow-hidden backdrop-blur-xl border border-white/30 shadow-lg origin-top-right transition-all duration-200 ease-out ${
+                      isNavMenuOpen ? 'opacity-100 visible scale-100 translate-y-0 bg-stone-800/95' : 'opacity-0 invisible scale-95 translate-y-1 pointer-events-none'
+                    }`}
+                  >
+                    <div className="py-2 px-2 flex flex-col gap-1">
+                      <Link href="/menu" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
+                        {t('nav.menu')}
+                      </Link>
+                      <Link href="/menu" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
+                        {t('nav.order')}
+                      </Link>
+                      <Link href="/contact" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
+                        {t('nav.contact')}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -397,7 +411,7 @@ export default function CheckoutPage() {
         style={{ minHeight: '40px' }}
       >
         <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible">
-          {/* Mobile Layout (< 768px) - brand left; cart then hamburger right; nav in dropdown */}
+          {/* Mobile Layout (< 768px) - brand left; language, cart, hamburger right; nav in dropdown */}
           <div className="md:hidden flex items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
@@ -406,7 +420,8 @@ export default function CheckoutPage() {
             >
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
-            <div className="flex items-center gap-1.5 flex-shrink-0">
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
                 className="shrink-0 min-w-[34px] min-h-[34px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-4 border-white/85"
@@ -431,7 +446,7 @@ export default function CheckoutPage() {
                   </span>
                 )}
               </button>
-              <div className="relative" ref={navMenuRef}>
+              <div className="relative" ref={navMenuMobileRef}>
                 <button
                   onClick={() => setIsNavMenuOpen(!isNavMenuOpen)}
                   className="min-w-[34px] min-h-[34px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
@@ -455,9 +470,6 @@ export default function CheckoutPage() {
                   }`}
                 >
                   <div className="py-2 px-2 flex flex-col gap-1">
-                    <div className="px-3 py-2 border-b border-white/20">
-                      <LanguageToggle variant="menuHeader" />
-                    </div>
                     <Link href="/menu" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
                       {t('nav.menu')}
                     </Link>
@@ -473,7 +485,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Desktop Layout (>= 768px) - smaller brand on checkout */}
+          {/* Desktop Layout (>= 768px) - brand left; language, cart, hamburger right; nav in dropdown */}
           <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 min-h-[40px] -translate-y-1.5">
             <Link
               href="/"
@@ -484,26 +496,6 @@ export default function CheckoutPage() {
             </Link>
             <div className="flex items-center gap-5 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />
-              <div className="flex items-center gap-1">
-                <Link
-                  href="/menu"
-                  className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
-                >
-                  {t('nav.menu')}
-                </Link>
-                <Link
-                  href="/menu"
-                  className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl lowercase text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
-                >
-                  {t('nav.order')}
-                </Link>
-                <Link
-                  href="/contact"
-                  className="flex-shrink-0 min-h-[36px] px-2.5 py-0.5 rounded-xl text-xs font-medium whitespace-nowrap border-[3px] border-white/85 bg-stone-800/30 text-white hover:bg-stone-700/40 hover:border-white transition-colors duration-200 flex items-center"
-                >
-                  {t('nav.contact')}
-                </Link>
-              </div>
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
                 className="min-w-[40px] min-h-[40px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-4 border-white/85"
@@ -528,6 +520,40 @@ export default function CheckoutPage() {
                   </span>
                 )}
               </button>
+              <div className="relative" ref={navMenuDesktopRef}>
+                <button
+                  onClick={() => setIsNavMenuOpen(!isNavMenuOpen)}
+                  className="min-w-[40px] min-h-[40px] p-2 flex items-center justify-center text-white border-4 border-white/85 bg-stone-800/30 backdrop-blur-sm rounded-full hover:bg-stone-700/40 transition-colors duration-200"
+                  aria-expanded={isNavMenuOpen}
+                  aria-label="Toggle navigation menu"
+                  aria-haspopup="true"
+                >
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    {isNavMenuOpen ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    )}
+                  </svg>
+                </button>
+                <div
+                  className={`absolute top-full right-0 mt-2 w-48 z-[101] rounded-xl overflow-hidden backdrop-blur-xl border border-white/30 shadow-lg origin-top-right transition-all duration-200 ease-out ${
+                    isNavMenuOpen ? 'opacity-100 visible scale-100 translate-y-0 bg-stone-800/95' : 'opacity-0 invisible scale-95 translate-y-1 pointer-events-none'
+                  }`}
+                >
+                  <div className="py-2 px-2 flex flex-col gap-1">
+                    <Link href="/menu" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
+                      {t('nav.menu')}
+                    </Link>
+                    <Link href="/menu" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
+                      {t('nav.order')}
+                    </Link>
+                    <Link href="/contact" onClick={() => setIsNavMenuOpen(false)} className="font-medium min-h-[44px] px-4 py-2.5 flex items-center text-sm text-white rounded-lg hover:bg-white/20">
+                      {t('nav.contact')}
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

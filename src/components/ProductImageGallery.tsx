@@ -120,7 +120,7 @@ export default function ProductImageGallery({
                     src={src}
                     alt={`${alt} ${i + 1} of ${images.length}`}
                     fill
-                    className="object-cover object-center"
+                    className="object-contain object-center"
                     sizes="100vw"
                     priority={i === 0}
                     quality={70}
@@ -184,7 +184,7 @@ export default function ProductImageGallery({
                   src={images[index]}
                   alt={`${alt} ${index + 1} of ${images.length}`}
                   fill
-                  className={`${useMobileHero ? 'object-cover object-center' : 'object-contain'} ${imageClassName}`}
+                  className={`object-contain object-center ${imageClassName}`}
                   sizes={sizes}
                   priority={index === 0}
                   quality={mobileHero ? 70 : 75}

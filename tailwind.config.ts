@@ -12,10 +12,10 @@ const config: Config = {
         // Warm neutrals and earth tones - pastel brownish palette
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        // Hero and menu page fill - light wood tone (matches hero fade)
+        // Hero and menu page fill - brownish (header background)
         hero: {
-          DEFAULT: '#c5b896',
-          600: '#a89878', /* darker for border/hover */
+          DEFAULT: '#a08060',
+          600: '#8b6b4d', /* darker for border/hover */
         },
         // Warm neutrals - soft caramel undertones
         beige: {
