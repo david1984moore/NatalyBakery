@@ -145,7 +145,7 @@ export function OptimizedImage({
           src={fallbackSrc}
           alt={alt}
           loading={priority ? 'eager' : 'lazy'}
-          decoding={priority ? 'sync' : 'async'}
+          decoding="async"
           fetchPriority={priority ? 'high' : 'auto'}
           style={imageStyle}
           onLoad={handleLoad}
@@ -154,7 +154,7 @@ export function OptimizedImage({
         />
       </picture>
 
-      {loadState === 'loading' && (
+      {loadState === 'loading' && !priority && (
         <div
           className="absolute inset-0 animate-shimmer bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"
           style={{ backgroundSize: '200% 100%' }}

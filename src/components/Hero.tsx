@@ -48,7 +48,7 @@ export default function Hero() {
         <Link
           href="/menu"
           prefetch={true}
-          className="min-h-[36px] py-1.5 px-6 sm:px-8 flex items-center justify-center text-white text-base font-medium lowercase border-2 border-white/85 bg-stone-800/45 backdrop-blur-sm rounded-2xl md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
+          className="min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[3.5px] border-white/85 bg-stone-800/45 backdrop-blur-sm rounded-2xl md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
           style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         >
           {t('nav.order')}

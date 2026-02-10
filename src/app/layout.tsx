@@ -47,6 +47,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${roboto.variable} ${playfairDisplay.variable}`}>
+      <head>
+        {/* LCP: preload hero image so the browser starts fetching before parsing body (AVIF = first source in picture) */}
+        <link
+          rel="preload"
+          as="image"
+          href="/optimized/new_hero_1-sm.avif"
+          media="(max-width: 768px)"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/optimized/IMG_7616-xl.avif"
+          media="(min-width: 769px)"
+        />
+      </head>
       <body>
         <LanguageProvider>
           <CartProvider>{children}</CartProvider>
