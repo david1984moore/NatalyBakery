@@ -8,7 +8,7 @@ export const size = { width: 1200, height: 1200 }
 export const contentType = 'image/png'
 
 async function loadPlayfairDisplay() {
-  const url = `https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&text=${encodeURIComponent('Caramel&Jo')}&display=swap`
+  const url = `https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&text=${encodeURIComponent('Caramel&JoWheredreamsbecomecake')}&display=swap`
   const css = await (await fetch(url)).text()
   const match = css.match(/url\((https:\/\/[^)]+)\)\s+format\('([^']+)'\)/)
   if (!match) throw new Error('Failed to extract font URL from Google Fonts CSS')
@@ -19,7 +19,7 @@ async function loadPlayfairDisplay() {
 
 export default async function Image() {
   const [imageData, fontData] = await Promise.all([
-    readFile(join(process.cwd(), 'public/Images/IMG_7616.jpeg'), 'base64'),
+    readFile(join(process.cwd(), 'public/Images/new_hero_1.jpeg'), 'base64'),
     loadPlayfairDisplay(),
   ])
   const imageSrc = `data:image/jpeg;base64,${imageData}`
@@ -34,10 +34,10 @@ export default async function Image() {
           flexDirection: 'column',
           position: 'relative',
           overflow: 'hidden',
-          background: '#d4c4a8',
+          background: '#8b6b4d',
         }}
       >
-        {/* Hero image - same as homepage: contain so cake is focal, wood visible at edges */}
+        {/* Mobile hero image – full bleed, cover (same as mobile Hero) */}
         <img
           src={imageSrc}
           alt=""
@@ -47,19 +47,11 @@ export default async function Image() {
             left: 0,
             width: '100%',
             height: '100%',
-            objectFit: 'contain',
+            objectFit: 'cover',
+            objectPosition: 'center',
           }}
         />
-        {/* Top/bottom gradient fades like homepage hero */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to bottom, rgba(212,196,168,0.98) 0%, rgba(212,196,168,0.95) 8%, rgba(212,196,168,0.82) 18%, rgba(212,196,168,0.5) 24%, transparent 28%, transparent 72%, rgba(212,196,168,0.5) 76%, rgba(212,196,168,0.82) 82%, rgba(212,196,168,0.95) 92%, rgba(212,196,168,0.98) 100%)',
-            pointerEvents: 'none',
-          }}
-        />
-        {/* Brand name: centered, ~18% from top to match hero */}
+        {/* Brand name: centered, ~18% from top – matches mobile Hero */}
         <div
           style={{
             position: 'absolute',
@@ -76,43 +68,16 @@ export default async function Image() {
           <span
             style={{
               fontFamily: 'Playfair Display',
-              fontSize: 96,
+              fontSize: 120,
               fontWeight: 700,
               color: 'white',
               textAlign: 'center',
-              textShadow: '0 2px 8px rgba(0,0,0,0.35)',
-              letterSpacing: '0.02em',
+              textShadow: '0 2px 4px rgba(0,0,0,1), 0 4px 8px rgba(0,0,0,0.95), 0 6px 16px rgba(0,0,0,0.9), 0 10px 28px rgba(0,0,0,0.85)',
+              letterSpacing: '0.03em',
               whiteSpace: 'nowrap',
             }}
           >
             Caramel & Jo
-          </span>
-        </div>
-        {/* Footer: slogan only (no nav, no buttons, no URL, no green section) */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            background: 'linear-gradient(180deg, #a08040 0%, #8B6914 100%)',
-            padding: '24px 40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: 'Playfair Display',
-              fontSize: 28,
-              fontWeight: 500,
-              color: 'white',
-              textAlign: 'center',
-              letterSpacing: '0.02em',
-            }}
-          >
-            Where caramel dreams become cake!
           </span>
         </div>
       </div>
@@ -125,6 +90,12 @@ export default async function Image() {
           data: fontData,
           style: 'normal',
           weight: 700,
+        },
+        {
+          name: 'Playfair Display',
+          data: fontData,
+          style: 'normal',
+          weight: 600,
         },
       ],
     }
