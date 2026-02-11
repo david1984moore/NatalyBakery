@@ -41,6 +41,7 @@ export default function MenuPageContent({
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
+  const [showRightFade, setShowRightFade] = useState(true)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   const checkScrollPosition = () => {
@@ -49,6 +50,8 @@ export default function MenuPageContent({
       const { scrollLeft, scrollWidth, clientWidth } = container
       setCanScrollLeft(scrollLeft > 1)
       setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1)
+      // Hide right fade when near the end so the last button (e.g. Conchas) isn't faded
+      setShowRightFade(scrollLeft + clientWidth < scrollWidth - 80)
     }
   }
 
@@ -165,10 +168,10 @@ export default function MenuPageContent({
   return (
     <div className="min-h-screen bg-background relative">
       <div
-        className="sticky top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
+        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
         style={{ minHeight: '40px' }}
       >
-        <div className="relative z-10 bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
+        <div className="relative z-10 flex flex-col min-h-[40px] bg-hero border-b border-hero-600 md:bg-transparent md:border-warmgray-200">
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
@@ -218,30 +221,32 @@ export default function MenuPageContent({
             </div>
           </div>
 
+          {/* Desktop: brand | equal space | menu buttons (centered) | equal space | contact/cart */}
           <div
-            className="hidden md:flex flex-1 items-center -translate-y-1.5"
+            className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0"
             style={{ minHeight: '40px' }}
           >
             <Link
               href="/"
               prefetch={true}
-              className="flex-shrink-0 px-4 lg:px-6 flex items-center h-full"
+              className="flex-shrink-0 flex items-center h-full"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-3xl lg:text-4xl xl:text-5xl font-extrabold brand-header-shadow">
+              <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">
                 Caramel & Jo
               </span>
             </Link>
-            <div className="flex-1 flex items-center gap-3 relative h-full min-w-0 pl-4 pr-2">
+            <div className="flex-1 min-w-0" aria-hidden="true" />
+            <div className="flex-shrink-0 flex items-center relative h-full max-w-[min(calc(100vw-20rem),56rem)] min-w-0">
               {canScrollLeft && (
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-hero via-hero/80 to-transparent pointer-events-none z-10" />
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none z-10" />
               )}
-              {canScrollRight && (
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent via-hero/80 to-hero pointer-events-none z-10" />
+              {canScrollRight && showRightFade && (
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent via-white/80 to-white pointer-events-none z-10" />
               )}
               <div
                 ref={scrollContainerRef}
-                className="flex items-center gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6"
+                className="flex items-center gap-3 md:gap-2 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6 md:pr-16"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 {products.map((product) => {
@@ -256,10 +261,10 @@ export default function MenuPageContent({
                     <button
                       key={product.name}
                       onClick={() => handleProductChange(product.name)}
-                      className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
+                      className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
                         isSelected
-                          ? 'border-2 border-hero-600 bg-headerButtonFill text-white md:hover:bg-hero-600'
-                          : 'border-warmgray-400 bg-transparent text-warmgray-900 md:hover:border-warmgray-500'
+                          ? 'border-2 border-warmgray-800 bg-warmbrown-500 text-white hover:bg-warmbrown-600'
+                          : 'border-warmgray-300 bg-transparent text-warmgray-700 hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white'
                       }`}
                     >
                       {translatedName}
@@ -268,24 +273,25 @@ export default function MenuPageContent({
                 })}
               </div>
             </div>
-            <div className="flex items-center gap-5 flex-shrink-0 pl-4 pr-8 lg:pl-6 lg:pr-10">
+            <div className="flex-1 min-w-0" aria-hidden="true" />
+            <div className="flex-shrink-0 flex items-center gap-6 lg:gap-8">
               <Link
                 href="/contact"
                 prefetch={true}
-                className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center"
+                className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
               >
                 {t('nav.contact')}
               </Link>
-              <LanguageToggle variant="menuHeader" />
+              <LanguageToggle variant="menu" />
               <button
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
                 }
-                className="min-w-[44px] min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/55 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative"
                 aria-label="Shopping cart"
               >
                 <svg
-                  className="w-7 h-7 text-white"
+                  className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -293,7 +299,7 @@ export default function MenuPageContent({
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2.5}
+                    strokeWidth={2}
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
@@ -359,7 +365,7 @@ export default function MenuPageContent({
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 items-center w-full">
-              <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-[100vw] md:h-auto md:min-h-0 md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0">
+              <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-[100vw] md:aspect-[3/4] md:h-auto md:min-h-[280px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0">
                 {featuredProduct.images && featuredProduct.images.length > 0 ? (
                   <ProductImageGallery
                     images={featuredProduct.images}

@@ -94,6 +94,8 @@ export default function ProductImageGallery({
   }))
   const useMobileCarousel = mobileHero && isMobile && images.length > 1
   const useMobileHero = mobileHero && isMobile
+  /** Desktop menu: fill the card with the image (no letterboxing) */
+  const desktopMenuHero = mobileHero && !isMobile
   const scrollRef = useRef<HTMLDivElement>(null)
 
   // Sync scroll position to index for dots when using scroll-snap carousel
@@ -162,17 +164,17 @@ export default function ProductImageGallery({
             </div>
           </div>
         ) : (
-          <>
+          <div className={desktopMenuHero ? 'flex flex-col h-full min-h-0' : ''}>
             {/* Desktop: click zones - left half = prev, right half = next */}
             <div className="hidden md:grid md:grid-cols-2 absolute inset-0 z-10">
               <button type="button" onClick={goPrev} className="cursor-pointer focus:outline-none" aria-label="Previous image" />
               <button type="button" onClick={goNext} className="cursor-pointer focus:outline-none" aria-label="Next image" />
             </div>
 
-            {/* Image container - desktop or non-hero mobile */}
+            {/* Image container - desktop or non-hero mobile; on desktop menu hero: flex-1 to fill card */}
             <div
-              className={`relative w-full overflow-hidden select-none ${useMobileHero ? 'min-h-full rounded-none cursor-pointer md:rounded-2xl' : 'rounded-2xl'} ${isMobile && !mobileHero ? 'touch-pan-y cursor-pointer' : ''}`}
-              style={{ aspectRatio: useMobileHero ? undefined : aspectRatio }}
+              className={`relative w-full overflow-hidden select-none ${useMobileHero ? 'min-h-full rounded-none cursor-pointer md:rounded-2xl' : 'rounded-2xl'} ${desktopMenuHero ? 'flex-1 min-h-0' : ''} ${isMobile && !mobileHero ? 'touch-pan-y cursor-pointer' : ''}`}
+              style={{ aspectRatio: desktopMenuHero ? undefined : (useMobileHero ? undefined : aspectRatio) }}
               onClick={useMobileHero ? () => setLightboxOpen(true) : undefined}
               onTouchStart={isMobile && !mobileHero ? onTouchStart : undefined}
               onTouchMove={isMobile && !mobileHero ? onTouchMove : undefined}
@@ -195,13 +197,13 @@ export default function ProductImageGallery({
                   className={imageClassName}
                   sizes={sizes}
                   priority={index === 0}
-                  objectFit="contain"
+                  objectFit={desktopMenuHero ? 'cover' : 'contain'}
                 />
               </div>
             </div>
 
             {/* Dots indicator - desktop and non-carousel mobile */}
-            <div className="flex justify-center gap-1.5 mt-2">
+            <div className={`flex justify-center gap-1.5 mt-2 ${desktopMenuHero ? 'flex-shrink-0' : ''}`}>
               {images.map((_, i) => (
                 <button
                   key={i}
@@ -219,7 +221,7 @@ export default function ProductImageGallery({
                 />
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
 

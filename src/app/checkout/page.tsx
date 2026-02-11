@@ -195,103 +195,43 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
         <Cart />
-        {/* Navigation Bar - Updated header (matches menu/contact pages) */}
+        {/* Navigation Bar - mobile: hero bar; desktop: original white bar */}
         <div
-          className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
+          className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
           style={{ minHeight: '40px' }}
         >
-          <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible">
-            {/* Mobile Layout (< 768px) - brand left; nav links, language, cart right */}
+          <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-warmgray-200">
             <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-              <Link
-                href="/"
-                className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0"
-                aria-label="Home"
-              >
+              <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
               </Link>
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                  {t('nav.menu')}
-                </Link>
-                <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                  {t('nav.contact')}
-                </Link>
+                <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">{t('nav.menu')}</Link>
+                <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">{t('nav.contact')}</Link>
                 <LanguageToggle variant="menuHeader" />
-                <button
-                  onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                  className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
-                  aria-label="Shopping cart"
-                >
-                  <svg
-                    className="w-7 h-7 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  {itemCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                      {itemCount}
-                    </span>
-                  )}
+                <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85" aria-label="Shopping cart">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
                 </button>
               </div>
             </div>
-
-            {/* Desktop Layout (>= 768px) - brand left; nav links, language, cart right */}
-            <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 min-h-[40px] -translate-y-1.5">
-              <Link
-                href="/"
-                className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0"
-                aria-label="Home"
-              >
-                <span className="text-white font-nav-playfair text-3xl lg:text-4xl xl:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+            <div className="hidden md:flex flex-1 items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0">
+              <Link href="/" className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+                <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">Caramel & Jo</span>
               </Link>
-              <div className="flex items-center gap-5 flex-shrink-0">
-                <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                  {t('nav.menu')}
-                </Link>
-                <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                  {t('nav.contact')}
-                </Link>
-                <LanguageToggle variant="menuHeader" />
-                <button
-                  onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                  className="min-w-[44px] min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/55 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
-                  aria-label="Shopping cart"
-                >
-                  <svg
-                    className="w-7 h-7 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  {itemCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                      {itemCount}
-                    </span>
-                  )}
+              <div className="flex items-center gap-6 lg:gap-8 flex-shrink-0">
+                <Link href="/menu" className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200">{t('nav.menu')}</Link>
+                <Link href="/contact" className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200">{t('nav.contact')}</Link>
+                <LanguageToggle variant="menu" />
+                <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative" aria-label="Shopping cart">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
                 </button>
               </div>
             </div>
           </div>
         </div>
         
-        {/* Main Content - Centered in viewport */}
         <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-8 md:pb-12">
           <div className="w-full max-w-4xl">
             <h1 className="text-3xl font-serif text-warmgray-800 mb-8 text-center">
@@ -328,103 +268,43 @@ export default function CheckoutPage() {
         </div>
       )}
       <Cart />
-      {/* Navigation Bar - Updated header (matches menu/contact pages) */}
+      {/* Navigation Bar - mobile: hero bar; desktop: original white bar */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
+        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
         style={{ minHeight: '40px' }}
       >
-        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible">
-          {/* Mobile Layout (< 768px) - brand left; nav links, language, cart right */}
+        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-warmgray-200">
           <div className="md:hidden flex items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-            <Link
-              href="/"
-              className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0"
-              aria-label="Home"
-            >
+            <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                {t('nav.menu')}
-              </Link>
-              <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                {t('nav.contact')}
-              </Link>
+              <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">{t('nav.menu')}</Link>
+              <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">{t('nav.contact')}</Link>
               <LanguageToggle variant="menuHeader" />
-              <button
-                onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
-                aria-label="Shopping cart"
-              >
-                <svg
-                  className="w-7 h-7 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {items.reduce((sum, item) => sum + item.quantity, 0)}
-                  </span>
-                )}
+              <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85" aria-label="Shopping cart">
+                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
               </button>
             </div>
           </div>
-
-          {/* Desktop Layout (>= 768px) - brand left; nav links, language, cart right */}
-          <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 min-h-[40px] -translate-y-1.5">
-            <Link
-              href="/"
-              className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0"
-              aria-label="Home"
-            >
-              <span className="text-white font-nav-playfair text-3xl lg:text-4xl xl:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+          <div className="hidden md:flex flex-1 items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0">
+            <Link href="/" className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0">
+              <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">Caramel & Jo</span>
             </Link>
-            <div className="flex items-center gap-5 flex-shrink-0">
-              <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                {t('nav.menu')}
-              </Link>
-              <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
-                {t('nav.contact')}
-              </Link>
-              <LanguageToggle variant="menuHeader" />
-              <button
-                onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[44px] min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/55 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
-                aria-label="Shopping cart"
-              >
-                <svg
-                  className="w-7 h-7 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {items.reduce((sum, item) => sum + item.quantity, 0)}
-                  </span>
-                )}
+            <div className="flex items-center gap-6 lg:gap-8 flex-shrink-0">
+              <Link href="/menu" className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200">{t('nav.menu')}</Link>
+              <Link href="/contact" className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200">{t('nav.contact')}</Link>
+              <LanguageToggle variant="menu" />
+              <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative" aria-label="Shopping cart">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
               </button>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Main Content - Centered in viewport */}
       <div className="flex-1 flex items-center justify-center px-4 pt-20 sm:pt-24 pb-8 md:pb-12 min-w-0 overflow-x-hidden">
         <div className="w-full max-w-4xl min-w-0">
           {/* Page Title (visible on mobile only) */}

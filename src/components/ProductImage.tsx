@@ -25,7 +25,7 @@ export default function ProductImage({
 
   return (
     <div
-      className={`relative w-full overflow-hidden ${className} ${mobileHero ? 'h-full min-h-0 md:h-auto md:min-h-0 md:rounded-2xl rounded-none' : 'rounded-2xl'}`}
+      className={`relative w-full overflow-hidden ${className} ${mobileHero ? 'h-full min-h-0 md:h-full md:min-h-0 md:rounded-2xl rounded-none' : 'rounded-2xl'}`}
       style={mobileHero ? undefined : { aspectRatio }}
     >
       <OptimizedImage

@@ -25,7 +25,7 @@ export default function HeroNav() {
             key={link.labelKey}
             href={link.href}
             prefetch={true}
-            className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full border border-transparent bg-transparent hover:border-white/50 hover:bg-tan"
+            className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full md:rounded-xl border border-transparent bg-transparent hover:border-white/50 hover:bg-tan"
             style={{ fontWeight: 500 }}
           >
             {t(link.labelKey)}
