@@ -103,6 +103,7 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
           <PaymentElement
             options={{
               layout: 'tabs',
+              paymentMethodOrder: ['card'],
               fields: {
                 billingDetails: 'auto',
               },
@@ -127,7 +128,7 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
         </p>
       </form>
 
-      {/* Payment button OUTSIDE the form to avoid Stripe interference */}
+      {/* Payment button OUTSIDE the form to avoid Stripe interference - styled like Add to Cart */}
       <div 
         className="mt-8 pt-6 border-t border-warmgray-300"
       >
@@ -146,30 +147,8 @@ function PaymentForm({ clientSecret, orderNumber, depositAmount, onSuccess }: Ch
           }}
           id="submit-payment-button"
           disabled={!stripe || isProcessing}
-          style={{
-            width: '100%',
-            minHeight: '56px',
-            padding: '16px 24px',
-            backgroundColor: !stripe || isProcessing ? '#9ca3af' : '#1f2937',
-            color: '#ffffff',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '18px',
-            fontWeight: '600',
-            cursor: !stripe || isProcessing ? 'not-allowed' : 'pointer',
-            display: 'block',
-            transition: 'background-color 0.2s',
-          }}
-          onMouseEnter={(e) => {
-            if (stripe && !isProcessing) {
-              e.currentTarget.style.backgroundColor = '#374151'
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (stripe && !isProcessing) {
-              e.currentTarget.style.backgroundColor = '#1f2937'
-            }
-          }}
+          className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md font-medium text-base sm:text-sm transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-hero-600 md:hover:bg-hero-600"
+          style={{ fontFamily: 'var(--font-ui), sans-serif' }}
         >
           {isProcessing ? (
             t('checkout.processingPayment')

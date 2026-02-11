@@ -139,7 +139,8 @@ body {
     box-sizing: border-box;
   }
   /* Mobile: ensure date input stays inside form (do NOT use 100vw - form has padding, so 100vw would overflow and get clipped).
-   * Override browser default min-width on date inputs so they shrink to container. */
+   * Override browser default min-width on date inputs so they shrink to container.
+   * Also prevent form controls from overflowing so field edges are not cut off. */
   @media (max-width: 768px) {
     .checkout-delivery-date-input,
     #checkout-form input#deliveryDate {
@@ -152,7 +153,13 @@ body {
     #checkout-form textarea {
       min-width: 0;
       max-width: 100%;
+      width: 100%;
       box-sizing: border-box;
+    }
+    /* Contain form layout so fields don't get clipped by parent overflow */
+    #checkout-form {
+      width: 100%;
+      min-width: 0;
     }
   }
   

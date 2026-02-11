@@ -62,7 +62,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
       <button
         type="button"
         onClick={toggleLanguage}
-        className="hero-footer-btn-taper w-full h-full min-h-[32px] py-1 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[2px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
+        className="hero-footer-btn-taper w-full h-full min-h-[32px] py-1 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
         style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}

@@ -38,7 +38,6 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems) {
   
   try {
     const depositAmount = formatCurrency(order.depositAmount)
-    const remainingAmount = formatCurrency(order.remainingAmount)
     const totalAmount = formatCurrency(order.totalAmount)
 
     const itemsList = order.items
@@ -67,17 +66,15 @@ Items Ordered:
 ${itemsList}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Subtotal: ${totalAmount}
-Deposit Paid (50%): ${depositAmount}
-Remaining Balance (50%): ${remainingAmount}
+Total: ${totalAmount}
+Payment: ${depositAmount} (paid in full)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Delivery Address:\n${order.deliveryLocation}\n\n
 ${order.deliveryDate && order.deliveryTime ? `Requested Delivery:\n${new Date(order.deliveryDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} at ${order.deliveryTime}\n\n` : ''}
 ${order.notes ? `Special Instructions:\n${order.notes}\n\n` : ''}
 Payment Status:
-✅ Deposit of ${depositAmount} has been received.
-⏳ Remaining balance of ${remainingAmount} is due when you pick up your order.
+✅ Full payment of ${depositAmount} has been received.
 
 We'll notify you once your order is ready for pickup. If you have any questions, please don't hesitate to contact us.
 
@@ -123,7 +120,6 @@ export async function sendOrderNotificationEmail(order: OrderWithItems) {
   
   try {
     const depositAmount = formatCurrency(order.depositAmount)
-    const remainingAmount = formatCurrency(order.remainingAmount)
     const totalAmount = formatCurrency(order.totalAmount)
 
     const itemsList = order.items
@@ -160,14 +156,12 @@ ${itemsList}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total Amount: ${totalAmount}
-Deposit Paid (50%): ${depositAmount}
-Remaining Due (50%): ${remainingAmount}
+Payment: ${depositAmount} (paid in full)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ${order.notes ? `Special Instructions:\n${order.notes}\n\n` : ''}
 Payment:
-✅ ${depositAmount} deposit received via Stripe
-💰 ${remainingAmount} due at pickup
+✅ Full payment of ${depositAmount} received via Stripe
 
 Please confirm this order and the delivery time/day, then begin preparation.
 

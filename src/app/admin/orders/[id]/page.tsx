@@ -226,13 +226,15 @@ export default function AdminOrderDetailPage() {
               <span className="font-medium">{formatCurrency(order.totalAmount)}</span>
             </div>
             <div className="flex justify-between text-sm mb-1">
-              <span className="text-warmgray-600">Deposit (50%)</span>
+              <span className="text-warmgray-600">Amount paid</span>
               <span>{formatCurrency(order.depositAmount)}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-warmgray-600">Remaining</span>
-              <span>{formatCurrency(order.remainingAmount)}</span>
-            </div>
+            {order.remainingAmount > 0 && (
+              <div className="flex justify-between text-sm">
+                <span className="text-warmgray-600">Remaining</span>
+                <span>{formatCurrency(order.remainingAmount)}</span>
+              </div>
+            )}
           </div>
 
           {!order.deliveryConfirmed && (

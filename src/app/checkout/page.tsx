@@ -200,7 +200,7 @@ export default function CheckoutPage() {
           className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
           style={{ minHeight: '40px' }}
         >
-          <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-warmgray-200">
+          <div className="bg-hero border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
             <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
               <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
@@ -211,7 +211,7 @@ export default function CheckoutPage() {
                 <LanguageToggle variant="menuHeader" />
                 <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85" aria-label="Shopping cart">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                  {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
+                  {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
                 </button>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function CheckoutPage() {
                 <LanguageToggle variant="menu" />
                 <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative" aria-label="Shopping cart">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                  {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
+                  {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
                 </button>
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function CheckoutPage() {
         className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
         style={{ minHeight: '40px' }}
       >
-        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-warmgray-200">
+        <div className="bg-hero border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
           <div className="md:hidden flex items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
@@ -284,7 +284,7 @@ export default function CheckoutPage() {
               <LanguageToggle variant="menuHeader" />
               <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85" aria-label="Shopping cart">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
+                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
               </button>
             </div>
           </div>
@@ -298,14 +298,14 @@ export default function CheckoutPage() {
               <LanguageToggle variant="menu" />
               <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative" aria-label="Shopping cart">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
+                {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
               </button>
             </div>
           </div>
         </div>
       </div>
       
-      <div className="flex-1 flex items-center justify-center px-4 pt-20 sm:pt-24 pb-8 md:pb-12 min-w-0 overflow-x-hidden">
+      <div className="flex-1 flex items-center justify-center px-4 pt-20 sm:pt-24 pb-8 md:pb-12 min-w-0 overflow-x-visible md:overflow-x-hidden">
         <div className="w-full max-w-4xl min-w-0">
           {/* Page Title (visible on mobile only) */}
           <div className="mb-6 md:hidden">
@@ -315,10 +315,10 @@ export default function CheckoutPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch min-w-0">
-            {/* Checkout form */}
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 flex flex-col min-w-0 overflow-hidden">
-              <form onSubmit={handleSubmit} id="checkout-form" className="space-y-3 flex-1 flex flex-col min-w-0 overflow-hidden">
-                <div className="space-y-3 min-w-0 overflow-hidden">
+            {/* Checkout form - overflow-visible on mobile so field edges are not clipped */}
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 flex flex-col min-w-0 overflow-visible md:overflow-hidden">
+              <form onSubmit={handleSubmit} id="checkout-form" className="space-y-3 flex-1 flex flex-col min-w-0 overflow-visible md:overflow-hidden">
+                <div className="space-y-3 min-w-0 overflow-visible md:overflow-hidden">
                   <div className="min-w-0 w-full">
                     <label htmlFor="name" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.fullName')}
@@ -475,10 +475,12 @@ export default function CheckoutPage() {
                   <span className="text-warmgray-600">{t('cart.deposit')}</span>
                   <span className="font-medium text-warmgray-800">{formatCurrency(depositAmount)}</span>
                 </div>
-                <div className="flex justify-between text-xs text-warmgray-500">
-                  <span>{t('cart.remaining')}</span>
-                  <span>{formatCurrency(remainingAmount)}</span>
-                </div>
+                {remainingAmount > 0 && (
+                  <div className="flex justify-between text-xs text-warmgray-500">
+                    <span>{t('cart.remaining')}</span>
+                    <span>{formatCurrency(remainingAmount)}</span>
+                  </div>
+                )}
                 <div className="mt-2 p-2 bg-cream-100 rounded-md">
                   <p className="text-xs text-warmgray-600 text-center">
                     {t('checkout.depositNote')}
@@ -486,7 +488,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Continue to Payment Button */}
+              {/* Continue to Payment Button - mobile: Add to Cart style; desktop: unchanged */}
               <div className="mt-3">
                 <button
                   type="submit"
@@ -508,33 +510,8 @@ export default function CheckoutPage() {
                       }
                     }
                   }}
-                  style={{
-                    display: 'block',
-                    visibility: 'visible',
-                    opacity: (isLoading || !isFormValid) ? 0.5 : 1,
-                    width: '100%',
-                    minHeight: '44px',
-                    padding: '12px 16px',
-                    backgroundColor: '#1f2937', // warmgray-800 equivalent
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '6px',
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    cursor: (isLoading || !isFormValid) ? 'not-allowed' : 'pointer',
-                    transition: 'background-color 0.2s',
-                    position: 'relative',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isLoading && isFormValid) {
-                      e.currentTarget.style.backgroundColor = '#374151' // warmgray-700
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isLoading && isFormValid) {
-                      e.currentTarget.style.backgroundColor = '#1f2937' // warmgray-800
-                    }
-                  }}
+                  className="block w-full min-h-[44px] px-4 py-2.5 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md font-medium text-base transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-hero-600 md:border-0 md:bg-[#1f2937] md:py-3 md:px-4 md:hover:bg-[#374151]"
+                  style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">

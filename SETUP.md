@@ -109,6 +109,16 @@ This resizes and compresses images; the build can also run it. See `PHOTO-PERFOR
 - Check webhook endpoint URL is correct
 - Use Stripe CLI for local testing
 
+### Confirmation emails not received (customer or vendor)
+Confirmation emails are sent **only when Stripe calls the webhook** after a successful payment (`payment_intent.succeeded`). They are not sent from the checkout page itself.
+
+- **Local development:** Stripe cannot reach `localhost`. You must forward webhooks with the Stripe CLI:
+  1. Install [Stripe CLI](https://stripe.com/docs/stripe-cli).
+  2. Run: `stripe listen --forward-to localhost:3000/api/webhooks/stripe`
+  3. Copy the **webhook signing secret** (e.g. `whsec_...`) and set `STRIPE_WEBHOOK_SECRET` in `.env.local` to that value (not the Dashboard secret).
+  4. Keep the CLI running while testing checkout; when you pay, the CLI forwards the event and the app sends the emails.
+- **Production (e.g. Render):** Ensure `GMAIL_APP_PASSWORD`, `GMAIL_USER`, `EMAIL_FROM`, and `EMAIL_TO` are set in the host’s environment. If any are missing, the server log will show: `Cannot send confirmation emails: GMAIL_APP_PASSWORD is not set`.
+
 ### Email Issues
 - Verify Gmail App Password is correct (not your regular password!)
 - Enable 2-Step Verification on Gmail account first (required for App Passwords)

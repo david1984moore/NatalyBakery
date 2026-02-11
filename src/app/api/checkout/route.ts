@@ -123,8 +123,8 @@ export async function POST(request: NextRequest) {
     }))
 
     const totalAmount = itemsWithTotals.reduce((sum, item) => sum + item.totalPrice, 0)
-    const depositAmount = calculateDeposit(totalAmount)
-    const remainingAmount = totalAmount - depositAmount
+    const depositAmount = calculateDeposit(totalAmount) // full amount to charge
+    const remainingAmount = 0
 
     // Generate order number
     const orderNumber = generateOrderNumber()
@@ -182,9 +182,9 @@ export async function POST(request: NextRequest) {
       throw dbError
     }
 
-    // Create Stripe payment intent (50% deposit only)
+    // Create Stripe payment intent (full order amount)
     const paymentIntent = await getStripe().paymentIntents.create({
-      amount: Math.round(depositAmount * 100), // Convert to cents
+      amount: Math.round(depositAmount * 100), // Convert to cents (full total)
       currency: 'usd',
       metadata: {
         orderId: order.id,
@@ -195,7 +195,7 @@ export async function POST(request: NextRequest) {
         depositAmount: depositAmount.toString(),
         remainingAmount: remainingAmount.toString(),
       },
-      description: `Order ${orderNumber} - 50% Deposit`,
+      description: `Order ${orderNumber} - Full Payment`,
       receipt_email: customerEmail,
     })
 

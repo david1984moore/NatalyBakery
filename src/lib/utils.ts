@@ -22,10 +22,11 @@ export function generateOrderNumber(): string {
 }
 
 /**
- * Calculate 50% deposit amount
+ * Amount to charge at checkout (full order total).
+ * Previously 50% deposit; now full amount.
  */
 export function calculateDeposit(totalAmount: number): number {
-  return Math.round((totalAmount * 0.5) * 100) / 100
+  return Math.round(totalAmount * 100) / 100
 }
 
 /**

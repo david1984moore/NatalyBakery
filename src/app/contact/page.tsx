@@ -24,7 +24,7 @@ export default function ContactPage() {
       <div
         className="sticky top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm min-h-[40px] md:min-h-[80px]"
       >
-        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent md:border-warmgray-200">
+        <div className="bg-hero border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent md:border-b md:border-warmgray-200">
           {/* Mobile Layout (< 768px) - unchanged */}
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
@@ -64,7 +64,7 @@ export default function ContactPage() {
                   />
                 </svg>
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
                     {itemCount}
                   </span>
                 )}
@@ -112,7 +112,7 @@ export default function ContactPage() {
                   />
                 </svg>
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
                     {itemCount}
                   </span>
                 )}

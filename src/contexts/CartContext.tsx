@@ -122,14 +122,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const getDepositAmount = useCallback(() => {
     const total = getTotalAmount()
-    return Math.round((total * 0.5) * 100) / 100
+    return Math.round(total * 100) / 100
   }, [getTotalAmount])
 
   const getRemainingAmount = useCallback(() => {
-    const total = getTotalAmount()
-    const deposit = getDepositAmount()
-    return Math.round((total - deposit) * 100) / 100
-  }, [getTotalAmount, getDepositAmount])
+    return 0
+  }, [])
 
   // Memoize context value to prevent unnecessary re-renders
   const value = useMemo(

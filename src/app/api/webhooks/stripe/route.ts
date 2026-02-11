@@ -103,33 +103,23 @@ export async function POST(request: NextRequest) {
           },
         })
 
-        // Send confirmation emails asynchronously (don't wait for completion)
-        // Only sent once because we checked depositPaid above
-        Promise.all([
-          sendOrderConfirmationEmail(order),
-          sendOrderNotificationEmail(order),
-        ])
-          .then((results) => {
-            const customerResult = results[0]
-            const vendorResult = results[1]
-            
-            if (customerResult.success && vendorResult.success) {
-              console.log(`✅ All emails sent successfully for order ${order.orderNumber}`)
-            } else {
-              console.error(`⚠️ Email sending completed with errors for order ${order.orderNumber}:`, {
-                customerEmail: customerResult.success ? '✅' : `❌ ${customerResult.error}`,
-                vendorEmail: vendorResult.success ? '✅' : `❌ ${vendorResult.error}`,
-              })
-            }
-          })
-          .catch((error) => {
-            console.error('❌ Fatal error sending confirmation emails:', error)
-            console.error('Error details:', {
-              message: error instanceof Error ? error.message : 'Unknown error',
-              stack: error instanceof Error ? error.stack : undefined,
+        // Send confirmation emails (await so we log failures; order already updated)
+        if (!process.env.GMAIL_APP_PASSWORD) {
+          console.error('❌ Cannot send confirmation emails: GMAIL_APP_PASSWORD is not set. Set it in .env.local (local) or in your host’s environment (e.g. Render).')
+        } else {
+          const [customerResult, vendorResult] = await Promise.all([
+            sendOrderConfirmationEmail(order),
+            sendOrderNotificationEmail(order),
+          ])
+          if (customerResult.success && vendorResult.success) {
+            console.log(`✅ All emails sent successfully for order ${order.orderNumber}`)
+          } else {
+            console.error(`⚠️ Email sending completed with errors for order ${order.orderNumber}:`, {
+              customerEmail: customerResult.success ? '✅' : `❌ ${customerResult.error}`,
+              vendorEmail: vendorResult.success ? '✅' : `❌ ${vendorResult.error}`,
             })
-            // Log but don't fail the webhook
-          })
+          }
+        }
 
         console.log(`✅ Order ${order.orderNumber} confirmed - deposit paid`)
         return NextResponse.json({ success: true, orderId: order.id })

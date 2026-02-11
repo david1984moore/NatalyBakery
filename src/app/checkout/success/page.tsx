@@ -64,7 +64,7 @@ function SuccessPageContent() {
         className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
         style={{ minHeight: '40px' }}
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] bg-hero border-b border-hero-600 md:bg-transparent md:border-warmgray-200">
+        <div className="relative z-10 flex flex-col min-h-[40px] bg-hero border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
           {/* Mobile header */}
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link href="/" className="flex-shrink-0 flex items-center h-full" aria-label="Home">
@@ -89,7 +89,7 @@ function SuccessPageContent() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
                     {itemCount}
                   </span>
                 )}
@@ -122,7 +122,7 @@ function SuccessPageContent() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
                     {itemCount}
                   </span>
                 )}
