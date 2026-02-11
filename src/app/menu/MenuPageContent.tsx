@@ -22,6 +22,9 @@ import LanguageToggle from '@/components/LanguageToggle'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import ProductImage from '@/components/ProductImage'
 
+/** Products that use Nataly's own photos; others show "Pics coming soon!" */
+const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan', 'Conchas']
+
 interface MenuPageContentProps {
   products: Product[]
 }
@@ -374,21 +377,27 @@ export default function MenuPageContent({
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 items-center w-full">
               <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-[100vw] md:aspect-[3/4] md:h-auto md:min-h-[280px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0">
-                {featuredProduct.images && featuredProduct.images.length > 0 ? (
-                  <ProductImageGallery
-                    images={featuredProduct.images}
-                    alt={featuredProduct.name}
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
-                    mobileHero
-                  />
+                {PRODUCTS_WITH_REAL_PHOTOS.includes(featuredProduct.name) ? (
+                  featuredProduct.images && featuredProduct.images.length > 0 ? (
+                    <ProductImageGallery
+                      images={featuredProduct.images}
+                      alt={featuredProduct.name}
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
+                      mobileHero
+                    />
+                  ) : (
+                    <ProductImage
+                      key={featuredProduct.name}
+                      src={featuredProduct.image}
+                      alt={featuredProduct.name}
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
+                      mobileHero
+                    />
+                  )
                 ) : (
-                  <ProductImage
-                    key={featuredProduct.name}
-                    src={featuredProduct.image}
-                    alt={featuredProduct.name}
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
-                    mobileHero
-                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-warmgray-100 text-warmgray-600 font-medium text-center px-6 py-8 text-base sm:text-lg md:text-xl">
+                    Pics coming soon!
+                  </div>
                 )}
               </div>
 
