@@ -40,7 +40,7 @@ export default function ContactPage() {
                 <Link
                   key={link.labelKey}
                   href={link.href}
-                  className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center"
+                  className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center"
                 >
                   {t(link.labelKey)}
                 </Link>
@@ -48,7 +48,7 @@ export default function ContactPage() {
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                className="min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -87,7 +87,7 @@ export default function ContactPage() {
                 <Link
                   key={link.labelKey}
                   href={link.href}
-                  className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center"
+                  className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center"
                 >
                   {t(link.labelKey)}
                 </Link>
@@ -95,7 +95,7 @@ export default function ContactPage() {
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[44px] min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                className="min-w-[44px] min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/55 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg

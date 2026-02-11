@@ -25,6 +25,7 @@ export default function Hero() {
             priority
             sizes="100vw"
             objectFit="cover"
+            markTimeline="hero"
           />
         </div>
         {/* Desktop: caramel flan with berries - lazy so only one hero image is priority (LCP) */}
@@ -36,6 +37,7 @@ export default function Hero() {
             priority={false}
             sizes="(min-width: 1025px) 1440px, 100vw"
             objectFit="cover"
+            markTimeline="hero"
           />
         </div>
       </div>

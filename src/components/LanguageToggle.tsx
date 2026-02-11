@@ -45,7 +45,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     return (
       <button
         onClick={toggleLanguage}
-        className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium"
+        className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium"
         style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
@@ -86,7 +86,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
   return (
     <button
       onClick={toggleLanguage}
-      className="font-ui font-bold text-base md:text-lg text-white tracking-wide lowercase min-h-[32px] md:min-h-[36px] px-4 py-1.5 md:px-5 md:py-2 flex items-center justify-center rounded-xl border-2 border-white/85 bg-stone-800/50 md:hover:bg-stone-700/60 md:hover:border-white transition-colors duration-200"
+      className="font-ui font-bold text-base md:text-lg text-white tracking-wide lowercase min-h-[32px] md:min-h-[36px] px-4 py-1.5 md:px-5 md:py-2 flex items-center justify-center rounded-xl border-2 border-white/85 bg-stone-800/45 backdrop-blur-sm md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
       aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
     >

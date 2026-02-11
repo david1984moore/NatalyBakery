@@ -151,9 +151,10 @@ export default function ProductImageGallery({
                     }
                     setIndex(i)
                   }}
-                  className={`rounded-full transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
+                  className={`rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
                     i === index ? 'w-2.5 h-2.5 bg-warmbrown-500' : 'w-2 h-2 bg-warmgray-300'
                   }`}
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
                   aria-label={`Go to image ${i + 1}`}
                   aria-current={i === index ? 'true' : undefined}
                 />
@@ -209,9 +210,10 @@ export default function ProductImageGallery({
                     setIndex(i)
                     setAspectRatio(4 / 3)
                   }}
-                  className={`rounded-full transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
+                  className={`rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
                     i === index ? 'w-2.5 h-2.5 bg-warmbrown-500' : 'w-2 h-2 bg-warmgray-300 hover:bg-warmgray-400'
                   }`}
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
                   aria-label={`Go to image ${i + 1}`}
                   aria-current={i === index ? 'true' : undefined}
                 />

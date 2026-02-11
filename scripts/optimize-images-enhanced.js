@@ -34,8 +34,18 @@ async function processImage(inputPath) {
 
   try {
     const buffer = await fs.readFile(inputPath);
-    const { base64 } = await getPlaiceholder(buffer);
+    const { base64, metadata, color } = await getPlaiceholder(buffer, {
+      size: 32,
+      saturation: 1.2,
+    });
     results.blur = base64;
+    if (metadata && typeof metadata.width === 'number' && typeof metadata.height === 'number') {
+      results.width = metadata.width;
+      results.height = metadata.height;
+    }
+    if (color && typeof color.hex === 'string') {
+      results.dominantColor = color.hex;
+    }
     console.log(`  ✓ Generated blur placeholder`);
 
     const operations = [];

@@ -26,6 +26,8 @@ const config: Config = {
           DEFAULT: '#a08060',
           600: '#8b6b4d', /* darker for border/hover */
         },
+        // Solid equivalent of header buttons (stone-800/45 on hero) - use for selected menu tab so it matches on any background
+        headerButtonFill: '#664f3f',
         // Warm neutrals - soft caramel undertones
         beige: {
           50: '#faf7f1',

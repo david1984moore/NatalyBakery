@@ -211,16 +211,16 @@ export default function CheckoutPage() {
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
               </Link>
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+                <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                   {t('nav.menu')}
                 </Link>
-                <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+                <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                   {t('nav.contact')}
                 </Link>
                 <LanguageToggle variant="menuHeader" />
                 <button
                   onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                  className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                  className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                   aria-label="Shopping cart"
                 >
                   <svg
@@ -255,16 +255,16 @@ export default function CheckoutPage() {
                 <span className="text-white font-nav-playfair text-3xl lg:text-4xl xl:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
               </Link>
               <div className="flex items-center gap-5 flex-shrink-0">
-                <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+                <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                   {t('nav.menu')}
                 </Link>
-                <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+                <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                   {t('nav.contact')}
                 </Link>
                 <LanguageToggle variant="menuHeader" />
                 <button
                   onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                  className="min-w-[44px] min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                  className="min-w-[44px] min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/55 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                   aria-label="Shopping cart"
                 >
                   <svg
@@ -344,16 +344,16 @@ export default function CheckoutPage() {
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+              <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                 {t('nav.menu')}
               </Link>
-              <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+              <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                 {t('nav.contact')}
               </Link>
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/40 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -388,16 +388,16 @@ export default function CheckoutPage() {
               <span className="text-white font-nav-playfair text-3xl lg:text-4xl xl:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
             </Link>
             <div className="flex items-center gap-5 flex-shrink-0">
-              <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+              <Link href="/menu" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                 {t('nav.menu')}
               </Link>
-              <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/30 text-white rounded-xl hover:bg-stone-700/40 hover:border-white transition-colors duration-200 font-medium flex items-center">
+              <Link href="/contact" className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center">
                 {t('nav.contact')}
               </Link>
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[44px] min-h-[44px] bg-stone-800/30 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/40 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                className="min-w-[44px] min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-2 flex items-center justify-center shadow-md hover:bg-stone-700/55 hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
                 aria-label="Shopping cart"
               >
                 <svg

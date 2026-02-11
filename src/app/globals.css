@@ -127,7 +127,7 @@ body {
   }
 
   .animate-fade-in {
-    animation: fade-in 0.3s ease-out forwards;
+    animation: fade-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 }
 
@@ -204,7 +204,7 @@ html {
   }
 }
 
-/* Cart modal animations - separate for centered vs top-aligned to avoid transform conflicts */
+/* Cart modal animations - Material standard curve for natural feel */
 @keyframes cartModalSlideDown {
   from {
     opacity: 0;
@@ -226,11 +226,11 @@ html {
 }
 
 .cart-modal-enter {
-  animation: cartModalSlideDown 0.3s ease-out;
+  animation: cartModalSlideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cart-modal-enter-centered {
-  animation: cartModalFadeIn 0.3s ease-out;
+  animation: cartModalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Cart modal top offset: menu has 2-row header on mobile (~100px), single row on desktop (~64px) */
