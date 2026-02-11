@@ -22,10 +22,9 @@ export default function ContactPage() {
     <main className="min-h-screen bg-cream-50/30">
       {/* Header - mobile: hero bar; desktop: original white bar (like StickyNav) */}
       <div
-        className="sticky top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
-        style={{ minHeight: '40px' }}
+        className="sticky top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm min-h-[40px] md:min-h-[80px]"
       >
-        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] md:bg-transparent md:border-warmgray-200">
+        <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent md:border-warmgray-200">
           {/* Mobile Layout (< 768px) - unchanged */}
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
@@ -74,7 +73,7 @@ export default function ContactPage() {
           </div>
 
           {/* Desktop Layout (>= 768px) - original white bar */}
-          <div className="hidden md:flex flex-1 items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0">
+          <div className="hidden md:flex flex-1 items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-20 -translate-y-0">
             <Link
               href="/"
               className="flex-shrink-0 flex items-center h-full"

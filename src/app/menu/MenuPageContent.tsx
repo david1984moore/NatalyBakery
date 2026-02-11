@@ -111,14 +111,23 @@ export default function MenuPageContent({
     const targetProduct = product || (products.length > 0 ? products[0] : null)
     if (targetProduct && (!featuredProduct || featuredProduct.name !== targetProduct.name)) {
       setFeaturedProduct(targetProduct)
-      setSelectedVariant(getDefaultVariant(targetProduct))
-      setQuantity(
-        targetProduct.minQuantity ? targetProduct.minQuantity : 1
-      )
+      setQuantity(targetProduct.minQuantity ? targetProduct.minQuantity : 1)
+      // When coming from URL, preselect variant; on first load with no URL param, leave no variant selected
+      const hasMultipleVariants = targetProduct.hasVariants && targetProduct.variants.length > 1
+      if (product || !hasMultipleVariants) {
+        setSelectedVariant(getDefaultVariant(targetProduct))
+      } else {
+        setSelectedVariant(null)
+      }
     } else if (!featuredProduct && products.length > 0) {
       setFeaturedProduct(products[0])
-      setSelectedVariant(getDefaultVariant(products[0]))
       setQuantity(products[0].minQuantity ? products[0].minQuantity : 1)
+      const hasMultipleVariants = products[0].hasVariants && products[0].variants.length > 1
+      if (!hasMultipleVariants) {
+        setSelectedVariant(getDefaultVariant(products[0]))
+      } else {
+        setSelectedVariant(null)
+      }
     }
   }, [searchParams])
 
@@ -150,7 +159,7 @@ export default function MenuPageContent({
     setSelectedVariant(variant)
   }
 
-  const isLoading = !featuredProduct || !selectedVariant
+  const isLoading = !featuredProduct
 
   const handleProductChange = (productName: string) => {
     const product = getProductByName(productName)
@@ -168,10 +177,9 @@ export default function MenuPageContent({
   return (
     <div className="min-h-screen bg-background relative">
       <div
-        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
-        style={{ minHeight: '40px' }}
+        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm min-h-[40px] md:min-h-[80px]"
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] bg-hero border-b border-hero-600 md:bg-transparent md:border-warmgray-200">
+        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero border-b border-hero-600 md:bg-transparent md:border-warmgray-200">
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
@@ -223,7 +231,7 @@ export default function MenuPageContent({
 
           {/* Desktop: brand | equal space | menu buttons (centered) | equal space | contact/cart */}
           <div
-            className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0"
+            className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-20 -translate-y-0"
             style={{ minHeight: '40px' }}
           >
             <Link
@@ -263,8 +271,8 @@ export default function MenuPageContent({
                       onClick={() => handleProductChange(product.name)}
                       className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
                         isSelected
-                          ? 'border-2 border-warmgray-800 bg-warmbrown-500 text-white hover:bg-warmbrown-600'
-                          : 'border-warmgray-300 bg-transparent text-warmgray-700 hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white'
+                          ? 'border-2 border-warmgray-800 bg-headerButtonFill text-white hover:bg-hero-600'
+                          : 'border-warmgray-300 bg-transparent text-warmgray-700 hover:bg-headerButtonFill hover:border-headerButtonFill hover:text-white'
                       }`}
                     >
                       {translatedName}
@@ -413,22 +421,22 @@ export default function MenuPageContent({
                         {featuredProduct.variants.map((variant) => (
                           <label
                             key={variant.id}
-                            className={`flex items-center gap-2 min-h-[44px] p-2 sm:p-2 border rounded-md cursor-pointer transition-colors ${
-                              selectedVariant.id === variant.id
-                                ? 'border-warmgray-800 bg-background'
-                                : 'border-warmgray-300 md:hover:border-warmgray-400'
+                            className={`flex items-center gap-2 md:gap-3 min-h-[44px] p-2 sm:p-2 md:p-3 border md:border md:border-transparent rounded-md cursor-pointer transition-colors ${
+                              selectedVariant?.id === variant.id
+                                ? 'border-warmgray-800 bg-background md:bg-cream-100 md:border-warmgray-300'
+                                : 'border-warmgray-300 md:hover:bg-cream-100 md:hover:border-warmgray-400 md:hover:shadow-sm'
                             }`}
                           >
                             <input
                               type="radio"
                               name="variant"
                               value={variant.id}
-                              checked={selectedVariant.id === variant.id}
+                              checked={selectedVariant?.id === variant.id}
                               onChange={() => handleVariantChange(variant)}
-                              className="w-3.5 h-3.5 text-warmgray-800 focus:ring-warmgray-800"
+                              className="w-3.5 h-3.5 md:w-5 md:h-5 text-warmgray-800 focus:ring-warmgray-800 cursor-pointer"
                             />
                             <div className="flex-1">
-                              <span className="text-warmgray-800 font-medium text-sm">
+                              <span className="text-warmgray-800 font-medium text-sm md:text-base">
                                 {(() => {
                                   const translationKey =
                                     getVariantTranslationKey(variant.name)
@@ -439,7 +447,7 @@ export default function MenuPageContent({
                                 })()}
                               </span>
                             </div>
-                            <span className="text-warmgray-700 font-semibold text-sm">
+                            <span className="text-warmgray-700 font-semibold text-sm md:text-base">
                               {formatCurrency(variant.price)}
                             </span>
                           </label>

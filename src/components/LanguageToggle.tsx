@@ -1,6 +1,6 @@
 'use client'
 
-import { BookOpen } from 'lucide-react'
+import { Languages } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 interface LanguageToggleProps {
@@ -56,20 +56,19 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     )
   }
 
-  /* heroFooter original: replace <BookOpen ... /> with: {language === 'en' ? 'español' : 'english'} */
   if (variant === 'heroFooter') {
     const label = language === 'en' ? 'español' : 'english'
     return (
       <button
         type="button"
         onClick={toggleLanguage}
-        className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
-        style={{ fontFamily: 'var(--font-playfair)' }}
+        className="hero-footer-btn-taper w-full h-full min-h-[32px] py-1 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[2px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
+        style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       >
-        <BookOpen className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-        <span className="text-xs leading-tight">{label}</span>
+        <Languages className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="none" stroke="white" aria-hidden />
+        <span className="text-sm leading-tight">{label}</span>
       </button>
     )
   }
@@ -78,7 +77,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     return (
       <button
         onClick={toggleLanguage}
-        className="min-h-[46px] md:min-h-[52px] md:mb-1 px-2.5 md:px-3 py-2 md:py-2.5 text-xs md:text-sm border-2 border-warmgray-300 bg-transparent text-warmgray-700 rounded-xl md:hover:bg-warmbrown-500 md:hover:border-warmbrown-500 md:hover:text-white transition-colors duration-200 font-medium"
+        className="px-3 py-1.5 text-sm bg-transparent text-warmgray-700 rounded-md md:hover:bg-warmbrown-500 md:hover:text-white transition-colors duration-200 font-medium"
         style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}

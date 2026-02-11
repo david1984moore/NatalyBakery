@@ -197,11 +197,12 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
         </div>
       )}
 
-      {/* Submit Button - uses warmbrown (tan) from tailwind config */}
+      {/* Submit Button - styled like Add to Cart */}
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full min-h-[44px] bg-warmbrown-500 text-white py-3 sm:py-2 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-medium text-base sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+        style={{ fontFamily: 'var(--font-ui), sans-serif' }}
       >
         {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
       </button>

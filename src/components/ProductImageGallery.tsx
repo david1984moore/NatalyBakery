@@ -94,7 +94,7 @@ export default function ProductImageGallery({
   }))
   const useMobileCarousel = mobileHero && isMobile && images.length > 1
   const useMobileHero = mobileHero && isMobile
-  /** Desktop menu: fill the card with the image (no letterboxing) */
+  /** Desktop menu: same hero layout; image uses contain so full product is visible */
   const desktopMenuHero = mobileHero && !isMobile
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -197,7 +197,7 @@ export default function ProductImageGallery({
                   className={imageClassName}
                   sizes={sizes}
                   priority={index === 0}
-                  objectFit={desktopMenuHero ? 'cover' : 'contain'}
+                  objectFit="contain"
                 />
               </div>
             </div>

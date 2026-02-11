@@ -5,6 +5,8 @@
 :root {
   --background: #faf7f2;
   --foreground: #2d2822;
+  /* Same as header (hero) so overscroll bounce at top on mobile shows brown, not white */
+  --overscroll-top: #a08060;
   --font-inter: 'Inter', system-ui, sans-serif;
   /* --font-roboto is set by next/font in layout.tsx */
   --font-serif: var(--font-roboto);
@@ -214,6 +216,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Mobile: prevent white strip during overscroll bounce at top/bottom.
+ * The bounce reveals the viewport background; use header brown so no white shows. */
+@media (max-width: 767px) {
+  html {
+    background: var(--overscroll-top);
+  }
+}
+
 /* Touch scrolling optimizations */
 @media (hover: none) and (pointer: coarse) {
   /* Mobile-specific optimizations */
@@ -300,17 +310,22 @@ html {
   animation: cartModalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Cart modal top offset: menu has 2-row header on mobile (~100px), single row on desktop (~64px) */
+/* Cart modal top offset: menu has 2-row header on mobile (~100px), desktop md:min-h-[80px]. Add gap so modal never touches header. */
 .cart-modal-top-menu {
-  top: calc(100px + env(safe-area-inset-top, 0px));
+  top: calc(100px + 16px + env(safe-area-inset-top, 0px));
 }
 @media (min-width: 768px) {
   .cart-modal-top-menu {
-    top: calc(64px + env(safe-area-inset-top, 0px));
+    top: calc(80px + 24px + env(safe-area-inset-top, 0px));
   }
 }
 .cart-modal-top-default {
-  top: calc(64px + env(safe-area-inset-top, 0px));
+  top: calc(64px + 12px + env(safe-area-inset-top, 0px));
+}
+@media (min-width: 768px) {
+  .cart-modal-top-default {
+    top: calc(80px + 24px + env(safe-area-inset-top, 0px));
+  }
 }
 .cart-modal-centered {
   top: 50%;

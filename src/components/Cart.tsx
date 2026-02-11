@@ -215,16 +215,8 @@ export default function Cart() {
                     onClick={() => {
                       router.push('/checkout')
                     }}
-                    className="block w-full bg-warmbrown-500 text-white text-center py-3 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-semibold text-lg shadow-md hover:shadow-lg relative z-10"
-                    style={{ 
-                      fontFamily: 'var(--font-ui), sans-serif',
-                      display: 'block',
-                      width: '100%',
-                      minHeight: '44px',
-                      height: 'auto',
-                      padding: '12px',
-                      touchAction: 'manipulation'
-                    }}
+                    className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white text-center rounded-md hover:bg-hero-600 md:hover:bg-hero-600 transition-colors duration-200 font-medium text-base sm:text-sm relative z-10"
+                    style={{ fontFamily: 'var(--font-ui), sans-serif', touchAction: 'manipulation' }}
                   >
                     {t('cart.checkout')}
                   </button>
@@ -418,15 +410,8 @@ export default function Cart() {
                 <button
                   type="button"
                   onClick={() => router.push('/checkout')}
-                  className="block w-full bg-warmbrown-500 text-white text-center py-3 rounded-md hover:bg-warmbrown-600 transition-colors duration-200 font-semibold text-lg shadow-md hover:shadow-lg"
-                  style={{ 
-                    fontFamily: 'var(--font-ui), sans-serif',
-                    display: 'block',
-                    width: '100%',
-                    minHeight: '44px',
-                    lineHeight: '44px',
-                    touchAction: 'manipulation'
-                  }}
+                  className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white text-center rounded-md hover:bg-hero-600 md:hover:bg-hero-600 transition-colors duration-200 font-medium text-base sm:text-sm"
+                  style={{ fontFamily: 'var(--font-ui), sans-serif', touchAction: 'manipulation' }}
                 >
                   {t('cart.checkout')}
                 </button>

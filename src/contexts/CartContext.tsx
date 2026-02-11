@@ -1,13 +1,35 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useMemo, useEffect, ReactNode } from 'react'
 import { CheckoutItem } from '@/types/checkout'
+
+const CART_STORAGE_KEY = 'nataly-bakery-cart'
 
 interface CartItem extends CheckoutItem {
   productName: string
   variantName?: string // e.g., "Small (6") - Plain" or "6 rolls/pan"
   unitPrice: number
   quantity: number
+}
+
+function loadCartFromStorage(): CartItem[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw) as unknown
+    if (!Array.isArray(parsed)) return []
+    return parsed.filter(
+      (item): item is CartItem =>
+        item &&
+        typeof item === 'object' &&
+        typeof item.productName === 'string' &&
+        typeof item.unitPrice === 'number' &&
+        typeof item.quantity === 'number'
+    )
+  } catch {
+    return []
+  }
 }
 
 interface CartContextType {
@@ -29,6 +51,19 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [openCartOnNextPage, setOpenCartOnNextPage] = useState(false)
+  const [hydrated, setHydrated] = useState(false)
+
+  // Load cart from localStorage on mount (client-only; avoids hydration mismatch)
+  useEffect(() => {
+    setItems(loadCartFromStorage())
+    setHydrated(true)
+  }, [])
+
+  // Persist cart to localStorage whenever items change (after initial hydration)
+  useEffect(() => {
+    if (!hydrated || typeof window === 'undefined') return
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
+  }, [hydrated, items])
 
   const addItem = useCallback((productName: string, unitPrice: number, quantity: number = 1, variantName?: string) => {
     setItems((prevItems) => {
