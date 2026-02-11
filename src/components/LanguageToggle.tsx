@@ -1,5 +1,6 @@
 'use client'
 
+import { BookOpen } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 interface LanguageToggleProps {
@@ -55,16 +56,20 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     )
   }
 
+  /* heroFooter original: replace <BookOpen ... /> with: {language === 'en' ? 'español' : 'english'} */
   if (variant === 'heroFooter') {
+    const label = language === 'en' ? 'español' : 'english'
     return (
       <button
+        type="button"
         onClick={toggleLanguage}
-        className="w-full h-full min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium border-[3.5px] border-white/85 bg-stone-800/45 backdrop-blur-sm rounded-2xl md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
+        className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-xs font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
         style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       >
-        {language === 'en' ? 'español' : 'english'}
+        <BookOpen className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+        <span className="text-[10px] leading-tight">{label}</span>
       </button>
     )
   }

@@ -1,11 +1,27 @@
 'use client'
 
 import Link from 'next/link'
+import { UtensilsCrossed, Phone } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
 import { OptimizedImage } from '@/components/OptimizedImage'
 
 const heroFooterLinks = [{ href: '/contact', labelKey: 'nav.contact' as const }]
+
+/* Original footer buttons (text labels) – restore by replacing the icon links below with this:
+          <div className="flex-1 min-w-0 min-h-[44px] flex">
+            <Link href="/menu" prefetch={true} className="w-full h-full min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[2px] border-white/85 bg-hero backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200" style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}>
+              {t('nav.menu')}
+            </Link>
+          </div>
+          {heroFooterLinks.map((link) => (
+            <div key={link.labelKey} className="flex-1 min-w-0 min-h-[44px] flex">
+              <Link href={link.href} prefetch={true} className="w-full h-full min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium border-[2px] border-white/85 bg-hero backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200" style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}>
+                {t(link.labelKey)}
+              </Link>
+            </div>
+          ))}
+*/
 
 export default function Hero() {
   const { t } = useLanguage()
@@ -50,41 +66,43 @@ export default function Hero() {
         <Link
           href="/menu"
           prefetch={true}
-          className="min-h-[44px] min-w-[7.5rem] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[3.5px] border-white/85 bg-stone-800/45 backdrop-blur-sm rounded-2xl md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
+          className="hero-footer-btn-taper min-h-[44px] min-w-[7.5rem] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[2px] border-white/85 bg-hero backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
           style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         >
           {t('nav.order')}
         </Link>
       </div>
 
-      {/* Footer bar - Order, language, Contact with equal spacing; safe area as padding. */}
+      {/* Footer bar - Order, language, Contact with equal spacing; safe area as padding. Mobile: subtle gradient with light from left to match photo. */}
       <footer
-        className="absolute bottom-0 left-0 right-0 z-10 bg-hero border-t border-hero-600 min-h-[36px] flex items-center justify-center px-4 sm:px-6 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+        className="absolute bottom-0 left-0 right-0 z-10 min-h-[48px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t-[3px] border-t-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] md:bg-headerButtonFill"
         aria-label="Navigation"
       >
-        <nav className="flex items-stretch justify-center gap-3 sm:gap-6 w-full max-w-2xl mx-auto px-1">
-          <div className="flex-1 min-w-0 min-h-[44px] flex">
+        <nav className="flex items-stretch justify-center gap-2 sm:gap-4 w-full max-w-sm mx-auto px-1">
+          <div className="flex-1 min-w-0 min-h-[40px] flex">
             <LanguageToggle variant="heroFooter" />
           </div>
-          <div className="flex-1 min-w-0 min-h-[44px] flex">
+          <div className="flex-1 min-w-0 min-h-[40px] flex">
             <Link
               href="/menu"
               prefetch={true}
-              className="w-full h-full min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[3.5px] border-white/85 bg-stone-800/45 backdrop-blur-sm rounded-2xl md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
+              className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-xs font-medium lowercase border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
               style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
             >
-              {t('nav.menu')}
+              <UtensilsCrossed className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+              <span className="text-[10px] leading-tight">{t('nav.menu')}</span>
             </Link>
           </div>
           {heroFooterLinks.map((link) => (
-            <div key={link.labelKey} className="flex-1 min-w-0 min-h-[44px] flex">
+            <div key={link.labelKey} className="flex-1 min-w-0 min-h-[40px] flex">
               <Link
                 href={link.href}
                 prefetch={true}
-                className="w-full h-full min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium border-[3.5px] border-white/85 bg-stone-800/45 backdrop-blur-sm rounded-2xl md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200"
+                className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-xs font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
                 style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
               >
-                {t(link.labelKey)}
+                <Phone className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+                <span className="text-[10px] leading-tight">{t(link.labelKey)}</span>
               </Link>
             </div>
           ))}

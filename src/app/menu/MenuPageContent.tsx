@@ -163,13 +163,13 @@ export default function MenuPageContent({
   }
 
   return (
-    <div className="h-screen bg-background flex flex-col overflow-hidden relative">
+    <div className="min-h-screen bg-background relative">
       <div
         className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
         style={{ minHeight: '40px' }}
       >
         <div className="relative z-10 bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
-          <div className="md:hidden flex flex-1 items-center justify-between pl-2.5 pr-5 min-h-[40px] -translate-y-1.5">
+          <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
               prefetch={true}
@@ -180,7 +180,7 @@ export default function MenuPageContent({
                 Caramel & Jo
               </span>
             </Link>
-            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 pr-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <Link
                 href="/contact"
                 prefetch={true}
@@ -268,7 +268,7 @@ export default function MenuPageContent({
                 })}
               </div>
             </div>
-            <div className="flex items-center gap-5 flex-shrink-0 pl-4 pr-8 lg:pr-10">
+            <div className="flex items-center gap-5 flex-shrink-0 pl-4 pr-8 lg:pl-6 lg:pr-10">
               <Link
                 href="/contact"
                 prefetch={true}
@@ -338,8 +338,8 @@ export default function MenuPageContent({
         </div>
       </div>
 
-      <section className="flex-1 overflow-hidden menu-content-top flex items-start overflow-y-auto safe-bottom relative z-0 [scrollbar-gutter:stable]">
-        <div className="max-w-7xl mx-auto pl-3 pr-5 sm:pl-6 sm:pr-8 lg:pl-8 lg:pr-10 w-full flex items-start md:items-center pt-2 pb-24 md:pt-6 md:pb-4">
+      <section className="menu-content-top flex items-start relative z-0 safe-bottom">
+        <div className="max-w-7xl mx-auto pl-3 pr-5 sm:pl-6 sm:pr-8 lg:pl-8 lg:pr-10 w-full flex items-start md:items-center pt-[5.5rem] md:pt-20 pb-24 md:pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">
@@ -551,7 +551,7 @@ export default function MenuPageContent({
                   <button
                     onClick={handleAddToCart}
                     disabled={!selectedVariant}
-                    className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 bg-hero text-white rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                    className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
                     style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >
                     {t('menu.addToCart')}

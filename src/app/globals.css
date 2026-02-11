@@ -82,6 +82,40 @@ body {
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
   }
 
+  /* Hero footer buttons: brown glass – inner sheen plus top-left corner/edge highlight */
+  .hero-footer-btn-taper {
+    position: relative;
+  }
+  /* Glass sheen: very subtle highlight (light on curved brown glass) */
+  .hero-footer-btn-taper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 35%, transparent 60%),
+      radial-gradient(ellipse 90% 80% at 0% 0%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 40%, transparent 70%);
+    background-size: 100% 100%, 100% 100%;
+    background-position: 0 0, 0 0;
+    background-repeat: no-repeat;
+  }
+  /* Top-left corner and edge: subtle highlight */
+  .hero-footer-btn-taper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image:
+      radial-gradient(ellipse 26px 26px at 0 0, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0.02) 65%, transparent 85%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 35%, transparent 65%),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 35%, transparent 65%);
+    background-size: 100% 100%, 100% 3px, 3px 100%;
+    background-position: top left, top left, top left;
+    background-repeat: no-repeat;
+  }
+
   /* Keep checkout inputs within container (prevents overflow/clipping on mobile) */
   .checkout-delivery-date-input {
     width: 100%;
@@ -337,9 +371,9 @@ html {
   }
 }
 
-/* Menu page: content clears fixed header on mobile (safe-area + brand row + category row) */
+/* Menu page: content clears fixed header on mobile (brand row + category row + safe-area only) */
 .menu-content-top {
-  padding-top: max(132px, calc(88px + env(safe-area-inset-top, 0px)));
+  padding-top: calc(88px + env(safe-area-inset-top, 0px));
 }
 @media (min-width: 768px) {
   .menu-content-top {

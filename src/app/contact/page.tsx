@@ -27,7 +27,7 @@ export default function ContactPage() {
       >
         <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
           {/* Mobile Layout (< 768px) */}
-          <div className="md:hidden flex flex-1 items-center justify-between pl-2.5 pr-3 min-h-[40px] -translate-y-1.5">
+          <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
               className="flex-shrink-0 flex items-center h-full"
@@ -74,7 +74,7 @@ export default function ContactPage() {
           </div>
 
           {/* Desktop Layout (>= 768px) */}
-          <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 -translate-y-1.5" style={{ minHeight: '40px' }}>
+          <div className="hidden md:flex flex-1 items-center justify-between pl-4 pr-8 lg:pl-6 lg:pr-10 min-h-[40px] -translate-y-1.5" style={{ minHeight: '40px' }}>
             <Link
               href="/"
               className="flex-shrink-0 flex items-center h-full"
