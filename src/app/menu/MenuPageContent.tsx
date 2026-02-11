@@ -456,7 +456,7 @@ export default function MenuPageContent({
                     </div>
                   )}
 
-                {!featuredProduct.hasVariants && (
+                {!featuredProduct.hasVariants && selectedVariant && (
                   <div className="flex items-baseline gap-3">
                     <span className="text-xl md:text-2xl font-serif text-warmgray-800">
                       {formatCurrency(selectedVariant.price)}
