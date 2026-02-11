@@ -22,7 +22,7 @@ export default function ContactPage() {
     <main className="min-h-screen bg-cream-50/30">
       {/* Header - brand left; nav links, language, cart right */}
       <div
-        className="fixed top-0 left-0 right-0 z-50 bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
+        className="sticky top-0 left-0 right-0 z-50 bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
         style={{ minHeight: '40px' }}
       >
         <div className="bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">

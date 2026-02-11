@@ -165,7 +165,7 @@ export default function MenuPageContent({
   return (
     <div className="min-h-screen bg-background relative">
       <div
-        className="fixed top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
+        className="sticky top-0 left-0 right-0 z-[100] bg-hero shadow-sm safe-top w-full max-w-[100vw] overflow-visible"
         style={{ minHeight: '40px' }}
       >
         <div className="relative z-10 bg-hero border-b border-hero-600 flex flex-col min-h-[40px]">
@@ -339,7 +339,7 @@ export default function MenuPageContent({
       </div>
 
       <section className="menu-content-top flex items-start relative z-0 safe-bottom">
-        <div className="max-w-7xl mx-auto pl-3 pr-5 sm:pl-6 sm:pr-8 lg:pl-8 lg:pr-10 w-full flex items-start md:items-center pt-[5.5rem] md:pt-20 pb-24 md:pb-4">
+        <div className="max-w-7xl mx-auto pl-3 pr-5 sm:pl-6 sm:pr-8 lg:pl-8 lg:pr-10 w-full flex items-start md:items-center pt-4 md:pt-6 pb-24 md:pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">

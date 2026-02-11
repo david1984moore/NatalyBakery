@@ -63,13 +63,13 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
       <button
         type="button"
         onClick={toggleLanguage}
-        className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-xs font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
-        style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
+        className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
+        style={{ fontFamily: 'var(--font-playfair)' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
       >
         <BookOpen className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-        <span className="text-[10px] leading-tight">{label}</span>
+        <span className="text-xs leading-tight">{label}</span>
       </button>
     )
   }

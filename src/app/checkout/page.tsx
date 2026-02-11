@@ -496,7 +496,7 @@ export default function CheckoutPage() {
                     />
                   </div>
 
-                  <div className="min-w-0 w-full overflow-hidden">
+                  <div className="min-w-0 w-full">
                     <label htmlFor="deliveryDate" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.deliveryDate')}
                     </label>

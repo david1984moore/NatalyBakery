@@ -66,8 +66,8 @@ export default function Hero() {
         <Link
           href="/menu"
           prefetch={true}
-          className="hero-footer-btn-taper min-h-[44px] min-w-[7.5rem] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[2px] border-white/85 bg-hero backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
-          style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
+          className="hero-footer-btn-taper min-h-[36px] min-w-[7.5rem] py-1.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[4px] border-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] md:bg-headerButtonFill backdrop-blur-sm rounded-2xl md:hover:brightness-110 md:hover:border-white transition-colors duration-200"
+          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           {t('nav.order')}
         </Link>
@@ -78,7 +78,7 @@ export default function Hero() {
         className="absolute bottom-0 left-0 right-0 z-10 min-h-[48px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t-[3px] border-t-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] md:bg-headerButtonFill"
         aria-label="Navigation"
       >
-        <nav className="flex items-stretch justify-center gap-2 sm:gap-4 w-full max-w-sm mx-auto px-1">
+        <nav className="flex items-stretch justify-center gap-4 sm:gap-6 w-full max-w-sm mx-auto px-1">
           <div className="flex-1 min-w-0 min-h-[40px] flex">
             <LanguageToggle variant="heroFooter" />
           </div>
@@ -86,11 +86,11 @@ export default function Hero() {
             <Link
               href="/menu"
               prefetch={true}
-              className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-xs font-medium lowercase border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
-              style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
+              className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium lowercase border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
+              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               <UtensilsCrossed className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-              <span className="text-[10px] leading-tight">{t('nav.menu')}</span>
+              <span className="text-xs leading-tight">{t('nav.menu')}</span>
             </Link>
           </div>
           {heroFooterLinks.map((link) => (
@@ -98,11 +98,11 @@ export default function Hero() {
               <Link
                 href={link.href}
                 prefetch={true}
-                className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-xs font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
-                style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
+                className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
+                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 <Phone className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-                <span className="text-[10px] leading-tight">{t(link.labelKey)}</span>
+                <span className="text-xs leading-tight">{t(link.labelKey)}</span>
               </Link>
             </div>
           ))}

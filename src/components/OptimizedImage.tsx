@@ -65,6 +65,7 @@ export function OptimizedImage({
   const [retryCount, setRetryCount] = useState(0)
   const decodeStarted = useRef(false)
   const markedVisible = useRef(false)
+  const loadedReported = useRef(false)
 
   const filename = src.split('/').pop()?.replace(/\.[^/.]+$/, '') || ''
   const manifest = imageManifest as ImageManifest
@@ -102,7 +103,7 @@ export function OptimizedImage({
             style={{ objectFit }}
             sizes={sizes ?? '100vw'}
             placeholder="empty"
-            onLoad={() => setLoadState('loaded')}
+            onLoad={() => requestAnimationFrame(() => setLoadState('loaded'))}
           />
         </div>
       </div>
@@ -126,10 +127,20 @@ export function OptimizedImage({
 
   const fallbackSrc = imageData.sizes['-md']?.webp ?? imageData.sizes['-lg']?.webp ?? imageData.original
 
-  // Reset decode flag on retry so we can run decode again
+  // Reset decode flag and loaded report on retry so we can run decode again
   useEffect(() => {
     decodeStarted.current = false
+    loadedReported.current = false
   }, [retryCount])
+
+  // Single path to "loaded": defer to next frame so placeholder paints once (avoids cached-load jitter)
+  const setLoadedGracefully = () => {
+    if (loadedReported.current) return
+    loadedReported.current = true
+    requestAnimationFrame(() => {
+      setLoadState('loaded')
+    })
+  }
 
   // Timeline mark: blur is shown (for validation protocol)
   useEffect(() => {
@@ -149,7 +160,7 @@ export function OptimizedImage({
       .decode()
       .then(() => {
         if (markTimeline) performance.mark(`${markTimeline}-decode-done`)
-        setLoadState('loaded')
+        setLoadedGracefully()
       })
       .catch(() => {
         // Decode failed (e.g. CORS); picture onLoad will still fire
@@ -166,7 +177,7 @@ export function OptimizedImage({
     return () => clearTimeout(t)
   }, [markTimeline, loadState, durationMs])
 
-  const handleLoad = () => setLoadState('loaded')
+  const handleLoad = () => setLoadedGracefully()
   const handleError = () => {
     if (retryCount < 2) {
       setTimeout(() => setRetryCount((prev) => prev + 1), 1000)
@@ -209,28 +220,36 @@ export function OptimizedImage({
     objectFit,
     opacity: loadState === 'loaded' ? 1 : 0,
     transition: `opacity ${durationMs}ms ${revealEasing}`,
+    willChange: loadState === 'loading' ? 'opacity' : 'auto',
   }
 
-  const showBlurPlaceholder = loadState === 'loading' && imageData.blur
+  const isLoaded = loadState === 'loaded'
+  const blurPlaceholderStyle: React.CSSProperties = imageData.blur
+    ? {
+        backgroundImage: `url("${imageData.blur}")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: 'blur(40px) saturate(1.2)',
+        transform: 'scale(1.1)',
+        opacity: isLoaded ? 0 : 1,
+        transition: `opacity ${durationMs}ms ${revealEasing}`,
+        willChange: loadState === 'loading' ? 'opacity' : 'auto',
+        pointerEvents: 'none',
+      }
+    : {}
 
   return (
     <div className={`relative ${className}`} style={containerStyle}>
-      {/* Blur placeholder: matches final image composition; scale(1.1) hides blur edges */}
-      {showBlurPlaceholder && (
+      {/* Blur placeholder: crossfades out with image fade-in (no unmount = no jitter when cached) */}
+      {imageData.blur && (
         <div
           className="absolute inset-0"
           aria-hidden
-          style={{
-            backgroundImage: `url("${imageData.blur}")`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'blur(40px) saturate(1.2)',
-            transform: 'scale(1.1)',
-          }}
+          style={blurPlaceholderStyle}
         />
       )}
       {/* Neutral fallback when no blur data */}
-      {loadState === 'loading' && !imageData.blur && (
+      {!imageData.blur && loadState === 'loading' && (
         <div className={`absolute inset-0 ${PLACEHOLDER_BG}`} aria-hidden />
       )}
 
