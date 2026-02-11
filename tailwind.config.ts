@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Partition: mobile = base + sm (0–767px), desktop = 768px+
+      // Use "desktop:" for desktop-only styles so edits don't affect mobile.
+      screens: {
+        desktop: '768px', // same as md; use for explicit desktop-only styling
+      },
       animation: {
         shimmer: 'shimmer 2s infinite',
       },

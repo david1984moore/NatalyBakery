@@ -5,23 +5,9 @@ import { UtensilsCrossed, Phone } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
 import { OptimizedImage } from '@/components/OptimizedImage'
+import HeroNav from '@/components/HeroNav'
 
 const heroFooterLinks = [{ href: '/contact', labelKey: 'nav.contact' as const }]
-
-/* Original footer buttons (text labels) – restore by replacing the icon links below with this:
-          <div className="flex-1 min-w-0 min-h-[44px] flex">
-            <Link href="/menu" prefetch={true} className="w-full h-full min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[2px] border-white/85 bg-hero backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200" style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}>
-              {t('nav.menu')}
-            </Link>
-          </div>
-          {heroFooterLinks.map((link) => (
-            <div key={link.labelKey} className="flex-1 min-w-0 min-h-[44px] flex">
-              <Link href={link.href} prefetch={true} className="w-full h-full min-h-[44px] py-2.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium border-[2px] border-white/85 bg-hero backdrop-blur-sm rounded-2xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200" style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}>
-                {t(link.labelKey)}
-              </Link>
-            </div>
-          ))}
-*/
 
 export default function Hero() {
   const { t } = useLanguage()
@@ -30,10 +16,9 @@ export default function Hero() {
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
 
-      {/* Photo - edge-to-edge, no borders or overlays */}
-      <div className="absolute inset-0 z-[1]">
-        {/* Mobile: top-down orange cake with berries */}
-        <div className="relative block h-full w-full md:hidden">
+      {/* ========== MOBILE: centered brand, footer bar, mobile hero image (unchanged) ========== */}
+      <div className="flex md:hidden absolute inset-0 z-[1] flex-col">
+        <div className="relative flex-1 w-full">
           <OptimizedImage
             src="/Images/new_hero_1.jpeg"
             alt="Orange cake dessert with fresh berries"
@@ -44,8 +29,58 @@ export default function Hero() {
             markTimeline="hero"
           />
         </div>
-        {/* Desktop: caramel flan with berries - lazy so only one hero image is priority (LCP) */}
-        <div className="relative hidden h-full w-full md:block">
+        <div id="brand-name-wrapper" className="absolute top-[18%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-4 px-8 py-6 sm:px-10 sm:py-8">
+          <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none">
+            Caramel & Jo
+          </h1>
+          <Link
+            href="/menu"
+            prefetch={true}
+            className="hero-footer-btn-taper min-h-[36px] min-w-[7.5rem] py-1.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[4px] border-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-2xl"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            {t('nav.order')}
+          </Link>
+        </div>
+        <footer
+          className="absolute bottom-0 left-0 right-0 z-10 min-h-[48px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t-[3px] border-t-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f]"
+          aria-label="Navigation"
+        >
+          <nav className="flex items-stretch justify-center gap-4 sm:gap-6 w-full max-w-sm mx-auto px-1">
+            <div className="flex-1 min-w-0 min-h-[40px] flex">
+              <LanguageToggle variant="heroFooter" />
+            </div>
+            <div className="flex-1 min-w-0 min-h-[40px] flex">
+              <Link
+                href="/menu"
+                prefetch={true}
+                className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium lowercase border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl"
+                style={{ fontFamily: 'var(--font-playfair)' }}
+              >
+                <UtensilsCrossed className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+                <span className="text-xs leading-tight">{t('nav.menu')}</span>
+              </Link>
+            </div>
+            {heroFooterLinks.map((link) => (
+              <div key={link.labelKey} className="flex-1 min-w-0 min-h-[40px] flex">
+                <Link
+                  href={link.href}
+                  prefetch={true}
+                  className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  <Phone className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+                  <span className="text-xs leading-tight">{t(link.labelKey)}</span>
+                </Link>
+              </div>
+            ))}
+          </nav>
+        </footer>
+      </div>
+
+      {/* ========== DESKTOP: original layout – brand left, HeroNav right, single image, no footer ========== */}
+      <div className="hidden md:block absolute inset-0 z-[1]">
+        <div className="absolute inset-0">
           <OptimizedImage
             src="/Images/IMG_7616.jpeg"
             alt="Caramel flan dessert with fresh berries"
@@ -55,59 +90,19 @@ export default function Hero() {
             objectFit="cover"
             markTimeline="hero"
           />
+          <div className="absolute inset-0 bg-black/10" />
+        </div>
+        <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8">
+          <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-4 md:right-6 lg:right-8">
+            <HeroNav />
+          </div>
+          <div id="brand-name-wrapper-desktop" className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 lg:left-8 font-brand-playfair">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap">
+              Caramel & Jo
+            </h1>
+          </div>
         </div>
       </div>
-
-      {/* Brand name - centered over photo. Padding gives text-shadow room so it isn't clipped. */}
-      <div id="brand-name-wrapper" className="absolute top-[18%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-4 px-8 py-6 sm:px-10 sm:py-8">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none">
-          Caramel & Jo
-        </h1>
-        <Link
-          href="/menu"
-          prefetch={true}
-          className="hero-footer-btn-taper min-h-[36px] min-w-[7.5rem] py-1.5 px-3 sm:px-6 flex items-center justify-center text-white text-base font-medium lowercase border-[4px] border-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] md:bg-headerButtonFill backdrop-blur-sm rounded-2xl md:hover:brightness-110 md:hover:border-white transition-colors duration-200"
-          style={{ fontFamily: 'var(--font-playfair)' }}
-        >
-          {t('nav.order')}
-        </Link>
-      </div>
-
-      {/* Footer bar - Order, language, Contact with equal spacing; safe area as padding. Mobile: subtle gradient with light from left to match photo. */}
-      <footer
-        className="absolute bottom-0 left-0 right-0 z-10 min-h-[48px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t-[3px] border-t-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] md:bg-headerButtonFill"
-        aria-label="Navigation"
-      >
-        <nav className="flex items-stretch justify-center gap-4 sm:gap-6 w-full max-w-sm mx-auto px-1">
-          <div className="flex-1 min-w-0 min-h-[40px] flex">
-            <LanguageToggle variant="heroFooter" />
-          </div>
-          <div className="flex-1 min-w-0 min-h-[40px] flex">
-            <Link
-              href="/menu"
-              prefetch={true}
-              className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium lowercase border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              <UtensilsCrossed className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-              <span className="text-xs leading-tight">{t('nav.menu')}</span>
-            </Link>
-          </div>
-          {heroFooterLinks.map((link) => (
-            <div key={link.labelKey} className="flex-1 min-w-0 min-h-[40px] flex">
-              <Link
-                href={link.href}
-                prefetch={true}
-                className="hero-footer-btn-taper w-full h-full min-h-[40px] py-2 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[2px] border-white bg-hero backdrop-blur-sm rounded-xl md:hover:bg-hero-600 md:hover:border-white transition-colors duration-200"
-                style={{ fontFamily: 'var(--font-playfair)' }}
-              >
-                <Phone className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-                <span className="text-xs leading-tight">{t(link.labelKey)}</span>
-              </Link>
-            </div>
-          ))}
-        </nav>
-      </footer>
     </section>
   )
 }
