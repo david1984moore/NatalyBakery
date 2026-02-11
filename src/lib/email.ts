@@ -67,16 +67,15 @@ ${itemsList}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total: ${totalAmount}
-Payment: ${depositAmount} (paid in full)
+${order.depositPaid ? `Payment: ${depositAmount} (paid in full)` : `Amount due: ${depositAmount}`}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Delivery Address:\n${order.deliveryLocation}\n\n
 ${order.deliveryDate && order.deliveryTime ? `Requested Delivery:\n${new Date(order.deliveryDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} at ${order.deliveryTime}\n\n` : ''}
 ${order.notes ? `Special Instructions:\n${order.notes}\n\n` : ''}
 Payment Status:
-✅ Full payment of ${depositAmount} has been received.
+${order.depositPaid ? `✅ Full payment of ${depositAmount} has been received.` : `⏳ Payment of ${depositAmount} will be arranged separately. We'll reach out to confirm your order and payment details.`}
 
-We'll notify you once your order is ready for pickup. If you have any questions, please don't hesitate to contact us.
+We'll notify you once your order is ready. If you have any questions, please don't hesitate to contact us.
 
 With love,
 Caramel & Jo
@@ -156,12 +155,12 @@ ${itemsList}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total Amount: ${totalAmount}
-Payment: ${depositAmount} (paid in full)
+${order.depositPaid ? `Payment: ${depositAmount} (paid in full)` : `Amount due: ${depositAmount}`}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ${order.notes ? `Special Instructions:\n${order.notes}\n\n` : ''}
 Payment:
-✅ Full payment of ${depositAmount} received via Stripe
+${order.depositPaid ? `✅ Full payment of ${depositAmount} received via Stripe` : `⏳ Payment pending - amount due: ${depositAmount}. Customer will pay separately.`}
 
 Please confirm this order and the delivery time/day, then begin preparation.
 

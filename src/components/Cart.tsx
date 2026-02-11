@@ -64,9 +64,9 @@ export default function Cart() {
     
     return (
       <>
-        {/* Backdrop overlay with blur effect - starts at header border */}
+        {/* Backdrop overlay with blur effect - full height on mobile (covers header), offset on desktop */}
         <div 
-          className={`fixed left-0 right-0 bottom-0 bg-black/5 z-[98] transition-opacity duration-300 ${isMenuPage ? 'cart-modal-top-menu' : 'cart-modal-top-default'}`}
+          className={`fixed left-0 right-0 bottom-0 bg-black/5 z-[98] transition-opacity duration-300 cart-backdrop ${isMenuPage ? 'cart-modal-top-menu' : 'cart-modal-top-default'}`}
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
           style={{ 
@@ -215,7 +215,8 @@ export default function Cart() {
                   <button
                     type="button"
                     onClick={() => {
-                      router.push('/checkout')
+                      setIsOpen(false)
+                      if (!isCheckoutPage) router.push('/checkout')
                     }}
                     className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white text-center rounded-md hover:bg-hero-600 md:hover:bg-hero-600 transition-colors duration-200 font-medium text-base sm:text-sm relative z-10"
                     style={{ fontFamily: 'var(--font-ui), sans-serif', touchAction: 'manipulation' }}
@@ -413,7 +414,10 @@ export default function Cart() {
                 </Link>
                 <button
                   type="button"
-                  onClick={() => router.push('/checkout')}
+                  onClick={() => {
+                    setIsOpen(false)
+                    if (!isCheckoutPage) router.push('/checkout')
+                  }}
                   className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white text-center rounded-md hover:bg-hero-600 md:hover:bg-hero-600 transition-colors duration-200 font-medium text-base sm:text-sm"
                   style={{ fontFamily: 'var(--font-ui), sans-serif', touchAction: 'manipulation' }}
                 >

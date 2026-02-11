@@ -50,6 +50,11 @@ export type TranslationKey =
   | 'checkout.selectTime'
   | 'checkout.orderSummary'
   | 'checkout.continueToPayment'
+  | 'checkout.submitOrder'
+  | 'checkout.confirmOrder'
+  | 'checkout.confirmOrderMessage'
+  | 'checkout.confirmOrderTotal'
+  | 'checkout.cancel'
   | 'checkout.processing'
   | 'checkout.completePayment'
   | 'checkout.paymentDetails'
@@ -59,6 +64,7 @@ export type TranslationKey =
   | 'checkout.loadingPaymentForm'
   | 'checkout.securePayment'
   | 'checkout.depositNote'
+  | 'checkout.paymentArrangedNote'
   
   // Contact
   | 'contact.getInTouch'
@@ -82,11 +88,13 @@ export type TranslationKey =
   // Success
   | 'success.orderConfirmed'
   | 'success.thankYou'
+  | 'success.thankYouPending'
   | 'success.orderNumber'
   | 'success.whatsNext'
   | 'success.confirmationEmail'
   | 'success.readyForPickup'
   | 'success.balanceDue'
+  | 'success.paymentArranged'
   | 'success.loadingOrder'
   | 'success.contactUs'
   
@@ -181,6 +189,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.selectTime': 'Select a time',
     'checkout.orderSummary': 'Order Summary',
     'checkout.continueToPayment': 'Continue to Payment',
+    'checkout.submitOrder': 'Submit Order',
+    'checkout.confirmOrder': 'Confirm Order',
+    'checkout.confirmOrderMessage': 'Please review your order details. Once you confirm, Nataly will receive your order and contact you to arrange payment and delivery.',
+    'checkout.confirmOrderTotal': 'Order total:',
+    'checkout.cancel': 'Cancel',
     'checkout.processing': 'Mixing the batter...',
     'checkout.completePayment': 'Complete Your Payment',
     'checkout.paymentDetails': 'Payment Details',
@@ -190,6 +203,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.loadingPaymentForm': 'Loading payment form...',
     'checkout.securePayment': 'Your payment is secure and encrypted. We never store your card details.',
     'checkout.depositNote': 'You will pay the full order total now.',
+    'checkout.paymentArrangedNote': 'Payment will be arranged separately after order confirmation. Nataly will contact you.',
     
     // Contact
     'contact.getInTouch': 'Get in Touch',
@@ -213,11 +227,13 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     // Success
     'success.orderConfirmed': 'Order Confirmed!',
     'success.thankYou': 'Thank you for your order. We\'ve received your payment and will begin preparing your order.',
+    'success.thankYouPending': 'Thank you for your order! We\'ve received it and Nataly will contact you shortly to arrange payment and confirm your delivery details.',
     'success.orderNumber': 'Order Number',
     'success.whatsNext': 'What\'s Next?',
     'success.confirmationEmail': 'You\'ll receive a confirmation email shortly with your order details.',
-    'success.readyForPickup': 'We\'ll contact you when your order is ready for pickup.',
+    'success.readyForPickup': 'We\'ll contact you when your order is ready.',
     'success.balanceDue': 'Your order has been paid in full.',
+    'success.paymentArranged': 'Nataly will contact you to arrange payment and confirm delivery.',
     'success.loadingOrder': 'Loading order details...',
     'success.contactUs': 'Contact Us',
     
@@ -311,6 +327,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.selectTime': 'Seleccionar hora',
     'checkout.orderSummary': 'Resumen del Pedido',
     'checkout.continueToPayment': 'Continuar al Pago',
+    'checkout.submitOrder': 'Enviar Pedido',
+    'checkout.confirmOrder': 'Confirmar Pedido',
+    'checkout.confirmOrderMessage': 'Por favor revisa los detalles de tu pedido. Una vez que confirmes, Nataly recibirá tu pedido y te contactará para coordinar el pago y la entrega.',
+    'checkout.confirmOrderTotal': 'Total del pedido:',
+    'checkout.cancel': 'Cancelar',
     'checkout.processing': 'Batiendo la masa...',
     'checkout.completePayment': 'Completa Tu Pago',
     'checkout.paymentDetails': 'Detalles del Pago',
@@ -320,6 +341,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.loadingPaymentForm': 'Cargando formulario de pago...',
     'checkout.securePayment': 'Tu pago está seguro y encriptado. Nunca almacenamos los detalles de tu tarjeta.',
     'checkout.depositNote': 'Pagarás el total del pedido ahora.',
+    'checkout.paymentArrangedNote': 'El pago se coordinará por separado después de la confirmación del pedido. Nataly te contactará.',
     
     // Contact
     'contact.getInTouch': 'Ponte en Contacto',
@@ -342,12 +364,14 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     
     // Success
     'success.orderConfirmed': '¡Pedido Confirmado!',
+    'success.thankYouPending': '¡Gracias por tu pedido! Lo hemos recibido y Nataly te contactará pronto para coordinar el pago y confirmar los detalles de entrega.',
     'success.thankYou': 'Gracias por tu pedido. Hemos recibido tu pago y comenzaremos a preparar tu pedido.',
     'success.orderNumber': 'Número de Pedido',
     'success.whatsNext': '¿Qué Sigue?',
     'success.confirmationEmail': 'Recibirás un correo electrónico de confirmación pronto con los detalles de tu pedido.',
-    'success.readyForPickup': 'Te contactaremos cuando tu pedido esté listo para recoger.',
+    'success.readyForPickup': 'Te contactaremos cuando tu pedido esté listo.',
     'success.balanceDue': 'Tu pedido ha sido pagado en su totalidad.',
+    'success.paymentArranged': 'Nataly te contactará para coordinar el pago y confirmar la entrega.',
     'success.loadingOrder': 'Cargando detalles del pedido...',
     'success.contactUs': 'Contáctanos',
     

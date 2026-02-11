@@ -30,6 +30,7 @@ function SuccessPageContent() {
   const { items } = useCart()
   const orderId = searchParams.get('orderId')
   const orderNumber = searchParams.get('orderNumber')
+  const isPendingOrder = searchParams.get('pending') === '1'
   const [orderData, setOrderData] = useState<OrderData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
@@ -154,7 +155,7 @@ function SuccessPageContent() {
 
             <h1 className="text-xl md:text-3xl font-serif text-warmgray-800 mb-4">{t('success.orderConfirmed')}</h1>
             <p className="text-warmgray-600 text-sm md:text-base mb-8">
-              {t('success.thankYou')}
+              {isPendingOrder ? t('success.thankYouPending') : t('success.thankYou')}
             </p>
 
             {orderNumber && (
@@ -173,17 +174,26 @@ function SuccessPageContent() {
                   </svg>
                   <span>{t('success.confirmationEmail')}</span>
                 </li>
+                {isPendingOrder ? (
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{t('success.paymentArranged')}</span>
+                  </li>
+                ) : (
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{t('success.balanceDue')}</span>
+                  </li>
+                )}
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span>{t('success.readyForPickup')}</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-pink-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>{t('success.balanceDue')}</span>
                 </li>
               </ul>
             </div>

@@ -138,15 +138,25 @@ body {
     max-width: 100%;
     box-sizing: border-box;
   }
-  /* Mobile: ensure date input stays inside form (do NOT use 100vw - form has padding, so 100vw would overflow and get clipped).
-   * Override browser default min-width on date inputs so they shrink to container.
-   * Also prevent form controls from overflowing so field edges are not cut off. */
-  @media (max-width: 768px) {
+  /* Mobile: delivery date field must stay in its rightful position.
+   * Root cause: native input[type=date] has browser-default min-width (e.g. 140px+)
+   * which can make the field overflow and shift layout. Fix: (1) wrapper with strict
+   * containment, (2) override any intrinsic width so input cannot exceed container. */
+  @media (max-width: 767px) {
+    .checkout-delivery-date-wrapper {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      display: block;
+    }
     .checkout-delivery-date-input,
     #checkout-form input#deliveryDate {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      /* Override WebKit/Blink intrinsic min-width on date inputs */
+      -webkit-min-logical-width: 0;
     }
     #checkout-form input,
     #checkout-form select,
@@ -156,7 +166,6 @@ body {
       width: 100%;
       box-sizing: border-box;
     }
-    /* Contain form layout so fields don't get clipped by parent overflow */
     #checkout-form {
       width: 100%;
       min-width: 0;
@@ -315,6 +324,16 @@ html {
 
 .cart-modal-enter-centered {
   animation: cartModalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cart backdrop: on mobile extend blur to top of viewport (including behind header). On desktop keep offset. */
+.cart-backdrop {
+  top: 0;
+}
+@media (min-width: 768px) {
+  .cart-backdrop {
+    top: unset;
+  }
 }
 
 /* Cart modal top offset: menu has 2-row header on mobile (~100px), desktop md:min-h-[80px]. Add gap so modal never touches header. */

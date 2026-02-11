@@ -186,6 +186,7 @@ export async function POST(request: NextRequest) {
     const paymentIntent = await getStripe().paymentIntents.create({
       amount: Math.round(depositAmount * 100), // Convert to cents (full total)
       currency: 'usd',
+      payment_method_types: ['card'], // Card only - disables Link and other methods
       metadata: {
         orderId: order.id,
         orderNumber: order.orderNumber,

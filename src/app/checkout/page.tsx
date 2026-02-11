@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useCart } from '@/contexts/CartContext'
@@ -27,28 +27,11 @@ export default function CheckoutPage() {
   const [checkoutData, setCheckoutData] = useState<CheckoutResponse | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
 
-  // DEBUG: Track items array stability
-  const itemsRef = useRef(items)
-  if (itemsRef.current !== items) {
-    console.log('⚠️ ITEMS ARRAY CHANGED REFERENCE', {
-      oldLength: itemsRef.current.length,
-      newLength: items.length,
-      timestamp: Date.now()
-    })
-    itemsRef.current = items
-  }
+  // When false, bypass Stripe and use order-only flow (submit → confirmation modal → place order)
+  const stripeEnabled = process.env.NEXT_PUBLIC_ENABLE_STRIPE_PAYMENT === 'true'
 
-  // DEBUG: Comprehensive render logging
-  console.log('=== CHECKOUT RENDER ===', {
-    itemsCount: items.length,
-    hasItems: items.length > 0,
-    isLoading,
-    customerInfoKeys: Object.keys(customerInfo),
-    hasError: !!error,
-    hasCheckoutData: !!checkoutData,
-    timestamp: Date.now()
-  })
 
   const totalAmount = getTotalAmount()
   const depositAmount = getDepositAmount()
@@ -67,10 +50,32 @@ export default function CheckoutPage() {
     const day = String(d.getDate()).padStart(2, '0')
     return `${y}-${m}-${day}`
   }
+  const todayStr = formatLocalDate(now)
   const tomorrow = new Date(now)
   tomorrow.setDate(tomorrow.getDate() + 1)
-  const minDeliveryDate = isBeforeCutoff ? formatLocalDate(now) : formatLocalDate(tomorrow)
+  const minDeliveryDate = isBeforeCutoff ? todayStr : formatLocalDate(tomorrow)
   const isSameDayBlocked = !isBeforeCutoff
+
+  // Mobile browsers (especially iOS) often ignore input[type=date] min attribute.
+  // Enforce same-day cutoff in JS: if after 8:59am, today must not be selectable.
+  // Dependency array size must stay constant (React requirement). Initial correction only;
+  // handleDeliveryDateChange prevents user from keeping "today" when after cutoff.
+  useEffect(() => {
+    if (!isSameDayBlocked) return
+    setCustomerInfo((prev) => {
+      const current = prev.deliveryDate.trim()
+      if (current === '' || current === todayStr) return { ...prev, deliveryDate: minDeliveryDate }
+      return prev
+    })
+  }, [isSameDayBlocked, minDeliveryDate, todayStr])
+
+  const handleDeliveryDateChange = (value: string) => {
+    if (isSameDayBlocked && value === todayStr) {
+      setCustomerInfo((prev) => ({ ...prev, deliveryDate: minDeliveryDate }))
+      return
+    }
+    setCustomerInfo((prev) => ({ ...prev, deliveryDate: value }))
+  }
 
   // Validate that all required fields are filled
   const isFormValid = customerInfo.name.trim() !== '' && 
@@ -85,7 +90,6 @@ export default function CheckoutPage() {
   
   useEffect(() => {
     if (items.length === 0 && !isCompletingPayment) {
-      console.log('🚫 Empty cart detected, redirecting to menu')
       router.push('/menu')
     }
   }, [items.length, router, isCompletingPayment])
@@ -103,71 +107,79 @@ export default function CheckoutPage() {
     )
   }
 
+  const buildRequestBody = () => ({
+    customerName: customerInfo.name,
+    customerEmail: customerInfo.email,
+    customerPhone: customerInfo.phone,
+    deliveryAddress: customerInfo.deliveryAddress,
+    deliveryDate: customerInfo.deliveryDate,
+    deliveryTime: customerInfo.deliveryTime,
+    items: items.map((item) => ({
+      productName: item.variantName 
+        ? `${item.productName} - ${item.variantName}`
+        : item.productName,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+    })),
+    specialInstructions: customerInfo.specialInstructions || undefined,
+  })
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+
+    if (!stripeEnabled) {
+      setShowConfirmModal(true)
+      return
+    }
+
     setIsLoading(true)
-
-    console.log('🚀 Starting checkout submission...', {
-      itemsCount: items.length,
-      customerInfo,
-      timestamp: new Date().toISOString()
-    })
-
     try {
-      const requestBody = {
-        customerName: customerInfo.name,
-        customerEmail: customerInfo.email,
-        customerPhone: customerInfo.phone,
-        deliveryAddress: customerInfo.deliveryAddress,
-        deliveryDate: customerInfo.deliveryDate,
-        deliveryTime: customerInfo.deliveryTime,
-        items: items.map((item) => ({
-          productName: item.variantName 
-            ? `${item.productName} - ${item.variantName}`
-            : item.productName,
-          quantity: item.quantity,
-          unitPrice: item.unitPrice,
-        })),
-        specialInstructions: customerInfo.specialInstructions || undefined,
-      }
-
-      console.log('📤 Sending request to /api/checkout', requestBody)
-
+      const requestBody = buildRequestBody()
       const response = await fetch('/api/checkout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody),
       })
-
-      console.log('📥 Received response', {
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok
-      })
-
       const data: CheckoutResponse = await response.json()
 
-      console.log('📦 Response data', data)
-
       if (!response.ok || !data.success) {
-        const errorMessage = data.error || 'Checkout failed. Please try again.'
-        console.error('❌ Checkout failed', errorMessage, data)
-        throw new Error(errorMessage)
+        throw new Error(data.error || 'Checkout failed. Please try again.')
       }
-
       if (!data.clientSecret) {
-        console.error('❌ Missing clientSecret in response', data)
         throw new Error('Payment form could not be initialized. Please try again.')
       }
-
-      console.log('✅ Checkout successful, setting checkout data')
       setCheckoutData(data)
     } catch (err) {
-      console.error('💥 Checkout error caught', err)
       const errorMessage = err instanceof Error ? err.message : 'An error occurred during checkout. Please try again.'
+      setError(errorMessage)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleConfirmOrder = async () => {
+    setError(null)
+    setIsLoading(true)
+    try {
+      const requestBody = buildRequestBody()
+      const response = await fetch('/api/orders/place', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      })
+      const data = await response.json()
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || data.message || 'Order failed. Please try again.')
+      }
+
+      setShowConfirmModal(false)
+      setIsCompletingPayment(true)
+      router.push(`/checkout/success?orderId=${data.orderId}&orderNumber=${data.orderNumber}&pending=1`)
+      clearCart()
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred. Please try again.'
       setError(errorMessage)
     } finally {
       setIsLoading(false)
@@ -189,7 +201,7 @@ export default function CheckoutPage() {
     clearCart()
   }
 
-  if (checkoutData?.clientSecret) {
+  if (stripeEnabled && checkoutData?.clientSecret) {
     const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
     
     return (
@@ -249,8 +261,6 @@ export default function CheckoutPage() {
     )
   }
 
-  console.log('🏗️ Rendering page container')
-  
   return (
     <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
       {/* Loading Overlay */}
@@ -376,7 +386,7 @@ export default function CheckoutPage() {
                     />
                   </div>
 
-                  <div className="min-w-0 w-full">
+                  <div className="min-w-0 w-full checkout-delivery-date-wrapper">
                     <label htmlFor="deliveryDate" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.deliveryDate')}
                     </label>
@@ -386,7 +396,7 @@ export default function CheckoutPage() {
                       required
                       min={minDeliveryDate}
                       value={customerInfo.deliveryDate}
-                      onChange={(e) => setCustomerInfo({ ...customerInfo, deliveryDate: e.target.value })}
+                      onChange={(e) => handleDeliveryDateChange(e.target.value)}
                       className="checkout-delivery-date-input w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
                     />
                     {isSameDayBlocked && (
@@ -483,31 +493,21 @@ export default function CheckoutPage() {
                 )}
                 <div className="mt-2 p-2 bg-cream-100 rounded-md">
                   <p className="text-xs text-warmgray-600 text-center">
-                    {t('checkout.depositNote')}
+                    {stripeEnabled ? t('checkout.depositNote') : t('checkout.paymentArrangedNote')}
                   </p>
                 </div>
               </div>
 
-              {/* Continue to Payment Button - mobile: Add to Cart style; desktop: unchanged */}
+              {/* Submit / Continue to Payment Button */}
               <div className="mt-3">
                 <button
                   type="submit"
                   form="checkout-form"
                   disabled={isLoading || !isFormValid}
                   onClick={(e) => {
-                    console.log('🔘 Button clicked', {
-                      isLoading,
-                      isFormValid,
-                      itemsCount: items.length,
-                      customerInfo
-                    })
-                    // Ensure form submission happens
                     if (!isLoading && isFormValid) {
                       const form = document.getElementById('checkout-form') as HTMLFormElement
-                      if (form) {
-                        console.log('📝 Triggering form submit')
-                        form.requestSubmit()
-                      }
+                      if (form) form.requestSubmit()
                     }
                   }}
                   className="block w-full min-h-[44px] px-4 py-2.5 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md font-medium text-base transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-hero-600 md:border-0 md:bg-[#1f2937] md:py-3 md:px-4 md:hover:bg-[#374151]"
@@ -522,10 +522,68 @@ export default function CheckoutPage() {
                       {t('checkout.processing')}
                     </span>
                   ) : (
-                    t('checkout.continueToPayment')
+                    stripeEnabled ? t('checkout.continueToPayment') : t('checkout.submitOrder')
                   )}
                 </button>
               </div>
+
+              {/* Confirmation Modal (order-only flow) */}
+              {showConfirmModal && (
+                <div
+                  className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50"
+                  onClick={() => { if (!isLoading) { setShowConfirmModal(false); setError(null); } }}
+                >
+                  <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
+                    <h3 className="text-lg font-serif text-warmgray-800">{t('checkout.confirmOrder')}</h3>
+                    <p className="text-sm text-warmgray-600">{t('checkout.confirmOrderMessage')}</p>
+                    <div className="border border-warmgray-200 rounded-md p-3 bg-cream-50/50">
+                      <p className="text-sm text-warmgray-700">
+                        {t('checkout.confirmOrderTotal')} <span className="font-semibold">{formatCurrency(totalAmount)}</span>
+                      </p>
+                      <ul className="mt-2 text-xs text-warmgray-600 space-y-1">
+                        {items.map((item, idx) => (
+                          <li key={idx}>
+                            {item.productName}{item.variantName ? ` - ${item.variantName}` : ''} × {item.quantity}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    {error && (
+                      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                        {error}
+                      </div>
+                    )}
+                    <div className="flex gap-3 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => { setShowConfirmModal(false); setError(null); }}
+                        disabled={isLoading}
+                        className="flex-1 min-h-[44px] px-4 py-2.5 border-2 border-warmgray-300 text-warmgray-700 rounded-md font-medium hover:bg-warmgray-50 disabled:opacity-50"
+                      >
+                        {t('checkout.cancel')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleConfirmOrder}
+                        disabled={isLoading}
+                        className="flex-1 min-h-[44px] px-4 py-2.5 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md font-medium hover:bg-hero-600 disabled:opacity-50 flex items-center justify-center"
+                      >
+                        {isLoading ? (
+                          <>
+                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            {t('checkout.processing')}
+                          </>
+                        ) : (
+                          t('checkout.confirmOrder')
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
