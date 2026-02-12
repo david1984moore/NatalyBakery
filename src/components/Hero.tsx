@@ -42,7 +42,7 @@ export default function Hero() {
           </Link>
         </div>
         <footer
-          className="absolute bottom-0 left-0 right-0 z-10 min-h-[52px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t-[4px] border-t-white/85 bg-gradient-to-r from-[#b89878] to-hero-600"
+          className="absolute bottom-0 left-0 right-0 z-10 min-h-[52px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t-[4px] border-t-white/85 bg-gradient-to-r from-[#b89878] to-hero-600 hero-footer-bar-mobile"
           aria-label="Navigation"
         >
           <nav className="flex items-stretch justify-center gap-4 sm:gap-6 w-full max-w-sm mx-auto px-1">

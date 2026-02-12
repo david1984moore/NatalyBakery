@@ -19,7 +19,7 @@ export default function ContactPage() {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <main className="min-h-screen bg-cream-50/30">
+    <main className="min-h-screen bg-background">
       {/* Header - mobile: hero bar; desktop: original white bar (like StickyNav) */}
       <div
         className="sticky top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm min-h-[40px] md:min-h-[80px]"
