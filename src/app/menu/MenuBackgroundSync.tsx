@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 
 /**
  * Syncs document background for the menu page. On desktop, html and body use
- * --background. On mobile, html keeps --overscroll-top so the overscroll bounce
- * (rubber-band) at the top shows the header brown instead of a white strip;
- * body still uses --background for the page content.
+ * --background. On mobile, html and body both use --overscroll-top so the
+ * overscroll bounce (rubber-band) at the top shows header brown instead of
+ * white; the menu content wrapper has bg-background so the page stays cream.
  */
 export default function MenuBackgroundSync() {
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function MenuBackgroundSync() {
     const apply = () => {
       if (mobileQuery.matches) {
         html.style.background = 'var(--overscroll-top)'
-        body.style.background = 'var(--background)'
+        body.style.background = 'var(--overscroll-top)'
       } else {
         html.style.background = 'var(--background)'
         body.style.background = 'var(--background)'

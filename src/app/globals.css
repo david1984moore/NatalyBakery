@@ -29,6 +29,15 @@ body {
   font-family: var(--font-roboto), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Main content uses page background so when body is set to overscroll brown on mobile,
+ * the visible page stays cream and only the overscroll band shows brown. */
+main {
+  background: var(--background);
 }
 
 @layer utilities {
@@ -227,16 +236,25 @@ body {
 
 /* Home page: uses Roboto (--font-ui) for all text except brand name */
 
-/* Smooth scrolling */
+/* Smooth scrolling; prevent horizontal scroll on mobile so content stays centered in viewport */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Mobile: prevent white strip during overscroll bounce at top/bottom.
- * The bounce reveals the viewport background; use header brown so no white shows. */
+ * The bounce reveals the viewport background; use header brown so no white shows.
+ * Set both html and body so whichever element the browser reveals during rubber-band
+ * shows brown. Content (main) keeps cream so the page doesn't look brown. */
 @media (max-width: 767px) {
-  html {
+  html,
+  body {
     background: var(--overscroll-top);
+  }
+  html {
+    /* Hint to contain overscroll; iOS may still bounce but viewport is now brown */
+    overscroll-behavior-y: contain;
   }
 }
 
@@ -309,6 +327,18 @@ html {
   }
 }
 
+/* Desktop (sm+): modal uses left-1/2 -translate-x-1/2. Animation must include -50% X so it never overrides centering and causes a right-then-center jump. */
+@keyframes cartModalSlideDownCentered {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 @keyframes cartModalFadeIn {
   from {
     opacity: 0;
@@ -320,6 +350,11 @@ html {
 
 .cart-modal-enter {
   animation: cartModalSlideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (min-width: 640px) {
+  .cart-modal-enter {
+    animation: cartModalSlideDownCentered 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 .cart-modal-enter-centered {

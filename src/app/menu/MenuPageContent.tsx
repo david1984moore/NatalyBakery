@@ -7,6 +7,7 @@ import {
   products,
   getProductByName,
   getDefaultVariant,
+  PRODUCTS_WITH_REAL_PHOTOS,
   type Product,
   type ProductVariant,
 } from '@/data/products'
@@ -21,9 +22,6 @@ import Cart from '@/components/Cart'
 import LanguageToggle from '@/components/LanguageToggle'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import ProductImage from '@/components/ProductImage'
-
-/** Products that use Nataly's own photos; others show "Pics coming soon!" */
-const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan', 'Conchas']
 
 interface MenuPageContentProps {
   products: Product[]
@@ -54,7 +52,7 @@ export default function MenuPageContent({
       setCanScrollLeft(scrollLeft > 1)
       setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1)
       // Hide right fade when near the end so the last button (e.g. Conchas) isn't faded
-      setShowRightFade(scrollLeft + clientWidth < scrollWidth - 80)
+      setShowRightFade(scrollLeft + clientWidth < scrollWidth - 120)
     }
   }
 
@@ -178,12 +176,12 @@ export default function MenuPageContent({
   }
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
       <div
-        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-none md:shadow-sm min-h-[40px] md:min-h-[80px]"
+        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-none min-h-[40px] md:min-h-[80px]"
       >
         <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
-          <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
+          <div className="md:hidden flex flex-1 items-center justify-between gap-2 px-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
               prefetch={true}
@@ -248,7 +246,7 @@ export default function MenuPageContent({
               </span>
             </Link>
             <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex-shrink-0 flex items-center relative h-full max-w-[min(calc(100vw-20rem),56rem)] min-w-0">
+            <div className="flex-shrink-0 flex items-center relative h-full max-w-[min(calc(100vw-20rem),56rem)] min-w-0 md:max-w-[min(calc(100vw-18rem),64rem)] md:pr-6 md:overflow-visible">
               {canScrollLeft && (
                 <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none z-10" />
               )}
@@ -257,7 +255,7 @@ export default function MenuPageContent({
               )}
               <div
                 ref={scrollContainerRef}
-                className="flex items-center gap-3 md:gap-2 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6 md:pr-16"
+                className="flex items-center gap-3 md:gap-2 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6 md:pr-24"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 {products.map((product) => {
@@ -326,7 +324,7 @@ export default function MenuPageContent({
 
         <div className="relative z-0 md:hidden bg-background">
           <div
-            className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pl-2.5 pr-4 py-1.5 touch-scroll mobile-scroll-container"
+            className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {products.map((product) => {
@@ -356,7 +354,7 @@ export default function MenuPageContent({
       </div>
 
       <section className="menu-content-top flex items-start relative z-0 safe-bottom">
-        <div className="max-w-7xl mx-auto pl-3 pr-5 sm:pl-6 sm:pr-8 lg:pl-8 lg:pr-10 w-full flex items-start md:items-center pt-4 md:pt-6 pb-24 md:pb-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-start md:items-center pt-4 md:pt-6 pb-24 md:pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">
@@ -376,7 +374,7 @@ export default function MenuPageContent({
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 items-center w-full">
-              <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-[100vw] md:aspect-[3/4] md:h-auto md:min-h-[280px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0">
+              <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-full md:aspect-[3/4] md:h-auto md:min-h-[280px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0">
                 {PRODUCTS_WITH_REAL_PHOTOS.includes(featuredProduct.name) ? (
                   featuredProduct.images && featuredProduct.images.length > 0 ? (
                     <ProductImageGallery

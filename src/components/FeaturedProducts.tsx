@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import ProductCard from './ProductCard'
-import { products } from '@/data/products'
+import { products, PRODUCTS_WITH_REAL_PHOTOS } from '@/data/products'
 
 const FEATURED_PRODUCT_COUNT = 6
 
@@ -25,14 +25,21 @@ export default function FeaturedProducts() {
               href={`/menu?product=${encodeURIComponent(product.name)}`}
               variant="light"
               priority={index < 4}
+              showPlaceholder={!PRODUCTS_WITH_REAL_PHOTOS.includes(product.name)}
             />
           ))}
         </div>
-        <Link href="/menu" prefetch={true} className="mt-8 flex justify-center">
-          <span className="font-ui inline-flex items-center justify-center min-h-[44px] px-6 py-3 text-sm font-medium tracking-wide uppercase text-black bg-white/10 backdrop-blur-sm hover:bg-tan transition-colors duration-300 rounded-md shadow-md">
-            Menu
-          </span>
-        </Link>
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/menu"
+            prefetch={true}
+            className="flex justify-center md:inline-flex"
+          >
+            <span className="font-ui inline-flex items-center justify-center min-h-[44px] px-6 py-3 text-sm font-medium tracking-wide uppercase text-black bg-white/10 backdrop-blur-sm hover:bg-tan md:hover:text-white transition-colors duration-300 rounded-md shadow-md">
+              Menu
+            </span>
+          </Link>
+        </div>
       </div>
     </section>
   )

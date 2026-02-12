@@ -51,8 +51,8 @@ export const products: Product[] = [
   },
   {
     name: 'Choco-flan',
-    image: '/Images/flan_1.jpeg',
-    images: ['/Images/flan_1.jpeg', '/Images/flan_2.jpeg', '/Images/IMG_7624.jpeg', '/Images/IMG_7626.jpeg'],
+    image: '/Images/choco_5.jpeg',
+    images: ['/Images/choco_5.jpeg', '/Images/flan_1.jpeg', '/Images/hero_2.jpeg'],
     hasVariants: true,
     variants: [
       {
@@ -152,6 +152,9 @@ export const products: Product[] = [
     minQuantity: 10, // Minimum 10 shells per order
   },
 ]
+
+/** Products that use Nataly's own photos; others show "Pics coming soon!" placeholder. */
+export const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan', 'Conchas']
 
 export function getProductByName(name: string): Product | undefined {
   return products.find((p) => p.name === name)

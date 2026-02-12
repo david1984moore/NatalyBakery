@@ -38,6 +38,8 @@ export const metadata: Metadata = {
     title: 'Where caramel dreams become cake!',
     description: 'caramelandjo.onrender.com',
   },
+  /** Matches header/overscroll brown so mobile browser chrome and overscroll bounce don't show white */
+  themeColor: '#a08060',
 }
 
 export default function RootLayout({
