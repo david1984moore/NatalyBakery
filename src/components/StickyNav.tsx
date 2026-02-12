@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useCart } from '@/contexts/CartContext'
 import LanguageToggle from './LanguageToggle'
 
 const navLinks = [
@@ -13,8 +14,9 @@ const navLinks = [
 
 export default function StickyNav() {
   const [isVisible, setIsVisible] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { t } = useLanguage()
+  const { items } = useCart()
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   useEffect(() => {
     const sentinel = document.getElementById('nav-sentinel')
@@ -34,11 +36,67 @@ export default function StickyNav() {
 
   return (
     <nav
-      className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-warmgray-200 shadow-sm transition-opacity duration-300 safe-top"
+      className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] safe-top bg-hero border-b-[3px] border-b-white/85 shadow-sm min-h-[40px] md:min-h-[80px] md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 transition-opacity duration-300"
       role="navigation"
     >
-      <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 h-14 md:h-16">
-        {/* Logo - links to top (original desktop styling) */}
+      {/* Mobile: hero-style bar (matches menu/contact mobile header) */}
+      <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
+        <Link
+          href="/"
+          onClick={(e) => {
+            if (window.location.pathname === '/') {
+              e.preventDefault()
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+          }}
+          className="flex-shrink-0 flex items-center h-full"
+          aria-label="Home"
+        >
+          <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">
+            Caramel & Jo
+          </span>
+        </Link>
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          {navLinks.map((link) => (
+            <Link
+              key={link.labelKey}
+              href={link.href}
+              prefetch={true}
+              className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center"
+            >
+              {t(link.labelKey)}
+            </Link>
+          ))}
+          <LanguageToggle variant="menuHeader" />
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
+            className="min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+            aria-label="Shopping cart"
+          >
+            <svg
+              className="w-7 h-7 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            {itemCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                {itemCount}
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Desktop: white bar with horizontal links */}
+      <div className="hidden md:flex justify-between items-center px-4 sm:px-6 lg:px-8 h-14 md:h-16">
         <Link
           href="/"
           onClick={(e) => {
@@ -51,9 +109,7 @@ export default function StickyNav() {
         >
           Caramel & Jo
         </Link>
-
-        {/* Desktop - Horizontal links (original: Contact, Order, Menu) */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8">
+        <div className="flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.labelKey}
@@ -66,45 +122,7 @@ export default function StickyNav() {
           ))}
           <LanguageToggle variant="menu" />
         </div>
-
-        {/* Mobile - Hamburger (StickyNav is hidden on mobile via hidden md:block, so this is unused but kept for structure) */}
-        <div className="md:hidden flex items-center gap-2">
-          <LanguageToggle variant="menu" />
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700"
-            aria-expanded={isMobileMenuOpen}
-            aria-label="Toggle menu"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
       </div>
-
-      {/* Mobile dropdown (unused when StickyNav is desktop-only) */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-warmgray-200 bg-white py-4 px-4 safe-x safe-bottom">
-          <div className="flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.labelKey}
-                href={link.href}
-                prefetch={true}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="font-ui min-h-[44px] py-3 flex items-center text-warmgray-700 hover:text-warmgray-900"
-              >
-                {t(link.labelKey)}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
     </nav>
   )
 }
