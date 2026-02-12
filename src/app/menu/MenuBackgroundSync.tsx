@@ -2,11 +2,28 @@
 
 import { useEffect } from 'react'
 
+/** Same as globals.css mobile: cream at top, footer-matching gradient at bottom (no brown bar at top). */
+const MOBILE_BG = {
+  backgroundColor: 'var(--background)',
+  backgroundImage: 'linear-gradient(to bottom, var(--background) 0%, transparent 78%), linear-gradient(to right, #b89878, #8b6b4d)',
+  backgroundSize: '100% 100%, 100% 22%',
+  backgroundPosition: '0 0, 0 100%',
+  backgroundRepeat: 'no-repeat',
+}
+
+function clearBg(el: HTMLElement) {
+  el.style.background = ''
+  el.style.backgroundColor = ''
+  el.style.backgroundImage = ''
+  el.style.backgroundSize = ''
+  el.style.backgroundPosition = ''
+  el.style.backgroundRepeat = ''
+}
+
 /**
  * Syncs document background for the menu page. On desktop, html and body use
- * --background. On mobile, html and body both use --overscroll-top so the
- * overscroll bounce (rubber-band) at the top shows header brown instead of
- * white; the menu content wrapper has bg-background so the page stays cream.
+ * --background. On mobile, uses same gradient as globals.css: cream at top (no brown bar),
+ * footer-matching gradient at bottom; overscroll behavior unchanged.
  */
 export default function MenuBackgroundSync() {
   useEffect(() => {
@@ -16,8 +33,8 @@ export default function MenuBackgroundSync() {
 
     const apply = () => {
       if (mobileQuery.matches) {
-        html.style.background = 'var(--overscroll-top)'
-        body.style.background = 'var(--overscroll-top)'
+        Object.assign(html.style, MOBILE_BG)
+        Object.assign(body.style, MOBILE_BG)
       } else {
         html.style.background = 'var(--background)'
         body.style.background = 'var(--background)'
@@ -29,8 +46,8 @@ export default function MenuBackgroundSync() {
 
     return () => {
       mobileQuery.removeEventListener('change', apply)
-      html.style.background = ''
-      body.style.background = ''
+      clearBg(html)
+      clearBg(body)
     }
   }, [])
 

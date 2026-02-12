@@ -5,7 +5,7 @@
 :root {
   --background: #faf7f2;
   --foreground: #2d2822;
-  /* Same as header (hero) so overscroll bounce at top on mobile shows brown, not white */
+  /* Hero/footer brown; mobile uses gradient (cream top, footer-matching bottom) in media query */
   --overscroll-top: #a08060;
   --font-inter: 'Inter', system-ui, sans-serif;
   /* --font-roboto is set by next/font in layout.tsx */
@@ -243,17 +243,20 @@ html {
   width: 100%;
 }
 
-/* Mobile: prevent white strip during overscroll bounce at top/bottom.
- * The bounce reveals the viewport background; use header brown so no white shows.
- * Set both html and body so whichever element the browser reveals during rubber-band
- * shows brown. Content (main) keeps cream so the page doesn't look brown. */
+/* Mobile: no brown at top (cream there); bottom matches footer gradient so the two are imperceptible.
+ * Overscroll bounce still shows cream at top and footer-matching brown at bottom; scroll fix unchanged. */
 @media (max-width: 767px) {
   html,
   body {
-    background: var(--overscroll-top);
+    background-color: var(--background);
+    background-image:
+      linear-gradient(to bottom, var(--background) 0%, transparent 78%),
+      linear-gradient(to right, #b89878, #8b6b4d);
+    background-size: 100% 100%, 100% 22%;
+    background-position: 0 0, 0 100%;
+    background-repeat: no-repeat;
   }
   html {
-    /* Hint to contain overscroll; iOS may still bounce but viewport is now brown */
     overscroll-behavior-y: contain;
   }
 }
