@@ -38,7 +38,7 @@ export default function ProductCard({ name, image, href, variant = 'hero', prior
               alt={translatedName}
               fill
               priority={priority}
-              sizes="(max-width: 640px) 140px, (max-width: 768px) 120px, 140px"
+              sizes="(max-width: 640px) 140px, (max-width: 1024px) 120px, 140px"
               objectFit="cover"
             />
           )}

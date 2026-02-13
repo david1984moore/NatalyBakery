@@ -9,9 +9,8 @@ export default function FeaturedProducts() {
 
   return (
     <section
-      className="hidden md:block relative py-8 sm:py-12 md:py-16 lg:py-20 overflow-hidden"
+      className="hidden md:block relative py-8 sm:py-12 md:py-16 lg:py-20 overflow-hidden bg-background"
       style={{
-        background: 'linear-gradient(180deg, #ffffff 0%, #fffefb 30%, #fffcf5 70%, #ffffff 100%)',
         boxShadow: 'inset 0 8px 24px -8px rgba(0,0,0,0.04), inset 0 -8px 24px -8px rgba(0,0,0,0.04), 0 4px 16px -4px rgba(0,0,0,0.06)',
       }}
     >

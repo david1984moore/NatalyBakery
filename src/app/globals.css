@@ -203,7 +203,7 @@ main {
    * Root cause: native input[type=date] has browser-default min-width (e.g. 140px+)
    * which can make the field overflow and shift layout. Fix: (1) wrapper with strict
    * containment, (2) override any intrinsic width so input cannot exceed container. */
-  @media (max-width: 767px) {
+  @media (max-width: 1023px) {
     .checkout-delivery-date-wrapper {
       width: 100%;
       min-width: 0;
@@ -268,12 +268,15 @@ main {
 
 /* ============================================
    MICRO-INTERACTIONS - Apple-quality link/input feedback
+   Only when hover is available (desktop); no hover animations on mobile.
    ============================================ */
-a:not([class*="transition"]) {
-  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-a:not([class*="transition"]):hover {
-  opacity: 0.9;
+@media (hover: hover) {
+  a:not([class*="transition"]) {
+    transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  a:not([class*="transition"]):hover {
+    opacity: 0.9;
+  }
 }
 
 input:not([class*="transition"]),
@@ -292,7 +295,7 @@ select:not([class*="transition"]) {
 }
 
 /* Desktop only: grey shadow/glow around the hero header brand name */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   #brand-name-wrapper-desktop h1 {
     text-shadow:
       0 2px 4px rgba(0, 0, 0, 1),
@@ -325,17 +328,16 @@ html {
 
 
 /* Mobile: native scroll behavior + full-height chain so no white above header during overscroll.
- * ROOT CAUSE FIX: (1) overscroll-behavior-y: none disables iOS rubber band entirely, eliminating
- * any white/incorrect color reveal in the overscroll zone (Safari's overscroll is outside document).
- * (2) html uses min-height (not height: 100%) so the root can extend properly; height: 100%
- * constrained the root and could cause layout/background propagation issues during scroll.
- * (3) theme-color meta (in layout.tsx) colors Safari's overscroll area when bounce occurs. */
-@media (max-width: 767px) {
+ * (1) overscroll-behavior-y: auto allows native rubber band, bounce, and pull-to-refresh.
+ *     theme-color meta (layout.tsx) colors Safari's overscroll area when bounce occurs.
+ * (2) html uses min-height (not height: 100%) so the root can extend properly.
+ * (3) -webkit-overflow-scrolling: touch enables momentum scrolling on iOS. */
+@media (max-width: 1023px) {
   html {
     scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
-    /* CRITICAL: none = no rubber band = no overscroll zone to reveal. contain allowed bounce. */
-    overscroll-behavior-y: none;
+    /* Allow native rubber band, bounce, and pull-to-refresh */
+    overscroll-behavior-y: auto;
     /* min-height lets root extend with content; height: 100% constrained and caused scroll glitches */
     min-height: 100%;
     min-height: 100dvh;
@@ -413,7 +415,7 @@ html {
   will-change: transform;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .product-card-smooth:hover {
     /* Smooth scale with GPU acceleration - desktop only */
     transform: translateZ(0) scale(1.05);
@@ -526,7 +528,7 @@ body.cart-open {
 .cart-backdrop {
   top: 0;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .cart-backdrop {
     top: 0;
   }
@@ -536,7 +538,7 @@ body.cart-open {
 .cart-modal-top-menu {
   top: calc(100px + 16px + env(safe-area-inset-top, 0px));
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .cart-modal-top-menu {
     top: calc(80px + 24px + env(safe-area-inset-top, 0px));
   }
@@ -544,7 +546,7 @@ body.cart-open {
 .cart-modal-top-default {
   top: calc(64px + 12px + env(safe-area-inset-top, 0px));
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .cart-modal-top-default {
     top: calc(80px + 24px + env(safe-area-inset-top, 0px));
   }
@@ -561,7 +563,7 @@ body.cart-open {
     width: 20rem;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .cart-modal-centered {
     width: 24rem;
   }
@@ -581,8 +583,10 @@ body.cart-open {
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #c7bb9e;
+@media (hover: hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c7bb9e;
+  }
 }
 
 /* Hide scrollbar for horizontal navigation */
@@ -681,7 +685,7 @@ body.cart-open {
 .menu-content-top {
   padding-top: 0.5rem;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .menu-content-top {
     padding-top: 1rem;
   }

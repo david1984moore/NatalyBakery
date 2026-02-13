@@ -37,7 +37,7 @@ export default function StickyNav() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] safe-top bg-hero-footer-gradient border-b-[3px] border-b-white/85 shadow-sm min-h-[40px] md:min-h-[80px] md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 transition-opacity duration-300"
+      className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] safe-top max-md:bg-hero-footer-gradient md:bg-background border-b-[3px] border-b-white/85 shadow-sm min-h-[40px] md:min-h-[80px] md:backdrop-blur-sm md:border-b md:border-warmgray-200 transition-opacity duration-300"
       role="navigation"
     >
       {/* Mobile: hero-style bar (matches menu/contact mobile header) */}
@@ -120,7 +120,7 @@ export default function StickyNav() {
               aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
               className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
             >
-              {link.href === '/contact' ? <Mail className="w-5 h-5" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-5 h-5" strokeWidth={2} /> : t(link.labelKey)}
+              {t(link.labelKey)}
             </Link>
           ))}
           <LanguageToggle variant="menu" />

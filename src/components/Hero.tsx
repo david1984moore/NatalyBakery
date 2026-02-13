@@ -36,7 +36,7 @@ export default function Hero() {
           <Link
             href="/menu"
             prefetch={true}
-            className="hero-order-btn hero-footer-btn-taper min-h-[42px] min-w-[7.5rem] py-2 px-3 sm:px-6 flex items-center justify-center text-white text-base font-extrabold leading-tight border-[5px] border-white/85 bg-gradient-to-r from-[#d0b078] to-[#b89058] backdrop-blur-sm rounded-2xl"
+            className="hero-order-btn hero-footer-btn-taper min-h-[42px] min-w-[7.5rem] py-2 px-3 sm:px-6 flex items-center justify-center text-white text-base font-extrabold leading-tight border-[5px] border-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-2xl"
           >
             {t('nav.order')}
           </Link>

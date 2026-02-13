@@ -34,7 +34,7 @@ export default function ProductImageGallery({
   alt,
   className = '',
   imageClassName = '',
-  sizes = '(max-width: 640px) 180px, (max-width: 768px) 240px, 400px',
+  sizes = '(max-width: 640px) 180px, (max-width: 1024px) 240px, 400px',
   mobileHero = false,
 }: ProductImageGalleryProps) {
   const [index, setIndex] = useState(0)
@@ -43,7 +43,7 @@ export default function ProductImageGallery({
   const [aspectRatio, setAspectRatio] = useState<number>(4 / 3)
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
+    const check = () => setIsMobile(window.innerWidth < 1024)
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)

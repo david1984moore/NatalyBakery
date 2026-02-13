@@ -30,7 +30,7 @@ export default function HeroNav() {
             className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full md:rounded-xl border border-transparent bg-transparent hover:border-white/50 hover:bg-tan flex items-center justify-center"
             style={{ fontWeight: 500 }}
           >
-            {link.href === '/contact' ? <Mail className="w-6 h-6 md:w-7 md:h-7" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 md:w-7 md:h-7" strokeWidth={2} /> : t(link.labelKey)}
+            {t(link.labelKey)}
           </Link>
         ))}
       </div>

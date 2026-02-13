@@ -79,7 +79,7 @@ export default function MenuPageContent({
       const desktopContainer = document.querySelector(
         '.desktop-scroll-container'
       ) as HTMLDivElement
-      const isMobile = window.innerWidth < 768
+      const isMobile = window.innerWidth < 1024
       const activeContainer = isMobile ? mobileContainer : desktopContainer
       if (activeContainer) {
         ;(scrollContainerRef as React.MutableRefObject<HTMLDivElement | null>).current =
@@ -188,9 +188,9 @@ export default function MenuPageContent({
     <div className="min-h-screen min-h-[100dvh] bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
       {/* Mobile: fixed so nav stays visible (iOS sticky unreliable); desktop: sticky */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:shadow-sm bg-hero-footer-gradient min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)]"
+        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden max-md:bg-hero-footer-gradient md:overflow-visible md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:shadow-sm min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)]"
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero-footer-gradient md:bg-transparent">
+        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] max-md:bg-hero-footer-gradient md:bg-transparent">
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
@@ -393,7 +393,7 @@ export default function MenuPageContent({
                     <ProductImageGallery
                       images={featuredProduct.images}
                       alt={featuredProduct.name}
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 240px, 400px"
                       mobileHero
                     />
                   ) : (
@@ -401,7 +401,7 @@ export default function MenuPageContent({
                       key={featuredProduct.name}
                       src={featuredProduct.image}
                       alt={featuredProduct.name}
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 240px, 400px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 240px, 400px"
                       mobileHero
                     />
                   )

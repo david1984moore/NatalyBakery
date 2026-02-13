@@ -63,13 +63,13 @@ export default function RootLayout({
           rel="preload"
           as="image"
           href="/optimized/new_hero_1-sm.avif"
-          media="(max-width: 768px)"
+          media="(max-width: 1024px)"
         />
         <link
           rel="preload"
           as="image"
           href="/optimized/IMG_7616-xl.avif"
-          media="(min-width: 769px)"
+          media="(min-width: 1025px)"
         />
       </head>
       <body>

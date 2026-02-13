@@ -16,7 +16,7 @@ interface ProductImageProps {
 export default function ProductImage({
   src,
   alt,
-  sizes = '(max-width: 640px) 180px, (max-width: 768px) 240px, 400px',
+  sizes = '(max-width: 640px) 180px, (max-width: 1024px) 240px, 400px',
   className = '',
   priority = true,
   mobileHero = false,

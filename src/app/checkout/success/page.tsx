@@ -63,10 +63,10 @@ function SuccessPageContent() {
       <Cart />
       {/* Navigation Bar - matches menu page structure */}
       <div
-        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero-footer-gradient shadow-sm"
+        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm"
         style={{ minHeight: '40px' }}
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] bg-hero-footer-gradient border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
+        <div className="relative z-10 flex flex-col min-h-[40px] max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
           {/* Mobile header */}
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link href="/" className="flex-shrink-0 flex items-center h-full" aria-label="Home">
