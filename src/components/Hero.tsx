@@ -36,13 +36,13 @@ export default function Hero() {
           <Link
             href="/menu"
             prefetch={true}
-            className="hero-footer-btn-taper min-h-[36px] min-w-[7.5rem] py-1.5 px-3 sm:px-6 flex items-center justify-center text-white text-sm font-medium leading-tight border-[5px] border-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-2xl"
+            className="hero-footer-btn-taper min-h-[42px] min-w-[7.5rem] py-2 px-3 sm:px-6 flex items-center justify-center text-white text-sm font-medium leading-tight border-[5px] border-white/85 bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-2xl"
           >
             {t('nav.order')}
           </Link>
         </div>
         <footer
-          className="absolute bottom-0 left-0 right-0 z-10 min-h-[52px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t-[4px] border-t-white/85 bg-gradient-to-r from-[#b89878] to-hero-600 hero-footer-bar-mobile"
+          className="absolute bottom-0 left-0 right-0 z-10 min-h-[52px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-r from-[#d8b888] to-hero-600 hero-footer-bar-mobile shadow-[0_-10px_36px_rgba(0,0,0,0.38)]"
           aria-label="Navigation"
         >
           <nav className="flex items-stretch justify-center gap-4 sm:gap-6 w-full max-w-sm mx-auto px-1">

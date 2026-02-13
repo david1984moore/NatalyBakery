@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
 
@@ -25,10 +26,11 @@ export default function HeroNav() {
             key={link.labelKey}
             href={link.href}
             prefetch={true}
-            className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full md:rounded-xl border border-transparent bg-transparent hover:border-white/50 hover:bg-tan"
+            aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
+            className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full md:rounded-xl border border-transparent bg-transparent hover:border-white/50 hover:bg-tan flex items-center justify-center"
             style={{ fontWeight: 500 }}
           >
-            {t(link.labelKey)}
+            {link.href === '/contact' ? <Mail className="w-6 h-6 md:w-7 md:h-7" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 md:w-7 md:h-7" strokeWidth={2} /> : t(link.labelKey)}
           </Link>
         ))}
       </div>
@@ -62,9 +64,10 @@ export default function HeroNav() {
               href={link.href}
               prefetch={true}
               onClick={() => setIsOpen(false)}
-              className="font-ui px-6 min-h-[44px] py-3 flex items-center text-warmgray-700 hover:bg-cream-100 font-light text-sm lowercase"
+              aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
+              className="font-ui px-6 min-h-[44px] py-3 flex items-center justify-center text-warmgray-700 hover:bg-cream-100 font-light text-sm lowercase"
             >
-              {t(link.labelKey)}
+              {link.href === '/contact' ? <Mail className="w-6 h-6" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6" strokeWidth={2} /> : t(link.labelKey)}
             </Link>
           ))}
           <LanguageToggle variant="mobile" />

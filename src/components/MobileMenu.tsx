@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useMobileMenu } from '@/contexts/MobileMenuContext'
 import LanguageToggle from './LanguageToggle'
@@ -47,9 +48,10 @@ export default function MobileMenu() {
               href={link.href}
               prefetch={true}
               onClick={() => setIsOpen(false)}
+              aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
               className="font-ui w-full flex items-center justify-center min-h-[44px] px-3 py-2 rounded-md border border-white/40 bg-white/20 backdrop-blur-sm text-white font-medium text-sm tracking-wide hover:bg-white/30 transition-colors duration-200"
             >
-              {t(link.labelKey)}
+              {link.href === '/contact' ? <Mail className="w-6 h-6" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6" strokeWidth={2} /> : t(link.labelKey)}
             </Link>
           ))}
         </nav>

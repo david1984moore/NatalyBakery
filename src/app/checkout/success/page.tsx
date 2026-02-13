@@ -7,6 +7,7 @@ import { useCart } from '@/contexts/CartContext'
 import LanguageToggle from '@/components/LanguageToggle'
 import Cart from '@/components/Cart'
 import Link from 'next/link'
+import { Mail } from 'lucide-react'
 
 interface OrderData {
   orderNumber: string
@@ -73,17 +74,18 @@ function SuccessPageContent() {
                 Caramel & Jo
               </span>
             </Link>
-            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
               <Link
                 href="/contact"
-                className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center"
+                aria-label={t('nav.contact')}
+                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
-                {t('nav.contact')}
+                <Mail className="w-6 h-6 text-white" strokeWidth={2.5} />
               </Link>
               <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
                 aria-label="Shopping cart"
               >
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,12 +108,13 @@ function SuccessPageContent() {
               </span>
             </Link>
             <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex-shrink-0 flex items-center gap-6 lg:gap-8">
+            <div className="flex-shrink-0 flex items-center gap-7 lg:gap-10">
               <Link
                 href="/contact"
-                className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
+                aria-label={t('nav.contact')}
+                className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
               >
-                {t('nav.contact')}
+                <Mail className="w-5 h-5" strokeWidth={2} />
               </Link>
               <LanguageToggle variant="menu" />
               <button

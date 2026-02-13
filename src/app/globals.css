@@ -5,10 +5,10 @@
 :root {
   --background: #faf7f2;
   --foreground: #2d2822;
-  /* Hero/footer brown; mobile uses gradient (cream top, footer-matching bottom) in media query */
-  --overscroll-top: #a08060;
+  /* Hero/footer - light brown */
+  --overscroll-top: #cca878;
   /* Single source of truth so hero footer and viewport bottom are identical on mobile */
-  --hero-footer-gradient: linear-gradient(to right, #b89878, #8b6b4d);
+  --hero-footer-gradient: linear-gradient(to right, #d8b888, #c09868);
   --font-inter: 'Inter', system-ui, sans-serif;
   /* --font-roboto is set by next/font in layout.tsx */
   --font-serif: var(--font-roboto);
@@ -146,6 +146,19 @@ main {
     background-repeat: no-repeat;
   }
 
+  /* Header buttons: less light shading than hero footer */
+  .hero-btn-header.hero-footer-btn-taper::before {
+    background-image:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0.005) 35%, transparent 60%),
+      radial-gradient(ellipse 90% 80% at 0% 0%, rgba(255, 255, 255, 0.01) 0%, transparent 40%);
+  }
+  .hero-btn-header.hero-footer-btn-taper::after {
+    background-image:
+      radial-gradient(ellipse 26px 26px at 0 0, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 40%, transparent 85%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 0%, transparent 65%),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0%, transparent 65%);
+  }
+
   /* Keep delivery date input within its container (no overflow/clipping on mobile).
    * Native date inputs can have a large intrinsic width; constrain to 100% of parent
    * and allow shrinking so the field is never cut off. */
@@ -215,6 +228,27 @@ main {
   .animate-fade-in {
     animation: fade-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
+
+  /* Page/content fade-in using design system timing (Apple-quality) */
+  .fade-in {
+    animation: fade-in 250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+/* ============================================
+   MICRO-INTERACTIONS - Apple-quality link/input feedback
+   ============================================ */
+a:not([class*="transition"]) {
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+a:not([class*="transition"]):hover {
+  opacity: 0.9;
+}
+
+input:not([class*="transition"]),
+textarea:not([class*="transition"]),
+select:not([class*="transition"]) {
+  transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Hero brand name text shadow - outside @layer so it is not overridden by Tailwind utilities */
@@ -254,6 +288,8 @@ html {
   min-height: 100%;
   /* CRITICAL: Root background prevents any white gaps in landscape (viewport-fit=cover + this = edge-to-edge). */
   background-color: var(--background);
+  /* Reserve scrollbar space at all times so overflow:hidden (cart modal) doesn't shift layout or create a strip */
+  scrollbar-gutter: stable;
 }
 
 
@@ -438,7 +474,7 @@ html {
 }
 
 /* Scroll lock when cart is open - prevents background scroll (critical for iOS)
- * position: fixed + top/left/right anchors body to viewport; prevents any scroll propagation. */
+ * position: fixed + top anchors body; prevents scroll propagation. */
 html.cart-open {
   overflow: hidden;
   overscroll-behavior: none;

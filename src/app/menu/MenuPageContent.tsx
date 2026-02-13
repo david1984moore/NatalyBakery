@@ -18,6 +18,7 @@ import {
   productNameToTranslationKey,
   getVariantTranslationKey,
 } from '@/lib/productTranslations'
+import { Mail } from 'lucide-react'
 import Cart from '@/components/Cart'
 import LanguageToggle from '@/components/LanguageToggle'
 import ProductImageGallery from '@/components/ProductImageGallery'
@@ -43,6 +44,7 @@ export default function MenuPageContent({
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
   const [showRightFade, setShowRightFade] = useState(true)
+  const [addToCartSuccess, setAddToCartSuccess] = useState(false)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   const checkScrollPosition = () => {
@@ -132,6 +134,7 @@ export default function MenuPageContent({
     }
   }, [searchParams])
 
+  const addToCartSuccessTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const handleAddToCart = () => {
     if (featuredProduct && selectedVariant) {
       if (
@@ -142,7 +145,13 @@ export default function MenuPageContent({
         setQuantity(featuredProduct.minQuantity)
         return
       }
+      if (addToCartSuccessTimeoutRef.current) clearTimeout(addToCartSuccessTimeoutRef.current)
       addItem(featuredProduct.name, selectedVariant.price, quantity, selectedVariant.name)
+      setAddToCartSuccess(true)
+      addToCartSuccessTimeoutRef.current = setTimeout(() => {
+        setAddToCartSuccess(false)
+        addToCartSuccessTimeoutRef.current = null
+      }, 2000)
     }
   }
 
@@ -179,9 +188,9 @@ export default function MenuPageContent({
     <div className="min-h-screen min-h-[100dvh] bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
       {/* Mobile: fixed so nav stays visible (iOS sticky unreliable); desktop: sticky */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-none min-h-[40px] md:min-h-[80px] border-b-[3px] border-b-hero-600 md:border-b-warmgray-200"
+        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:shadow-sm bg-hero min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)]"
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero border-b-0 md:bg-transparent md:border-b md:border-warmgray-200">
+        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero md:bg-transparent">
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
@@ -193,20 +202,21 @@ export default function MenuPageContent({
                 Caramel & Jo
               </span>
             </Link>
-            <div className="flex h-full min-h-[40px] items-center gap-2 sm:gap-3 flex-shrink-0">
+            <div className="flex h-full min-h-[40px] items-center gap-3 sm:gap-4 flex-shrink-0">
+              <LanguageToggle variant="menuHeader" />
               <Link
                 href="/contact"
                 prefetch={true}
-                className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white/85 bg-stone-800/45 backdrop-blur-sm text-white rounded-xl hover:bg-stone-700/55 hover:border-white transition-colors duration-200 font-medium flex items-center"
+                aria-label={t('nav.contact')}
+                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
-                {t('nav.contact')}
+                <Mail className="w-6 h-6 text-white" strokeWidth={2.5} />
               </Link>
-              <LanguageToggle variant="menuHeader" />
               <button
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
                 }
-                className="min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-stone-800/45 backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:bg-stone-700/55 md:hover:border-white transition-colors duration-200 relative border-[3px] border-white/85"
+                className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center shadow-md md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -281,15 +291,16 @@ export default function MenuPageContent({
               </div>
             </div>
             <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex h-full flex-shrink-0 items-center gap-6 lg:gap-8">
+            <div className="flex h-full flex-shrink-0 items-center gap-7 lg:gap-10">
+              <LanguageToggle variant="menu" />
               <Link
                 href="/contact"
                 prefetch={true}
-                className="font-ui flex items-center px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
+                aria-label={t('nav.contact')}
+                className="font-ui flex items-center justify-center px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
               >
-                {t('nav.contact')}
+                <Mail className="w-5 h-5" strokeWidth={2} />
               </Link>
-              <LanguageToggle variant="menu" />
               <button
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
@@ -573,11 +584,24 @@ export default function MenuPageContent({
                   )}
                   <button
                     onClick={handleAddToCart}
-                    disabled={!selectedVariant}
-                    className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+                    disabled={!selectedVariant || addToCartSuccess}
+                    className={`w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 rounded-md font-medium text-base sm:text-sm disabled:cursor-not-allowed transition-colors duration-standard ease-apple ${
+                      addToCartSuccess
+                        ? 'border-sage-500 bg-sage-500 text-white'
+                        : 'border-hero-600 bg-headerButtonFill text-white md:hover:bg-hero-600 disabled:opacity-50'
+                    }`}
                     style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >
-                    {t('menu.addToCart')}
+                    {addToCartSuccess ? (
+                      <span className="inline-flex items-center justify-center gap-2">
+                        <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        {t('menu.addedToCart')}
+                      </span>
+                    ) : (
+                      t('menu.addToCart')
+                    )}
                   </button>
                   <p
                     className="text-xs text-warmgray-500 mt-2 leading-relaxed"

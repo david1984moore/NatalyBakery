@@ -28,6 +28,7 @@ export type TranslationKey =
   | 'menu.quantity'
   | 'menu.minimum'
   | 'menu.addToCart'
+  | 'menu.addedToCart'
   | 'menu.minimumOrder'
   | 'menu.deliveryNote'
   
@@ -167,6 +168,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'menu.quantity': 'Quantity:',
     'menu.minimum': '(Minimum {min})',
     'menu.addToCart': 'Add to Cart',
+    'menu.addedToCart': 'Added!',
     'menu.minimumOrder': 'Minimum order of {min} shells required for Conchas',
     'menu.deliveryNote': 'All orders will be delivered to you. We deliver orders between 6:30pm and 9:30pm daily. Local delivery (Christiana, Newark, southern Wilmington, New Castle, Bear) is free. Any delivery outside of New Castle county, Delaware will be an additional $15.',
     
@@ -305,6 +307,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'menu.quantity': 'Cantidad:',
     'menu.minimum': '(Mínimo {min})',
     'menu.addToCart': 'Agregar al Carrito',
+    'menu.addedToCart': '¡Agregado!',
     'menu.minimumOrder': 'Pedido mínimo de {min} piezas requerido para Conchas',
     'menu.deliveryNote': 'Todos los pedidos serán entregados a domicilio. Entregamos entre 6:30pm y 9:30pm diariamente. La entrega local (Christiana, Newark, sur de Wilmington, New Castle, Bear) es gratis. Cualquier entrega fuera del condado de New Castle, Delaware tendrá un cargo adicional de $15.',
     

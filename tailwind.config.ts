@@ -9,9 +9,22 @@ const config: Config = {
   theme: {
     extend: {
       // Partition: mobile = base + sm (0–767px), desktop = 768px+
-      // Use "desktop:" for desktop-only styles so edits don't affect mobile.
+      // Use "desktop:" for desktop-only styling so edits don't affect mobile.
       screens: {
         desktop: '768px', // same as md; use for explicit desktop-only styling
+      },
+      // Apple-quality animation design system
+      transitionDuration: {
+        micro: '150ms', // micro-interactions (hover, small changes)
+        standard: '250ms', // component transitions (modals, cards)
+        page: '300ms', // page transitions (route changes)
+        complex: '500ms', // complex orchestrations
+      },
+      transitionTimingFunction: {
+        apple: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'apple-in': 'cubic-bezier(0.4, 0, 1, 1)',
+        'apple-out': 'cubic-bezier(0, 0, 0.2, 1)',
+        'apple-inout': 'cubic-bezier(0.4, 0, 0.6, 1)',
       },
       animation: {
         shimmer: 'shimmer 2s infinite',
@@ -26,13 +39,13 @@ const config: Config = {
         // Warm neutrals and earth tones - pastel brownish palette
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        // Hero and menu page fill - brownish (header background)
+        // Hero and menu page fill - light brown
         hero: {
-          DEFAULT: '#a08060',
-          600: '#8b6b4d', /* darker for border/hover */
+          DEFAULT: '#cca878',
+          600: '#c09868', /* darker for border/hover */
         },
         // Solid equivalent of header buttons (stone-800/45 on hero) - use for selected menu tab so it matches on any background
-        headerButtonFill: '#664f3f',
+        headerButtonFill: '#927058',
         // Warm neutrals - soft caramel undertones
         beige: {
           50: '#faf7f1',

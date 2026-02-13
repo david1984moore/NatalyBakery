@@ -31,12 +31,14 @@ export default function Cart() {
     return () => setMounted(false)
   }, [])
 
-  /* Scroll lock when modal cart is open: prevent background scroll (critical for iOS) */
+  /* Scroll lock when modal cart is open: prevent background scroll (critical for iOS).
+   * Layout shift prevented by scrollbar-gutter: stable on html (globals.css). */
   useEffect(() => {
     if (!isModalCartPage || !mounted) return
     if (isOpen) {
       scrollPositionRef.current = typeof window !== 'undefined' ? window.scrollY : 0
       const y = scrollPositionRef.current
+
       document.documentElement.classList.add('cart-open')
       document.body.classList.add('cart-open')
       document.body.style.top = `-${y}px`
