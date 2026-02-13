@@ -19,10 +19,10 @@ export default function ContactPage() {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* Header - mobile: hero bar; desktop: original white bar (like StickyNav) */}
+    <main className="min-h-screen min-h-[100dvh] bg-background">
+      {/* Header - mobile: fixed so it stays visible (iOS sticky is unreliable); desktop: sticky */}
       <div
-        className="sticky top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm min-h-[40px] md:min-h-[80px]"
+        className="fixed top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm min-h-[40px] md:min-h-[80px]"
       >
         <div className="bg-hero border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent md:border-b md:border-warmgray-200">
           {/* Mobile Layout (< 768px) - unchanged */}
@@ -121,10 +121,13 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      
+
+      {/* Spacer so content is not under fixed header on mobile (desktop uses sticky so no spacer needed) */}
+      <div className="h-[52px] md:h-0 md:min-h-0 shrink-0" aria-hidden />
+
       <Cart />
-      
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24 lg:pb-32">
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 md:pt-32 pb-16 sm:pb-20 md:pb-24 lg:pb-32">
         <div className="space-y-8">
           {/* Header */}
           <div className="text-center space-y-4">

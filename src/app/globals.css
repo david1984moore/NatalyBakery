@@ -34,6 +34,8 @@ body {
   overflow-x: hidden;
   width: 100%;
   min-width: 0;
+  /* Desktop: allow smooth scroll; mobile gets min-height in media query to prevent white above header. */
+  min-height: 100%;
 }
 
 /* Main content uses page background so when body is set to overscroll brown on mobile,
@@ -238,15 +240,30 @@ main {
 
 /* Home page: uses Roboto (--font-ui) for all text except brand name */
 
-/* Smooth scrolling; prevent horizontal scroll on mobile so content stays centered in viewport */
+/* Smooth scrolling on desktop only; prevent horizontal scroll so content stays centered. */
+/* CRITICAL: On mobile we use scroll-behavior: auto so native iOS momentum isn't fought by smooth scroll (avoids glitchy bounce). */
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   width: 100%;
+  /* Ensure html fills viewport so overscroll/rubber-band never reveals white. */
+  min-height: 100%;
 }
 
-/* Mobile: no brown at top (cream there); bottom uses same gradient as hero footer so the two are imperceptible. */
+/* Mobile: native scroll behavior + full-height chain so no white above header during overscroll. */
 @media (max-width: 767px) {
+  html {
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    /* Single scroll container; prevents white gap above fixed/sticky header during bounce. */
+    height: 100%;
+  }
+  body {
+    min-height: 100%;
+    min-height: 100dvh;
+    -webkit-overflow-scrolling: touch;
+  }
   html,
   body {
     background-color: var(--background);
@@ -256,9 +273,8 @@ html {
     background-size: 100% 100%, 100% 22%;
     background-position: 0 0, 0 100%;
     background-repeat: no-repeat;
-  }
-  html {
-    overscroll-behavior-y: contain;
+    /* Ensure background covers entire scrollable area including overscroll. */
+    background-attachment: scroll;
   }
   /* Hero footer bar: same gradient as viewport bottom so footer and area below are seamless */
   .hero-footer-bar-mobile {

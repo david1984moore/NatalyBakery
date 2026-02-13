@@ -176,12 +176,13 @@ export default function MenuPageContent({
   }
 
   return (
-    <div className="min-h-screen bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
+    <div className="min-h-screen min-h-[100dvh] bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
+      {/* Mobile: fixed so nav stays visible (iOS sticky unreliable); desktop: sticky */}
       <div
-        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-none min-h-[40px] md:min-h-[80px]"
+        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-none min-h-[40px] md:min-h-[80px] border-b-[3px] border-b-hero-600 md:border-b-warmgray-200"
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
-          <div className="md:hidden flex flex-1 items-center justify-between gap-2 px-3 min-h-[40px] -translate-y-1.5 min-w-0">
+        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero border-b-0 md:bg-transparent md:border-b md:border-warmgray-200">
+          <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
               prefetch={true}
@@ -192,7 +193,7 @@ export default function MenuPageContent({
                 Caramel & Jo
               </span>
             </Link>
-            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <div className="flex h-full min-h-[40px] items-center gap-2 sm:gap-3 flex-shrink-0">
               <Link
                 href="/contact"
                 prefetch={true}
@@ -230,11 +231,8 @@ export default function MenuPageContent({
             </div>
           </div>
 
-          {/* Desktop: brand | equal space | menu buttons (centered) | equal space | contact/cart */}
-          <div
-            className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-20 -translate-y-0"
-            style={{ minHeight: '40px' }}
-          >
+          {/* Desktop: same structure as contact page - fixed row height so content sits at top of brown area */}
+          <div className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-20 -translate-y-0">
             <Link
               href="/"
               prefetch={true}
@@ -283,11 +281,11 @@ export default function MenuPageContent({
               </div>
             </div>
             <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex-shrink-0 flex items-center gap-6 lg:gap-8">
+            <div className="flex h-full flex-shrink-0 items-center gap-6 lg:gap-8">
               <Link
                 href="/contact"
                 prefetch={true}
-                className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
+                className="font-ui flex items-center px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
               >
                 {t('nav.contact')}
               </Link>
@@ -322,7 +320,8 @@ export default function MenuPageContent({
           </div>
         </div>
 
-        <div className="relative z-0 md:hidden bg-background">
+        {/* Mobile: category row is part of the sticky header so it stays visible when scrolling */}
+        <div className="md:hidden flex-shrink-0 bg-background border-t border-warmgray-200">
           <div
             className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container"
             style={{ WebkitOverflowScrolling: 'touch' }}
@@ -352,6 +351,9 @@ export default function MenuPageContent({
           </div>
         </div>
       </div>
+
+      {/* Spacer: matches full sticky header height (brand row + category row + safe area) so content starts below */}
+      <div className="h-[calc(88px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0 bg-background" aria-hidden />
 
       <section className="menu-content-top flex items-start relative z-0 safe-bottom">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-start md:items-center pt-4 md:pt-6 pb-24 md:pb-4">
