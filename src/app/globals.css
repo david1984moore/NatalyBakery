@@ -36,6 +36,10 @@ body {
   min-width: 0;
   /* Desktop: allow smooth scroll; mobile gets min-height in media query to prevent white above header. */
   min-height: 100%;
+  /* CRITICAL: Safe-area padding for iOS notch/rounded corners in landscape.
+   * env(safe-area-inset-*) is 0 on devices without notches, so no desktop impact. */
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
 }
 
 /* Main content uses page background so when body is set to overscroll brown on mobile,
@@ -248,16 +252,26 @@ html {
   width: 100%;
   /* Ensure html fills viewport so overscroll/rubber-band never reveals white. */
   min-height: 100%;
+  /* CRITICAL: Root background prevents any white gaps in landscape (viewport-fit=cover + this = edge-to-edge). */
+  background-color: var(--background);
 }
 
-/* Mobile: native scroll behavior + full-height chain so no white above header during overscroll. */
+
+/* Mobile: native scroll behavior + full-height chain so no white above header during overscroll.
+ * ROOT CAUSE FIX: (1) overscroll-behavior-y: none disables iOS rubber band entirely, eliminating
+ * any white/incorrect color reveal in the overscroll zone (Safari's overscroll is outside document).
+ * (2) html uses min-height (not height: 100%) so the root can extend properly; height: 100%
+ * constrained the root and could cause layout/background propagation issues during scroll.
+ * (3) theme-color meta (in layout.tsx) colors Safari's overscroll area when bounce occurs. */
 @media (max-width: 767px) {
   html {
     scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
-    /* Single scroll container; prevents white gap above fixed/sticky header during bounce. */
-    height: 100%;
+    /* CRITICAL: none = no rubber band = no overscroll zone to reveal. contain allowed bounce. */
+    overscroll-behavior-y: none;
+    /* min-height lets root extend with content; height: 100% constrained and caused scroll glitches */
+    min-height: 100%;
+    min-height: 100dvh;
   }
   body {
     min-height: 100%;
@@ -385,13 +399,69 @@ html {
   animation: cartModalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Cart backdrop: on mobile extend blur to top of viewport (including behind header). On desktop keep offset. */
+/* ============================================
+   SHOPPING CART OVERLAY - Professional modal pattern
+   Full viewport, fixed, strong blur, prevents background interaction
+   ============================================ */
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 998;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: auto;
+  overflow: hidden;
+  /* Block touch scroll from propagating to locked body (iOS) */
+  touch-action: none;
+}
+@supports not (backdrop-filter: blur(12px)) {
+  .cart-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+}
+@media (orientation: landscape) {
+  .cart-overlay {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    position: fixed;
+  }
+}
+
+/* Scroll lock when cart is open - prevents background scroll (critical for iOS)
+ * position: fixed + top/left/right anchors body to viewport; prevents any scroll propagation. */
+html.cart-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body.cart-open {
+  overflow: hidden;
+  position: fixed;
+  /* top set by Cart.tsx inline style to -scrollY for position preservation */
+  left: 0;
+  right: 0;
+  width: 100%;
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto; /* Disable momentum when locked */
+}
+
+/* Cart backdrop (legacy class): full viewport when using cart-overlay */
 .cart-backdrop {
   top: 0;
 }
 @media (min-width: 768px) {
   .cart-backdrop {
-    top: unset;
+    top: 0;
   }
 }
 
@@ -501,6 +571,42 @@ html {
   
   .safe-inset-right {
     right: env(safe-area-inset-right);
+  }
+}
+
+/* ============================================
+   CRITICAL: Landscape orientation edge-to-edge rendering
+   Works with viewport-fit=cover to eliminate letterbox borders on iOS.
+   ============================================ */
+@media (orientation: landscape) {
+  html,
+  body {
+    /* Ensure no max-width constrains layout in landscape */
+    max-width: none;
+    /* Explicit full viewport width */
+    width: 100%;
+  }
+
+  /* Header/navigation full-width in landscape */
+  header,
+  nav {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Main content full-width */
+  main {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* Mobile landscape (short viewport) - ensure backgrounds extend edge-to-edge */
+@media (orientation: landscape) and (max-height: 500px) {
+  html,
+  body {
+    /* Reinforce background coverage for compact landscape on phones */
+    min-width: 100%;
   }
 }
 

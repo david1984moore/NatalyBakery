@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
@@ -13,25 +14,56 @@ export default function Cart() {
   const { items, removeItem, updateQuantity, getTotalAmount, getDepositAmount, getRemainingAmount, openCartOnNextPage, setOpenCartOnNextPage } = useCart()
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const scrollPositionRef = useRef(0)
   const pathname = usePathname()
   const isMenuPage = pathname === '/menu'
   const isContactPage = pathname === '/contact'
   const isCheckoutPage = pathname === '/checkout' || pathname?.startsWith('/checkout/')
+  const isModalCartPage = isMenuPage || isContactPage || isCheckoutPage
 
   const totalAmount = getTotalAmount()
   const depositAmount = getDepositAmount()
   const remainingAmount = getRemainingAmount()
 
-  // Diagnostic logging
-  if (typeof window !== 'undefined' && isMenuPage && isOpen) {
-    console.log('=== CART RENDER ===', {
-      itemsLength: items.length,
-      hasItems: items.length > 0,
-      isOpen,
-      items: items,
-      timestamp: Date.now()
-    })
-  }
+  useEffect(() => {
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
+
+  /* Scroll lock when modal cart is open: prevent background scroll (critical for iOS) */
+  useEffect(() => {
+    if (!isModalCartPage || !mounted) return
+    if (isOpen) {
+      scrollPositionRef.current = typeof window !== 'undefined' ? window.scrollY : 0
+      const y = scrollPositionRef.current
+      document.documentElement.classList.add('cart-open')
+      document.body.classList.add('cart-open')
+      document.body.style.top = `-${y}px`
+    } else {
+      document.documentElement.classList.remove('cart-open')
+      document.body.classList.remove('cart-open')
+      document.body.style.top = ''
+      if (typeof window !== 'undefined') {
+        window.scrollTo(0, scrollPositionRef.current)
+      }
+    }
+    return () => {
+      document.documentElement.classList.remove('cart-open')
+      document.body.classList.remove('cart-open')
+      document.body.style.top = ''
+    }
+  }, [isModalCartPage, isOpen, mounted])
+
+  /* Escape key closes modal cart */
+  useEffect(() => {
+    if (!isOpen || !isModalCartPage) return
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false)
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [isOpen, isModalCartPage])
 
   // Listen for cart toggle from menu page, contact page, or checkout pages navigation bar
   useEffect(() => {
@@ -58,31 +90,28 @@ export default function Cart() {
   }, [isMenuPage, openCartOnNextPage, setOpenCartOnNextPage])
 
   // Don't render floating button on menu page, contact page, or checkout pages (it's in the nav bar)
-  if (isMenuPage || isContactPage || isCheckoutPage) {
-    // Render only the dropdown positioned from top-right
-    if (!isOpen) return null
-    
-    return (
+  if (isModalCartPage) {
+    if (!isOpen || !mounted) return null
+
+    const modalContent = (
       <>
-        {/* Backdrop overlay with blur effect - full height on mobile (covers header), offset on desktop */}
-        <div 
-          className={`fixed left-0 right-0 bottom-0 bg-black/5 z-[98] transition-opacity duration-300 cart-backdrop ${isMenuPage ? 'cart-modal-top-menu' : 'cart-modal-top-default'}`}
+        {/* Full viewport overlay: fixed, strong blur, blocks background interaction */}
+        <div
+          className="cart-overlay"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
-          style={{ 
-            backdropFilter: 'blur(3px)',
-            WebkitBackdropFilter: 'blur(3px)'
-          }}
         />
-        
-        {/* Cart Modal - centered when empty, top-aligned when has items */}
-        <div 
-          className={`fixed left-4 right-4 sm:w-80 md:w-96 z-[99] safe-x ${
-            items.length === 0 
-              ? 'cart-modal-centered cart-modal-enter-centered' 
+        {/* Cart panel: above overlay, positioned below header */}
+        <div
+          className={`fixed left-4 right-4 sm:w-80 md:w-96 z-[999] safe-x ${
+            items.length === 0
+              ? 'cart-modal-centered cart-modal-enter-centered'
               : `sm:left-1/2 sm:right-auto sm:-translate-x-1/2 cart-modal-enter ${isMenuPage ? 'cart-modal-top-menu' : 'cart-modal-top-default'}`
           }`}
           onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cart-title"
         >
           <div className="relative w-full bg-white rounded-lg shadow-xl border-4 border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
           {/* Cart Items */}
@@ -97,14 +126,14 @@ export default function Cart() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <h2 className="text-lg font-serif text-warmgray-800 text-center mb-4">{t('cart.shoppingCart')}</h2>
+              <h2 id="cart-title" className="text-lg font-serif text-warmgray-800 text-center mb-4">{t('cart.shoppingCart')}</h2>
               <p className="text-warmgray-600 text-center">{t('cart.empty')}</p>
             </div>
           ) : (
             <>
           {/* Header with title and close button */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-warmgray-100 flex-shrink-0">
-            <h2 className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
+            <h2 id="cart-title" className="text-lg font-serif text-warmgray-800">{t('cart.shoppingCart')}</h2>
             <button
               onClick={() => setIsOpen(false)}
               className="min-w-[44px] min-h-[44px] flex items-center justify-center text-warmgray-400 hover:text-warmgray-600 transition-colors rounded-full hover:bg-warmgray-100"
@@ -229,9 +258,10 @@ export default function Cart() {
             </>
           )}
         </div>
-      </div>
+        </div>
       </>
     )
+    return createPortal(modalContent, document.body)
   }
 
   // Render floating button for other pages

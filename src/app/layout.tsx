@@ -29,6 +29,10 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
+  // CRITICAL: viewport-fit=cover enables edge-to-edge rendering on iOS.
+  // Without this, iOS adds default margins in landscape orientation, causing
+  // visible letterbox borders on left/right. Use env(safe-area-inset-*) for notch handling.
+  viewportFit: 'cover',
 }
 
 export const metadata: Metadata = {
@@ -39,8 +43,7 @@ export const metadata: Metadata = {
     title: 'Where caramel dreams become cake!',
     description: 'caramelandjo.onrender.com',
   },
-  /** Cream so mobile status bar has no brown bar at top */
-  themeColor: '#faf7f2',
+  /** theme-color set via manual meta tags in head (with media for light/dark overscroll) */
 }
 
 export default function RootLayout({
@@ -51,6 +54,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${roboto.variable} ${playfairDisplay.variable}`}>
       <head>
+        {/* Status bar + iOS overscroll: theme-color prevents white gaps (fallback + light/dark) */}
+        <meta name="theme-color" content="#faf7f2" />
+        <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#f8f5f0" media="(prefers-color-scheme: dark)" />
         {/* LCP: preload hero image so the browser starts fetching before parsing body (AVIF = first source in picture) */}
         <link
           rel="preload"
