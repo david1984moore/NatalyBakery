@@ -188,9 +188,9 @@ export default function MenuPageContent({
     <div className="min-h-screen min-h-[100dvh] bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
       {/* Mobile: fixed so nav stays visible (iOS sticky unreliable); desktop: sticky */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:shadow-sm bg-hero min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)]"
+        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-full overflow-x-hidden md:overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:shadow-sm bg-hero-footer-gradient min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)]"
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero md:bg-transparent">
+        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] bg-hero-footer-gradient md:bg-transparent">
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link
               href="/"
@@ -278,10 +278,10 @@ export default function MenuPageContent({
                     <button
                       key={product.name}
                       onClick={() => handleProductChange(product.name)}
-                      className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border ${
+                      className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
                         isSelected
-                          ? 'border-2 border-warmgray-800 bg-headerButtonFill text-white hover:bg-hero-600'
-                          : 'border-warmgray-300 bg-transparent text-warmgray-700 hover:bg-headerButtonFill hover:border-headerButtonFill hover:text-white'
+                          ? 'bg-gradient-to-r from-[#7a6150] to-[#664f3f] text-white md:hover:opacity-90'
+                          : 'bg-transparent text-warmgray-700 hover:bg-[#7a6150] hover:text-white'
                       }`}
                     >
                       {translatedName}
@@ -349,10 +349,10 @@ export default function MenuPageContent({
                 <button
                   key={product.name}
                   onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border ${
+                  className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
                     isSelected
-                      ? 'border-2 border-hero-600 bg-headerButtonFill text-white hover:bg-hero-600'
-                      : 'border-warmgray-400 bg-transparent text-warmgray-900 hover:border-warmgray-500'
+                      ? 'bg-gradient-to-r from-[#7a6150] to-[#664f3f] text-white'
+                      : 'bg-transparent text-warmgray-900'
                   }`}
                 >
                   {translatedName}
@@ -585,10 +585,10 @@ export default function MenuPageContent({
                   <button
                     onClick={handleAddToCart}
                     disabled={!selectedVariant || addToCartSuccess}
-                    className={`w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 rounded-md font-medium text-base sm:text-sm disabled:cursor-not-allowed transition-colors duration-standard ease-apple ${
+                    className={`w-full min-h-[44px] px-4 py-2.5 sm:py-2 border rounded-md font-medium text-base sm:text-sm disabled:cursor-not-allowed transition-colors duration-standard ease-apple ${
                       addToCartSuccess
                         ? 'border-sage-500 bg-sage-500 text-white'
-                        : 'border-hero-600 bg-headerButtonFill text-white md:hover:bg-hero-600 disabled:opacity-50'
+                        : 'border-transparent bg-gradient-to-r from-[#7a6150] to-[#664f3f] text-white md:hover:opacity-90 disabled:opacity-50'
                     }`}
                     style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >

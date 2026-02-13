@@ -37,7 +37,7 @@ export default function StickyNav() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] safe-top bg-hero border-b-[3px] border-b-white/85 shadow-sm min-h-[40px] md:min-h-[80px] md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 transition-opacity duration-300"
+      className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] safe-top bg-hero-footer-gradient border-b-[3px] border-b-white/85 shadow-sm min-h-[40px] md:min-h-[80px] md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 transition-opacity duration-300"
       role="navigation"
     >
       {/* Mobile: hero-style bar (matches menu/contact mobile header) */}

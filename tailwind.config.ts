@@ -39,10 +39,10 @@ const config: Config = {
         // Warm neutrals and earth tones - pastel brownish palette
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        // Hero and menu page fill - light brown
+        // Hero and menu page fill - light brown, two shades darker and more brown
         hero: {
-          DEFAULT: '#cca878',
-          600: '#c09868', /* darker for border/hover */
+          DEFAULT: '#c09868',
+          600: '#b88858', /* darker for border/hover */
         },
         // Solid equivalent of header buttons (stone-800/45 on hero) - use for selected menu tab so it matches on any background
         headerButtonFill: '#927058',

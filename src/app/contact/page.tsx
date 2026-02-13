@@ -23,9 +23,9 @@ export default function ContactPage() {
     <main className="min-h-screen min-h-[100dvh] bg-background">
       {/* Header - mobile: fixed so it stays visible (iOS sticky is unreliable); desktop: sticky */}
       <div
-        className="fixed top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm min-h-[40px] md:min-h-[80px]"
+        className="fixed top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible md:sticky md:top-0 md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero-footer-gradient shadow-sm min-h-[40px] md:min-h-[80px]"
       >
-        <div className="bg-hero border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent md:border-b md:border-warmgray-200">
+        <div className="bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent md:border-b md:border-warmgray-200">
           {/* Mobile Layout (< 768px) - unchanged */}
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link

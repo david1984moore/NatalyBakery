@@ -210,10 +210,10 @@ export default function CheckoutPage() {
         <Cart />
         {/* Navigation Bar - mobile: hero bar; desktop: original white bar */}
         <div
-          className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
+          className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero-footer-gradient shadow-sm"
           style={{ minHeight: '40px' }}
         >
-          <div className="bg-hero border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
+          <div className="bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
             <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
               <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
@@ -281,10 +281,10 @@ export default function CheckoutPage() {
       <Cart />
       {/* Navigation Bar - mobile: hero bar; desktop: original white bar */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero shadow-sm"
+        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible md:bg-white/95 md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm bg-hero-footer-gradient shadow-sm"
         style={{ minHeight: '40px' }}
       >
-        <div className="bg-hero border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
+        <div className="bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
           <div className="md:hidden flex items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
             <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
