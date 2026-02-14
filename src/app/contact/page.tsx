@@ -20,7 +20,7 @@ export default function ContactPage() {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <main className="min-h-screen min-h-[100dvh] bg-background">
+    <main data-scrollable className="min-h-screen min-h-[100dvh] bg-background">
       {/* Header - mobile: fixed so it stays visible (iOS sticky is unreliable); desktop: sticky */}
       <div
         className="fixed top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm min-h-[40px] md:min-h-[80px]"

@@ -3,11 +3,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { usePathname, useRouter } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
 import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/productTranslations'
 import Link from 'next/link'
+
+const cartTransition = { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const }
 
 export default function Cart() {
   const router = useRouter()
@@ -92,30 +95,32 @@ export default function Cart() {
   }, [isMenuPage, openCartOnNextPage, setOpenCartOnNextPage])
 
   // Don't render floating button on menu page, contact page, or checkout pages (it's in the nav bar)
-  if (isModalCartPage) {
-    if (!isOpen || !mounted) return null
-
+  if (isModalCartPage && mounted) {
     const modalContent = (
-      <>
-        {/* Full viewport overlay: fixed, strong blur, blocks background interaction */}
-        <div
-          className="cart-overlay"
-          onClick={() => setIsOpen(false)}
-          aria-hidden="true"
-        />
-        {/* Cart panel: above overlay, positioned below header */}
-        <div
-          className={`fixed left-4 right-4 sm:w-80 md:w-96 z-[999] safe-x ${
-            items.length === 0
-              ? 'cart-modal-centered cart-modal-enter-centered'
-              : `sm:left-1/2 sm:right-auto sm:-translate-x-1/2 cart-modal-enter ${isMenuPage ? 'cart-modal-top-menu' : 'cart-modal-top-default'}`
-          }`}
-          onClick={(e) => e.stopPropagation()}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cart-title"
-        >
-          <div className="relative w-full bg-white rounded-lg shadow-xl border-4 border-warmgray-200 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-sm"
+              onClick={() => setIsOpen(false)}
+              aria-hidden="true"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={cartTransition}
+              className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[999] overflow-y-auto safe-top safe-left shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="cart-title"
+            >
+          <div className="relative w-full h-full flex flex-col overflow-hidden border-4 border-warmgray-200 border-l">
           {/* Cart Items */}
           {items.length === 0 ? (
             <div className="relative px-6 py-8 flex-shrink-0">
@@ -259,9 +264,11 @@ export default function Cart() {
             </div>
             </>
           )}
-        </div>
-        </div>
-      </>
+          </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     )
     return createPortal(modalContent, document.body)
   }

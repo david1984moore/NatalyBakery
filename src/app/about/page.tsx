@@ -9,7 +9,7 @@ export default function AboutPage() {
   const { t } = useLanguage()
   
   return (
-    <main className="min-h-screen bg-cream-50/30">
+    <main data-scrollable className="min-h-screen bg-cream-50/30">
       <Navigation />
       
       {/* Home Button */}

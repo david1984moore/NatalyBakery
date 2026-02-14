@@ -16,7 +16,9 @@ export default function MenuPage() {
         </div>
       }
     >
-      <MenuPageContent products={products} />
+      <main data-scrollable className="min-h-screen min-h-[100dvh] bg-background w-full max-w-full min-w-0 overflow-x-hidden">
+        <MenuPageContent products={products} />
+      </main>
     </Suspense>
   )
 }

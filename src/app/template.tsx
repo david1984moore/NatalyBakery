@@ -20,7 +20,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
       setIsTransitioning(false)
     }, 150)
     return () => clearTimeout(timer)
-  }, [pathname, children])
+    // Only run on pathname change. Including children causes infinite re-runs (new ref every render)
+    // which keeps isTransitioning true and the page stuck at opacity-0.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
 
   return (
     <PageTransition isTransitioning={isTransitioning}>

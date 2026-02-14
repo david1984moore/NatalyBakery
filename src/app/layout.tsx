@@ -4,6 +4,7 @@ import './globals.css'
 import { CartProvider } from '@/contexts/CartContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import MobileBackgroundSync from '@/components/MobileBackgroundSync'
+import MobileScrollLock from '@/components/MobileScrollLock'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -74,8 +75,11 @@ export default function RootLayout({
       </head>
       <body>
         <MobileBackgroundSync />
+        <MobileScrollLock />
         <LanguageProvider>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            {children}
+          </CartProvider>
         </LanguageProvider>
       </body>
     </html>

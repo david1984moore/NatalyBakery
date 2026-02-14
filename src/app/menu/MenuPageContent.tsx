@@ -20,6 +20,7 @@ import {
 } from '@/lib/productTranslations'
 import { Mail } from 'lucide-react'
 import Cart from '@/components/Cart'
+import CartPreviewModal from '@/components/CartPreviewModal'
 import LanguageToggle from '@/components/LanguageToggle'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import ProductImage from '@/components/ProductImage'
@@ -45,6 +46,12 @@ export default function MenuPageContent({
   const [canScrollRight, setCanScrollRight] = useState(false)
   const [showRightFade, setShowRightFade] = useState(true)
   const [addToCartSuccess, setAddToCartSuccess] = useState(false)
+  const [showPreview, setShowPreview] = useState(false)
+  const [previewItem, setPreviewItem] = useState<{
+    name: string
+    price: number
+    image: string
+  } | null>(null)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   const checkScrollPosition = () => {
@@ -148,6 +155,12 @@ export default function MenuPageContent({
       if (addToCartSuccessTimeoutRef.current) clearTimeout(addToCartSuccessTimeoutRef.current)
       addItem(featuredProduct.name, selectedVariant.price, quantity, selectedVariant.name)
       setAddToCartSuccess(true)
+      setPreviewItem({
+        name: featuredProduct.name,
+        price: selectedVariant.price,
+        image: featuredProduct.images?.[0] ?? featuredProduct.image,
+      })
+      setShowPreview(true)
       addToCartSuccessTimeoutRef.current = setTimeout(() => {
         setAddToCartSuccess(false)
         addToCartSuccessTimeoutRef.current = null
@@ -617,6 +630,11 @@ export default function MenuPageContent({
       </section>
 
       <Cart />
+      <CartPreviewModal
+        show={showPreview}
+        item={previewItem}
+        onClose={() => setShowPreview(false)}
+      />
     </div>
   )
 }
