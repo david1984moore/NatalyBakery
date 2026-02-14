@@ -5,6 +5,7 @@ import { CartProvider } from '@/contexts/CartContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import MobileBackgroundSync from '@/components/MobileBackgroundSync'
 import MobileScrollLock from '@/components/MobileScrollLock'
+import PageTransition from '@/components/PageTransition'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -78,7 +79,9 @@ export default function RootLayout({
         <MobileScrollLock />
         <LanguageProvider>
           <CartProvider>
-            {children}
+            <PageTransition>
+              {children}
+            </PageTransition>
           </CartProvider>
         </LanguageProvider>
       </body>
