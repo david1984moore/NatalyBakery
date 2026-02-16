@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
@@ -22,7 +22,7 @@ export default function HeroNav() {
       <div className="hidden md:flex flex-col items-center gap-3 md:gap-3.5">
         <LanguageToggle />
         {navLinks.map((link) => (
-          <Link
+          <SmoothLink
             key={link.labelKey}
             href={link.href}
             prefetch={true}
@@ -31,7 +31,7 @@ export default function HeroNav() {
             style={{ fontWeight: 500 }}
           >
             {t(link.labelKey)}
-          </Link>
+          </SmoothLink>
         ))}
       </div>
 
@@ -59,7 +59,7 @@ export default function HeroNav() {
       >
         <div className="py-4 min-w-[min(200px,calc(100vw-2rem))]">
           {navLinks.map((link) => (
-            <Link
+            <SmoothLink
               key={link.labelKey}
               href={link.href}
               prefetch={true}
@@ -68,7 +68,7 @@ export default function HeroNav() {
               className="font-ui px-6 min-h-[44px] py-3 flex items-center justify-center text-warmgray-700 hover:bg-cream-100 font-light text-sm lowercase"
             >
               {link.href === '/contact' ? <Mail className="w-6 h-6" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6" strokeWidth={2} /> : t(link.labelKey)}
-            </Link>
+            </SmoothLink>
           ))}
           <LanguageToggle variant="mobile" />
         </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from './LanguageToggle'
@@ -24,7 +24,7 @@ export default function Navigation() {
       {/* Desktop Navigation - Vertical links on right side */}
       <div className="hidden md:flex flex-col items-end gap-4 md:gap-5">
         {navLinks.map((link) => (
-          <Link
+          <SmoothLink
             key={link.labelKey}
             href={link.href}
             prefetch={true}
@@ -34,7 +34,7 @@ export default function Navigation() {
             style={{ fontWeight: 400 }}
           >
             {link.href === '/contact' ? <Mail className="w-7 h-7 md:w-8 md:h-8" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-7 h-7 md:w-8 md:h-8" strokeWidth={2} /> : t(link.labelKey)}
-          </Link>
+          </SmoothLink>
         ))}
         <LanguageToggle />
       </div>
@@ -80,7 +80,7 @@ export default function Navigation() {
       >
         <div className="py-4 min-w-[200px]">
           {navLinks.map((link) => (
-            <Link
+            <SmoothLink
               key={link.labelKey}
               href={link.href}
               prefetch={true}
@@ -90,7 +90,7 @@ export default function Navigation() {
               className="font-ui flex items-center justify-center min-h-[44px] px-6 py-3 text-warmgray-700 hover:bg-cream-100 hover:scale-105 transition-[transform,background-color] duration-200 font-light text-sm will-change-transform"
             >
               {link.href === '/contact' ? <Mail className="w-6 h-6" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6" strokeWidth={2} /> : t(link.labelKey)}
-            </Link>
+            </SmoothLink>
           ))}
           <LanguageToggle variant="mobile" />
         </div>

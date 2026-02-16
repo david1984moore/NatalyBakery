@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { useRouter } from 'next/navigation'
 
 interface OrderItem {
@@ -173,12 +173,12 @@ export default function AdminOrdersPage() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-serif text-warmgray-800">Orders</h1>
-          <Link
+          <SmoothLink
             href="/"
             className="text-sm text-warmgray-600 hover:text-warmgray-800"
           >
             ← Back to site
-          </Link>
+          </SmoothLink>
         </div>
 
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -223,12 +223,12 @@ export default function AdminOrdersPage() {
                       {formatCurrency(order.totalAmount)}
                     </td>
                     <td className="px-4 py-3">
-                      <Link
+                      <SmoothLink
                         href={`/admin/orders/${order.id}`}
                         className="text-sm text-warmbrown-600 hover:text-warmbrown-700 font-medium"
                       >
                         View →
-                      </Link>
+                      </SmoothLink>
                     </td>
                   </tr>
                 ))}

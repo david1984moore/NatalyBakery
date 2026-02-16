@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import ProductCard from './ProductCard'
 import { products, PRODUCTS_WITH_REAL_PHOTOS } from '@/data/products'
 
@@ -29,7 +29,7 @@ export default function FeaturedProducts() {
           ))}
         </div>
         <div className="mt-8 flex justify-center">
-          <Link
+          <SmoothLink
             href="/menu"
             prefetch={true}
             className="flex justify-center md:inline-flex"
@@ -37,7 +37,7 @@ export default function FeaturedProducts() {
             <span className="font-ui inline-flex items-center justify-center min-h-[44px] px-6 py-3 text-sm font-medium tracking-wide uppercase text-black bg-white/10 backdrop-blur-sm hover:bg-tan md:hover:text-white transition-colors duration-300 rounded-md shadow-md">
               Menu
             </span>
-          </Link>
+          </SmoothLink>
         </div>
       </div>
     </section>

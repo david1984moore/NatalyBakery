@@ -6,6 +6,8 @@ import { LanguageProvider } from '@/contexts/LanguageContext'
 import MobileBackgroundSync from '@/components/MobileBackgroundSync'
 import MobileScrollLock from '@/components/MobileScrollLock'
 import PageTransition from '@/components/PageTransition'
+import TransitionOverlay from '@/components/TransitionOverlay'
+import TransitionScreen from '@/components/TransitionScreen'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -77,8 +79,10 @@ export default function RootLayout({
       <body>
         <MobileBackgroundSync />
         <MobileScrollLock />
+        <TransitionScreen />
         <LanguageProvider>
           <CartProvider>
+            <TransitionOverlay />
             <PageTransition>
               {children}
             </PageTransition>

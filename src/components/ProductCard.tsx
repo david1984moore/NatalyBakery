@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { getProductTranslationKey } from '@/lib/productTranslations'
 import { OptimizedImage } from '@/components/OptimizedImage'
@@ -24,7 +24,7 @@ export default function ProductCard({ name, image, href, variant = 'hero', prior
   const borderClass = variant === 'light' ? 'border-warmgray-300/50 hover:border-warmgray-400/60' : 'border-white/80 hover:border-white'
 
   return (
-    <Link href={productUrl} className="w-full h-full">
+    <SmoothLink href={productUrl} className="w-full h-full">
       <div className={`group relative rounded-2xl overflow-hidden border-4 ${borderClass} shadow-sm hover:shadow-xl cursor-pointer w-full h-full flex flex-col product-card-smooth`}>
         {/* Product Image - fills container with rounded corners, name overlaid to avoid visible strip */}
         <div className="relative w-full flex-shrink-0 overflow-hidden rounded-t-2xl" style={{ aspectRatio: '3/4' }}>
@@ -50,6 +50,6 @@ export default function ProductCard({ name, image, href, variant = 'hero', prior
           </div>
         </div>
       </div>
-    </Link>
+    </SmoothLink>
   )
 }

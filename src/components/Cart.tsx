@@ -8,7 +8,7 @@ import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
 import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/productTranslations'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 
 const cartTransition = { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const }
 
@@ -105,22 +105,26 @@ export default function Cart() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-sm"
+              className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-md"
               onClick={() => setIsOpen(false)}
               aria-hidden="true"
             />
             <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               transition={cartTransition}
-              className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[999] overflow-y-auto safe-top safe-left shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="cart-title"
+              className="fixed inset-0 z-[999] flex items-center justify-center p-4 pointer-events-none"
+              aria-hidden="true"
             >
-          <div className="relative w-full h-full flex flex-col overflow-hidden border-4 border-warmgray-200 border-l">
+              <div
+                onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="cart-title"
+                className="w-full max-w-md max-h-[calc(100vh-2rem)] bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto safe-top safe-bottom"
+              >
+          <div className="relative w-full flex flex-col overflow-hidden flex-1 min-h-0">
           {/* Cart Items */}
           {items.length === 0 ? (
             <div className="relative px-6 py-8 flex-shrink-0">
@@ -153,8 +157,8 @@ export default function Cart() {
           </div>
 
           {/* Cart Items */}
-            <div className="flex flex-col" style={{ flex: '1 1 auto', minHeight: 0 }}>
-              <div className="overflow-y-auto px-6 py-4" style={{ flex: '1 1 0%', minHeight: 0, maxHeight: 'calc(100vh - 5rem - 220px)' }}>
+            <div className="flex flex-col flex-1 min-h-0">
+              <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
                 <div className="space-y-4">
                   {items.map((item, index) => (
                 <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex items-start gap-4 pb-4 border-b border-warmgray-100 last:border-0">
@@ -240,14 +244,14 @@ export default function Cart() {
                   )}
                   </div>
                 <div className="flex flex-col gap-2">
-                  <Link
+                  <SmoothLink
                     href="/menu"
                     onClick={() => setIsOpen(false)}
                     className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
                     style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >
                     {t('cart.continueShopping')}
-                  </Link>
+                  </SmoothLink>
                   <button
                     type="button"
                     onClick={() => {
@@ -265,6 +269,7 @@ export default function Cart() {
             </>
           )}
           </div>
+              </div>
             </motion.div>
           </>
         )}
@@ -444,13 +449,13 @@ export default function Cart() {
                   )}
               </div>
               <div className="flex flex-col gap-2">
-                <Link
+                <SmoothLink
                   href="/menu"
                   onClick={() => setIsOpen(false)}
                   className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
                 >
                   {t('cart.continueShopping')}
-                </Link>
+                </SmoothLink>
                 <button
                   type="button"
                   onClick={() => {

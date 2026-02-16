@@ -2,7 +2,7 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, useRef, Suspense } from 'react'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import {
   products,
   getProductByName,
@@ -205,7 +205,7 @@ export default function MenuPageContent({
       >
         <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] max-md:bg-hero-footer-gradient md:bg-transparent">
           <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-            <Link
+            <SmoothLink
               href="/"
               prefetch={true}
               className="flex-shrink-0 flex items-center h-full"
@@ -214,22 +214,22 @@ export default function MenuPageContent({
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">
                 Caramel & Jo
               </span>
-            </Link>
-            <div className="flex h-full min-h-[40px] items-center gap-3 sm:gap-4 flex-shrink-0">
+            </SmoothLink>
+            <div className="flex h-full min-h-[40px] items-center gap-4 sm:gap-5 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />
-              <Link
+              <SmoothLink
                 href="/contact"
                 prefetch={true}
                 aria-label={t('nav.contact')}
-                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
                 <Mail className="w-6 h-6 text-white" strokeWidth={2.5} />
-              </Link>
+              </SmoothLink>
               <button
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
                 }
-                className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
+                className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
                 aria-label="Shopping cart"
               >
                 <svg
@@ -256,7 +256,7 @@ export default function MenuPageContent({
 
           {/* Desktop: same structure as contact page - fixed row height so content sits at top of brown area */}
           <div className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-20 -translate-y-0">
-            <Link
+            <SmoothLink
               href="/"
               prefetch={true}
               className="flex-shrink-0 flex items-center h-full"
@@ -265,7 +265,7 @@ export default function MenuPageContent({
               <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">
                 Caramel & Jo
               </span>
-            </Link>
+            </SmoothLink>
             <div className="flex-1 min-w-0" aria-hidden="true" />
             <div className="flex-shrink-0 flex items-center relative h-full max-w-[min(calc(100vw-20rem),56rem)] min-w-0 md:max-w-[min(calc(100vw-18rem),64rem)] md:pr-6 md:overflow-visible">
               {canScrollLeft && (
@@ -276,7 +276,7 @@ export default function MenuPageContent({
               )}
               <div
                 ref={scrollContainerRef}
-                className="flex items-center gap-3 md:gap-2 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6 md:pr-24"
+                className="flex items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6 md:pr-24"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 {products.map((product) => {
@@ -293,8 +293,8 @@ export default function MenuPageContent({
                       onClick={() => handleProductChange(product.name)}
                       className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
                         isSelected
-                          ? 'bg-gradient-to-r from-[#7a6150] to-[#664f3f] text-white md:hover:opacity-90'
-                          : 'bg-transparent text-warmgray-700 hover:bg-[#7a6150] hover:text-white'
+                          ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white md:hover:opacity-90'
+                          : 'bg-transparent text-warmgray-700 hover:bg-[#8a7160] hover:text-white'
                       }`}
                     >
                       {translatedName}
@@ -304,16 +304,16 @@ export default function MenuPageContent({
               </div>
             </div>
             <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex h-full flex-shrink-0 items-center gap-7 lg:gap-10">
+            <div className="flex h-full flex-shrink-0 items-center gap-8 lg:gap-11">
               <LanguageToggle variant="menu" />
-              <Link
+              <SmoothLink
                 href="/contact"
                 prefetch={true}
                 aria-label={t('nav.contact')}
                 className="font-ui flex items-center justify-center px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
               >
                 <Mail className="w-5 h-5" strokeWidth={2} />
-              </Link>
+              </SmoothLink>
               <button
                 onClick={() =>
                   window.dispatchEvent(new CustomEvent('cart:toggle'))
@@ -347,7 +347,7 @@ export default function MenuPageContent({
         {/* Mobile: category row is part of the sticky header so it stays visible when scrolling */}
         <div className="md:hidden flex-shrink-0 bg-background border-t border-warmgray-200">
           <div
-            className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container"
+            className="flex items-center gap-2.5 overflow-x-auto scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {products.map((product) => {
@@ -364,7 +364,7 @@ export default function MenuPageContent({
                   onClick={() => handleProductChange(product.name)}
                   className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
                     isSelected
-                      ? 'bg-gradient-to-r from-[#7a6150] to-[#664f3f] text-white'
+                      ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white'
                       : 'bg-transparent text-warmgray-900'
                   }`}
                 >
@@ -601,7 +601,7 @@ export default function MenuPageContent({
                     className={`w-full min-h-[44px] px-4 py-2.5 sm:py-2 border rounded-md font-medium text-base sm:text-sm disabled:cursor-not-allowed transition-colors duration-standard ease-apple ${
                       addToCartSuccess
                         ? 'border-sage-500 bg-sage-500 text-white'
-                        : 'border-transparent bg-gradient-to-r from-[#7a6150] to-[#664f3f] text-white md:hover:opacity-90 disabled:opacity-50'
+                        : 'border-transparent bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white md:hover:opacity-90 disabled:opacity-50'
                     }`}
                     style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >

@@ -2,13 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent white flash during page transitions */
+html {
+  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
+  overscroll-behavior-y: none;
+}
+
+body {
+  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
+  overscroll-behavior-y: none;
+  min-height: 100vh;
+}
+
+/* Consistent page backgrounds during transitions */
+[data-page-wrapper] {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto;
+  background: var(--background); /* Match your body background */
+}
+
+/* During fade, show gradient instead of white */
+[data-page-wrapper][style*="opacity: 0"] {
+  pointer-events: none;
+  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
+}
+
+/* Disable transitions on child elements during page transition */
+[data-page-wrapper][style*="opacity: 0"] * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Ensure images don't pop in late */
+[data-page-wrapper] img {
+  will-change: opacity;
+}
+
+/* Prevent flash of unstyled content */
+body {
+  opacity: 1;
+  transition: none;
+}
+
+/* COMMENT OUT OR REMOVE: Persistent background layer - each page sets its own main background
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+*/
+
+/* Ensure main content renders on top of background */
+main {
+  position: relative;
+  z-index: 1;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  background: var(--background);
+}
+
 :root {
   --background: #faf7f2;
   --foreground: #2d2822;
   /* Hero/footer - light brown, two shades darker and more brown */
   --overscroll-top: #c09868;
   /* Single source of truth so hero footer and viewport bottom are identical on mobile */
-  --hero-footer-gradient: linear-gradient(to right, #cca878, #b88858);
+  --hero-footer-gradient: linear-gradient(to right, #d6b88a, #c49868);
   --font-inter: 'Inter', system-ui, sans-serif;
   /* --font-roboto is set by next/font in layout.tsx */
   --font-serif: var(--font-roboto);
@@ -25,36 +92,35 @@
   }
 }
 
-/* Prevent overscroll */
-html,
-body {
+/* Prevent overscroll - body AND html need same background as header */
+html {
+  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
   overscroll-behavior-y: none;
-  background-color: #F5E6D3; /* Your header gradient top color - prevents color flash */
 }
 
 body {
+  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
+  overscroll-behavior-y: none;
+  min-height: 100vh;
   color: var(--foreground);
-  background: var(--background);
   font-family: var(--font-roboto), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   width: 100%;
   min-width: 0;
-  /* Desktop: allow smooth scroll; mobile gets min-height in media query to prevent white above header. */
-  min-height: 100%;
-  /* CRITICAL: Safe-area padding for iOS notch/rounded corners in landscape.
-   * env(safe-area-inset-*) is 0 on devices without notches, so no desktop impact. */
+  /* CRITICAL: Safe-area padding for iOS notch/rounded corners in landscape. */
   padding-left: env(safe-area-inset-left, 0);
   padding-right: env(safe-area-inset-right, 0);
 }
 
-/* Header stability */
+/* Header stability - ensure it's on top of everything */
 header {
   position: sticky;
   top: 0;
-  z-index: 50;
-  transform: translateZ(0); /* Hardware acceleration */
+  z-index: 100; /* Increased from 50 */
+  transform: translateZ(0);
+  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%); /* Match body */
 }
 
 /* Apple-like scroll */
@@ -66,6 +132,8 @@ main {
   scroll-behavior: smooth;
   overscroll-behavior: contain;
   background: var(--background);
+  position: relative;
+  z-index: 1; /* Below header */
 }
 
 @layer utilities {
@@ -228,7 +296,7 @@ main {
       width: 100%;
       min-width: 0;
       max-width: 100%;
-      overflow: hidden;
+      /* overflow: hidden removed - was clipping focus ring */
       display: block;
     }
     .checkout-delivery-date-input,

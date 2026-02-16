@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { useParams, useRouter } from 'next/navigation'
 
 interface OrderItem {
@@ -143,9 +143,9 @@ export default function AdminOrderDetailPage() {
       <div className="min-h-screen flex items-center justify-center bg-cream-50">
         <div className="text-center">
           <p className="text-warmgray-600 mb-4">Order not found</p>
-          <Link href="/admin" className="text-warmbrown-600 hover:underline">
+          <SmoothLink href="/admin" className="text-warmbrown-600 hover:underline">
             ← Back to orders
-          </Link>
+          </SmoothLink>
         </div>
       </div>
     )

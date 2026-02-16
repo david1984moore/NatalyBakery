@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useCart } from '@/contexts/CartContext'
@@ -42,37 +42,31 @@ export default function StickyNav() {
     >
       {/* Mobile: hero-style bar (matches menu/contact mobile header) */}
       <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-        <Link
+        <SmoothLink
           href="/"
-          onClick={(e) => {
-            if (window.location.pathname === '/') {
-              e.preventDefault()
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }
-          }}
           className="flex-shrink-0 flex items-center h-full"
           aria-label="Home"
         >
           <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">
             Caramel & Jo
           </span>
-        </Link>
-        <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+        </SmoothLink>
+        <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0">
           {navLinks.map((link) => (
-            <Link
+            <SmoothLink
               key={link.labelKey}
               href={link.href}
               prefetch={true}
               aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
-              className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+              className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
             >
-              {link.href === '/contact' ? <Mail className="w-6 h-6 text-white" strokeWidth={2.5} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} /> : t(link.labelKey)}
-            </Link>
+              {link.href === '/contact' ? <Mail className="w-6 h-6 text-white" strokeWidth={2.5} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" /> : t(link.labelKey)}
+            </SmoothLink>
           ))}
           <LanguageToggle variant="menuHeader" />
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-            className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
+            className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
             aria-label="Shopping cart"
           >
             <svg
@@ -99,21 +93,15 @@ export default function StickyNav() {
 
       {/* Desktop: white bar with horizontal links */}
       <div className="hidden md:flex justify-between items-center px-4 sm:px-6 lg:px-8 h-14 md:h-16">
-        <Link
+        <SmoothLink
           href="/"
-          onClick={(e) => {
-            if (window.location.pathname === '/') {
-              e.preventDefault()
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }
-          }}
           className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap"
         >
           Caramel & Jo
-        </Link>
-        <div className="flex items-center gap-7 lg:gap-10">
+        </SmoothLink>
+        <div className="flex items-center gap-8 lg:gap-11">
           {navLinks.map((link) => (
-            <Link
+            <SmoothLink
               key={link.labelKey}
               href={link.href}
               prefetch={true}
@@ -121,7 +109,7 @@ export default function StickyNav() {
               className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
             >
               {t(link.labelKey)}
-            </Link>
+            </SmoothLink>
           ))}
           <LanguageToggle variant="menu" />
         </div>

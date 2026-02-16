@@ -2,25 +2,25 @@
 
 import Navigation from '@/components/Navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { OptimizedImage } from '@/components/OptimizedImage'
 
 export default function AboutPage() {
   const { t } = useLanguage()
   
   return (
-    <main data-scrollable className="min-h-screen bg-cream-50/30">
+    <main data-scrollable className="min-h-screen" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
       <Navigation />
       
       {/* Home Button */}
       <div className="fixed top-3 sm:top-4 left-3 sm:left-4 z-50 safe-left safe-top">
-        <Link
+        <SmoothLink
           href="/"
           className="flex-shrink-0 px-2 sm:px-3 py-1.5"
           aria-label="Home"
         >
           <span className="text-black font-nav-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold brand-header-shadow">Caramel & Jo</span>
-        </Link>
+        </SmoothLink>
       </div>
       
       <div className="h-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16 flex items-center">

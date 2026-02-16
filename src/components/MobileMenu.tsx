@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useMobileMenu } from '@/contexts/MobileMenuContext'
@@ -43,7 +43,7 @@ export default function MobileMenu() {
         {/* Nav links */}
         <nav className="py-4 border-b border-white/30 flex flex-col gap-3">
           {navLinks.map((link) => (
-            <Link
+            <SmoothLink
               key={link.labelKey}
               href={link.href}
               prefetch={true}
@@ -52,7 +52,7 @@ export default function MobileMenu() {
               className="font-ui w-full flex items-center justify-center min-h-[44px] px-3 py-2 rounded-md border border-white/40 bg-white/20 backdrop-blur-sm text-white font-medium text-sm tracking-wide hover:bg-white/30 transition-colors duration-200"
             >
               {link.href === '/contact' ? <Mail className="w-6 h-6" strokeWidth={2} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6" strokeWidth={2} /> : t(link.labelKey)}
-            </Link>
+            </SmoothLink>
           ))}
         </nav>
 

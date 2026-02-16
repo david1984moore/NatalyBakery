@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
@@ -206,35 +206,35 @@ export default function CheckoutPage() {
     const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
     
     return (
-      <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
+      <div className="min-h-screen flex flex-col relative" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
         <Cart />
-        {/* Navigation Bar - mobile: hero bar; desktop: original white bar */}
+        {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
         <div
-          className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm"
+          className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm"
           style={{ minHeight: '40px' }}
         >
-          <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
+          <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
             <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-              <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+              <SmoothLink href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
-              </Link>
-              <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
-                <Link href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} /></Link>
-                <Link href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 text-white" strokeWidth={2.5} /></Link>
+              </SmoothLink>
+              <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0">
+                <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
+                <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 text-white" strokeWidth={2.5} /></SmoothLink>
                 <LanguageToggle variant="menuHeader" />
-                <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
+                <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                   {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
                 </button>
               </div>
             </div>
             <div className="hidden md:flex flex-1 items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0">
-              <Link href="/" className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+              <SmoothLink href="/" className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
                 <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">Caramel & Jo</span>
-              </Link>
-              <div className="flex items-center gap-7 lg:gap-10 flex-shrink-0">
-                <Link href="/menu" aria-label={t('nav.menu')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><UtensilsCrossed className="w-5 h-5" strokeWidth={2} /></Link>
-                <Link href="/contact" aria-label={t('nav.contact')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><Mail className="w-5 h-5" strokeWidth={2} /></Link>
+              </SmoothLink>
+              <div className="flex items-center gap-8 lg:gap-11 flex-shrink-0">
+                <SmoothLink href="/menu" aria-label={t('nav.menu')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><UtensilsCrossed className="w-5 h-5" strokeWidth={2} /></SmoothLink>
+                <SmoothLink href="/contact" aria-label={t('nav.contact')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><Mail className="w-5 h-5" strokeWidth={2} /></SmoothLink>
                 <LanguageToggle variant="menu" />
                 <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative" aria-label="Shopping cart">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
@@ -263,7 +263,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream-50/30 flex flex-col relative">
+    <main data-scrollable className="min-h-screen flex flex-col relative" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
       {/* Loading Overlay */}
       {isLoading && (
         <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50 p-4">
@@ -279,33 +279,33 @@ export default function CheckoutPage() {
         </div>
       )}
       <Cart />
-      {/* Navigation Bar - mobile: hero bar; desktop: original white bar */}
+      {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm"
+        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm"
         style={{ minHeight: '40px' }}
       >
-        <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent md:border-b md:border-warmgray-200">
+        <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
           <div className="md:hidden flex items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-            <Link href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+            <SmoothLink href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
-            </Link>
-            <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
-              <Link href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} /></Link>
-              <Link href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 text-white" strokeWidth={2.5} /></Link>
+            </SmoothLink>
+            <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0">
+              <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
+              <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 text-white" strokeWidth={2.5} /></SmoothLink>
               <LanguageToggle variant="menuHeader" />
-              <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#7a6150] to-[#664f3f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
+              <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
               </button>
             </div>
           </div>
           <div className="hidden md:flex flex-1 items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0">
-            <Link href="/" className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0">
+            <SmoothLink href="/" className="flex-shrink-0 flex items-center h-full outline-none focus:outline-none focus-visible:ring-0">
               <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">Caramel & Jo</span>
-            </Link>
-            <div className="flex items-center gap-7 lg:gap-10 flex-shrink-0">
-              <Link href="/menu" aria-label={t('nav.menu')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><UtensilsCrossed className="w-5 h-5" strokeWidth={2} /></Link>
-              <Link href="/contact" aria-label={t('nav.contact')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><Mail className="w-5 h-5" strokeWidth={2} /></Link>
+            </SmoothLink>
+            <div className="flex items-center gap-8 lg:gap-11 flex-shrink-0">
+              <SmoothLink href="/menu" aria-label={t('nav.menu')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><UtensilsCrossed className="w-5 h-5" strokeWidth={2} /></SmoothLink>
+              <SmoothLink href="/contact" aria-label={t('nav.contact')} className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"><Mail className="w-5 h-5" strokeWidth={2} /></SmoothLink>
               <LanguageToggle variant="menu" />
               <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative" aria-label="Shopping cart">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
@@ -589,6 +589,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
