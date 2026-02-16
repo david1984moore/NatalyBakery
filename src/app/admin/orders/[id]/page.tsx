@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import SmoothLink from '@/components/SmoothLink'
 import { useParams, useRouter } from 'next/navigation'
 
