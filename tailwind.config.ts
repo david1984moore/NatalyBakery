@@ -58,8 +58,6 @@ const config: Config = {
         },
         // Solid equivalent of header buttons (stone-800/45 on hero) - use for selected menu tab so it matches on any background
         headerButtonFill: '#a07e68',
-        // Mobile only: light tan fill for header bar (matches header button area)
-        headerMobileTan: '#ddd8cd',
         // Warm neutrals - soft caramel undertones
         beige: {
           50: '#faf7f1',
@@ -133,6 +131,10 @@ const config: Config = {
         sans: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
         serif: ['var(--font-serif)', 'system-ui', 'sans-serif'],
         playfair: ['var(--font-playfair)', 'Georgia', 'serif'],
+      },
+      // Hero footer gradient – in theme so max-md:bg-hero-footer-gradient generates correctly on mobile
+      backgroundImage: {
+        'hero-footer-gradient': 'var(--hero-footer-gradient)',
       },
     },
   },

@@ -23,10 +23,10 @@ export default function ContactPage() {
     <main data-scrollable className="min-h-screen min-h-[100dvh]" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
       {/* Header - mobile: fixed; desktop: sticky, no strip, subtle shadow */}
       <div
-        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-headerMobileTan md:sticky md:top-0 md:bg-background md:backdrop-blur-sm header-bar-shadow shadow-sm min-h-[40px] md:min-h-[80px] isolate"
+        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm header-bar-shadow shadow-sm min-h-[40px] md:min-h-[80px] isolate"
         style={{ width: '100%' }}
       >
-        <div className="max-md:bg-headerMobileTan border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent">
+        <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent">
           {/* Mobile: safe-area padding + truncate brand so landscape never overflows */}
           <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
             <SmoothLink

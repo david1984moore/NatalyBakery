@@ -63,10 +63,10 @@ function SuccessPageContent() {
       <Cart />
       {/* Navigation Bar - matches menu page structure */}
       <div
-        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-headerMobileTan md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm isolate"
+        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm isolate"
         style={{ minHeight: '40px', width: '100%' }}
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] max-md:bg-headerMobileTan border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
+        <div className="relative z-10 flex flex-col min-h-[40px] max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
           {/* Mobile: fixed so content never bleeds above; safe-area + truncate for landscape */}
           <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
             <SmoothLink href="/" className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full" aria-label="Home">
