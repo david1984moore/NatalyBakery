@@ -1,6 +1,6 @@
 /**
- * Two-tone envelope icon for mobile headers.
- * Body: solid white fill. Flap: transparent so the brown background shows through.
+ * Two-tone envelope icon for contact button.
+ * Body: solid white fill. Flap: brown (matches button).
  */
 export default function EnvelopeIcon({
   className = 'w-6 h-6',
@@ -21,14 +21,10 @@ export default function EnvelopeIcon({
         d="M2 10h20v10H2V10z"
         fill="white"
       />
-      {/* Envelope flap (triangle) - transparent, background shows through */}
+      {/* Envelope flap (triangle) - brown */}
       <path
         d="M2 4l10 6 10-6"
-        fill="transparent"
-        stroke="white"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fill="#8a7160"
       />
     </svg>
   )

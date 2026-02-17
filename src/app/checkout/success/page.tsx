@@ -8,6 +8,7 @@ import LanguageToggle from '@/components/LanguageToggle'
 import Cart from '@/components/Cart'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail } from 'lucide-react'
+import EnvelopeIcon from '@/components/EnvelopeIcon'
 
 interface OrderData {
   orderNumber: string
@@ -74,13 +75,13 @@ function SuccessPageContent() {
                 Caramel & Jo
               </span>
             </SmoothLink>
-            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+            <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
               <SmoothLink
                 href="/contact"
                 aria-label={t('nav.contact')}
                 className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
-                <Mail className="w-5 h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" fill="none" aria-hidden />
+                <EnvelopeIcon className="w-5 h-5 shrink-0" aria-hidden />
               </SmoothLink>
               <LanguageToggle variant="menuHeader" />
               <button
@@ -88,7 +89,7 @@ function SuccessPageContent() {
                 className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
                 aria-label="Shopping cart"
               >
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-7 h-7 text-white" fill="none" stroke="white" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {itemCount > 0 && (

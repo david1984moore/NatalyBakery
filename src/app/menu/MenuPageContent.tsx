@@ -19,6 +19,7 @@ import {
   getVariantTranslationKey,
 } from '@/lib/productTranslations'
 import { Mail } from 'lucide-react'
+import EnvelopeIcon from '@/components/EnvelopeIcon'
 import Cart from '@/components/Cart'
 import CartPreviewModal from '@/components/CartPreviewModal'
 import LanguageToggle from '@/components/LanguageToggle'
@@ -220,7 +221,7 @@ export default function MenuPageContent({
                 Caramel & Jo
               </span>
             </SmoothLink>
-            <div className="flex h-full min-h-[40px] items-center gap-2 sm:gap-4 flex-shrink-0">
+            <div className="flex h-full min-h-[40px] items-center gap-3 sm:gap-5 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />
               <SmoothLink
                 href="/contact"
@@ -228,7 +229,7 @@ export default function MenuPageContent({
                 aria-label={t('nav.contact')}
                 className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
-                <Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" fill="none" aria-hidden />
+                <EnvelopeIcon className="w-6 h-6 shrink-0" aria-hidden />
               </SmoothLink>
               <button
                 onClick={() =>
@@ -240,7 +241,7 @@ export default function MenuPageContent({
                 <svg
                   className="w-7 h-7 text-white"
                   fill="none"
-                  stroke="currentColor"
+                  stroke="white"
                   viewBox="0 0 24 24"
                 >
                   <path

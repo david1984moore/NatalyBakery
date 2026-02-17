@@ -36,7 +36,7 @@ export default function ContactPage() {
             >
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
             </SmoothLink>
-            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+            <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />
               {visibleNavLinks.map((link) => (
                 <SmoothLink
@@ -56,7 +56,7 @@ export default function ContactPage() {
                 <svg
                   className="w-7 h-7 text-white"
                   fill="none"
-                  stroke="currentColor"
+                  stroke="white"
                   viewBox="0 0 24 24"
                 >
                   <path
