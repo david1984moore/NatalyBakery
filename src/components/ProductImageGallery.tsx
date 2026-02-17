@@ -43,10 +43,11 @@ export default function ProductImageGallery({
   const [aspectRatio, setAspectRatio] = useState<number>(4 / 3)
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024)
+    const mql = window.matchMedia('(hover: none) and (pointer: coarse)')
+    const check = () => setIsMobile(mql.matches)
     check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
+    mql.addEventListener('change', check)
+    return () => mql.removeEventListener('change', check)
   }, [])
 
   const goPrev = useCallback(() => {

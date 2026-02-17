@@ -8,7 +8,6 @@ import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
 import { productNameToTranslationKey, getVariantTranslationKey } from '@/lib/productTranslations'
-import SmoothLink from '@/components/SmoothLink'
 
 const cartTransition = { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const }
 
@@ -24,6 +23,15 @@ export default function Cart() {
   const isContactPage = pathname === '/contact'
   const isCheckoutPage = pathname === '/checkout' || pathname?.startsWith('/checkout/')
   const isModalCartPage = isMenuPage || isContactPage || isCheckoutPage
+
+  /** Continue Shopping: close cart and go to menu. Implemented as button (not link) so
+   * mobile Safari reliably receives touch — anchors in overlay often don't fire click on iOS. */
+  const handleContinueShopping = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsOpen(false)
+    if (pathname !== '/menu') router.push('/menu')
+  }
 
   const totalAmount = getTotalAmount()
   const depositAmount = getDepositAmount()
@@ -244,14 +252,14 @@ export default function Cart() {
                   )}
                   </div>
                 <div className="flex flex-col gap-2">
-                  <SmoothLink
-                    href="/menu"
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
+                  <button
+                    type="button"
+                    onClick={handleContinueShopping}
+                    className="block w-full min-h-[44px] bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm cursor-pointer touch-manipulation relative z-10 [-webkit-tap-highlight-color:transparent]"
                     style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                   >
                     {t('cart.continueShopping')}
-                  </SmoothLink>
+                  </button>
                   <button
                     type="button"
                     onClick={() => {
@@ -449,13 +457,14 @@ export default function Cart() {
                   )}
               </div>
               <div className="flex flex-col gap-2">
-                <SmoothLink
-                  href="/menu"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm"
+                <button
+                  type="button"
+                  onClick={handleContinueShopping}
+                  className="block w-full min-h-[44px] bg-white border-2 border-warmgray-800 text-warmgray-800 text-center py-1.5 rounded-md hover:bg-warmgray-50 transition-colors duration-200 font-semibold text-sm cursor-pointer touch-manipulation [-webkit-tap-highlight-color:transparent]"
+                  style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {t('cart.continueShopping')}
-                </SmoothLink>
+                </button>
                 <button
                   type="button"
                   onClick={() => {

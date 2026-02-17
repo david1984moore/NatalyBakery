@@ -8,10 +8,22 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // Partition: mobile = base + sm (0–767px), desktop = 768px+
-      // Use "desktop:" for desktop-only styling so edits don't affect mobile.
+      // Device-based breakpoints: layout follows input method (touch vs pointer), not viewport width.
+      // Mobile in landscape (e.g. iPhone) keeps mobile layout; desktop requires hover/pointer.
       screens: {
-        desktop: '768px', // same as md; use for explicit desktop-only styling
+        // Touch devices regardless of orientation (mobile layout)
+        mobile: { raw: '(hover: none) and (pointer: coarse)' },
+        // Larger touch devices (tablet)
+        tablet: { raw: '(hover: none) and (pointer: coarse) and (min-width: 768px)' },
+        // Devices with hover (desktop layout) – use for desktop-only styling
+        desktop: { raw: '(hover: hover) and (pointer: fine)' },
+        // md = same as desktop so existing md: classes stay mobile-safe in landscape
+        md: { raw: '(hover: hover) and (pointer: fine)' },
+        // Width-based fallbacks for when layout is intentionally width-dependent
+        sm: '640px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
       },
       // Apple-quality animation design system
       transitionDuration: {
@@ -123,10 +135,10 @@ const config: Config = {
     },
   },
   plugins: [
-    // Disable hover effects on mobile (screens < 768px) - no hover animations on touch
+    // Hover variants only when device supports hover (touch devices keep no-hover in any orientation)
     function ({ addVariant }: { addVariant: (name: string, value: string) => void }) {
-      addVariant('hover', '@media (min-width: 768px) { &:hover }')
-      addVariant('group-hover', '@media (min-width: 768px) { .group:hover & }')
+      addVariant('hover', '@media (hover: hover) and (pointer: fine) { &:hover }')
+      addVariant('group-hover', '@media (hover: hover) and (pointer: fine) { .group:hover & }')
     },
   ],
 }

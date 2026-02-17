@@ -86,7 +86,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-warmgray-700 mb-2">
+        <label htmlFor="name" className="block text-base font-medium text-warmgray-700 mb-2">
           {t('contact.name')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <input
@@ -106,7 +106,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
 
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-warmgray-700 mb-2">
+        <label htmlFor="email" className="block text-base font-medium text-warmgray-700 mb-2">
           {t('contact.email')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <input
@@ -126,7 +126,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
 
       {/* Phone Field (Optional) */}
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-warmgray-700 mb-2">
+        <label htmlFor="phone" className="block text-base font-medium text-warmgray-700 mb-2">
           {t('contact.phone')} <span className="text-warmgray-500 text-xs">{t('contact.phoneOptional')}</span>
         </label>
         <input
@@ -146,7 +146,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
 
       {/* Subject Field */}
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-warmgray-700 mb-2">
+        <label htmlFor="subject" className="block text-base font-medium text-warmgray-700 mb-2">
           {t('contact.subject')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <input
@@ -166,7 +166,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
 
       {/* Message Field */}
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-warmgray-700 mb-2">
+        <label htmlFor="message" className="block text-base font-medium text-warmgray-700 mb-2">
           {t('contact.message')} <span className="text-red-500">{t('common.required')}</span>
         </label>
         <textarea

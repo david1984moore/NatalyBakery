@@ -19,6 +19,7 @@ import {
   getVariantTranslationKey,
 } from '@/lib/productTranslations'
 import { Mail } from 'lucide-react'
+import EnvelopeIcon from '@/components/EnvelopeIcon'
 import Cart from '@/components/Cart'
 import CartPreviewModal from '@/components/CartPreviewModal'
 import LanguageToggle from '@/components/LanguageToggle'
@@ -79,6 +80,7 @@ export default function MenuPageContent({
 
   useEffect(() => {
     const timer = setTimeout(() => checkScrollPosition(), 100)
+    const touchQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
     const updateScrollRef = () => {
       const mobileContainer = document.querySelector(
         '.mobile-scroll-container'
@@ -86,7 +88,7 @@ export default function MenuPageContent({
       const desktopContainer = document.querySelector(
         '.desktop-scroll-container'
       ) as HTMLDivElement
-      const isMobile = window.innerWidth < 1024
+      const isMobile = touchQuery.matches
       const activeContainer = isMobile ? mobileContainer : desktopContainer
       if (activeContainer) {
         ;(scrollContainerRef as React.MutableRefObject<HTMLDivElement | null>).current =
@@ -95,6 +97,7 @@ export default function MenuPageContent({
       }
     }
     updateScrollRef()
+    touchQuery.addEventListener('change', updateScrollRef)
     window.addEventListener('resize', updateScrollRef)
     const container = scrollContainerRef.current
     if (container) {
@@ -102,11 +105,13 @@ export default function MenuPageContent({
       return () => {
         clearTimeout(timer)
         container.removeEventListener('scroll', checkScrollPosition)
+        touchQuery.removeEventListener('change', updateScrollRef)
         window.removeEventListener('resize', updateScrollRef)
       }
     }
     return () => {
       clearTimeout(timer)
+      touchQuery.removeEventListener('change', updateScrollRef)
       window.removeEventListener('resize', updateScrollRef)
     }
   }, [products, t])
@@ -223,7 +228,7 @@ export default function MenuPageContent({
                 aria-label={t('nav.contact')}
                 className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
-                <Mail className="w-6 h-6 text-white" strokeWidth={2.5} />
+                <EnvelopeIcon className="w-6 h-6" />
               </SmoothLink>
               <button
                 onClick={() =>

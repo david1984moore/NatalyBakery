@@ -209,7 +209,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     
     // Contact
     'contact.getInTouch': 'Get in Touch',
-    'contact.subtitle': 'Have a question, custom order request, or just want to say hello? We\'d love to hear from you!',
+    'contact.subtitle': 'Questions? Custom requests? Or just want to say hello...we want to hear from you!',
     'contact.name': 'Name',
     'contact.email': 'Email',
     'contact.phone': 'Phone',
@@ -348,7 +348,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     
     // Contact
     'contact.getInTouch': 'Ponte en Contacto',
-    'contact.subtitle': '¿Tienes una pregunta, solicitud de pedido personalizado o solo quieres saludar? ¡Nos encantaría saber de ti!',
+    'contact.subtitle': '¿Preguntas? ¿Pedidos personalizados? ¿O solo quieres saludar?... ¡Queremos saber de ti!',
     'contact.name': 'Nombre',
     'contact.email': 'Correo Electrónico',
     'contact.phone': 'Teléfono',

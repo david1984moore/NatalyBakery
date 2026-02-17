@@ -29,7 +29,7 @@ export default function MobileBackgroundSync() {
   useEffect(() => {
     const html = document.documentElement
     const body = document.body
-    const mobileQuery = window.matchMedia('(max-width: 1023px)')
+    const mobileQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
 
     const apply = () => {
       if (mobileQuery.matches) {

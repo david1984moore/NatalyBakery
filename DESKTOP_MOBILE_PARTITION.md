@@ -8,17 +8,19 @@ This project uses a **single codebase** with responsive Tailwind classes. You ca
 
 ## 1. How the partition works
 
-| Viewport | Tailwind breakpoints | Meaning |
-|----------|----------------------|--------|
-| **Mobile** | Base (no prefix) + `sm:` (640px+) | 0–767px = mobile experience |
-| **Desktop** | `md:` (768px+) and up: `lg:`, `xl:`, `2xl:` | 768px+ = desktop experience |
+Layout is **device-based**, not width-based: touch devices (e.g. iPhone) keep the mobile experience in **any orientation**; devices with hover/pointer get the desktop experience.
+
+| Device / input | Tailwind breakpoints | Meaning |
+|----------------|----------------------|--------|
+| **Mobile (touch)** | Base (no prefix) + `sm:` (640px) | Touch, coarse pointer = mobile experience (portrait and landscape) |
+| **Desktop (hover)** | `md:`, `desktop:` (hover + fine pointer), and `lg:`, `xl:`, `2xl:` (width) | Hover + fine pointer = desktop experience |
 
 **Convention:**
 
 - **Mobile-only styles** = unprefixed classes and `sm:` only.  
   When you **do not** touch these, mobile stays unchanged.
-- **Desktop-only styles** = use only `md:`, `lg:`, `xl:`, or `2xl:` (or the custom `desktop:` breakpoint).  
-  When you **only** add or edit these, desktop changes cannot affect layout or styling below 768px.
+- **Desktop-only styles** = use only `md:`, `desktop:`, `lg:`, `xl:`, or `2xl:`.  
+  `md:` and `desktop:` use `(hover: hover) and (pointer: fine)` so rotated phones do not get desktop layout.
 
 So: **yes, you can work on desktop without changing mobile**, as long as you only add or modify **desktop breakpoint** classes.
 
@@ -26,16 +28,17 @@ So: **yes, you can work on desktop without changing mobile**, as long as you onl
 
 ## 2. Optional: `desktop:` breakpoint
 
-A custom breakpoint `desktop: 768px` is defined in `tailwind.config.ts` (same as `md`). Use it when you want to make it obvious that a class is **desktop-only**:
+A custom breakpoint `desktop:` is defined in `tailwind.config.ts` using `(hover: hover) and (pointer: fine)` (same logic as `md:`). Use it when you want to make it obvious that a class is **desktop-only**:
 
 ```tsx
-// Desktop-only: this does nothing below 768px
+// Desktop-only: only on devices with hover/pointer (not on touch in landscape)
 <div className="hidden desktop:block">...</div>
 <div className="desktop:grid-cols-3 desktop:gap-8">...</div>
 ```
 
 - Prefer **`desktop:`** when the intent is “this is only for desktop.”
-- Use **`md:` / `lg:` / `xl:` / `2xl:`** when you need different behavior at specific widths (e.g. 1024px vs 1280px).
+- **`md:`** matches the same device type as `desktop:` (hover + fine pointer).
+- **`lg:` / `xl:` / `2xl:`** remain width-based for layout that depends on viewport size.
 
 ---
 

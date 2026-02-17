@@ -1,10 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import SmoothLink from '@/components/SmoothLink'
-import { Mail, UtensilsCrossed } from 'lucide-react'
+import { UtensilsCrossed } from 'lucide-react'
+import EnvelopeIcon from '@/components/EnvelopeIcon'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useCart } from '@/contexts/CartContext'
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 import LanguageToggle from './LanguageToggle'
 
 const navLinks = [
@@ -14,6 +17,8 @@ const navLinks = [
 ]
 
 export default function StickyNav() {
+  const pathname = usePathname()
+  const isTouchDevice = useIsTouchDevice()
   const [isVisible, setIsVisible] = useState(false)
   const { t } = useLanguage()
   const { items } = useCart()
@@ -32,6 +37,12 @@ export default function StickyNav() {
     observer.observe(sentinel)
     return () => observer.disconnect()
   }, [])
+
+  // Mobile (touch) only: never show header on hero page for a fully immersive experience.
+  // Desktop keeps existing scroll-based visibility.
+  if (pathname === '/' && isTouchDevice) {
+    return null
+  }
 
   if (!isVisible) return null
 
@@ -60,7 +71,7 @@ export default function StickyNav() {
               aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
               className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
             >
-              {link.href === '/contact' ? <Mail className="w-6 h-6 text-white" strokeWidth={2.5} /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" /> : t(link.labelKey)}
+              {link.href === '/contact' ? <EnvelopeIcon className="w-6 h-6" /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" /> : t(link.labelKey)}
             </SmoothLink>
           ))}
           <LanguageToggle variant="menuHeader" />

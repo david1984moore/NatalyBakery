@@ -8,6 +8,7 @@ import LanguageToggle from '@/components/LanguageToggle'
 import Cart from '@/components/Cart'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail } from 'lucide-react'
+import EnvelopeIcon from '@/components/EnvelopeIcon'
 
 interface OrderData {
   orderNumber: string
@@ -80,7 +81,7 @@ function SuccessPageContent() {
                 aria-label={t('nav.contact')}
                 className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
-                <Mail className="w-6 h-6 text-white" strokeWidth={2.5} />
+                <EnvelopeIcon className="w-6 h-6" />
               </SmoothLink>
               <LanguageToggle variant="menuHeader" />
               <button

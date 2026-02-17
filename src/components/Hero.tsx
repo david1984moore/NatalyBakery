@@ -47,32 +47,32 @@ export default function Hero() {
         </div>
         </div>
         <footer
-          className="absolute bottom-0 left-0 right-0 z-10 min-h-[52px] flex items-center justify-center px-3 sm:px-5 pt-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-r from-[#d6b88a] to-hero-600 hero-footer-bar-mobile shadow-[0_-16px_32px_rgba(0,0,0,0.35),0_-28px_56px_rgba(0,0,0,0.28)]"
+          className="absolute bottom-0 left-0 right-0 z-10 min-h-[52px] flex items-center justify-center px-3 sm:px-5 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-gradient-to-r from-[#d6b88a] to-hero-600 hero-footer-bar-mobile shadow-[0_-16px_32px_rgba(0,0,0,0.35),0_-28px_56px_rgba(0,0,0,0.28)]"
           aria-label="Navigation"
         >
-          <nav className="flex items-stretch justify-center gap-4 sm:gap-6 w-full max-w-sm mx-auto px-1">
-            <div className="flex-1 min-w-0 min-h-[32px] flex">
+          <nav className="flex items-center justify-center gap-4 sm:gap-5 w-full max-w-sm mx-auto min-h-[40px]">
+            <div className="flex-1 min-w-0 min-h-[38px] flex">
               <LanguageToggle variant="heroFooter" />
             </div>
-            <div className="flex-1 min-w-0 min-h-[32px] flex">
+            <div className="flex-1 min-w-0 min-h-[38px] flex">
               <SmoothLink
                 href="/menu"
                 prefetch={true}
-                className="hero-footer-btn-taper w-full h-full min-h-[32px] py-1 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium lowercase border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl"
+                className="hero-btn-header hero-footer-btn-taper w-full h-full min-h-[38px] px-1.5 py-1.5 flex items-center justify-center gap-1 text-xs font-medium lowercase border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200"
               >
-                <UtensilsCrossed className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-                <span className="text-sm leading-tight">{t('nav.menu')}</span>
+                <UtensilsCrossed className="w-6 h-6 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+                <span className="leading-tight">{t('nav.menu')}</span>
               </SmoothLink>
             </div>
             {heroFooterLinks.map((link) => (
-              <div key={link.labelKey} className="flex-1 min-w-0 min-h-[32px] flex">
+              <div key={link.labelKey} className="flex-1 min-w-0 min-h-[38px] flex">
                 <SmoothLink
                   href={link.href}
                   prefetch={true}
-                  className="hero-footer-btn-taper w-full h-full min-h-[32px] py-1 px-0.5 sm:px-1 flex flex-col items-center justify-center gap-0.5 text-white text-sm font-medium border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl"
+                  className="hero-btn-header hero-footer-btn-taper w-full h-full min-h-[38px] px-1.5 py-1.5 flex items-center justify-center gap-1 text-xs font-medium border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200"
                 >
-                  <Mail className="w-4 h-4 shrink-0" strokeWidth={2.5} fill="none" stroke="white" aria-hidden />
-                  <span className="text-sm leading-tight">{t(link.labelKey)}</span>
+                  <Mail className="w-6 h-6 shrink-0" strokeWidth={2.5} fill="none" stroke="white" aria-hidden />
+                  <span className="leading-tight">{t(link.labelKey)}</span>
                 </SmoothLink>
               </div>
             ))}

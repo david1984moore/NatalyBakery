@@ -23,7 +23,7 @@ export default function ContactPage() {
     <main data-scrollable className="min-h-screen min-h-[100dvh]" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
       {/* Header - mobile: fixed; desktop: sticky, no strip, subtle shadow */}
       <div
-        className="fixed top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm min-h-[40px] md:min-h-[80px]"
+        className="fixed top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm header-bar-shadow shadow-sm min-h-[40px] md:min-h-[80px]"
       >
         <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent">
           {/* Mobile Layout (< 768px) - unchanged */}
@@ -134,10 +134,10 @@ export default function ContactPage() {
         <div className="space-y-8">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-warmgray-800">
+            <h1 className="pt-10 md:pt-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-warmgray-800">
               {t('contact.getInTouch')}
             </h1>
-            <p className="text-lg md:text-xl text-warmgray-600 max-w-2xl mx-auto font-light">
+            <p className="text-lg md:text-xl text-warmgray-700 max-w-2xl mx-auto font-light">
               {t('contact.subtitle')}
             </p>
           </div>

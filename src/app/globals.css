@@ -278,6 +278,13 @@ main {
       linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0%, transparent 65%);
   }
 
+  /* Desktop: shadow under the header bar – darker and smooth (used on contact and other page headers) */
+  @media (hover: hover) and (pointer: fine) {
+    .header-bar-shadow {
+      box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.22);
+    }
+  }
+
   /* Keep delivery date input within its container (no overflow/clipping on mobile).
    * Native date inputs can have a large intrinsic width; constrain to 100% of parent
    * and allow shrinking so the field is never cut off. */
@@ -287,11 +294,11 @@ main {
     max-width: 100%;
     box-sizing: border-box;
   }
-  /* Mobile: delivery date field must stay in its rightful position.
+  /* Touch devices: delivery date field must stay in its rightful position.
    * Root cause: native input[type=date] has browser-default min-width (e.g. 140px+)
    * which can make the field overflow and shift layout. Fix: (1) wrapper with strict
    * containment, (2) override any intrinsic width so input cannot exceed container. */
-  @media (max-width: 1023px) {
+  @media (hover: none) and (pointer: coarse) {
     .checkout-delivery-date-wrapper {
       width: 100%;
       min-width: 0;
@@ -383,7 +390,7 @@ select:not([class*="transition"]) {
 }
 
 /* Desktop only: grey shadow/glow around the hero header brand name */
-@media (min-width: 1024px) {
+@media (hover: hover) and (pointer: fine) {
   #brand-name-wrapper-desktop h1 {
     text-shadow:
       0 2px 4px rgba(0, 0, 0, 1),
@@ -415,12 +422,12 @@ html {
 }
 
 
-/* Mobile: native scroll behavior + full-height chain so no white above header during overscroll.
+/* Touch devices: native scroll behavior + full-height chain so no white above header during overscroll.
  * (1) overscroll-behavior-y: auto allows native rubber band, bounce, and pull-to-refresh.
  *     theme-color meta (layout.tsx) colors Safari's overscroll area when bounce occurs.
  * (2) html uses min-height (not height: 100%) so the root can extend properly.
  * (3) -webkit-overflow-scrolling: touch enables momentum scrolling on iOS. */
-@media (max-width: 1023px) {
+@media (hover: none) and (pointer: coarse) {
   html {
     scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
@@ -523,7 +530,7 @@ main {
   will-change: transform;
 }
 
-@media (min-width: 1024px) {
+@media (hover: hover) and (pointer: fine) {
   .product-card-smooth:hover {
     /* Smooth scale with GPU acceleration - desktop only */
     transform: translateZ(0) scale(1.05);
@@ -636,17 +643,17 @@ body.cart-open {
 .cart-backdrop {
   top: 0;
 }
-@media (min-width: 1024px) {
+@media (hover: hover) and (pointer: fine) {
   .cart-backdrop {
     top: 0;
   }
 }
 
-/* Cart modal top offset: menu has 2-row header on mobile (~100px), desktop md:min-h-[80px]. Add gap so modal never touches header. */
+/* Cart modal top offset: menu has 2-row header on mobile (~100px), desktop min-h-[80px]. Add gap so modal never touches header. */
 .cart-modal-top-menu {
   top: calc(100px + 16px + env(safe-area-inset-top, 0px));
 }
-@media (min-width: 1024px) {
+@media (hover: hover) and (pointer: fine) {
   .cart-modal-top-menu {
     top: calc(80px + 24px + env(safe-area-inset-top, 0px));
   }
@@ -654,7 +661,7 @@ body.cart-open {
 .cart-modal-top-default {
   top: calc(64px + 12px + env(safe-area-inset-top, 0px));
 }
-@media (min-width: 1024px) {
+@media (hover: hover) and (pointer: fine) {
   .cart-modal-top-default {
     top: calc(80px + 24px + env(safe-area-inset-top, 0px));
   }
@@ -671,7 +678,7 @@ body.cart-open {
     width: 20rem;
   }
 }
-@media (min-width: 1024px) {
+@media (hover: hover) and (pointer: fine) {
   .cart-modal-centered {
     width: 24rem;
   }
@@ -793,7 +800,7 @@ body.cart-open {
 .menu-content-top {
   padding-top: 0.5rem;
 }
-@media (min-width: 1024px) {
+@media (hover: hover) and (pointer: fine) {
   .menu-content-top {
     padding-top: 1rem;
   }

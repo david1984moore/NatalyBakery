@@ -67,13 +67,13 @@ export default function RootLayout({
           rel="preload"
           as="image"
           href="/optimized/new_hero_1-sm.avif"
-          media="(max-width: 1024px)"
+          media="(hover: none) and (pointer: coarse)"
         />
         <link
           rel="preload"
           as="image"
           href="/optimized/IMG_7616-xl.avif"
-          media="(min-width: 1025px)"
+          media="(hover: hover) and (pointer: fine)"
         />
       </head>
       <body>
