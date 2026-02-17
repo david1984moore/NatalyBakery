@@ -8,7 +8,6 @@ import LanguageToggle from '@/components/LanguageToggle'
 import Cart from '@/components/Cart'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail } from 'lucide-react'
-import EnvelopeIcon from '@/components/EnvelopeIcon'
 
 interface OrderData {
   orderNumber: string
@@ -64,24 +63,24 @@ function SuccessPageContent() {
       <Cart />
       {/* Navigation Bar - matches menu page structure */}
       <div
-        className="sticky top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm"
-        style={{ minHeight: '40px' }}
+        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-headerMobileTan md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm shadow-sm isolate"
+        style={{ minHeight: '40px', width: '100%' }}
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
-          {/* Mobile header */}
-          <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-            <SmoothLink href="/" className="flex-shrink-0 flex items-center h-full" aria-label="Home">
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">
+        <div className="relative z-10 flex flex-col min-h-[40px] max-md:bg-headerMobileTan border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
+          {/* Mobile: fixed so content never bleeds above; safe-area + truncate for landscape */}
+          <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
+            <SmoothLink href="/" className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full" aria-label="Home">
+              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">
                 Caramel & Jo
               </span>
             </SmoothLink>
-            <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0">
+            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
               <SmoothLink
                 href="/contact"
                 aria-label={t('nav.contact')}
-                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
-                <EnvelopeIcon className="w-6 h-6" />
+                <Mail className="w-5 h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" fill="none" aria-hidden />
               </SmoothLink>
               <LanguageToggle variant="menuHeader" />
               <button
@@ -136,6 +135,9 @@ function SuccessPageContent() {
           </div>
         </div>
       </div>
+
+      {/* Spacer so content starts below fixed header (mobile); desktop uses sticky so no height needed */}
+      <div className="h-[calc(56px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0" aria-hidden />
 
       <div className="menu-content-top flex items-start relative z-0 safe-bottom pt-4 md:pt-6 pb-24 md:pb-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto w-full">

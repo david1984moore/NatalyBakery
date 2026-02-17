@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
-import EnvelopeIcon from '@/components/EnvelopeIcon'
 import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
@@ -211,17 +210,17 @@ export default function CheckoutPage() {
         <Cart />
         {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
         <div
-          className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm"
-          style={{ minHeight: '40px' }}
+          className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-headerMobileTan md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
+          style={{ minHeight: '40px', width: '100%' }}
         >
-          <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
-            <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-              <SmoothLink href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
-                <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+          <div className="max-md:bg-headerMobileTan border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
+            <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
+              <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+                <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
               </SmoothLink>
-              <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0">
-                <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
-                <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><EnvelopeIcon className="w-6 h-6" /></SmoothLink>
+              <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+                <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
+                <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-5 h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" fill="none" aria-hidden /></SmoothLink>
                 <LanguageToggle variant="menuHeader" />
                 <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
@@ -282,17 +281,17 @@ export default function CheckoutPage() {
       <Cart />
       {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
       <div
-        className="fixed top-0 left-0 right-0 z-[100] safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm"
-        style={{ minHeight: '40px' }}
+        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-headerMobileTan md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
+        style={{ minHeight: '40px', width: '100%' }}
       >
-        <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
-          <div className="md:hidden flex items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
-            <SmoothLink href="/" className="min-w-0 flex-shrink flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+        <div className="max-md:bg-headerMobileTan border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
+          <div className="md:hidden flex items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
+            <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
             </SmoothLink>
-            <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0">
-              <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
-              <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><EnvelopeIcon className="w-6 h-6" /></SmoothLink>
+            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+              <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
+              <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-5 h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" fill="none" aria-hidden /></SmoothLink>
               <LanguageToggle variant="menuHeader" />
               <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>

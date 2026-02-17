@@ -23,28 +23,29 @@ export default function ContactPage() {
     <main data-scrollable className="min-h-screen min-h-[100dvh]" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
       {/* Header - mobile: fixed; desktop: sticky, no strip, subtle shadow */}
       <div
-        className="fixed top-0 left-0 right-0 z-50 safe-top w-full max-w-[100vw] overflow-visible max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm header-bar-shadow shadow-sm min-h-[40px] md:min-h-[80px]"
+        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-headerMobileTan md:sticky md:top-0 md:bg-background md:backdrop-blur-sm header-bar-shadow shadow-sm min-h-[40px] md:min-h-[80px] isolate"
+        style={{ width: '100%' }}
       >
-        <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent">
-          {/* Mobile Layout (< 768px) - unchanged */}
-          <div className="md:hidden flex flex-1 items-center justify-between gap-2 pl-2.5 pr-3 min-h-[40px] -translate-y-1.5 min-w-0">
+        <div className="max-md:bg-headerMobileTan border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent">
+          {/* Mobile: safe-area padding + truncate brand so landscape never overflows */}
+          <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
             <SmoothLink
               href="/"
-              className="flex-shrink-0 flex items-center h-full"
+              className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow">Caramel & Jo</span>
+              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
             </SmoothLink>
-            <div className="flex items-center gap-4 sm:gap-5 flex-shrink-0">
+            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />
               {visibleNavLinks.map((link) => (
                 <SmoothLink
                   key={link.labelKey}
                   href={link.href}
                   aria-label={t(link.labelKey)}
-                  className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+                  className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
                 >
-                  <UtensilsCrossed className="w-6 h-6 text-white" strokeWidth={2.5} stroke="white" fill="white" />
+                  <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" />
                 </SmoothLink>
               ))}
               <button

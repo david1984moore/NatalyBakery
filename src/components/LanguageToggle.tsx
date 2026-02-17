@@ -60,7 +60,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
       <button
         type="button"
         onClick={toggleLanguage}
-        className="hero-btn-header hero-footer-btn-taper w-full h-full min-h-[38px] px-1.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium"
+        className="hero-btn-header hero-footer-btn-taper min-h-[38px] min-w-0 max-w-[5.5rem] px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium"
         style={{ fontFamily: 'var(--font-ui-active, var(--font-ui)), sans-serif' }}
         aria-label={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}
         title={`Switch to ${language === 'en' ? 'Spanish' : 'English'}`}

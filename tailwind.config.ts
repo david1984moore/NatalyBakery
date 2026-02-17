@@ -58,6 +58,8 @@ const config: Config = {
         },
         // Solid equivalent of header buttons (stone-800/45 on hero) - use for selected menu tab so it matches on any background
         headerButtonFill: '#a07e68',
+        // Mobile only: light tan fill for header bar (matches header button area)
+        headerMobileTan: '#ddd8cd',
         // Warm neutrals - soft caramel undertones
         beige: {
           50: '#faf7f1',
