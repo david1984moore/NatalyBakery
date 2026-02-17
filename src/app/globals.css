@@ -458,6 +458,33 @@ html {
   .hero-footer-bar-mobile {
     background: var(--hero-footer-gradient);
   }
+  /* Mobile page headers (menu, contact, checkout): same fill as hero footer.
+   * Uses this media query so we don't rely on Tailwind's max-md variant, which
+   * is unreliable when md is a raw (hover/pointer) breakpoint. */
+  .mobile-header-hero-fill {
+    background: var(--hero-footer-gradient);
+  }
+
+  /* Landscape: single seamless background so no disconnected corner blocks or strips.
+   * One gradient from page color to footer gradient at bottom for coherent structure. */
+  @media (orientation: landscape) {
+    html,
+    body {
+      background-image:
+        linear-gradient(
+          to bottom,
+          var(--background) 0%,
+          var(--background) 65%,
+          #efe8dc 85%,
+          #e5d9c8 92%,
+          #d6b88a 98%,
+          #c49868 100%
+        );
+      background-size: 100% 100%;
+      background-position: 0 0;
+      background-repeat: no-repeat;
+    }
+  }
 }
 
 /* Touch scrolling optimizations */
@@ -763,6 +790,7 @@ body.cart-open {
 /* ============================================
    CRITICAL: Landscape orientation edge-to-edge rendering
    Works with viewport-fit=cover to eliminate letterbox borders on iOS.
+   Ensures one coherent structure during and after rotation (portrait ↔ landscape).
    ============================================ */
 @media (orientation: landscape) {
   html,
@@ -780,8 +808,15 @@ body.cart-open {
     max-width: none;
   }
 
-  /* Main content full-width */
+  /* Main content full-width so hero and sections use full width */
   main {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  /* Page wrapper (e.g. PageTransition) full width in landscape */
+  [data-page-wrapper] {
     width: 100%;
     max-width: none;
   }

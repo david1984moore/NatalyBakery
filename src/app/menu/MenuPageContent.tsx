@@ -205,10 +205,10 @@ export default function MenuPageContent({
     <div className="min-h-screen min-h-[100dvh] bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
       {/* Mobile: fixed so nav stays visible (iOS sticky unreliable); no overflow-x-hidden so brand/cart not clipped in landscape */}
       <div
-        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:shadow-sm min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)] isolate"
+        className="fixed inset-x-0 top-0 z-[100] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:shadow-sm min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)] isolate"
         style={{ width: '100%' }}
       >
-        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] max-md:bg-hero-footer-gradient md:bg-transparent">
+        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-transparent">
           <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
             <SmoothLink
               href="/"

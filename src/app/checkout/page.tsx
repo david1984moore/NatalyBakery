@@ -210,10 +210,10 @@ export default function CheckoutPage() {
         <Cart />
         {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
         <div
-          className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
+          className="fixed inset-x-0 top-0 z-[100] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
           style={{ minHeight: '40px', width: '100%' }}
         >
-          <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
+          <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
             <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
               <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
@@ -281,10 +281,10 @@ export default function CheckoutPage() {
       <Cart />
       {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
       <div
-        className="fixed inset-x-0 top-0 z-[100] safe-top max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
+        className="fixed inset-x-0 top-0 z-[100] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
         style={{ minHeight: '40px', width: '100%' }}
       >
-        <div className="max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
+        <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
           <div className="md:hidden flex items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
             <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
