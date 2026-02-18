@@ -39,8 +39,16 @@ export default function Hero() {
           </h1>
         </div>
         </div>
+        {/* Shadow gradient above footer */}
+        <div
+          className="absolute bottom-0 left-0 right-0 z-[5] h-24 landscape:h-16 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 100%)',
+          }}
+          aria-hidden
+        />
         <footer
-          className="absolute bottom-0 left-0 right-0 z-10 min-h-[72px] landscape:min-h-[56px] flex items-center justify-center px-3 sm:px-5 landscape:px-[max(0.5rem,env(safe-area-inset-left))] landscape:pr-[max(0.5rem,env(safe-area-inset-right))] pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-gradient-to-r from-[#d6b88a] to-hero-600 hero-footer-bar-mobile shadow-[0_-16px_32px_rgba(0,0,0,0.35),0_-28px_56px_rgba(0,0,0,0.28)]"
+          className="absolute bottom-0 left-0 right-0 z-10 min-h-[72px] landscape:min-h-[56px] flex items-center justify-center px-3 sm:px-5 landscape:px-[max(0.5rem,env(safe-area-inset-left))] landscape:pr-[max(0.5rem,env(safe-area-inset-right))] pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-gradient-to-r from-[#d6b88a] to-hero-600 hero-footer-bar-mobile shadow-[0_-20px_40px_rgba(0,0,0,0.4),0_-36px_72px_rgba(0,0,0,0.32),0_-8px_24px_rgba(0,0,0,0.25)]"
           aria-label="Navigation"
         >
           <nav className="flex items-center w-full max-w-md landscape:max-w-none mx-auto landscape:mx-0 min-h-[56px] landscape:min-h-[48px]">
@@ -70,7 +78,7 @@ export default function Hero() {
               <SmoothLink
                 href="/menu"
                 prefetch={true}
-                className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-[42px] w-[6rem] landscape:h-[36px] landscape:w-[5.5rem] flex items-center justify-center px-2.5 py-1.5 landscape:px-2 landscape:py-1 text-white text-sm font-medium border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl md:hover:opacity-90 transition-colors duration-200"
+                className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-[42px] w-[6rem] landscape:h-[36px] landscape:w-[5.5rem] flex items-center justify-center px-2.5 py-1.5 landscape:px-2 landscape:py-1 text-white text-base font-medium border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl md:hover:opacity-90 transition-colors duration-200"
               >
                 {t('nav.order')}
               </SmoothLink>
