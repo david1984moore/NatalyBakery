@@ -24,6 +24,7 @@ import CartPreviewModal from '@/components/CartPreviewModal'
 import LanguageToggle from '@/components/LanguageToggle'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import ProductImage from '@/components/ProductImage'
+import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
 
 interface MenuPageContentProps {
   products: Product[]
@@ -32,6 +33,7 @@ interface MenuPageContentProps {
 export default function MenuPageContent({
   products,
 }: MenuPageContentProps) {
+  usePageHeroHeader()
   const searchParams = useSearchParams()
   const router = useRouter()
   const { addItem, items } = useCart()
@@ -98,6 +100,22 @@ export default function MenuPageContent({
     updateScrollRef()
     touchQuery.addEventListener('change', updateScrollRef)
     window.addEventListener('resize', updateScrollRef)
+
+    /* iOS: orientation change can break -webkit-overflow-scrolling touch; force reflow so horizontal scroll works again */
+    const handleOrientationChange = () => {
+      const mobileContainer = document.querySelector('.mobile-scroll-container') as HTMLDivElement
+      if (mobileContainer) {
+        const prev = mobileContainer.style.display
+        mobileContainer.style.display = 'none'
+        mobileContainer.offsetHeight
+        requestAnimationFrame(() => {
+          mobileContainer.style.display = prev || ''
+        })
+      }
+      updateScrollRef()
+    }
+    window.addEventListener('orientationchange', handleOrientationChange)
+
     const container = scrollContainerRef.current
     if (container) {
       container.addEventListener('scroll', checkScrollPosition)
@@ -106,12 +124,14 @@ export default function MenuPageContent({
         container.removeEventListener('scroll', checkScrollPosition)
         touchQuery.removeEventListener('change', updateScrollRef)
         window.removeEventListener('resize', updateScrollRef)
+        window.removeEventListener('orientationchange', handleOrientationChange)
       }
     }
     return () => {
       clearTimeout(timer)
       touchQuery.removeEventListener('change', updateScrollRef)
       window.removeEventListener('resize', updateScrollRef)
+      window.removeEventListener('orientationchange', handleOrientationChange)
     }
   }, [products, t])
 
@@ -352,7 +372,7 @@ export default function MenuPageContent({
         {/* Mobile: category row is part of the sticky header so it stays visible when scrolling */}
         <div className="md:hidden flex-shrink-0 bg-background border-t border-warmgray-200">
           <div
-            className="flex items-center gap-2.5 overflow-x-auto scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container"
+            className="flex items-center gap-2.5 overflow-x-auto overflow-y-hidden scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container touch-pan-x"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {products.map((product) => {

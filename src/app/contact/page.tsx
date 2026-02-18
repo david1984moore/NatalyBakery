@@ -7,6 +7,7 @@ import { UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useCart } from '@/contexts/CartContext'
 import SmoothLink from '@/components/SmoothLink'
+import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
 
 const navLinks = [
   { href: '/menu', labelKey: 'nav.menu' as const },
@@ -14,6 +15,7 @@ const navLinks = [
 ]
 
 export default function ContactPage() {
+  usePageHeroHeader()
   const visibleNavLinks = navLinks.filter((link) => link.href !== '/contact')
   const { t } = useLanguage()
   const { items } = useCart()

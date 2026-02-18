@@ -11,8 +11,10 @@ import CheckoutForm from '@/components/CheckoutForm'
 import LanguageToggle from '@/components/LanguageToggle'
 import Cart from '@/components/Cart'
 import { CheckoutResponse } from '@/types/checkout'
+import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
 
 export default function CheckoutPage() {
+  usePageHeroHeader()
   const router = useRouter()
   const { items, getTotalAmount, getDepositAmount, getRemainingAmount, clearCart } = useCart()
   const { t } = useLanguage()
@@ -218,10 +220,10 @@ export default function CheckoutPage() {
               <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full overflow-visible outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
                 <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">Caramel & Jo</span>
               </SmoothLink>
-              <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
-                <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
-                <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" /></SmoothLink>
+              <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0 pr-3">
                 <LanguageToggle variant="menuHeader" />
+                <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
+                <SmoothLink href="/contact" aria-label={t('nav.contact')} className="shrink-0 min-h-[38px] md:min-h-[44px] min-w-[38px] max-md:w-[38px] max-md:h-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
                 <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="white" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                   {itemCount > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{itemCount}</span>}
@@ -289,10 +291,10 @@ export default function CheckoutPage() {
             <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full overflow-visible outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
               <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">Caramel & Jo</span>
             </SmoothLink>
-            <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
-              <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
-              <SmoothLink href="/contact" aria-label={t('nav.contact')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" /></SmoothLink>
+            <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0 pr-3">
               <LanguageToggle variant="menuHeader" />
+              <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
+              <SmoothLink href="/contact" aria-label={t('nav.contact')} className="shrink-0 min-h-[38px] md:min-h-[44px] min-w-[38px] max-md:w-[38px] max-md:h-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
               <button onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))} className="shrink-0 min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] hero-btn-header hero-footer-btn-taper bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white" aria-label="Shopping cart">
                 <svg className="w-7 h-7 text-white" fill="none" stroke="white" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 {items.reduce((sum, item) => sum + item.quantity, 0) > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{items.reduce((sum, item) => sum + item.quantity, 0)}</span>}
@@ -326,8 +328,8 @@ export default function CheckoutPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch min-w-0">
-            {/* Checkout form - overflow-visible on mobile so field edges are not clipped */}
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 flex flex-col min-w-0 overflow-visible md:overflow-hidden">
+            {/* Checkout form - overflow-x-clip on mobile to contain date input (WebKit bug 301648) */}
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 flex flex-col min-w-0 overflow-x-clip md:overflow-hidden">
               <form onSubmit={handleSubmit} id="checkout-form" className="space-y-3 flex-1 flex flex-col min-w-0 overflow-visible md:overflow-hidden">
                 <div className="space-y-3 min-w-0 overflow-visible md:overflow-hidden">
                   <div className="min-w-0 w-full">
@@ -391,15 +393,17 @@ export default function CheckoutPage() {
                     <label htmlFor="deliveryDate" className="block text-xs font-medium text-warmgray-700 mb-1">
                       {t('checkout.deliveryDate')}
                     </label>
-                    <input
-                      type="date"
-                      id="deliveryDate"
-                      required
-                      min={minDeliveryDate}
-                      value={customerInfo.deliveryDate}
-                      onChange={(e) => handleDeliveryDateChange(e.target.value)}
-                      className="checkout-delivery-date-input w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
-                    />
+                    <div className="checkout-delivery-date-inner">
+                      <input
+                        type="date"
+                        id="deliveryDate"
+                        required
+                        min={minDeliveryDate}
+                        value={customerInfo.deliveryDate}
+                        onChange={(e) => handleDeliveryDateChange(e.target.value)}
+                        className="checkout-delivery-date-input w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
+                      />
+                    </div>
                     {isSameDayBlocked && (
                       <p className="text-xs text-warmgray-500 mt-1" role="status">
                         {t('checkout.sameDayCutoffNote')}

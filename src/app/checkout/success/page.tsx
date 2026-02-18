@@ -9,6 +9,7 @@ import Cart from '@/components/Cart'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail } from 'lucide-react'
 import EnvelopeIcon from '@/components/EnvelopeIcon'
+import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
 
 interface OrderData {
   orderNumber: string
@@ -26,6 +27,7 @@ interface OrderData {
 }
 
 function SuccessPageContent() {
+  usePageHeroHeader()
   const searchParams = useSearchParams()
   const router = useRouter()
   const { t } = useLanguage()

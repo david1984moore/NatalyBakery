@@ -12,6 +12,16 @@ const MOBILE_BG = {
   backgroundRepeat: 'no-repeat',
 }
 
+/** Menu/contact/checkout: top overscroll area uses same gradient as header bar so pull-down never shows a different color over the header. */
+const MOBILE_BG_HERO_HEADER = {
+  backgroundColor: 'var(--background)',
+  backgroundImage:
+    'linear-gradient(to bottom, #d6b88a 0%, #c49868 10%, #c49868 28%, #e5d9c8 38%, var(--background) 45%, transparent 75%), var(--hero-footer-gradient)',
+  backgroundSize: '100% 100%, 100% 22%',
+  backgroundPosition: '0 0, 0 100%',
+  backgroundRepeat: 'no-repeat',
+}
+
 function clearBg(el: HTMLElement) {
   el.style.background = ''
   el.style.backgroundColor = ''
@@ -22,8 +32,9 @@ function clearBg(el: HTMLElement) {
 }
 
 /**
- * Applies mobile viewport background on all pages so overscroll never shows white:
- * cream at top, hero-footer-matching gradient at bottom. Runs in root layout.
+ * Applies mobile viewport background on all pages so overscroll never shows white.
+ * On menu/contact/checkout (body.page-hero-header), uses hero gradient at top so
+ * pull-down-to-refresh never overlaps the header with a different color.
  */
 export default function MobileBackgroundSync() {
   useEffect(() => {
@@ -32,20 +43,25 @@ export default function MobileBackgroundSync() {
     const mobileQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
 
     const apply = () => {
-      if (mobileQuery.matches) {
-        Object.assign(html.style, MOBILE_BG)
-        Object.assign(body.style, MOBILE_BG)
-      } else {
+      if (!mobileQuery.matches) {
         html.style.background = 'var(--background)'
         body.style.background = 'var(--background)'
+        return
       }
+      const useHeroHeader =
+        typeof document !== 'undefined' && body.classList.contains('page-hero-header')
+      const bg = useHeroHeader ? MOBILE_BG_HERO_HEADER : MOBILE_BG
+      Object.assign(html.style, bg)
+      Object.assign(body.style, bg)
     }
 
     apply()
     mobileQuery.addEventListener('change', apply)
+    window.addEventListener('page-hero-header-change', apply)
 
     return () => {
       mobileQuery.removeEventListener('change', apply)
+      window.removeEventListener('page-hero-header-change', apply)
       clearBg(html)
       clearBg(body)
     }

@@ -14,9 +14,11 @@ body {
   min-height: 100vh;
 }
 
-/* Consistent page backgrounds during transitions */
+/* Consistent page backgrounds during transitions.
+ * z-index: 0 so fixed headers (z-index max) always paint on top during overscroll on iOS. */
 [data-page-wrapper] {
   position: relative;
+  z-index: 0;
   width: 100%;
   min-height: 100vh;
   pointer-events: auto;
@@ -60,10 +62,10 @@ body::before {
 }
 */
 
-/* Ensure main content renders on top of background */
+/* Ensure main content renders below fixed headers (z-index: 0 for iOS overscroll stacking). */
 main {
   position: relative;
-  z-index: 1;
+  z-index: 0;
   scroll-behavior: smooth;
   overscroll-behavior: contain;
   background: var(--background);
@@ -114,11 +116,12 @@ body {
   padding-right: env(safe-area-inset-right, 0);
 }
 
-/* Header stability - ensure it's on top of everything */
+/* Header stability - ensure it's on top of everything.
+ * Very high z-index + translateZ(0) so iOS never draws scroll/overscroll content over the header. */
 header {
   position: sticky;
   top: 0;
-  z-index: 100; /* Increased from 50 */
+  z-index: 2147483647;
   transform: translateZ(0);
   background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%); /* Match body */
 }
@@ -133,7 +136,7 @@ main {
   overscroll-behavior: contain;
   background: var(--background);
   position: relative;
-  z-index: 1; /* Below header */
+  z-index: 0; /* Explicitly below fixed headers; no transform to avoid iOS stacking context bugs */
 }
 
 @layer utilities {
@@ -285,34 +288,48 @@ main {
     }
   }
 
-  /* Keep delivery date input within its container (no overflow/clipping on mobile).
-   * Native date inputs can have a large intrinsic width; constrain to 100% of parent
-   * and allow shrinking so the field is never cut off. */
+  /* Keep delivery date input within its container (no overflow on mobile).
+   * WebKit bug 301648: input[type=date] with padding incorrectly calculates width 100% on iOS,
+   * causing the field to overflow its card. Fix: strict containment + overflow clip. */
   .checkout-delivery-date-input {
     width: 100%;
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
   }
-  /* Touch devices: delivery date field must stay in its rightful position.
-   * Root cause: native input[type=date] has browser-default min-width (e.g. 140px+)
-   * which can make the field overflow and shift layout. Fix: (1) wrapper with strict
-   * containment, (2) override any intrinsic width so input cannot exceed container. */
+  /* Inner wrapper: on desktop passes through; on touch enables flex containment. */
+  .checkout-delivery-date-inner {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+  /* Touch devices: delivery date overflow fix.
+   * Root cause: WebKit bug 301648 - date inputs miscalculate width when padding is applied.
+   * Multi-layer fix: (1) overflow clip on wrapper to contain miscalculation,
+   * (2) flex containment so input cannot exceed parent, (3) override intrinsic min-width. */
   @media (hover: none) and (pointer: coarse) {
     .checkout-delivery-date-wrapper {
       width: 100%;
       min-width: 0;
       max-width: 100%;
-      /* overflow: hidden removed - was clipping focus ring */
-      display: block;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .checkout-delivery-date-inner {
+      display: flex;
+      min-width: 0;
+      width: 100%;
+      overflow: hidden;
     }
     .checkout-delivery-date-input,
     #checkout-form input#deliveryDate {
       width: 100% !important;
       max-width: 100% !important;
       min-width: 0 !important;
-      /* Override WebKit/Blink intrinsic min-width on date inputs */
+      flex: 1 1 0;
       -webkit-min-logical-width: 0;
+      box-sizing: border-box !important;
     }
     #checkout-form input,
     #checkout-form select,
@@ -467,13 +484,13 @@ html {
     background: var(--hero-footer-gradient);
   }
   /* Mobile page headers (menu, contact, checkout): same fill as hero footer.
-   * Uses this media query so we don't rely on Tailwind's max-md variant, which
-   * is unreliable when md is a raw (hover/pointer) breakpoint.
-   * Extend fill above viewport so overscroll/bounce never shows white over the header. */
+   * Extend fill above viewport so overscroll/bounce shows the same gradient (no white).
+   * Do NOT use z-index: -1 on ::before – on iOS it can escape the stacking context
+   * and sit behind the root, so overscroll content can draw over the header. */
   .mobile-header-hero-fill {
     background: var(--hero-footer-gradient);
   }
-  /* Extend header fill above viewport (fixed parent is already containing block) */
+  /* Extend header fill above viewport. z-index: 0 keeps it inside header's stacking context. */
   .mobile-header-hero-fill::before {
     content: '';
     position: absolute;
@@ -482,8 +499,16 @@ html {
     right: 0;
     height: 100vh;
     background: var(--hero-footer-gradient);
-    z-index: -1;
+    z-index: 0;
     pointer-events: none;
+  }
+  /* Fixed header bar: always on top during overscroll/pull-to-refresh (iOS stacking + compositor layer).
+   * !important overrides Tailwind z-[100] so nothing can ever paint over the header. */
+  .fixed.mobile-header-hero-fill {
+    z-index: 2147483647 !important;
+    transform: translateZ(0);
+    will-change: transform;
+    isolation: isolate;
   }
 
   /* Landscape: header gradient at top, then seamless transition to footer gradient at bottom. */
@@ -520,6 +545,30 @@ html {
   .touch-scroll {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+  }
+
+  /* Mobile menu category row: lock to horizontal scroll and reduce scroll chaining */
+  .mobile-scroll-container {
+    overflow-y: hidden;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  /* iOS: orientation change breaks -webkit-overflow-scrolling touch; force reflow so horizontal scroll works again (portrait and landscape) */
+  @media (orientation: landscape) {
+    .mobile-scroll-container > * {
+      -webkit-animation: fixWebkitOverflowScroll 0.15s;
+    }
+  }
+  @media (orientation: portrait) {
+    .mobile-scroll-container > * {
+      -webkit-animation: fixWebkitOverflowScroll 0.15s;
+    }
+  }
+  @-webkit-keyframes fixWebkitOverflowScroll {
+    0% { padding-bottom: 1px; }
+    100% { padding-bottom: 0px; }
   }
 }
 
