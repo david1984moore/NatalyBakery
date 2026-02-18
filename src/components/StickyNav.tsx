@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import SmoothLink from '@/components/SmoothLink'
-import { UtensilsCrossed } from 'lucide-react'
-import EnvelopeIcon from '@/components/EnvelopeIcon'
+import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useCart } from '@/contexts/CartContext'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
@@ -72,7 +71,7 @@ export default function StickyNav() {
               aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
               className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
             >
-              {link.href === '/contact' ? <EnvelopeIcon className="w-5 h-5 shrink-0" aria-hidden /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /> : t(link.labelKey)}
+              {link.href === '/contact' ? <Mail className="w-5 h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /> : t(link.labelKey)}
             </SmoothLink>
           ))}
           <LanguageToggle variant="menuHeader" />
@@ -120,7 +119,7 @@ export default function StickyNav() {
               aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
               className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
             >
-              {t(link.labelKey)}
+              {link.href === '/contact' ? <Mail className="w-5 h-5" strokeWidth={2} /> : t(link.labelKey)}
             </SmoothLink>
           ))}
           <LanguageToggle variant="menu" />
