@@ -180,14 +180,18 @@ main {
   /* Navigation font class - Playfair used for nav branding */
   .font-nav-playfair { font-family: var(--font-playfair); font-weight: 700; }
 
-  /* Brand name text shadow in headers - distinct, noticeable depth (per-letter 3D/embossed) */
+  /* Brand name text shadow in headers - soft cascade from letters, no hard edges */
   .brand-header-shadow {
     text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.9),
-      0 2px 4px rgba(0, 0, 0, 0.85),
-      0 4px 8px rgba(0, 0, 0, 0.75),
-      0 6px 12px rgba(0, 0, 0, 0.65),
-      0 8px 16px rgba(0, 0, 0, 0.5);
+      0 0 2px rgba(0, 0, 0, 0.45),
+      0 0 4px rgba(0, 0, 0, 0.4),
+      0 1px 4px rgba(0, 0, 0, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.28),
+      0 3px 12px rgba(0, 0, 0, 0.2),
+      0 4px 16px rgba(0, 0, 0, 0.14),
+      0 6px 24px rgba(0, 0, 0, 0.1),
+      0 8px 32px rgba(0, 0, 0, 0.06),
+      0 12px 40px rgba(0, 0, 0, 0.03);
   }
 
   /* Softer shadow on checkout only - avoids boxy/border-like look */
@@ -380,28 +384,34 @@ select:not([class*="transition"]) {
   transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hero brand name text shadow - outside @layer so it is not overridden by Tailwind utilities */
+/* Hero brand name text shadow - soft cascade from letters, no hard edges */
 #brand-name-wrapper h1 {
   text-shadow:
-    0 2px 8px rgba(0, 0, 0, 1),
-    0 3px 16px rgba(0, 0, 0, 0.96),
-    0 6px 32px rgba(0, 0, 0, 0.9),
-    0 12px 48px rgba(0, 0, 0, 0.82);
+    0 0 4px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(0, 0, 0, 0.42),
+    0 2px 8px rgba(0, 0, 0, 0.38),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 6px 24px rgba(0, 0, 0, 0.22),
+    0 8px 32px rgba(0, 0, 0, 0.16),
+    0 12px 48px rgba(0, 0, 0, 0.1),
+    0 16px 56px rgba(0, 0, 0, 0.06),
+    0 24px 72px rgba(0, 0, 0, 0.03);
 }
 
-/* Desktop only: grey shadow/glow around the hero header brand name */
+/* Desktop only: soft grey cascade around the hero header brand name, no hard edges */
 @media (hover: hover) and (pointer: fine) {
   #brand-name-wrapper-desktop h1 {
     text-shadow:
-      0 2px 4px rgba(0, 0, 0, 1),
-      0 4px 8px rgba(0, 0, 0, 0.95),
-      0 6px 16px rgba(0, 0, 0, 0.9),
-      0 10px 28px rgba(0, 0, 0, 0.85),
-      0 2px 24px rgba(0, 0, 0, 0.5),
-      0 4px 40px rgba(0, 0, 0, 0.35),
-      0 0 20px rgba(100, 100, 100, 0.45),
-      0 0 40px rgba(80, 80, 80, 0.3),
-      0 0 60px rgba(60, 60, 60, 0.2);
+      0 0 4px rgba(0, 0, 0, 0.48),
+      0 0 8px rgba(0, 0, 0, 0.4),
+      0 2px 12px rgba(0, 0, 0, 0.32),
+      0 4px 20px rgba(0, 0, 0, 0.24),
+      0 6px 28px rgba(0, 0, 0, 0.18),
+      0 8px 36px rgba(0, 0, 0, 0.12),
+      0 12px 48px rgba(0, 0, 0, 0.08),
+      0 0 24px rgba(80, 80, 80, 0.2),
+      0 0 48px rgba(60, 60, 60, 0.12),
+      0 0 72px rgba(50, 50, 50, 0.06);
   }
 }
 
@@ -444,14 +454,22 @@ html {
   }
   html,
   body {
+    /* Top: header gradient so status bar + overscroll area display as one cohesive header.
+     * Transitions to page background, then footer gradient at bottom. */
     background-color: var(--background);
     background-image:
-      linear-gradient(to bottom, var(--background) 0%, transparent 78%),
+      linear-gradient(
+        to bottom,
+        #d6b88a 0%,
+        #c49868 8%,
+        #e5d9c8 16%,
+        var(--background) 22%,
+        transparent 78%
+      ),
       var(--hero-footer-gradient);
     background-size: 100% 100%, 100% 22%;
     background-position: 0 0, 0 100%;
     background-repeat: no-repeat;
-    /* Ensure background covers entire scrollable area including overscroll. */
     background-attachment: scroll;
   }
   /* Hero footer bar: same gradient as viewport bottom so footer and area below are seamless */
@@ -465,15 +483,16 @@ html {
     background: var(--hero-footer-gradient);
   }
 
-  /* Landscape: single seamless background so no disconnected corner blocks or strips.
-   * One gradient from page color to footer gradient at bottom for coherent structure. */
+  /* Landscape: header gradient at top, then seamless transition to footer gradient at bottom. */
   @media (orientation: landscape) {
     html,
     body {
       background-image:
         linear-gradient(
           to bottom,
-          var(--background) 0%,
+          #d6b88a 0%,
+          #c49868 6%,
+          var(--background) 12%,
           var(--background) 65%,
           #efe8dc 85%,
           #e5d9c8 92%,

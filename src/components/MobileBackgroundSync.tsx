@@ -2,11 +2,11 @@
 
 import { useEffect } from 'react'
 
-/** Same as globals.css mobile: cream at top, hero-footer gradient at bottom (single source of truth via --hero-footer-gradient). */
+/** Same as globals.css mobile: header gradient at top for cohesive header/overscroll, then page bg, hero-footer at bottom. */
 const MOBILE_BG = {
   backgroundColor: 'var(--background)',
   backgroundImage:
-    'linear-gradient(to bottom, var(--background) 0%, transparent 78%), var(--hero-footer-gradient)',
+    'linear-gradient(to bottom, #d6b88a 0%, #c49868 8%, #e5d9c8 16%, var(--background) 22%, transparent 78%), var(--hero-footer-gradient)',
   backgroundSize: '100% 100%, 100% 22%',
   backgroundPosition: '0 0, 0 100%',
   backgroundRepeat: 'no-repeat',
