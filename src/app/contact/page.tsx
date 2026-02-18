@@ -31,10 +31,10 @@ export default function ContactPage() {
           <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
             <SmoothLink
               href="/"
-              className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full"
+              className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full overflow-visible"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
+              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">Caramel & Jo</span>
             </SmoothLink>
             <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
               <LanguageToggle variant="menuHeader" />

@@ -215,8 +215,8 @@ export default function CheckoutPage() {
         >
           <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
             <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
-              <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
-                <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
+              <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full overflow-visible outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+                <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">Caramel & Jo</span>
               </SmoothLink>
               <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
                 <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
@@ -286,8 +286,8 @@ export default function CheckoutPage() {
       >
         <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
           <div className="md:hidden flex items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
-            <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">Caramel & Jo</span>
+            <SmoothLink href="/" className="min-w-0 flex-shrink max-w-[45%] flex items-center h-full overflow-visible outline-none focus:outline-none focus-visible:ring-0" aria-label="Home">
+              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">Caramel & Jo</span>
             </SmoothLink>
             <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
               <SmoothLink href="/menu" aria-label={t('nav.menu')} className="min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs hero-btn-header hero-footer-btn-taper border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"><UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /></SmoothLink>
@@ -511,7 +511,7 @@ export default function CheckoutPage() {
                       if (form) form.requestSubmit()
                     }
                   }}
-                  className="block w-full min-h-[44px] px-4 py-2.5 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md font-medium text-base transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-hero-600 md:border-0 md:bg-[#1f2937] md:py-3 md:px-4 md:hover:bg-[#374151]"
+                  className="block w-full min-h-[44px] px-4 py-2.5 border rounded-md font-medium text-base text-center border-transparent bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white transition-colors duration-standard ease-apple disabled:opacity-50 disabled:cursor-not-allowed md:border-0 md:bg-[#1f2937] md:py-3 md:px-4 md:hover:bg-[#374151]"
                   style={{ fontFamily: 'var(--font-ui), sans-serif' }}
                 >
                   {isLoading ? (

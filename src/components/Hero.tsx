@@ -1,8 +1,7 @@
 'use client'
 
 import SmoothLink from '@/components/SmoothLink'
-import { UtensilsCrossed } from 'lucide-react'
-import EnvelopeIcon from '@/components/EnvelopeIcon'
+import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
 import { OptimizedImage } from '@/components/OptimizedImage'
@@ -45,7 +44,7 @@ export default function Hero() {
           aria-label="Navigation"
         >
           <nav className="flex items-center w-full max-w-md landscape:max-w-none mx-auto landscape:mx-0 min-h-[56px] landscape:min-h-[48px]">
-            <div className="flex items-center justify-start flex-1 min-w-0 pr-2">
+            <div className="flex items-center justify-start flex-1 min-w-0 pl-4 sm:pl-6 pr-2">
               <LanguageToggle variant="heroFooter" />
             </div>
             <div className="flex items-center justify-center gap-4 sm:gap-6 landscape:gap-3 shrink-0">
@@ -63,11 +62,11 @@ export default function Hero() {
                   prefetch={true}
                   className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex items-center justify-center border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-2xl md:hover:opacity-90 transition-colors duration-200"
                 >
-                  <EnvelopeIcon className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0" aria-hidden />
+                  <Mail className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
                 </SmoothLink>
               ))}
             </div>
-            <div className="flex items-center justify-end flex-1 min-w-0 pl-2">
+            <div className="flex items-center justify-end flex-1 min-w-0 pl-2 pr-4 sm:pr-6">
               <SmoothLink
                 href="/menu"
                 prefetch={true}

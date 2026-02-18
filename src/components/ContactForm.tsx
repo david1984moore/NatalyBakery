@@ -201,7 +201,7 @@ export default function ContactForm({ onSuccess }: ContactFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white rounded-md md:hover:bg-hero-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium text-base sm:text-sm"
+        className="w-full min-h-[44px] px-4 py-2.5 sm:py-2 border rounded-md font-medium text-base sm:text-sm border-transparent bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white transition-colors duration-standard ease-apple disabled:opacity-50 disabled:cursor-not-allowed md:border-2 md:border-hero-600 md:bg-headerButtonFill md:hover:bg-hero-600"
         style={{ fontFamily: 'var(--font-ui), sans-serif' }}
       >
         {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}

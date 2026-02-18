@@ -266,7 +266,7 @@ export default function Cart() {
                       setIsOpen(false)
                       if (!isCheckoutPage) router.push('/checkout')
                     }}
-                    className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white text-center rounded-md hover:bg-hero-600 md:hover:bg-hero-600 transition-colors duration-200 font-medium text-base sm:text-sm relative z-10"
+                    className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border rounded-md font-medium text-base sm:text-sm text-center border-transparent bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white transition-colors duration-standard ease-apple md:border-2 md:border-hero-600 md:bg-headerButtonFill md:hover:bg-hero-600 relative z-10"
                     style={{ fontFamily: 'var(--font-ui), sans-serif', touchAction: 'manipulation' }}
                   >
                     {t('cart.checkout')}
@@ -471,7 +471,7 @@ export default function Cart() {
                     setIsOpen(false)
                     if (!isCheckoutPage) router.push('/checkout')
                   }}
-                  className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border-2 border-hero-600 bg-headerButtonFill text-white text-center rounded-md hover:bg-hero-600 md:hover:bg-hero-600 transition-colors duration-200 font-medium text-base sm:text-sm"
+                  className="block w-full min-h-[44px] px-4 py-2.5 sm:py-2 border rounded-md font-medium text-base sm:text-sm text-center border-transparent bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white transition-colors duration-standard ease-apple md:border-2 md:border-hero-600 md:bg-headerButtonFill md:hover:bg-hero-600"
                   style={{ fontFamily: 'var(--font-ui), sans-serif', touchAction: 'manipulation' }}
                 >
                   {t('cart.checkout')}

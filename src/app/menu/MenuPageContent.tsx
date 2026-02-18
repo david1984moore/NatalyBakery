@@ -213,10 +213,10 @@ export default function MenuPageContent({
             <SmoothLink
               href="/"
               prefetch={true}
-              className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full"
+              className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full overflow-visible"
               aria-label="Home"
             >
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow truncate block">
+              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">
                 Caramel & Jo
               </span>
             </SmoothLink>
