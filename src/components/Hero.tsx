@@ -78,7 +78,7 @@ export default function Hero() {
               <SmoothLink
                 href="/menu"
                 prefetch={true}
-                className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-[42px] w-[6rem] landscape:h-[36px] landscape:w-[5.5rem] flex items-center justify-center px-2.5 py-1.5 landscape:px-2 landscape:py-1 text-white text-base font-medium border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl md:hover:opacity-90 transition-colors duration-200"
+                className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-[42px] w-[6rem] landscape:h-[36px] landscape:w-[5.5rem] flex items-center justify-center px-2.5 py-1.5 landscape:px-2 landscape:py-1 text-white text-lg font-medium border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl md:hover:opacity-90 transition-colors duration-200"
               >
                 {t('nav.order')}
               </SmoothLink>
