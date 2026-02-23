@@ -116,13 +116,12 @@ body {
   padding-right: env(safe-area-inset-right, 0);
 }
 
-/* Header stability - ensure it's on top of everything.
- * Very high z-index + translateZ(0) so iOS never draws scroll/overscroll content over the header. */
+/* Header stability - ensure it's on top of everything. */
 header {
   position: sticky;
   top: 0;
   z-index: 2147483647;
-  transform: translateZ(0);
+  /* No transform, no will-change — fixed/sticky elements do not need GPU promotion */
   background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%); /* Match body */
 }
 
@@ -432,8 +431,11 @@ html {
   width: 100%;
   /* Ensure html fills viewport so overscroll/rubber-band never reveals white. */
   min-height: 100%;
-  /* CRITICAL: Root background prevents any white gaps in landscape (viewport-fit=cover + this = edge-to-edge). */
-  background-color: var(--background);
+  /* CRITICAL: Root background prevents any white gaps in landscape (viewport-fit=cover + this = edge-to-edge).
+   Match header/hero fill (#c49868 = top stop of --hero-footer-gradient) so Safari overscroll region is seamless. */
+  background-image: none;
+  background-color: #c49868;
+  overscroll-behavior-y: none; /* prevents bounce on non-touch */
   /* Reserve scrollbar space at all times so overflow:hidden (cart modal) doesn't shift layout or create a strip */
   scrollbar-gutter: stable;
 }
@@ -479,6 +481,10 @@ html {
     background-repeat: no-repeat;
     background-attachment: scroll;
   }
+  html {
+    background-image: none;
+    background-color: #c49868; /* same value — ensure touch block doesn't override; Safari overscroll uses this */
+  }
   /* Hero footer bar: same gradient as viewport bottom so footer and area below are seamless */
   .hero-footer-bar-mobile {
     background: var(--hero-footer-gradient);
@@ -502,13 +508,11 @@ html {
     z-index: 0;
     pointer-events: none;
   }
-  /* Fixed header bar: always on top during overscroll/pull-to-refresh (iOS stacking + compositor layer).
+  /* Fixed header bar: always on top during overscroll/pull-to-refresh (iOS stacking).
    * !important overrides Tailwind z-[100] so nothing can ever paint over the header. */
   .fixed.mobile-header-hero-fill {
     z-index: 2147483647 !important;
-    transform: translateZ(0);
-    will-change: transform;
-    isolation: isolate;
+    /* isolation and will-change removed — these fight Safari's overscroll compositor */
   }
 
   /* Landscape: header gradient at top, then seamless transition to footer gradient at bottom. */
@@ -719,18 +723,16 @@ main {
   }
 }
 
-/* Scroll lock when cart is open - prevents background scroll (critical for iOS)
- * position: fixed + top anchors body; prevents scroll propagation. */
+/* Scroll lock when cart is open - prevents background scroll (critical for iOS).
+ * --scroll-y set via CSS custom property before class applies (no one-frame gap in Safari).
+ * html handles overflow; body uses position:fixed + top:var(--scroll-y). */
 html.cart-open {
   overflow: hidden;
-  overscroll-behavior: none;
 }
-body.cart-open {
-  overflow: hidden;
+
+html.cart-open body {
   position: fixed;
-  /* top set by Cart.tsx inline style to -scrollY for position preservation */
-  left: 0;
-  right: 0;
+  top: var(--scroll-y);
   width: 100%;
   touch-action: none;
   overscroll-behavior: none;

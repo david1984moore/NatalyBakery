@@ -43,29 +43,25 @@ export default function Cart() {
   }, [])
 
   /* Scroll lock when modal cart is open: prevent background scroll (critical for iOS).
-   * Layout shift prevented by scrollbar-gutter: stable on html (globals.css). */
+   * Uses --scroll-y CSS variable so body gets correct top before class applies (avoids one-frame gap in Safari). */
+  const lockScroll = () => {
+    scrollPositionRef.current = window.scrollY
+    document.documentElement.style.setProperty('--scroll-y', `-${scrollPositionRef.current}px`)
+    document.documentElement.classList.add('cart-open')
+  }
+  const unlockScroll = () => {
+    document.documentElement.classList.remove('cart-open')
+    document.documentElement.style.removeProperty('--scroll-y')
+    window.scrollTo({ top: scrollPositionRef.current, behavior: 'instant' })
+  }
   useEffect(() => {
     if (!isModalCartPage || !mounted) return
     if (isOpen) {
-      scrollPositionRef.current = typeof window !== 'undefined' ? window.scrollY : 0
-      const y = scrollPositionRef.current
-
-      document.documentElement.classList.add('cart-open')
-      document.body.classList.add('cart-open')
-      document.body.style.top = `-${y}px`
+      lockScroll()
     } else {
-      document.documentElement.classList.remove('cart-open')
-      document.body.classList.remove('cart-open')
-      document.body.style.top = ''
-      if (typeof window !== 'undefined') {
-        window.scrollTo(0, scrollPositionRef.current)
-      }
+      unlockScroll()
     }
-    return () => {
-      document.documentElement.classList.remove('cart-open')
-      document.body.classList.remove('cart-open')
-      document.body.style.top = ''
-    }
+    return () => unlockScroll()
   }, [isModalCartPage, isOpen, mounted])
 
   /* Escape key closes modal cart */
