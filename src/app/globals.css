@@ -8,10 +8,8 @@ html {
   min-height: 100%;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
-  /* Solid color for Safari overscroll — matches top of gradient */
   background-color: #d6b88a;
-  /* Gradient for visual layer */
-  background-image: var(--hero-footer-gradient);
+  background-image: none;
   overscroll-behavior-y: none;
 }
 
@@ -106,7 +104,7 @@ main {
   /* Hero/footer - light brown, two shades darker and more brown */
   --overscroll-top: #c09868;
   /* Single source of truth so hero footer and viewport bottom are identical on mobile */
-  --hero-footer-gradient: linear-gradient(to bottom, #d6b88a, #c49868);
+  --hero-footer-gradient: #d6b88a;
   --font-inter: 'Inter', system-ui, sans-serif;
   /* --font-roboto is set by next/font in layout.tsx */
   --font-serif: var(--font-roboto);
@@ -442,18 +440,6 @@ select:not([class*="transition"]) {
    * and sit behind the root, so overscroll content can draw over the header. */
   .mobile-header-hero-fill {
     background: var(--hero-footer-gradient);
-  }
-  /* Extend header fill above viewport. z-index: 0 keeps it inside header's stacking context. */
-  .mobile-header-hero-fill::before {
-    content: '';
-    position: absolute;
-    top: -100vh;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    background: var(--hero-footer-gradient);
-    z-index: -1;
-    pointer-events: none;
   }
   /* Fixed header bar: always on top during overscroll/pull-to-refresh (iOS stacking).
    * !important overrides Tailwind z-[100] so nothing can ever paint over the header. */
