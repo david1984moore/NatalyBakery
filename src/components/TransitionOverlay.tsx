@@ -31,7 +31,7 @@ export default function TransitionOverlay() {
         background: 'linear-gradient(135deg, #FCF7F2 0%, #F6EFE8 100%)',
         zIndex: 9999,
         pointerEvents: 'none',
-        opacity: isTransitioning ? 1 : 0,
+        opacity: 1, // Always 1 now since we only render when transitioning
         transition: 'opacity 120ms cubic-bezier(0.4, 0, 0.2, 1)',
       }}
     />

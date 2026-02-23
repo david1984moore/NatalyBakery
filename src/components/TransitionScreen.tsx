@@ -45,6 +45,8 @@ export default function TransitionScreen() {
     previousPathRef.current = pathname;
   }, [pathname]);
 
+  if (!isTransitioning || shouldFadeOut) return null;
+
   return (
     <div
       style={{
@@ -54,15 +56,11 @@ export default function TransitionScreen() {
         right: 0,
         bottom: 0,
         background: isHeroTransition 
-          ? 'rgba(252, 247, 242, 0.98)'  // Nearly opaque, lighter
-          : 'rgba(252, 247, 242, 0.95)',  // Nearly opaque for standard too
+          ? 'rgba(252, 247, 242, 0.98)'
+          : 'rgba(252, 247, 242, 0.95)',
         backdropFilter: isHeroTransition ? 'blur(40px)' : 'blur(30px)',
         WebkitBackdropFilter: isHeroTransition ? 'blur(40px)' : 'blur(30px)',
         zIndex: 10001,
-        opacity: (isTransitioning && !shouldFadeOut) ? 1 : 0,
-        transition: shouldFadeOut 
-          ? `opacity ${TRANSITIONS.overlay.fadeSpeed}ms ease-out` 
-          : 'opacity 150ms ease-in',
         pointerEvents: 'none',
       }}
     />
