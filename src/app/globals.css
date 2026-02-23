@@ -455,7 +455,7 @@ select:not([class*="transition"]) {
     right: 0;
     height: 100vh;
     background: var(--hero-footer-gradient);
-    z-index: 1;
+    z-index: -1;
     pointer-events: none;
   }
   /* Fixed header bar: always on top during overscroll/pull-to-refresh (iOS stacking).
