@@ -2,16 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Prevent white flash during page transitions */
 html {
-  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+
+  /* CRITICAL: Safari uses html background-color for the rubber-band overscroll region.
+     This must match the header fill. Never override this with inline styles. */
+  background-color: #c49868;
+  background-image: none;
+
+  /* Desktop: suppress rubber-band bounce. Touch block below re-enables for iOS. */
   overscroll-behavior-y: none;
 }
 
 body {
-  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
-  overscroll-behavior-y: none;
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 0;
   min-height: 100vh;
+  color: var(--foreground);
+  font-family: var(--font-roboto), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Page content background — separate from overscroll color on html */
+  background-color: var(--background);
+  background-image: none;
+
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
+  overscroll-behavior-y: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
+    min-height: 100dvh;
+    /* background-color: #c49868 is inherited from above — do not re-declare here */
+  }
+
+  body {
+    -webkit-overflow-scrolling: touch;
+    min-height: 100dvh;
+  }
 }
 
 /* Consistent page backgrounds during transitions.
@@ -40,12 +78,6 @@ body {
 /* Ensure images don't pop in late */
 [data-page-wrapper] img {
   will-change: opacity;
-}
-
-/* Prevent flash of unstyled content */
-body {
-  opacity: 1;
-  transition: none;
 }
 
 /* COMMENT OUT OR REMOVE: Persistent background layer - each page sets its own main background
@@ -92,28 +124,6 @@ main {
     --background: #f8f5f0;
     --foreground: #2d2822;
   }
-}
-
-/* Prevent overscroll - body AND html need same background as header */
-html {
-  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
-  overscroll-behavior-y: none;
-}
-
-body {
-  background: linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%);
-  overscroll-behavior-y: none;
-  min-height: 100vh;
-  color: var(--foreground);
-  font-family: var(--font-roboto), system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  width: 100%;
-  min-width: 0;
-  /* CRITICAL: Safe-area padding for iOS notch/rounded corners in landscape. */
-  padding-left: env(safe-area-inset-left, 0);
-  padding-right: env(safe-area-inset-right, 0);
 }
 
 /* Header stability - ensure it's on top of everything. */
@@ -423,68 +433,8 @@ select:not([class*="transition"]) {
 
 /* Home page: uses Roboto (--font-ui) for all text except brand name */
 
-/* Smooth scrolling on desktop only; prevent horizontal scroll so content stays centered. */
-/* CRITICAL: On mobile we use scroll-behavior: auto so native iOS momentum isn't fought by smooth scroll (avoids glitchy bounce). */
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  width: 100%;
-  /* Ensure html fills viewport so overscroll/rubber-band never reveals white. */
-  min-height: 100%;
-  /* CRITICAL: Root background prevents any white gaps in landscape (viewport-fit=cover + this = edge-to-edge).
-   Match header/hero fill (#c49868 = top stop of --hero-footer-gradient) so Safari overscroll region is seamless. */
-  background-image: none;
-  background-color: #c49868;
-  overscroll-behavior-y: none; /* prevents bounce on non-touch */
-  /* Reserve scrollbar space at all times so overflow:hidden (cart modal) doesn't shift layout or create a strip */
-  scrollbar-gutter: stable;
-}
-
-
-/* Touch devices: native scroll behavior + full-height chain so no white above header during overscroll.
- * (1) overscroll-behavior-y: auto allows native rubber band, bounce, and pull-to-refresh.
- *     theme-color meta (layout.tsx) colors Safari's overscroll area when bounce occurs.
- * (2) html uses min-height (not height: 100%) so the root can extend properly.
- * (3) -webkit-overflow-scrolling: touch enables momentum scrolling on iOS. */
+/* Touch devices: hero footer and mobile header fills (page content color on body/[data-page-wrapper]) */
 @media (hover: none) and (pointer: coarse) {
-  html {
-    scroll-behavior: auto;
-    -webkit-overflow-scrolling: touch;
-    /* Allow native rubber band, bounce, and pull-to-refresh */
-    overscroll-behavior-y: auto;
-    /* min-height lets root extend with content; height: 100% constrained and caused scroll glitches */
-    min-height: 100%;
-    min-height: 100dvh;
-  }
-  body {
-    min-height: 100%;
-    min-height: 100dvh;
-    -webkit-overflow-scrolling: touch;
-  }
-  html,
-  body {
-    /* Top: header gradient so status bar + overscroll area display as one cohesive header.
-     * Transitions to page background, then footer gradient at bottom. */
-    background-color: var(--background);
-    background-image:
-      linear-gradient(
-        to bottom,
-        #d6b88a 0%,
-        #c49868 8%,
-        #e5d9c8 16%,
-        var(--background) 22%,
-        transparent 78%
-      ),
-      var(--hero-footer-gradient);
-    background-size: 100% 100%, 100% 22%;
-    background-position: 0 0, 0 100%;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-  }
-  html {
-    background-image: none;
-    background-color: #c49868; /* same value — ensure touch block doesn't override; Safari overscroll uses this */
-  }
   /* Hero footer bar: same gradient as viewport bottom so footer and area below are seamless */
   .hero-footer-bar-mobile {
     background: var(--hero-footer-gradient);
@@ -513,28 +463,6 @@ html {
   .fixed.mobile-header-hero-fill {
     z-index: 2147483647 !important;
     /* isolation and will-change removed — these fight Safari's overscroll compositor */
-  }
-
-  /* Landscape: header gradient at top, then seamless transition to footer gradient at bottom. */
-  @media (orientation: landscape) {
-    html,
-    body {
-      background-image:
-        linear-gradient(
-          to bottom,
-          #d6b88a 0%,
-          #c49868 6%,
-          var(--background) 12%,
-          var(--background) 65%,
-          #efe8dc 85%,
-          #e5d9c8 92%,
-          #d6b88a 98%,
-          #c49868 100%
-        );
-      background-size: 100% 100%;
-      background-position: 0 0;
-      background-repeat: no-repeat;
-    }
   }
 }
 
