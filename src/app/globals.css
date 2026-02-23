@@ -9,10 +9,8 @@ html {
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
 
-  /* CRITICAL: Safari uses html background-color for the rubber-band overscroll region.
-     This must match the header fill. Never override this with inline styles. */
-  background-color: #c49868;
-  background-image: none;
+  /* Match header gradient for seamless overscroll */
+  background: var(--hero-footer-gradient);
 
   /* Desktop: suppress rubber-band bounce. Touch block below re-enables for iOS. */
   overscroll-behavior-y: none;
@@ -43,7 +41,7 @@ body {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: auto;
     min-height: 100dvh;
-    /* background-color: #c49868 is inherited from above — do not re-declare here */
+    /* background (hero-footer-gradient) is inherited from above — do not re-declare here */
   }
 
   body {
