@@ -8,11 +8,10 @@ html {
   min-height: 100%;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
-
-  /* Match header gradient for seamless overscroll */
-  background: var(--hero-footer-gradient);
-
-  /* Desktop: suppress rubber-band bounce. Touch block below re-enables for iOS. */
+  /* Solid color for Safari overscroll — matches top of gradient */
+  background-color: #d6b88a;
+  /* Gradient for visual layer */
+  background-image: var(--hero-footer-gradient);
   overscroll-behavior-y: none;
 }
 
@@ -107,7 +106,7 @@ main {
   /* Hero/footer - light brown, two shades darker and more brown */
   --overscroll-top: #c09868;
   /* Single source of truth so hero footer and viewport bottom are identical on mobile */
-  --hero-footer-gradient: linear-gradient(to right, #d6b88a, #c49868);
+  --hero-footer-gradient: linear-gradient(to bottom, #d6b88a, #c49868);
   --font-inter: 'Inter', system-ui, sans-serif;
   /* --font-roboto is set by next/font in layout.tsx */
   --font-serif: var(--font-roboto);
