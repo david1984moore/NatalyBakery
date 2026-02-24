@@ -98,7 +98,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
       }
     } else {
       // STANDARD TRANSITION
-      wrapper.style.transform = 'scale(1) translateZ(0)';
       wrapper.style.opacity = '0';
       wrapper.style.visibility = 'hidden';
       wrapper.style.transition = 'none';

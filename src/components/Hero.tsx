@@ -13,7 +13,7 @@ export default function Hero() {
   const { t } = useLanguage()
   return (
     <section
-      className="relative h-[100svh] max-h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden shrink-0"
+      className="relative h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden shrink-0"
       style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}
     >
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
