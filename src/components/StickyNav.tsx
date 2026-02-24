@@ -24,6 +24,12 @@ export default function StickyNav() {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   useEffect(() => {
+    // Non-home pages: ensure invisible and skip observer (prevents menu header flash)
+    if (pathname !== '/') {
+      setIsVisible(false)
+      return
+    }
+
     const sentinel = document.getElementById('nav-sentinel')
 
     // No sentinel = not on a page with a hero
@@ -53,7 +59,10 @@ export default function StickyNav() {
     return null
   }
 
-  if (!isVisible) return null
+  // StickyNav only shows on home page after scrolling past hero; on other pages return null to prevent flash
+  if (pathname !== '/' || !isVisible) {
+    return null
+  }
 
   return (
     <nav

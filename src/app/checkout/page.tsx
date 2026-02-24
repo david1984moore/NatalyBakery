@@ -101,10 +101,12 @@ export default function CheckoutPage() {
   // Don't render anything until we confirm cart has items
   if (items.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-cream-50/30">
-        <div className="text-center">
-          <p className="text-warmgray-600 mb-4">{t('common.loading')}</p>
-          <p className="text-sm text-warmgray-500">{t('menu.loading')}</p>
+      <div className="page-content-wrapper">
+        <div className="min-h-screen flex items-center justify-center bg-cream-50/30">
+          <div className="text-center">
+            <p className="text-warmgray-600 mb-4">{t('common.loading')}</p>
+            <p className="text-sm text-warmgray-500">{t('menu.loading')}</p>
+          </div>
         </div>
       </div>
     )
@@ -265,6 +267,7 @@ export default function CheckoutPage() {
   }
 
   return (
+    <div className="page-content-wrapper">
     <main data-scrollable className="min-h-screen flex flex-col relative" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
       {/* Loading Overlay */}
       {isLoading && (
@@ -594,5 +597,6 @@ export default function CheckoutPage() {
         </div>
       </div>
     </main>
+    </div>
   )
 }

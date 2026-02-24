@@ -22,6 +22,7 @@ export default function ContactPage() {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
+    <div className="page-content-wrapper">
     <main data-scrollable className="min-h-screen min-h-[100dvh]" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
       {/* Header - mobile: fixed; desktop: sticky, no strip, subtle shadow */}
       <div
@@ -162,5 +163,6 @@ export default function ContactPage() {
         </div>
       </div>
     </main>
+    </div>
   )
 }

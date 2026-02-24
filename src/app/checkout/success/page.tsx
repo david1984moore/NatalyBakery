@@ -52,16 +52,19 @@ function SuccessPageContent() {
 
   if (isLoading) {
     return (
+      <div className="page-content-wrapper">
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-2 border-warmgray-200 border-t-warmgray-800 mx-auto mb-4 will-change-transform"></div>
           <p className="text-warmgray-600">{t('success.loadingOrder')}</p>
         </div>
       </div>
+      </div>
     )
   }
 
   return (
+    <div className="page-content-wrapper">
     <div className="min-h-screen relative" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
       <Cart />
       {/* Navigation Bar - matches menu page structure */}
@@ -231,6 +234,7 @@ function SuccessPageContent() {
         </div>
       </div>
     </div>
+    </div>
   )
 }
 
@@ -238,10 +242,12 @@ export default function SuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-2 border-warmgray-200 border-t-warmgray-800 mx-auto mb-4 will-change-transform"></div>
-            <p className="text-warmgray-600">Loading...</p>
+        <div className="page-content-wrapper">
+          <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-warmgray-200 border-t-warmgray-800 mx-auto mb-4 will-change-transform"></div>
+              <p className="text-warmgray-600">Loading...</p>
+            </div>
           </div>
         </div>
       }

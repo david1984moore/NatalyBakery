@@ -9,6 +9,7 @@ export default function AboutPage() {
   const { t } = useLanguage()
   
   return (
+    <div className="page-content-wrapper">
     <main data-scrollable className="min-h-screen" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
       <Navigation />
       
@@ -53,5 +54,6 @@ export default function AboutPage() {
         </div>
       </div>
     </main>
+    </div>
   )
 }

@@ -36,6 +36,8 @@ body {
   background-color: #faf7f2;
   min-height: 100vh;
   min-height: 100dvh;
+  position: relative;
+  z-index: 0; /* Explicitly below nav so fixed header stays on top during overscroll (e.g. iOS) */
 }
 
 @media (hover: none) and (pointer: coarse) {

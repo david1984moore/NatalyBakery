@@ -84,9 +84,7 @@ export default function RootLayout({
             <StickyNav />
             <TransitionOverlay />
             <PageTransition>
-              <div className="page-content-wrapper">
-                {children}
-              </div>
+              {children}
             </PageTransition>
           </CartProvider>
         </LanguageProvider>
