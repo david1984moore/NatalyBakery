@@ -2,7 +2,6 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, useRef, Suspense } from 'react'
-import SmoothLink from '@/components/SmoothLink'
 import {
   products,
   getProductByName,
@@ -18,10 +17,8 @@ import {
   productNameToTranslationKey,
   getVariantTranslationKey,
 } from '@/lib/productTranslations'
-import { Mail } from 'lucide-react'
 import Cart from '@/components/Cart'
 import CartPreviewModal from '@/components/CartPreviewModal'
-import LanguageToggle from '@/components/LanguageToggle'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import ProductImage from '@/components/ProductImage'
 import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
@@ -223,186 +220,71 @@ export default function MenuPageContent({
 
   return (
     <div className="min-h-screen min-h-[100dvh] bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
-      {/* Mobile: fixed so nav stays visible (iOS sticky unreliable); no overflow-x-hidden so brand/cart not clipped in landscape */}
-      <div
-        className="fixed inset-x-0 top-0 z-[2147483647] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:shadow-sm min-h-[40px] md:min-h-[80px] shadow-[0_6px_14px_0_rgba(0,0,0,0.08)] isolate"
-        style={{ width: '100%' }}
-      >
-        <div className="relative z-10 flex flex-col min-h-[40px] md:min-h-[80px] mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-transparent">
-          <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
-            <SmoothLink
-              href="/"
-              prefetch={true}
-              className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full overflow-visible"
-              aria-label="Home"
-            >
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">
-                Caramel & Jo
-              </span>
-            </SmoothLink>
-            <div className="flex h-full min-h-[40px] items-center gap-3 sm:gap-5 flex-shrink-0">
-              <LanguageToggle variant="menuHeader" />
-              <SmoothLink
-                href="/contact"
-                prefetch={true}
-                aria-label={t('nav.contact')}
-                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
-              >
-                <Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" />
-              </SmoothLink>
-              <button
-                onClick={() =>
-                  window.dispatchEvent(new CustomEvent('cart:toggle'))
-                }
-                className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
-                aria-label="Shopping cart"
-              >
-                <svg
-                  className="w-7 h-7 text-white"
-                  fill="none"
-                  stroke="white"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {itemCount}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
+      {/* Spacer so content is not under fixed PageHeader */}
+      <div className="h-[calc(52px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0 bg-background" aria-hidden />
 
-          {/* Desktop: same structure as contact page - fixed row height so content sits at top of brown area */}
-          <div className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-20 -translate-y-0">
-            <SmoothLink
-              href="/"
-              prefetch={true}
-              className="flex-shrink-0 flex items-center h-full"
-              aria-label="Home"
-            >
-              <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">
-                Caramel & Jo
-              </span>
-            </SmoothLink>
-            <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex-shrink-0 flex items-center relative h-full max-w-[min(calc(100vw-20rem),56rem)] min-w-0 md:max-w-[min(calc(100vw-18rem),64rem)] md:pr-6 md:overflow-visible">
-              {canScrollLeft && (
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none z-10" />
-              )}
-              {canScrollRight && showRightFade && (
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent via-white/80 to-white pointer-events-none z-10" />
-              )}
-              <div
-                ref={scrollContainerRef}
-                className="flex items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container pr-6 md:pr-24"
-                style={{ WebkitOverflowScrolling: 'touch' }}
-              >
-                {products.map((product) => {
-                  const isSelected = featuredProduct?.name === product.name
-                  const translationKey =
-                    productNameToTranslationKey[product.name] || product.name
-                  const translatedName =
-                    translationKey.startsWith('product.')
-                      ? t(translationKey as any)
-                      : product.name
-                  return (
-                    <button
-                      key={product.name}
-                      onClick={() => handleProductChange(product.name)}
-                      className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
-                        isSelected
-                          ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white md:hover:opacity-90'
-                          : 'bg-transparent text-warmgray-700 hover:bg-[#8a7160] hover:text-white'
-                      }`}
-                    >
-                      {translatedName}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-            <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex h-full flex-shrink-0 items-center gap-8 lg:gap-11">
-              <LanguageToggle variant="menu" />
-              <SmoothLink
-                href="/contact"
-                prefetch={true}
-                aria-label={t('nav.contact')}
-                className="font-ui flex items-center justify-center px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200"
-              >
-                <Mail className="w-5 h-5" strokeWidth={2} />
-              </SmoothLink>
+      {/* Mobile: sticky category row so product tabs stay visible when scrolling */}
+      <div className="md:hidden sticky top-0 z-10 flex-shrink-0 bg-background border-b border-warmgray-200">
+        <div
+          className="flex items-center gap-2.5 overflow-x-auto overflow-y-hidden scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container touch-pan-x"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          {products.map((product) => {
+            const isSelected = featuredProduct?.name === product.name
+            const translationKey =
+              productNameToTranslationKey[product.name] || product.name
+            const translatedName =
+              translationKey.startsWith('product.')
+                ? t(translationKey as any)
+                : product.name
+            return (
               <button
-                onClick={() =>
-                  window.dispatchEvent(new CustomEvent('cart:toggle'))
-                }
-                className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative"
-                aria-label="Shopping cart"
+                key={product.name}
+                onClick={() => handleProductChange(product.name)}
+                className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white'
+                    : 'bg-transparent text-warmgray-900'
+                }`}
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {itemCount}
-                  </span>
-                )}
+                {translatedName}
               </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile: category row is part of the sticky header so it stays visible when scrolling */}
-        <div className="md:hidden flex-shrink-0 bg-background border-t border-warmgray-200">
-          <div
-            className="flex items-center gap-2.5 overflow-x-auto overflow-y-hidden scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container touch-pan-x"
-            style={{ WebkitOverflowScrolling: 'touch' }}
-          >
-            {products.map((product) => {
-              const isSelected = featuredProduct?.name === product.name
-              const translationKey =
-                productNameToTranslationKey[product.name] || product.name
-              const translatedName =
-                translationKey.startsWith('product.')
-                  ? t(translationKey as any)
-                  : product.name
-              return (
-                <button
-                  key={product.name}
-                  onClick={() => handleProductChange(product.name)}
-                  className={`flex-shrink-0 min-h-[36px] px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
-                    isSelected
-                      ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white'
-                      : 'bg-transparent text-warmgray-900'
-                  }`}
-                >
-                  {translatedName}
-                </button>
-              )
-            })}
-          </div>
+            )
+          })}
         </div>
       </div>
 
-      {/* Spacer: matches full sticky header height (brand row + category row + safe area) so content starts below */}
-      <div className="h-[calc(88px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0 bg-background" aria-hidden />
+      {/* Desktop: in-flow category row (scrollable with content) */}
+      <div className="hidden md:flex flex-shrink-0 items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide px-4 sm:px-6 lg:px-8 py-2 bg-background border-b border-warmgray-200">
+        <div
+          ref={scrollContainerRef}
+          className="flex items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          {products.map((product) => {
+            const isSelected = featuredProduct?.name === product.name
+            const translationKey =
+              productNameToTranslationKey[product.name] || product.name
+            const translatedName =
+              translationKey.startsWith('product.')
+                ? t(translationKey as any)
+                : product.name
+            return (
+              <button
+                key={product.name}
+                onClick={() => handleProductChange(product.name)}
+                className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white md:hover:opacity-90'
+                    : 'bg-transparent text-warmgray-700 hover:bg-[#8a7160] hover:text-white'
+                }`}
+              >
+                {translatedName}
+              </button>
+            )
+          })}
+        </div>
+      </div>
 
       <section className="menu-content-top flex items-start relative z-0 safe-bottom">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-start md:items-center pt-4 md:pt-6 pb-24 md:pb-4">

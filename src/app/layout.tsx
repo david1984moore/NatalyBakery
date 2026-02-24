@@ -4,6 +4,7 @@ import './globals.css'
 import { CartProvider } from '@/contexts/CartContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import StickyNav from '@/components/StickyNav'
+import PageHeader from '@/components/PageHeader'
 import MobileScrollLock from '@/components/MobileScrollLock'
 import PageTransition from '@/components/PageTransition'
 import TransitionOverlay from '@/components/TransitionOverlay'
@@ -82,6 +83,7 @@ export default function RootLayout({
         <LanguageProvider>
           <CartProvider>
             <StickyNav />
+            <PageHeader />
             <TransitionOverlay />
             <PageTransition>
               {children}
