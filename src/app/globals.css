@@ -447,6 +447,18 @@ select:not([class*="transition"]) {
     z-index: 2147483647 !important;
     /* isolation and will-change removed — these fight Safari's overscroll compositor */
   }
+  /* Extend background above viewport to prevent white strip during Safari rubber-band bounce-back */
+  nav.mobile-header-hero-fill::before {
+    content: '';
+    position: absolute;
+    top: -100vh;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    background-color: #d6b88a;
+    z-index: -1;
+    pointer-events: none;
+  }
 }
 
 /* Touch scrolling optimizations */
