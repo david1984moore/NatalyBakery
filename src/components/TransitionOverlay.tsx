@@ -10,12 +10,30 @@ export default function TransitionOverlay() {
 
   useEffect(() => {
     setIsTransitioning(true);
+
     const isHero = pathname === '/';
     const hold = isHero ? TRANSITIONS.hero.overlayHold : TRANSITIONS.standard.overlayHold;
-    const timer = setTimeout(() => {
+
+    let timer: ReturnType<typeof setTimeout>;
+
+    const handleReady = () => {
+      timer = setTimeout(() => {
+        setIsTransitioning(false);
+      }, hold);
+    };
+
+    // Fallback in case page-ready never fires
+    const fallback = setTimeout(() => {
       setIsTransitioning(false);
-    }, hold);
-    return () => clearTimeout(timer);
+    }, 1200);
+
+    window.addEventListener('page-ready', handleReady, { once: true });
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(fallback);
+      window.removeEventListener('page-ready', handleReady);
+    };
   }, [pathname]);
 
   if (!isTransitioning) return null;
