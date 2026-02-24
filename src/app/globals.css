@@ -2,14 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  background-color: #d6b88a;
+  background-image: none;
+}
+
 html {
   overflow-x: hidden;
   width: 100%;
   min-height: 100%;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
-  background-color: #d6b88a;
-  background-image: none;
   overscroll-behavior-y: none;
 }
 
@@ -23,13 +27,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Page content background — separate from overscroll color on html */
-  background-color: var(--background);
-  background-image: none;
-
   padding-left: env(safe-area-inset-left, 0);
   padding-right: env(safe-area-inset-right, 0);
   overscroll-behavior-y: none;
+}
+
+.page-content-wrapper {
+  background-color: #faf7f2;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 @media (hover: none) and (pointer: coarse) {

@@ -3,7 +3,6 @@ import { Inter, Roboto, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/contexts/CartContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
-import SafariOverscrollFill from '@/components/SafariOverscrollFill'
 import StickyNav from '@/components/StickyNav'
 import MobileScrollLock from '@/components/MobileScrollLock'
 import PageTransition from '@/components/PageTransition'
@@ -78,7 +77,6 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <SafariOverscrollFill />
         <MobileScrollLock />
         <TransitionScreen />
         <LanguageProvider>
@@ -86,7 +84,9 @@ export default function RootLayout({
             <StickyNav />
             <TransitionOverlay />
             <PageTransition>
-              {children}
+              <div className="page-content-wrapper">
+                {children}
+              </div>
             </PageTransition>
           </CartProvider>
         </LanguageProvider>

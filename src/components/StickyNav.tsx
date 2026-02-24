@@ -25,7 +25,17 @@ export default function StickyNav() {
 
   useEffect(() => {
     const sentinel = document.getElementById('nav-sentinel')
-    if (!sentinel) return
+
+    // No sentinel = not on a page with a hero
+    // Set invisible and let page-specific headers handle it
+    if (!sentinel) {
+      setIsVisible(false)
+      return
+    }
+
+    // Check initial state immediately
+    const rect = sentinel.getBoundingClientRect()
+    setIsVisible(rect.bottom <= 0)
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -35,7 +45,7 @@ export default function StickyNav() {
     )
     observer.observe(sentinel)
     return () => observer.disconnect()
-  }, [])
+  }, [pathname])
 
   // Mobile (touch) only: never show header on hero page for a fully immersive experience.
   // Desktop keeps existing scroll-based visibility.
