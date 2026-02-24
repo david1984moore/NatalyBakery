@@ -40,7 +40,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
       const inverseZoom = 2 - TRANSITIONS.hero.zoomAmount;
       
       if (heroImage) {
-        wrapper.style.transform = 'scale(1) translateZ(0)';
         wrapper.style.opacity = '0';
         wrapper.style.transition = 'none';
         
