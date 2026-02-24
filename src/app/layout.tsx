@@ -79,11 +79,11 @@ export default function RootLayout({
       </head>
       <body>
         <SafariOverscrollFill />
-        <StickyNav />
         <MobileScrollLock />
         <TransitionScreen />
         <LanguageProvider>
           <CartProvider>
+            <StickyNav />
             <TransitionOverlay />
             <PageTransition>
               {children}
