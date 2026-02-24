@@ -23,13 +23,19 @@ export function PageHeader() {
     const header = headerRef.current;
     if (!header) return;
 
-    header.style.opacity = '0';
+    header.style.opacity = '1';
+
+    const handleTransitionStart = () => {
+      header.style.transition = 'none';
+      header.style.opacity = '0';
+    };
 
     const handleReady = () => {
       header.style.transition = 'none';
       header.style.opacity = '1';
     };
 
+    window.addEventListener('start-transition', handleTransitionStart);
     window.addEventListener('page-ready', handleReady);
 
     const fallback = setTimeout(() => {
@@ -37,6 +43,7 @@ export function PageHeader() {
     }, 600);
 
     return () => {
+      window.removeEventListener('start-transition', handleTransitionStart);
       window.removeEventListener('page-ready', handleReady);
       clearTimeout(fallback);
     };
@@ -53,7 +60,7 @@ export function PageHeader() {
       className="fixed inset-x-0 top-0 mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
       style={{ zIndex: 2147483647, width: '100%' }}
     >
-      <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[52px] md:min-h-[80px] md:bg-transparent md:border-b-0">
+      <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient flex flex-col min-h-[52px] md:min-h-[80px] md:bg-transparent md:border-b-0">
         {/* Mobile */}
         <div
           className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[52px] min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]"
