@@ -63,13 +63,13 @@ body {
   width: 100%;
   min-height: 100vh;
   pointer-events: auto;
-  background: var(--background); /* Match your body background */
+  background: transparent;
 }
 
 /* During fade, show gradient instead of white */
 [data-page-wrapper][style*="opacity: 0"] {
   pointer-events: none;
-  background: #d6b88a;
+  background: transparent;
 }
 
 /* Disable transitions on child elements during page transition */
@@ -146,7 +146,7 @@ header {
 main {
   scroll-behavior: smooth;
   overscroll-behavior: contain;
-  background: var(--background);
+  background: transparent;
   position: relative;
   z-index: 0; /* Explicitly below fixed headers; no transform to avoid iOS stacking context bugs */
 }

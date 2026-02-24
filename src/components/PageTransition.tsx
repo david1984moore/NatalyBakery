@@ -50,6 +50,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
         
         let clearTimer: ReturnType<typeof setTimeout> | null = null;
         const timer = setTimeout(() => {
+          wrapper.style.willChange = 'opacity, transform';
           heroImage.style.transition = `transform ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity ${duration}ms ease-in`;
           heroImage.style.transform = 'scale(1) translateZ(0)';
           heroImage.style.opacity = '1';
@@ -78,6 +79,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
         
         let clearTimer: ReturnType<typeof setTimeout> | null = null;
         const timer = setTimeout(() => {
+          wrapper.style.willChange = 'opacity, transform';
           wrapper.style.transition = `transform ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity ${duration}ms ease-in`;
           wrapper.style.transform = 'scale(1) translateZ(0)';
           wrapper.style.opacity = '1';

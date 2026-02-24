@@ -23,7 +23,7 @@ export default function ContactPage() {
 
   return (
     <div className="page-content-wrapper">
-    <main data-scrollable className="min-h-screen min-h-[100dvh]" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
+    <main data-scrollable className="min-h-screen min-h-[100dvh]" style={{ background: '#d6b88a' }}>
       {/* Header - mobile: fixed; desktop: sticky, no strip, subtle shadow */}
       <div
         className="fixed inset-x-0 top-0 z-[100] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:sticky md:top-0 md:bg-background md:backdrop-blur-sm header-bar-shadow shadow-sm min-h-[40px] md:min-h-[80px] isolate"
