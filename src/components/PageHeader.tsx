@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import SmoothLink from '@/components/SmoothLink';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -16,6 +17,31 @@ export function PageHeader() {
   const { items } = useCart();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    header.style.opacity = '0';
+
+    const handleReady = () => {
+      header.style.transition = 'none';
+      header.style.opacity = '1';
+    };
+
+    window.addEventListener('page-ready', handleReady);
+
+    const fallback = setTimeout(() => {
+      header.style.opacity = '1';
+    }, 600);
+
+    return () => {
+      window.removeEventListener('page-ready', handleReady);
+      clearTimeout(fallback);
+    };
+  }, [pathname]);
+
   if (!isNonHeroPage) return null;
 
   const showMenuLink = pathname !== '/menu';
@@ -23,13 +49,14 @@ export function PageHeader() {
 
   return (
     <div
+      ref={headerRef}
       className="fixed inset-x-0 top-0 mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
       style={{ zIndex: 2147483647, width: '100%' }}
     >
-      <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] md:min-h-[80px] md:bg-transparent md:border-b-0">
+      <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[52px] md:min-h-[80px] md:bg-transparent md:border-b-0">
         {/* Mobile */}
         <div
-          className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]"
+          className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[52px] min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]"
           style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
           <SmoothLink
