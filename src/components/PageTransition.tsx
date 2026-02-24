@@ -156,11 +156,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     <div 
       ref={wrapperRef}
       data-page-wrapper
-      style={{ 
-        minHeight: '100vh',
-        willChange: 'opacity, transform',
-        transformOrigin: 'center center',
-      }}
+      style={{ minHeight: '100vh', transformOrigin: 'center center' }}
     >
       {children}
     </div>
