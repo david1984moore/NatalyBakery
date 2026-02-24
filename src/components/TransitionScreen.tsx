@@ -60,7 +60,7 @@ export default function TransitionScreen() {
           : 'rgba(252, 247, 242, 0.95)',
         backdropFilter: isHeroTransition ? 'blur(40px)' : 'blur(30px)',
         WebkitBackdropFilter: isHeroTransition ? 'blur(40px)' : 'blur(30px)',
-        zIndex: 10001,
+        zIndex: 100,
         pointerEvents: 'none',
       }}
     />

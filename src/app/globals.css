@@ -451,6 +451,9 @@ select:not([class*="transition"]) {
    * !important overrides Tailwind z-[100] so nothing can ever paint over the header. */
   .fixed.mobile-header-hero-fill {
     z-index: 2147483647 !important;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    isolation: isolate;
     /* isolation and will-change removed — these fight Safari's overscroll compositor */
   }
 }
