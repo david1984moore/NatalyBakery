@@ -214,7 +214,7 @@ export default function CheckoutPage() {
         <Cart />
         {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
         <div
-          className="fixed inset-x-0 top-0 z-[100] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
+          className="fixed inset-x-0 top-0 z-[2147483647] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
           style={{ minHeight: '40px', width: '100%' }}
         >
           <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">
@@ -286,7 +286,7 @@ export default function CheckoutPage() {
       <Cart />
       {/* Navigation Bar - mobile: hero bar; desktop: no strip, subtle shadow */}
       <div
-        className="fixed inset-x-0 top-0 z-[100] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
+        className="fixed inset-x-0 top-0 z-[2147483647] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
         style={{ minHeight: '40px', width: '100%' }}
       >
         <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 flex flex-col min-h-[40px] overflow-visible md:bg-transparent">

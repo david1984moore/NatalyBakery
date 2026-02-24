@@ -37,7 +37,6 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
-  z-index: 0; /* Explicitly below nav so fixed header stays on top during overscroll (e.g. iOS) */
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -59,7 +58,6 @@ body {
  * z-index: 0 so fixed headers (z-index max) always paint on top during overscroll on iOS. */
 [data-page-wrapper] {
   position: relative;
-  z-index: 0;
   width: 100%;
   min-height: 100vh;
   pointer-events: auto;
