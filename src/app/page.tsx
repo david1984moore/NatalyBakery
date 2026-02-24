@@ -2,7 +2,6 @@
 
 import Hero from '@/components/Hero'
 import FeaturedProducts from '@/components/FeaturedProducts'
-import StickyNav from '@/components/StickyNav'
 import ImagePreloader from '@/components/ImagePreloader'
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
       <main data-scrollable className="min-h-[100svh] w-full min-w-0 flex flex-col md:min-h-screen" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
       <Hero />
       <FeaturedProducts />
-      <StickyNav />
     </main>
     </>
   )

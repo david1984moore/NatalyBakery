@@ -4,6 +4,7 @@ import './globals.css'
 import { CartProvider } from '@/contexts/CartContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import SafariOverscrollFill from '@/components/SafariOverscrollFill'
+import StickyNav from '@/components/StickyNav'
 import MobileScrollLock from '@/components/MobileScrollLock'
 import PageTransition from '@/components/PageTransition'
 import TransitionOverlay from '@/components/TransitionOverlay'
@@ -78,6 +79,7 @@ export default function RootLayout({
       </head>
       <body>
         <SafariOverscrollFill />
+        <StickyNav />
         <MobileScrollLock />
         <TransitionScreen />
         <LanguageProvider>
