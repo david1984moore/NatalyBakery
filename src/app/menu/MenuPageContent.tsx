@@ -224,7 +224,7 @@ export default function MenuPageContent({
       <div className="h-[calc(52px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0 bg-background" aria-hidden />
 
       {/* Mobile: sticky category row so product tabs stay visible when scrolling */}
-      <div className="md:hidden sticky top-[calc(52px+env(safe-area-inset-top,0px))] z-10 flex-shrink-0 bg-background border-b border-warmgray-200">
+      <div className="md:hidden sticky top-[calc(52px+env(safe-area-inset-top,0px))] z-10 flex-shrink-0 bg-background">
         <div
           className="flex items-center gap-2.5 overflow-x-auto overflow-y-hidden scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container touch-pan-x"
           style={{ WebkitOverflowScrolling: 'touch' }}
@@ -255,7 +255,7 @@ export default function MenuPageContent({
       </div>
 
       {/* Desktop: in-flow category row (scrollable with content) */}
-      <div className="hidden md:flex flex-shrink-0 items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide px-4 sm:px-6 lg:px-8 py-2 bg-background border-b border-warmgray-200">
+      <div className="hidden md:flex flex-shrink-0 items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide px-4 sm:px-6 lg:px-8 py-2 bg-background">
         <div
           ref={scrollContainerRef}
           className="flex items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container"

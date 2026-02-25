@@ -17,16 +17,17 @@ function SlideToggle({
 
   const isHero = variant === 'hero'
   const isLight = variant === 'light'
+  const isHeroFooter = size === 'heroFooter'
 
-  const heroTrackClass =
-    size === 'heroFooter'
-      ? 'border-[4px] landscape:border-[3px] border-white bg-white/20 rounded-2xl'
-      : 'border-[3px] border-white bg-white/20 rounded-xl'
+  const heroBorderClass = isHeroFooter
+    ? 'border-[4px] landscape:border-[3px]'
+    : 'border-[3px]'
+
   const trackClass = isHero
-    ? heroTrackClass
+    ? `${heroBorderClass} border-white bg-white/20 backdrop-blur-sm`
     : isLight
-      ? 'border border-white/40 bg-white/20 rounded-xl'
-      : 'border border-warmgray-200 bg-cream-50 rounded-xl'
+      ? 'border border-white/40 bg-white/20'
+      : 'border border-warmgray-200 bg-cream-50'
 
   const pillClass = isHero
     ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f]'
@@ -47,16 +48,18 @@ function SlideToggle({
         ? 'h-9 min-w-[4.5rem] text-xs'
         : 'h-11 min-w-[5rem] text-sm'
 
+  const trackRadius = isHero ? 'rounded-2xl' : 'rounded-xl'
+
   return (
     <div
       role="group"
       aria-label="Language"
-      className={`relative flex overflow-hidden ${trackClass} ${sizeClasses}`}
+      className={`relative flex overflow-hidden ${trackRadius} ${trackClass} ${sizeClasses}`}
     >
       <div
-        className={`absolute top-1.5 bottom-1.5 w-[calc(50%-8px)] rounded-xl ${pillClass} transition-all duration-200 ease-out z-0`}
+        className={`absolute top-1 bottom-1 w-[calc(50%-6px)] rounded-full ${pillClass} transition-all duration-200 ease-out z-0`}
         style={{
-          left: language === 'en' ? '6px' : 'calc(50% + 2px)',
+          left: language === 'en' ? '4px' : 'calc(50% + 2px)',
         }}
         aria-hidden
       />
