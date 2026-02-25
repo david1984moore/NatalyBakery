@@ -57,7 +57,7 @@ export function PageHeader() {
   return (
     <div
       ref={headerRef}
-      className="fixed inset-x-0 top-0 mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] shadow-sm isolate"
+      className="fixed inset-x-0 top-0 mobile-header-hero-fill max-md:bg-hero-footer-gradient md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] max-md:shadow-none isolate"
       style={{ zIndex: 2147483647, width: '100%' }}
     >
       <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient flex flex-col min-h-[52px] md:min-h-[80px] md:bg-transparent md:border-b-0">

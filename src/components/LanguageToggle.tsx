@@ -18,11 +18,15 @@ function SlideToggle({
   const isHero = variant === 'hero'
   const isLight = variant === 'light'
 
+  const heroTrackClass =
+    size === 'heroFooter'
+      ? 'border-[4px] landscape:border-[3px] border-white bg-white/20 rounded-2xl'
+      : 'border-[3px] border-white bg-white/20 rounded-xl'
   const trackClass = isHero
-    ? 'border-2 md:border-[3px] border-white bg-white/20'
+    ? heroTrackClass
     : isLight
-      ? 'border border-white/40 bg-white/20'
-      : 'border border-warmgray-200 bg-cream-50'
+      ? 'border border-white/40 bg-white/20 rounded-xl'
+      : 'border border-warmgray-200 bg-cream-50 rounded-xl'
 
   const pillClass = isHero
     ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f]'
@@ -47,12 +51,12 @@ function SlideToggle({
     <div
       role="group"
       aria-label="Language"
-      className={`relative flex rounded-xl overflow-hidden ${trackClass} ${sizeClasses}`}
+      className={`relative flex overflow-hidden ${trackClass} ${sizeClasses}`}
     >
       <div
-        className={`absolute top-1 bottom-1 w-[calc(50%-6px)] rounded-lg ${pillClass} transition-all duration-200 ease-out z-0`}
+        className={`absolute top-1.5 bottom-1.5 w-[calc(50%-8px)] rounded-xl ${pillClass} transition-all duration-200 ease-out z-0`}
         style={{
-          left: language === 'en' ? '4px' : 'calc(50% + 2px)',
+          left: language === 'en' ? '6px' : 'calc(50% + 2px)',
         }}
         aria-hidden
       />
