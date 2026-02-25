@@ -104,7 +104,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
 
   if (variant === 'menuHeader') {
     return (
-      <div className="hero-btn-header hero-footer-btn-taper">
+      <div className="hero-btn-header hero-footer-btn-taper rounded-xl">
         <SlideToggle variant="hero" size="compact" />
       </div>
     )
@@ -112,7 +112,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
 
   if (variant === 'heroFooter') {
     return (
-      <div className="hero-btn-header hero-footer-btn-taper">
+      <div className="hero-btn-header hero-footer-btn-taper rounded-2xl">
         <SlideToggle variant="hero" size="heroFooter" />
       </div>
     )
@@ -127,7 +127,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
   }
 
   return (
-    <div className="hero-btn-header hero-footer-btn-taper">
+    <div className="hero-btn-header hero-footer-btn-taper rounded-2xl">
       <SlideToggle variant="hero" size="default" />
     </div>
   )
