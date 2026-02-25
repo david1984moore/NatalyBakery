@@ -48,7 +48,7 @@ function SlideToggle({
         ? 'h-9 min-w-[4.5rem] text-xs'
         : 'h-11 min-w-[5rem] text-sm'
 
-  const trackRadius = isHero ? 'rounded-2xl' : 'rounded-xl'
+  const trackRadius = 'rounded-xl'
 
   return (
     <div
