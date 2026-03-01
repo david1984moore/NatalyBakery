@@ -11,7 +11,6 @@ export const productNameToTranslationKey: Record<string, string> = {
   'Chocolate Matilda Cake': 'product.chocolateMatildaCake',
   'Chocolate Cheesecake': 'product.chocolateCheesecake',
   'Lemon Charlotte': 'product.lemonCharlotte',
-  'Conchas': 'product.conchas',
 }
 
 /**
@@ -25,7 +24,6 @@ export const variantNameToTranslationKey: Record<string, string> = {
   'Large (10") - With Fresh Berry Garnish': 'variant.largeBerries',
   '6 rolls/pan': 'variant.rolls6Pan',
   '10" pan': 'variant.pan10',
-  'Concha Shells': 'variant.conchaShells',
   // Product names that appear as variant names
   'Chocolate Matilda Cake': 'product.chocolateMatildaCake',
   'Chocolate Cheesecake': 'product.chocolateCheesecake',

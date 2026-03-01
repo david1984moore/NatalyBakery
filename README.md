@@ -4,7 +4,7 @@ A modern, minimalist e-commerce website for Nataly's Home Bakery built with Next
 
 ## 🚀 Features
 
-- **Product Catalog** - Browse delicious bakery items (Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, Conchas)
+- **Product Catalog** - Browse delicious bakery items (Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls)
 - **Shopping Cart** - Add items to cart and manage quantities
 - **Checkout System** - Secure 50% deposit payment via Stripe
 - **Email Notifications** - Automated order confirmations and vendor notifications

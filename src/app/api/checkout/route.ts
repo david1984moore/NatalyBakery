@@ -49,13 +49,26 @@ export async function POST(request: NextRequest) {
     console.log('📥 Checkout API called')
     
     // Check for required environment variables
-    if (!process.env.DATABASE_URL) {
+    const dbUrl = process.env.DATABASE_URL
+    if (!dbUrl || typeof dbUrl !== 'string') {
       console.error('❌ DATABASE_URL is not set')
       return NextResponse.json(
         { 
           success: false,
           error: 'Database is not configured. Please contact support.',
           message: 'DATABASE_URL environment variable is missing. Please check your .env.local file.'
+        },
+        { status: 500 }
+      )
+    }
+    const trimmedDbUrl = dbUrl.trim()
+    if (!trimmedDbUrl.startsWith('postgresql://') && !trimmedDbUrl.startsWith('postgres://')) {
+      console.error('❌ DATABASE_URL must use postgresql:// or postgres:// protocol')
+      return NextResponse.json(
+        { 
+          success: false,
+          error: 'Invalid database configuration.',
+          message: 'DATABASE_URL must start with postgresql:// or postgres://. Please check your .env.local file. Example: postgresql://user:password@host:5432/database'
         },
         { status: 500 }
       )

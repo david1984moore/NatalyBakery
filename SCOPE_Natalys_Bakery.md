@@ -16,7 +16,7 @@
 
 1. **Landing Page** - Animated photo slideshow with dynamic transitions, hero section, call-to-action
 2. **Navigation System** - Fixed/sticky nav bar, mobile-responsive hamburger menu (Home, About, Menu, Gallery, Contact)
-3. **Menu & Ordering System** - Product catalog (Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, Conchas), add-to-cart, shopping cart, checkout with **50% deposit payment**
+3. **Menu & Ordering System** - Product catalog (Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls), add-to-cart, shopping cart, checkout with **50% deposit payment**
 4. **Payment Integration** - Stripe (recommended), 50% deposit online, remaining 50% offline
 5. **Email Notification System** - Customer confirmation email + vendor notification email with order details
 6. **Contact Form** - Required fields (name, phone, email, subject, message), email delivery

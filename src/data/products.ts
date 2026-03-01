@@ -18,7 +18,7 @@ export interface Product {
   description?: string
   variants: ProductVariant[]
   hasVariants: boolean
-  minQuantity?: number // For products like Concha Shells
+  minQuantity?: number
 }
 
 export const products: Product[] = [
@@ -137,24 +137,10 @@ export const products: Product[] = [
       },
     ],
   },
-  {
-    name: 'Conchas',
-    image: '/Images/conchas_3.jpeg',
-    images: ['/Images/conchas_3.jpeg', '/Images/conchas_1.jpeg', '/Images/conchas_2.jpeg', '/Images/conchas_4.jpeg'],
-    hasVariants: false,
-    variants: [
-      {
-        id: 'conchas',
-        name: 'Concha Shells',
-        price: 1, // Per shell
-      },
-    ],
-    minQuantity: 10, // Minimum 10 shells per order
-  },
 ]
 
 /** Products that use Nataly's own photos; others show "Pics coming soon!" placeholder. */
-export const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan', 'Conchas']
+export const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan']
 
 export function getProductByName(name: string): Product | undefined {
   return products.find((p) => p.name === name)

@@ -43,7 +43,7 @@ export const viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://caramelandjo.onrender.com'),
   title: "Caramel & Jo - Where caramel dreams become cake",
-  description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes. Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, Conchas, and more.',
+  description: 'Fresh, homemade treats crafted daily with the finest ingredients and traditional recipes. Flan, Choco-flan, Chocolate Cake, Cinnamon Rolls, and more.',
   openGraph: {
     title: 'Where caramel dreams become cake!',
     description: 'caramelandjo.onrender.com',

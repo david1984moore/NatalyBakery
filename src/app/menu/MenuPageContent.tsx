@@ -59,7 +59,7 @@ export default function MenuPageContent({
       const { scrollLeft, scrollWidth, clientWidth } = container
       setCanScrollLeft(scrollLeft > 1)
       setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1)
-      // Hide right fade when near the end so the last button (e.g. Conchas) isn't faded
+      // Hide right fade when near the end so the last button isn't faded
       setShowRightFade(scrollLeft + clientWidth < scrollWidth - 120)
     }
   }

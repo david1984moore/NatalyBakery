@@ -128,7 +128,6 @@ export type TranslationKey =
   | 'product.chocolateMatildaCake'
   | 'product.chocolateCheesecake'
   | 'product.lemonCharlotte'
-  | 'product.conchas'
   
   // Variants
   | 'variant.smallPlain'
@@ -137,7 +136,6 @@ export type TranslationKey =
   | 'variant.largeBerries'
   | 'variant.rolls6Pan'
   | 'variant.pan10'
-  | 'variant.conchaShells'
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -169,7 +167,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'menu.minimum': '(Minimum {min})',
     'menu.addToCart': 'Add to Cart',
     'menu.addedToCart': 'Added!',
-    'menu.minimumOrder': 'Minimum order of {min} shells required for Conchas',
+    'menu.minimumOrder': 'Minimum order of {min} pieces required',
     'menu.deliveryNote': 'All orders will be delivered to you. We deliver orders between 6:30pm and 9:30pm daily. Local delivery (Christiana, Newark, southern Wilmington, New Castle, Bear) is free. Any delivery outside of New Castle county, Delaware will be an additional $15.',
     
     // Checkout
@@ -268,7 +266,6 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'product.chocolateMatildaCake': 'Chocolate Matilda Cake',
     'product.chocolateCheesecake': 'Chocolate Cheesecake',
     'product.lemonCharlotte': 'Lemon Charlotte',
-    'product.conchas': 'Conchas',
     
     // Variants
     'variant.smallPlain': 'Small (6") - Plain',
@@ -277,7 +274,6 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'variant.largeBerries': 'Large (10") - With Fresh Berry Garnish',
     'variant.rolls6Pan': '6 rolls/pan',
     'variant.pan10': '10" pan',
-    'variant.conchaShells': 'Concha Shells',
   },
   es: {
     // Navigation
@@ -308,7 +304,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'menu.minimum': '(Mínimo {min})',
     'menu.addToCart': 'Agregar al Carrito',
     'menu.addedToCart': '¡Agregado!',
-    'menu.minimumOrder': 'Pedido mínimo de {min} piezas requerido para Conchas',
+    'menu.minimumOrder': 'Pedido mínimo de {min} piezas requerido',
     'menu.deliveryNote': 'Todos los pedidos serán entregados a domicilio. Entregamos entre 6:30pm y 9:30pm diariamente. La entrega local (Christiana, Newark, sur de Wilmington, New Castle, Bear) es gratis. Cualquier entrega fuera del condado de New Castle, Delaware tendrá un cargo adicional de $15.',
     
     // Checkout
@@ -407,7 +403,6 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'product.chocolateMatildaCake': 'Pastel Matilda de Chocolate',
     'product.chocolateCheesecake': 'Pastel de Queso de Chocolate',
     'product.lemonCharlotte': 'Charlotte de Limón',
-    'product.conchas': 'Conchas',
     
     // Variants
     'variant.smallPlain': 'Pequeño (6") - Simple',
@@ -416,7 +411,6 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'variant.largeBerries': 'Grande (10") - Con Frutos Rojos Frescos',
     'variant.rolls6Pan': '6 rollos/bandeja',
     'variant.pan10': 'Bandeja de 10"',
-    'variant.conchaShells': 'Conchas',
   },
 }
 

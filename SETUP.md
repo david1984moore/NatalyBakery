@@ -97,7 +97,8 @@ This resizes and compresses images; the build can also run it. See `PHOTO-PERFOR
 
 ### Database Connection Issues
 - Verify PostgreSQL is running
-- Check `DATABASE_URL` format is correct
+- Check `DATABASE_URL` format is correct — it **must** start with `postgresql://` or `postgres://` (e.g. `postgresql://user:password@host.supabase.co:5432/postgres`)
+- If checkout shows "Invalid datasource 'db'" or "the URL must start with the protocol postgresql:// or postgres://", set `DATABASE_URL` in `.env.local` (or production env vars) to a valid PostgreSQL connection string
 - Ensure database exists
 
 ### Prisma Issues

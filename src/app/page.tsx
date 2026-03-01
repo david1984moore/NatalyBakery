@@ -10,7 +10,6 @@ export default function Home() {
       <ImagePreloader images={[
         '/Images/IMG_7616.jpeg',   // Menu first product (Flan)
         '/Images/choco_5.jpeg', '/Images/flan_1.jpeg', '/Images/hero_2.jpeg',  // Choco-flan gallery
-        '/Images/conchas_3.jpeg', '/Images/conchas_1.jpeg', '/Images/conchas_2.jpeg', '/Images/conchas_4.jpeg',  // Conchas gallery
       ]} />
       <main data-scrollable className="min-h-[100svh] w-full min-w-0 flex flex-col md:min-h-screen" style={{ background: '#d6b88a' }}>
       <Hero />
