@@ -3,12 +3,8 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { useCart } from '@/contexts/CartContext'
-import LanguageToggle from '@/components/LanguageToggle'
 import Cart from '@/components/Cart'
 import SmoothLink from '@/components/SmoothLink'
-import { Mail } from 'lucide-react'
-import EnvelopeIcon from '@/components/EnvelopeIcon'
 import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
 
 interface OrderData {
@@ -31,13 +27,11 @@ function SuccessPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { t } = useLanguage()
-  const { items } = useCart()
   const orderId = searchParams.get('orderId')
   const orderNumber = searchParams.get('orderNumber')
   const isPendingOrder = searchParams.get('pending') === '1'
   const [orderData, setOrderData] = useState<OrderData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   useEffect(() => {
     if (!orderId) {
@@ -67,83 +61,8 @@ function SuccessPageContent() {
     <div className="page-content-wrapper">
     <div className="min-h-screen relative" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
       <Cart />
-      {/* Navigation Bar - matches menu page structure */}
-      <div
-        className="fixed inset-x-0 top-0 z-[100] safe-top mobile-header-hero-fill max-md:bg-hero-footer-gradient max-md:shadow-none md:sticky md:top-0 md:bg-background md:backdrop-blur-sm md:border-b md:border-warmgray-200 md:shadow-sm isolate"
-        style={{ minHeight: '40px', width: '100%' }}
-      >
-        <div className="relative z-10 flex flex-col min-h-[40px] mobile-header-hero-fill max-md:bg-hero-footer-gradient border-b-[3px] border-b-white/85 md:bg-transparent md:border-b md:border-warmgray-200">
-          {/* Mobile: fixed so content never bleeds above; safe-area + truncate for landscape */}
-          <div className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[40px] -translate-y-1.5 min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]">
-            <SmoothLink href="/" className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full overflow-visible" aria-label="Home">
-              <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">
-                Caramel & Jo
-              </span>
-            </SmoothLink>
-            <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
-              <SmoothLink
-                href="/contact"
-                aria-label={t('nav.contact')}
-                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
-              >
-                <EnvelopeIcon className="w-5 h-5 shrink-0" aria-hidden />
-              </SmoothLink>
-              <LanguageToggle variant="mobileHeader" />
-              <button
-                onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
-                aria-label="Shopping cart"
-              >
-                <svg className="w-7 h-7 text-white" fill="none" stroke="white" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {itemCount}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Desktop header - matches menu page */}
-          <div className="hidden md:flex flex-1 items-center px-4 sm:px-6 lg:px-8 h-14 md:h-16 -translate-y-0" style={{ minHeight: '40px' }}>
-            <SmoothLink href="/" className="flex-shrink-0 flex items-center h-full" aria-label="Home">
-              <span className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap">
-                Caramel & Jo
-              </span>
-            </SmoothLink>
-            <div className="flex-1 min-w-0" aria-hidden="true" />
-            <div className="flex-shrink-0 flex items-center gap-8 lg:gap-11">
-              <SmoothLink
-                href="/contact"
-                aria-label={t('nav.contact')}
-                className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
-              >
-                <Mail className="w-5 h-5" strokeWidth={2} />
-              </SmoothLink>
-              <LanguageToggle variant="menu" />
-              <button
-                onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
-                className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative"
-                aria-label="Shopping cart"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-                    {itemCount}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Spacer so content starts below fixed header (mobile); desktop uses sticky so no height needed */}
-      <div className="h-[calc(56px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0" aria-hidden />
+      {/* Spacer so content starts below fixed PageHeader (matches checkout/menu pages) */}
+      <div className="h-[calc(52px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0" aria-hidden />
 
       <div className="menu-content-top flex items-start relative z-0 safe-bottom pt-4 md:pt-6 pb-24 md:pb-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto w-full">
