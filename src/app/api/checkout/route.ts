@@ -97,20 +97,21 @@ export async function POST(request: NextRequest) {
 
     const { customerName, customerEmail, customerPhone, deliveryAddress, deliveryDate, deliveryTime, items, specialInstructions } = validationResult.data
 
-    // Validate delivery date: same-day orders only allowed if placed before 9:00am (bakery local time).
-    const tz = process.env.BAKERY_TIMEZONE || undefined
-    const dateOptions: Intl.DateTimeFormatOptions = tz ? { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' } : { year: 'numeric', month: '2-digit', day: '2-digit' }
-    const hourOptions: Intl.DateTimeFormatOptions = tz ? { timeZone: tz, hour: 'numeric', hour12: false } : { hour: 'numeric', hour12: false }
+    // No same-day orders. Orders placed today are ready for delivery the following day.
+    const tz = process.env.BAKERY_TIMEZONE || 'America/New_York'
+    const dateOptions: Intl.DateTimeFormatOptions = {
+      timeZone: tz,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }
     const todayStr = new Intl.DateTimeFormat('en-CA', dateOptions).format(new Date()) // YYYY-MM-DD
-    const currentHour = parseInt(new Intl.DateTimeFormat('en-US', hourOptions).format(new Date()), 10)
-    const isToday = deliveryDate === todayStr
-    const isAfterCutoff = currentHour >= 9
-    if (isToday && isAfterCutoff) {
+    if (deliveryDate === todayStr) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Same-day ordering cutoff has passed',
-          message: 'Orders for today must be placed before 9:00am. Please select tomorrow or a later date for delivery.',
+          error: 'Same-day delivery not available',
+          message: 'Orders placed today are ready for delivery the following day. Please select tomorrow or a later date.',
         },
         { status: 400 }
       )

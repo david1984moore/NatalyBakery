@@ -40,37 +40,30 @@ export default function CheckoutPage() {
   // Delivery time options: 6:30pm - 9:30pm in 30-min increments
   const deliveryTimeOptions = ['6:30pm', '7:00pm', '7:30pm', '8:00pm', '8:30pm', '9:00pm', '9:30pm']
 
-  // Minimum delivery date: before 9:00am can select today; at or after 9:00am, soonest is tomorrow.
+  // No same-day orders. Orders placed today are ready for delivery the following day.
   const now = new Date()
-  const cutOffHour = 9
-  const isBeforeCutoff = now.getHours() < cutOffHour
   const formatLocalDate = (d: Date) => {
     const y = d.getFullYear()
     const m = String(d.getMonth() + 1).padStart(2, '0')
     const day = String(d.getDate()).padStart(2, '0')
     return `${y}-${m}-${day}`
   }
-  const todayStr = formatLocalDate(now)
   const tomorrow = new Date(now)
   tomorrow.setDate(tomorrow.getDate() + 1)
-  const minDeliveryDate = isBeforeCutoff ? todayStr : formatLocalDate(tomorrow)
-  const isSameDayBlocked = !isBeforeCutoff
+  const minDeliveryDate = formatLocalDate(tomorrow)
 
-  // Mobile browsers (especially iOS) often ignore input[type=date] min attribute.
-  // Enforce same-day cutoff in JS: if after 8:59am, today must not be selectable.
-  // Dependency array size must stay constant (React requirement). Initial correction only;
-  // handleDeliveryDateChange prevents user from keeping "today" when after cutoff.
+  // Ensure delivery date is never today (no same-day orders)
   useEffect(() => {
-    if (!isSameDayBlocked) return
     setCustomerInfo((prev) => {
       const current = prev.deliveryDate.trim()
-      if (current === '' || current === todayStr) return { ...prev, deliveryDate: minDeliveryDate }
+      if (current === '' || current === formatLocalDate(now)) return { ...prev, deliveryDate: minDeliveryDate }
       return prev
     })
-  }, [isSameDayBlocked, minDeliveryDate, todayStr])
+  }, [minDeliveryDate])
 
   const handleDeliveryDateChange = (value: string) => {
-    if (isSameDayBlocked && value === todayStr) {
+    const todayStr = formatLocalDate(now)
+    if (value === todayStr) {
       setCustomerInfo((prev) => ({ ...prev, deliveryDate: minDeliveryDate }))
       return
     }
@@ -173,7 +166,9 @@ export default function CheckoutPage() {
       const data = await response.json()
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || data.message || 'Order failed. Please try again.')
+        // Prefer message (specific cause) over error (generic label)
+        const msg = data.message || data.error || 'Order failed. Please try again.'
+        throw new Error(msg)
       }
 
       setShowConfirmModal(false)
@@ -332,11 +327,9 @@ export default function CheckoutPage() {
                         className="checkout-delivery-date-input w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
                       />
                     </div>
-                    {isSameDayBlocked && (
-                      <p className="text-xs text-warmgray-500 mt-1" role="status">
-                        {t('checkout.sameDayCutoffNote')}
-                      </p>
-                    )}
+                    <p className="text-xs text-warmgray-500 mt-1" role="status">
+                      {t('checkout.nextDayNote')}
+                    </p>
                   </div>
 
                   <div className="min-w-0 w-full">
