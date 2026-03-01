@@ -86,7 +86,7 @@ function SlideToggle({
         ? 'text-white font-medium'
         : 'text-warmgray-700'
 
-  const pillRadiusClass = isHeaderButton || isMobile ? 'rounded-lg' : 'rounded-full'
+  const pillRadiusClass = isHeaderButton || isMobile ? 'rounded-xl' : 'rounded-full'
 
   const trackRadius = isHeaderButton
     ? isHeroFooter
@@ -112,9 +112,9 @@ function SlideToggle({
       onTouchEnd={handleTouchEnd}
     >
       <div
-        className={`absolute top-0 bottom-0 w-[calc(50%-6px)] ${pillRadiusClass} ${pillClass} transition-all duration-200 ease-out z-0`}
+        className={`absolute top-1 bottom-1 w-[calc(50%-10px)] ${pillRadiusClass} ${pillClass} transition-all duration-200 ease-out z-0`}
         style={{
-          left: language === 'en' ? '4px' : 'calc(50% + 2px)',
+          left: language === 'en' ? '6px' : 'calc(50% + 4px)',
         }}
         aria-hidden
       />
