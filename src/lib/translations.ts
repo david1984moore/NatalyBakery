@@ -37,6 +37,7 @@ export type TranslationKey =
   | 'checkout.customerInfo'
   | 'checkout.fullName'
   | 'checkout.email'
+  | 'checkout.invalidEmail'
   | 'checkout.phone'
   | 'checkout.phoneNumber'
   | 'checkout.deliveryAddress'
@@ -175,6 +176,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.customerInfo': 'Customer Information',
     'checkout.fullName': 'Full Name *',
     'checkout.email': 'Email *',
+    'checkout.invalidEmail': 'Please enter a valid email address.',
     'checkout.phone': 'Phone Number *',
     'checkout.phoneNumber': 'Phone Number',
     'checkout.deliveryAddress': 'Delivery Address *',
@@ -312,6 +314,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'checkout.customerInfo': 'Información del Cliente',
     'checkout.fullName': 'Nombre Completo *',
     'checkout.email': 'Correo Electrónico *',
+    'checkout.invalidEmail': 'Por favor ingresa un correo electrónico válido.',
     'checkout.phone': 'Número de Teléfono *',
     'checkout.phoneNumber': 'Número de Teléfono',
     'checkout.deliveryAddress': 'Dirección de Entrega *',

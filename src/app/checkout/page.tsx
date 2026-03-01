@@ -29,6 +29,9 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
 
+  // Basic email format validation (RFC 5322 simplified - local@domain.tld)
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+
   // When false, bypass Stripe and use order-only flow (submit → confirmation modal → place order)
   const stripeEnabled = process.env.NEXT_PUBLIC_ENABLE_STRIPE_PAYMENT === 'true'
 
@@ -70,9 +73,15 @@ export default function CheckoutPage() {
     setCustomerInfo((prev) => ({ ...prev, deliveryDate: value }))
   }
 
-  // Validate that all required fields are filled
+  // Show email error when user has entered something that is not a valid format
+  const emailError = customerInfo.email.trim() !== '' && !isValidEmail(customerInfo.email)
+    ? t('checkout.invalidEmail')
+    : null
+
+  // Validate that all required fields are filled and email format is valid
   const isFormValid = customerInfo.name.trim() !== '' && 
                       customerInfo.email.trim() !== '' && 
+                      isValidEmail(customerInfo.email) &&
                       customerInfo.phone.trim() !== '' &&
                       customerInfo.deliveryAddress.trim() !== '' &&
                       customerInfo.deliveryDate.trim() !== '' &&
@@ -279,8 +288,15 @@ export default function CheckoutPage() {
                       required
                       value={customerInfo.email}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
-                      className="w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border border-warmgray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border"
+                      aria-invalid={!!emailError}
+                      aria-describedby={emailError ? 'email-error' : undefined}
+                      className={`w-full min-w-0 max-w-full px-4 py-3 sm:px-3 sm:py-2 text-base sm:text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent box-border ${emailError ? 'border-red-300' : 'border-warmgray-300'}`}
                     />
+                    {emailError && (
+                      <p id="email-error" className="mt-1 text-sm text-red-600" role="alert">
+                        {emailError}
+                      </p>
+                    )}
                   </div>
 
                   <div className="min-w-0 w-full">
