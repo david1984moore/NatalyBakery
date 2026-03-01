@@ -93,7 +93,7 @@ export default function StickyNav() {
               {link.href === '/contact' ? <Mail className="w-5 h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" /> : link.href === '/menu' ? <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" /> : t(link.labelKey)}
             </SmoothLink>
           ))}
-          <LanguageToggle variant="mobile" />
+          <LanguageToggle variant="mobileHeader" />
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('cart:toggle'))}
             className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"

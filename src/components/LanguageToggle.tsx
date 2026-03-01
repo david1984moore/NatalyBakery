@@ -7,15 +7,15 @@ const SWIPE_THRESHOLD = 40
 const SWIPE_HORIZONTAL_RATIO = 1.5 // horizontal must be this much larger than vertical
 
 interface LanguageToggleProps {
-  variant?: 'desktop' | 'mobile' | 'menu' | 'menuHeader' | 'mobileMenu' | 'heroFooter'
+  variant?: 'desktop' | 'mobile' | 'mobileHeader' | 'menu' | 'menuHeader' | 'mobileMenu' | 'heroFooter'
 }
 
 function SlideToggle({
   variant,
   size = 'default',
 }: {
-  variant: 'hero' | 'light' | 'dark' | 'mobile'
-  size?: 'default' | 'compact' | 'heroFooter'
+  variant: 'hero' | 'light' | 'dark' | 'mobile' | 'headerButton'
+  size?: 'default' | 'compact' | 'heroFooter' | 'header'
 }) {
   const { language, setLanguage } = useLanguage()
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
@@ -51,29 +51,34 @@ function SlideToggle({
   const isHero = variant === 'hero'
   const isLight = variant === 'light'
   const isMobile = variant === 'mobile'
+  const isHeaderButton = variant === 'headerButton'
   const isHeroFooter = size === 'heroFooter'
 
   const heroBorderClass = isHeroFooter
     ? 'border-[4px] landscape:border-[3px]'
     : 'border-[3px]'
 
-  const trackClass = isHero
-    ? `${heroBorderClass} border-white bg-white/20 backdrop-blur-sm`
-    : isMobile
-      ? 'border border-white/40 bg-gradient-to-r from-[#8a7160] to-[#75604f]'
-      : isLight
-        ? 'border border-white/40 bg-white/20'
-        : 'border border-warmgray-200 bg-cream-50'
+  const trackClass = isHeaderButton
+    ? `${heroBorderClass} border-white bg-gradient-to-r from-[#8a7160] to-[#75604f]`
+    : isHero
+      ? `${heroBorderClass} border-white bg-white/20 backdrop-blur-sm`
+      : isMobile
+        ? 'border border-white/40 bg-gradient-to-r from-[#8a7160] to-[#75604f]'
+        : isLight
+          ? 'border border-white/40 bg-white/20'
+          : 'border border-warmgray-200 bg-cream-50'
 
-  const pillClass = isHero
-    ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f]'
-    : isMobile
-      ? 'bg-[#d6b88a]'
-      : isLight
-        ? 'bg-white/30'
-        : 'bg-cream-200'
+  const pillClass = isHeaderButton
+    ? 'bg-[#d6b88a]'
+    : isHero
+      ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f]'
+      : isMobile
+        ? 'bg-[#d6b88a]'
+        : isLight
+          ? 'bg-white/30'
+          : 'bg-cream-200'
 
-  const textClass = isHero
+  const textClass = isHero && !isHeaderButton
     ? 'text-white font-medium'
     : isMobile
       ? 'text-warmgray-800 font-medium'
@@ -81,16 +86,22 @@ function SlideToggle({
         ? 'text-white font-medium'
         : 'text-warmgray-700'
 
-  const pillRadiusClass = isMobile ? 'rounded-lg' : 'rounded-full'
+  const pillRadiusClass = isHeaderButton || isMobile ? 'rounded-lg' : 'rounded-full'
+
+  const trackRadius = isHeaderButton
+    ? isHeroFooter
+      ? 'rounded-2xl'
+      : 'rounded-xl'
+    : 'rounded-xl'
 
   const sizeClasses =
     size === 'heroFooter'
       ? 'h-14 w-[5.5rem] sm:h-16 sm:w-[6rem] landscape:h-12 landscape:w-[5rem] text-sm'
-      : size === 'compact'
-        ? 'h-9 min-w-[4.5rem] text-xs'
-        : 'h-11 min-w-[5rem] text-sm'
-
-  const trackRadius = 'rounded-xl'
+      : size === 'header'
+        ? 'h-[38px] min-w-[4.5rem] text-xs'
+        : size === 'compact'
+          ? 'h-9 min-w-[4.5rem] text-xs'
+          : 'h-11 min-w-[5rem] text-sm'
 
   return (
     <div
@@ -111,7 +122,7 @@ function SlideToggle({
         type="button"
         onClick={() => setLanguage('en')}
         className={`relative z-10 flex-1 flex items-center justify-center transition-colors duration-200 ${
-          isMobile
+          isHeaderButton || isMobile
             ? language === 'en'
               ? 'text-warmgray-800 font-medium'
               : 'text-white/90 font-medium'
@@ -126,7 +137,7 @@ function SlideToggle({
         type="button"
         onClick={() => setLanguage('es')}
         className={`relative z-10 flex-1 flex items-center justify-center transition-colors duration-200 ${
-          isMobile
+          isHeaderButton || isMobile
             ? language === 'es'
               ? 'text-warmgray-800 font-medium'
               : 'text-white/90 font-medium'
@@ -150,6 +161,14 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
     )
   }
 
+  if (variant === 'mobileHeader') {
+    return (
+      <div className="hero-btn-header hero-footer-btn-taper rounded-xl">
+        <SlideToggle variant="headerButton" size="header" />
+      </div>
+    )
+  }
+
   if (variant === 'mobileMenu') {
     return (
       <div className="flex justify-center">
@@ -169,7 +188,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
   if (variant === 'heroFooter') {
     return (
       <div className="hero-btn-header hero-footer-btn-taper rounded-2xl">
-        <SlideToggle variant="hero" size="heroFooter" />
+        <SlideToggle variant="headerButton" size="heroFooter" />
       </div>
     )
   }
