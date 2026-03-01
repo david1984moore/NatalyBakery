@@ -76,7 +76,7 @@ export function PageHeader() {
             </span>
           </SmoothLink>
           <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
-            <LanguageToggle variant="menuHeader" />
+            <LanguageToggle variant="mobile" />
             {showMenuLink && (
               <SmoothLink
                 href="/menu"
