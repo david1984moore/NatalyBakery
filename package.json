@@ -2,13 +2,13 @@
   "name": "natalys-bakery",
   "version": "0.1.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=20 <23"
   },
   "private": true,
   "scripts": {
     "dev": "npm run optimize-images && next dev",
     "build": "prisma generate && npm run optimize-images && next build",
-    "postbuild": "cp -r .next/static .next/standalone/.next/static && cp -r public .next/standalone/public",
+    "postbuild": "node -e \"const fs=require('fs');fs.cpSync('.next/static','.next/standalone/.next/static',{recursive:true});fs.cpSync('public','.next/standalone/public',{recursive:true});\"",
     "start": "next start",
     "optimize-images": "node scripts/optimize-images-enhanced.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
