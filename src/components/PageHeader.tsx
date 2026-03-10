@@ -70,7 +70,7 @@ export function PageHeader() {
       resizeObserver.disconnect();
       window.removeEventListener('orientationchange', updateHeaderHeight);
     };
-  }, [isNonHeroPage]);
+  }, [pathname]);
 
   if (!isNonHeroPage) return null;
 

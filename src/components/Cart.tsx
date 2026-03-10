@@ -124,7 +124,7 @@ export default function Cart() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={cartTransition}
-              className="fixed inset-0 z-[999] max-md:z-[2147483647] flex items-center max-md:items-start max-md:pt-[calc(var(--header-height)+0.5rem)] justify-center p-4 pointer-events-none"
+              className="fixed inset-0 z-[999] max-md:z-[2147483647] flex items-center max-md:items-start max-md:pt-[calc(var(--header-height)_+_0.5rem)] justify-center p-4 pointer-events-none"
               aria-hidden="true"
             >
               <div
@@ -132,7 +132,7 @@ export default function Cart() {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="cart-title"
-                className="w-full max-w-md max-h-[calc(100vh-2rem)] max-md:max-h-[calc(100dvh-var(--header-height)-1rem)] bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto safe-top safe-bottom"
+                className="w-full max-w-md max-h-[calc(100vh-2rem)] max-md:max-h-[calc(100dvh_-_var(--header-height)_-_1rem)] bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto safe-top safe-bottom"
               >
           <div className="relative w-full flex flex-col overflow-hidden flex-1 min-h-0">
           {/* Cart Items */}
