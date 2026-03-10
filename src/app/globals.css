@@ -48,6 +48,10 @@ body {
 }
 
 @media (hover: none) and (pointer: coarse) {
+  body.hero-page #scroll-root {
+    overscroll-behavior-y: auto;
+  }
+
   html {
     scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
@@ -113,6 +117,7 @@ main {
 }
 
 :root {
+  --header-height: 52px; /* fallback; overwritten by JS measurement */
   --background: #faf7f2;
   --foreground: #2d2822;
   /* Hero/footer - light brown, two shades darker and more brown */

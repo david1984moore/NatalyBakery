@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
@@ -11,6 +12,14 @@ const heroFooterLinks = [{ href: '/contact', labelKey: 'nav.contact' as const }]
 
 export default function Hero() {
   const { t } = useLanguage()
+
+  useEffect(() => {
+    document.body.classList.add('hero-page')
+    return () => {
+      document.body.classList.remove('hero-page')
+    }
+  }, [])
+
   return (
     <section
       className="relative h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden md:overflow-visible shrink-0"

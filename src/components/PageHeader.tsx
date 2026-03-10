@@ -50,6 +50,28 @@ export function PageHeader() {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const updateHeaderHeight = () => {
+      const height = header.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--header-height', `${height}px`);
+    };
+
+    updateHeaderHeight();
+
+    const resizeObserver = new ResizeObserver(updateHeaderHeight);
+    resizeObserver.observe(header);
+
+    window.addEventListener('orientationchange', updateHeaderHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('orientationchange', updateHeaderHeight);
+    };
+  }, [isNonHeroPage]);
+
   if (!isNonHeroPage) return null;
 
   const showMenuLink = pathname !== '/menu';
