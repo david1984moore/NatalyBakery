@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: caramel-and-jo
+    runtime: node
+    buildCommand: prisma generate && npm run optimize-images && next build
+    startCommand: node .next/standalone/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
