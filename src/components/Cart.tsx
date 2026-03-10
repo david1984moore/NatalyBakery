@@ -17,6 +17,7 @@ export default function Cart() {
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [mobileCartStyle, setMobileCartStyle] = useState<React.CSSProperties>({})
   const scrollPositionRef = useRef(0)
   const pathname = usePathname()
   const isMenuPage = pathname === '/menu'
@@ -104,6 +105,36 @@ export default function Cart() {
     }
   }, [isMenuPage, openCartOnNextPage, setOpenCartOnNextPage])
 
+  /* Mobile: measure header bottom via getBoundingClientRect when cart opens; apply top/height as inline styles.
+   * Abandons CSS variables for reliability across devices/orientations. Desktop unchanged. */
+  useEffect(() => {
+    if (!isOpen) return
+
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    if (!isTouchDevice) return
+
+    const measure = () => {
+      const header = document.querySelector('[data-cart-header-ref]') as HTMLElement | null
+      if (!header) return
+
+      const { bottom } = header.getBoundingClientRect()
+      setMobileCartStyle({
+        top: `${bottom}px`,
+        height: `${window.innerHeight - bottom}px`,
+      })
+    }
+
+    measure()
+
+    window.addEventListener('orientationchange', measure)
+    window.addEventListener('resize', measure)
+
+    return () => {
+      window.removeEventListener('orientationchange', measure)
+      window.removeEventListener('resize', measure)
+    }
+  }, [isOpen])
+
   // Don't render floating button on menu page, contact page, or checkout pages (it's in the nav bar)
   if (isModalCartPage && mounted) {
     const modalContent = (
@@ -124,7 +155,14 @@ export default function Cart() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={cartTransition}
-              className="fixed inset-0 max-md:inset-x-0 max-md:inset-y-0 max-md:top-[var(--header-height)] z-[999] max-md:z-[2147483647] flex items-center max-md:items-end justify-center max-md:justify-stretch p-4 max-md:p-0 pointer-events-none"
+              className="fixed inset-x-0 bottom-0 z-[999] max-md:z-[2147483647] flex items-end md:inset-0 md:items-center md:justify-center md:p-4 pointer-events-none"
+              style={
+                typeof window !== 'undefined' &&
+                window.matchMedia('(hover: none) and (pointer: coarse)').matches &&
+                Object.keys(mobileCartStyle).length > 0
+                  ? mobileCartStyle
+                  : undefined
+              }
               aria-hidden="true"
             >
               <div
@@ -132,7 +170,7 @@ export default function Cart() {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="cart-title"
-                className="w-full max-w-md max-h-[calc(100vh-2rem)] max-md:w-full max-md:max-w-none max-md:max-h-none max-md:h-[calc(100dvh_-_var(--header-height))] max-md:rounded-none max-md:rounded-t-2xl max-md:border-x-0 max-md:border-b-0 bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto"
+                className="w-full max-w-md max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-2rem)] max-md:w-full max-md:max-w-none max-md:h-full max-md:max-h-full max-md:rounded-none max-md:rounded-t-2xl max-md:border-x-0 max-md:border-b-0 bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto"
               >
           <div className="relative w-full flex flex-col overflow-hidden flex-1 min-h-0">
           {/* Cart Items */}

@@ -80,6 +80,7 @@ export function PageHeader() {
   return (
     <div
       ref={headerRef}
+      data-cart-header-ref
       className="fixed inset-x-0 top-0 mobile-header-hero-fill max-md:bg-hero-footer-gradient max-md:shadow-none md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] isolate"
       style={{ zIndex: 2147483647, width: '100%' }}
     >
