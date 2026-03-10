@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -17,7 +17,7 @@ export default function Cart() {
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const [mobileCartStyle, setMobileCartStyle] = useState<React.CSSProperties>({})
+  const [, forceUpdate] = useState(0)
   const scrollPositionRef = useRef(0)
   const pathname = usePathname()
   const isMenuPage = pathname === '/menu'
@@ -105,39 +105,33 @@ export default function Cart() {
     }
   }, [isMenuPage, openCartOnNextPage, setOpenCartOnNextPage])
 
-  /* Mobile: measure header bottom via getBoundingClientRect when cart opens; apply top/left/right/height as inline styles.
-   * useLayoutEffect runs before paint so first render has correct dimensions — no layout shift.
-   * Abandons CSS variables for reliability across devices/orientations. Desktop unchanged. */
-  useLayoutEffect(() => {
+  /* Force re-render on orientation/resize so getMobileCartStyle() gets fresh measurements. */
+  useEffect(() => {
     if (!isOpen) return
-    const isTouchDevice =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(hover: none) and (pointer: coarse)').matches
-    if (!isTouchDevice) return
-
-    const measure = () => {
-      const header = document.querySelector('[data-cart-header-ref]') as HTMLElement | null
-      if (!header) return
-      const { bottom } = header.getBoundingClientRect()
-      setMobileCartStyle({
-        position: 'fixed',
-        top: `${bottom}px`,
-        left: 0,
-        right: 0,
-        height: `${window.innerHeight - bottom}px`,
-        zIndex: 2147483647,
-        pointerEvents: 'auto',
-      })
-    }
-
-    measure()
-    window.addEventListener('orientationchange', measure)
-    window.addEventListener('resize', measure)
+    const handleResize = () => forceUpdate((n) => n + 1)
+    window.addEventListener('orientationchange', handleResize)
+    window.addEventListener('resize', handleResize)
     return () => {
-      window.removeEventListener('orientationchange', measure)
-      window.removeEventListener('resize', measure)
+      window.removeEventListener('orientationchange', handleResize)
+      window.removeEventListener('resize', handleResize)
     }
   }, [isOpen])
+
+  const getMobileCartStyle = (): React.CSSProperties => {
+    if (typeof window === 'undefined') return {}
+    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) return {}
+    const header = document.querySelector('[data-cart-header-ref]') as HTMLElement | null
+    const bottom = header ? header.getBoundingClientRect().bottom : 52
+    return {
+      position: 'fixed',
+      top: `${bottom}px`,
+      left: 0,
+      right: 0,
+      height: `${window.innerHeight - bottom}px`,
+      zIndex: 2147483647,
+      pointerEvents: 'auto',
+    }
+  }
 
   // Don't render floating button on menu page, contact page, or checkout pages (it's in the nav bar)
   if (isModalCartPage && mounted) {
@@ -160,12 +154,7 @@ export default function Cart() {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={cartTransition}
               className="pointer-events-none md:fixed md:inset-0 md:z-[999] md:flex md:items-center md:justify-center md:p-4 max-md:pointer-events-none"
-              style={
-                typeof window !== 'undefined' &&
-                window.matchMedia('(hover: none) and (pointer: coarse)').matches
-                  ? mobileCartStyle
-                  : undefined
-              }
+              style={getMobileCartStyle()}
               aria-hidden="true"
             >
               <div
