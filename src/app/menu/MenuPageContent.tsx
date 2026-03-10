@@ -31,6 +31,12 @@ export default function MenuPageContent({
   products,
 }: MenuPageContentProps) {
   usePageHeroHeader()
+  useEffect(() => {
+    document.body.classList.add('menu-page')
+    return () => {
+      document.body.classList.remove('menu-page')
+    }
+  }, [])
   const searchParams = useSearchParams()
   const router = useRouter()
   const { addItem, items } = useCart()

@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import ContactForm from '@/components/ContactForm'
 import Cart from '@/components/Cart'
 import { useLanguage } from '@/contexts/LanguageContext'
@@ -7,6 +8,12 @@ import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
 
 export default function ContactPage() {
   usePageHeroHeader()
+  useEffect(() => {
+    document.body.classList.add('contact-page')
+    return () => {
+      document.body.classList.remove('contact-page')
+    }
+  }, [])
   const { t } = useLanguage()
 
   return (

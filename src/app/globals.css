@@ -52,6 +52,11 @@ body {
     overscroll-behavior-y: auto;
   }
 
+  body.menu-page #scroll-root,
+  body.contact-page #scroll-root {
+    overscroll-behavior-y: auto;
+  }
+
   html {
     scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
