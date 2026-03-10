@@ -105,12 +105,14 @@ export default function Cart() {
     }
   }, [isMenuPage, openCartOnNextPage, setOpenCartOnNextPage])
 
-  /* Mobile: measure header bottom via getBoundingClientRect when cart opens; apply top/height as inline styles.
+  /* Mobile: measure header bottom via getBoundingClientRect when cart opens; apply top/left/right/height as inline styles.
    * Abandons CSS variables for reliability across devices/orientations. Desktop unchanged. */
   useEffect(() => {
     if (!isOpen) return
 
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    const isTouchDevice =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(hover: none) and (pointer: coarse)').matches
     if (!isTouchDevice) return
 
     const measure = () => {
@@ -119,8 +121,12 @@ export default function Cart() {
 
       const { bottom } = header.getBoundingClientRect()
       setMobileCartStyle({
+        position: 'fixed',
         top: `${bottom}px`,
+        left: 0,
+        right: 0,
         height: `${window.innerHeight - bottom}px`,
+        zIndex: 2147483647,
       })
     }
 
@@ -146,7 +152,7 @@ export default function Cart() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/40 z-[998] max-md:z-[2147483646] backdrop-blur-md"
+              className="fixed inset-0 bg-black/40 z-[998] md:z-[998] max-md:z-[2147483646] backdrop-blur-md"
               onClick={() => setIsOpen(false)}
               aria-hidden="true"
             />
@@ -155,11 +161,10 @@ export default function Cart() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={cartTransition}
-              className="fixed inset-x-0 bottom-0 z-[999] max-md:z-[2147483647] flex items-end md:inset-0 md:items-center md:justify-center md:p-4 pointer-events-none"
+              className="pointer-events-none md:fixed md:inset-0 md:z-[999] md:flex md:items-center md:justify-center md:p-4"
               style={
                 typeof window !== 'undefined' &&
-                window.matchMedia('(hover: none) and (pointer: coarse)').matches &&
-                Object.keys(mobileCartStyle).length > 0
+                window.matchMedia('(hover: none) and (pointer: coarse)').matches
                   ? mobileCartStyle
                   : undefined
               }
@@ -170,7 +175,7 @@ export default function Cart() {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="cart-title"
-                className="w-full max-w-md max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-2rem)] max-md:w-full max-md:max-w-none max-md:h-full max-md:max-h-full max-md:rounded-none max-md:rounded-t-2xl max-md:border-x-0 max-md:border-b-0 bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto"
+                className="w-full bg-white overflow-hidden flex flex-col pointer-events-auto max-md:h-full max-md:max-h-full max-md:rounded-none max-md:rounded-t-2xl max-md:border-x-0 max-md:border-b-0 md:max-w-md md:max-h-[calc(100vh-2rem)] md:rounded-lg md:shadow-2xl md:border-4 md:border-warmgray-200"
               >
           <div className="relative w-full flex flex-col overflow-hidden flex-1 min-h-0">
           {/* Cart Items */}
