@@ -6,6 +6,7 @@ import { LanguageProvider } from '@/contexts/LanguageContext'
 import StickyNav from '@/components/StickyNav'
 import { PageHeader } from '@/components/PageHeader'
 import MobileScrollLock from '@/components/MobileScrollLock'
+import ScrollRoot from '@/components/ScrollRoot'
 import PageTransition from '@/components/PageTransition'
 import TransitionOverlay from '@/components/TransitionOverlay'
 import TransitionScreen from '@/components/TransitionScreen'
@@ -77,19 +78,23 @@ export default function RootLayout({
           media="(hover: hover) and (pointer: fine)"
         />
       </head>
-      <body>
+      <body className="h-[100dvh] md:h-screen overflow-hidden flex flex-col min-h-0">
         <MobileScrollLock />
         <TransitionScreen />
-        <LanguageProvider>
-          <CartProvider>
-            <StickyNav />
-            <PageHeader />
-            <TransitionOverlay />
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </CartProvider>
-        </LanguageProvider>
+        <div className="flex-1 min-h-0 flex flex-col">
+          <LanguageProvider>
+            <CartProvider>
+              <StickyNav />
+              <PageHeader />
+              <TransitionOverlay />
+              <ScrollRoot>
+                <PageTransition>
+                  {children}
+                </PageTransition>
+              </ScrollRoot>
+            </CartProvider>
+          </LanguageProvider>
+        </div>
       </body>
     </html>
   )

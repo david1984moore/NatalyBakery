@@ -4,7 +4,7 @@
 
 html,
 body {
-  background-color: #d6b88a;
+  background-color: #f7f3ec;
   background-image: none;
 }
 
@@ -657,7 +657,8 @@ main {
 
 /* Scroll lock when cart is open - prevents background scroll (critical for iOS).
  * --scroll-y set via CSS custom property before class applies (no one-frame gap in Safari).
- * html handles overflow; body uses position:fixed + top:var(--scroll-y). */
+ * html handles overflow; body uses position:fixed + top:var(--scroll-y).
+ * When using scroll-root, lock that container too. */
 html.cart-open {
   overflow: hidden;
 }
@@ -669,6 +670,10 @@ html.cart-open body {
   touch-action: none;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: auto; /* Disable momentum when locked */
+}
+
+html.cart-open #scroll-root {
+  overflow: hidden;
 }
 
 /* Cart backdrop (legacy class): full viewport when using cart-overlay */

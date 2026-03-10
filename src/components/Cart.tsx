@@ -43,16 +43,22 @@ export default function Cart() {
   }, [])
 
   /* Scroll lock when modal cart is open: prevent background scroll (critical for iOS).
-   * Uses --scroll-y CSS variable so body gets correct top before class applies (avoids one-frame gap in Safari). */
+   * Uses scroll-root when present (our scroll container), else window. */
   const lockScroll = () => {
-    scrollPositionRef.current = window.scrollY
+    const scrollRoot = document.getElementById('scroll-root')
+    scrollPositionRef.current = scrollRoot ? scrollRoot.scrollTop : window.scrollY
     document.documentElement.style.setProperty('--scroll-y', `-${scrollPositionRef.current}px`)
     document.documentElement.classList.add('cart-open')
   }
   const unlockScroll = () => {
     document.documentElement.classList.remove('cart-open')
     document.documentElement.style.removeProperty('--scroll-y')
-    window.scrollTo({ top: scrollPositionRef.current, behavior: 'instant' })
+    const scrollRoot = document.getElementById('scroll-root')
+    if (scrollRoot) {
+      scrollRoot.scrollTo({ top: scrollPositionRef.current, behavior: 'instant' })
+    } else {
+      window.scrollTo({ top: scrollPositionRef.current, behavior: 'instant' })
+    }
   }
   useEffect(() => {
     if (!isModalCartPage || !mounted) return

@@ -13,7 +13,7 @@ export default function Hero() {
   const { t } = useLanguage()
   return (
     <section
-      className="relative h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden shrink-0"
+      className="relative h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden md:overflow-visible shrink-0"
       style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}
     >
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
@@ -88,7 +88,7 @@ export default function Hero() {
       </div>
 
       {/* ========== DESKTOP: original layout – brand left, HeroNav right, single image, no footer ========== */}
-      <div className="hidden md:block absolute inset-0 z-[1]">
+      <div className="hidden md:block absolute inset-0 z-[1] pointer-events-none">
         <div data-hero-content className="absolute inset-0">
           <div className="absolute inset-0" data-hero-image style={{ transformOrigin: 'center center' }}>
             <OptimizedImage
@@ -103,7 +103,7 @@ export default function Hero() {
             <div className="absolute inset-0 bg-black/10" />
           </div>
           <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8">
-          <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-4 md:right-6 lg:right-8">
+          <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-4 md:right-6 lg:right-8 pointer-events-auto">
             <HeroNav />
           </div>
           <div id="brand-name-wrapper-desktop" className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 lg:left-8 font-brand-playfair">

@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import SmoothLink from '@/components/SmoothLink';
 import LanguageToggle from '@/components/LanguageToggle';
+import { MenuHeaderTabs } from '@/components/MenuHeaderTabs';
 import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, UtensilsCrossed } from 'lucide-react';
@@ -136,7 +137,7 @@ export function PageHeader() {
 
         {/* Desktop */}
         <div
-          className="hidden md:flex flex-1 items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-20"
+          className="hidden md:flex flex-1 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 h-14 md:h-20 min-w-0"
           style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
           <SmoothLink
@@ -148,7 +149,14 @@ export function PageHeader() {
               Caramel & Jo
             </span>
           </SmoothLink>
-          <div className="flex items-center gap-8 lg:gap-11 flex-shrink-0">
+          {pathname === '/menu' ? (
+            <Suspense fallback={<div className="flex-1 min-w-0" />}>
+              <MenuHeaderTabs />
+            </Suspense>
+          ) : (
+            <div className="flex-1 min-w-0" aria-hidden />
+          )}
+          <div className="flex items-center gap-6 lg:gap-8 flex-shrink-0">
             {showMenuLink && (
               <SmoothLink
                 href="/menu"

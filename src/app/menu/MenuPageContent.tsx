@@ -219,12 +219,12 @@ export default function MenuPageContent({
   }
 
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-background relative w-full max-w-full min-w-0 overflow-x-hidden">
+    <div className="h-full min-h-0 flex flex-col overflow-hidden bg-background relative w-full max-w-full min-w-0">
       {/* Spacer so content is not under fixed PageHeader */}
-      <div className="h-[calc(52px+env(safe-area-inset-top,0px))] md:h-0 md:min-h-0 shrink-0 bg-background" aria-hidden />
+      <div className="h-[calc(52px+env(safe-area-inset-top,0px))] md:h-[calc(5rem+env(safe-area-inset-top,0px))] shrink-0 bg-background" aria-hidden />
 
-      {/* Mobile: sticky category row so product tabs stay visible when scrolling */}
-      <div className="md:hidden sticky top-[calc(52px+env(safe-area-inset-top,0px))] z-10 flex-shrink-0 bg-background">
+      {/* Mobile: category row so product tabs stay visible */}
+      <div className="md:hidden shrink-0 z-10 bg-background">
         <div
           className="flex items-center gap-2.5 overflow-x-auto overflow-y-hidden scrollbar-hide px-3 py-1.5 touch-scroll mobile-scroll-container touch-pan-x"
           style={{ WebkitOverflowScrolling: 'touch' }}
@@ -254,40 +254,8 @@ export default function MenuPageContent({
         </div>
       </div>
 
-      {/* Desktop: in-flow category row (scrollable with content) */}
-      <div className="hidden md:flex flex-shrink-0 items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide px-4 sm:px-6 lg:px-8 py-2 bg-background">
-        <div
-          ref={scrollContainerRef}
-          className="flex items-center gap-4 md:gap-3 overflow-x-auto scrollbar-hide flex-1 min-w-0 overflow-y-hidden touch-scroll desktop-scroll-container"
-          style={{ WebkitOverflowScrolling: 'touch' }}
-        >
-          {products.map((product) => {
-            const isSelected = featuredProduct?.name === product.name
-            const translationKey =
-              productNameToTranslationKey[product.name] || product.name
-            const translatedName =
-              translationKey.startsWith('product.')
-                ? t(translationKey as any)
-                : product.name
-            return (
-              <button
-                key={product.name}
-                onClick={() => handleProductChange(product.name)}
-                className={`flex-shrink-0 min-h-[44px] px-3 py-1.5 md:px-2.5 md:text-xs rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap border border-transparent ${
-                  isSelected
-                    ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white md:hover:opacity-90'
-                    : 'bg-transparent text-warmgray-700 hover:bg-[#8a7160] hover:text-white'
-                }`}
-              >
-                {translatedName}
-              </button>
-            )
-          })}
-        </div>
-      </div>
-
-      <section className="menu-content-top flex items-start relative z-0 safe-bottom">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-start md:items-center pt-4 md:pt-6 pb-24 md:pb-4">
+      <section className="menu-content-top flex-1 min-h-0 flex flex-col relative z-0 safe-bottom overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-start md:items-center pt-2 md:pt-4 pb-2 md:pb-4 flex-1 min-h-0">
           {isLoading ? (
             <div className="flex items-center justify-center w-full h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center w-full max-w-4xl">
@@ -306,8 +274,8 @@ export default function MenuPageContent({
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 items-center w-full">
-              <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-full md:aspect-[3/4] md:h-auto md:min-h-[280px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 items-center w-full min-h-0 flex-1">
+              <div className="relative w-full min-h-[160px] max-w-full md:aspect-[3/4] md:h-auto md:min-h-[200px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0 flex-shrink-0">
                 {PRODUCTS_WITH_REAL_PHOTOS.includes(featuredProduct.name) ? (
                   featuredProduct.images && featuredProduct.images.length > 0 ? (
                     <ProductImageGallery
@@ -326,15 +294,15 @@ export default function MenuPageContent({
                     />
                   )
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center bg-warmgray-100 text-warmgray-600 font-medium text-center px-6 py-8 text-base sm:text-lg md:text-xl">
+                  <div className="absolute inset-0 flex items-center justify-center bg-warmgray-100 text-warmgray-600 font-medium text-center px-4 py-6 text-sm md:text-base">
                     Pics coming soon!
                   </div>
                 )}
               </div>
 
-              <div className="space-y-2 md:space-y-4 flex flex-col">
-                <div>
-                  <h1 className="text-xl md:text-3xl font-serif text-warmgray-800 mb-0.5 md:mb-1.5">
+              <div className="space-y-1.5 md:space-y-3 flex flex-col min-h-0 min-w-0">
+                <div className="flex-shrink-0">
+                  <h1 className="text-lg md:text-2xl font-serif text-warmgray-800 mb-0.5 md:mb-1">
                     {(() => {
                       const translationKey =
                         productNameToTranslationKey[featuredProduct.name] ||
@@ -345,7 +313,7 @@ export default function MenuPageContent({
                     })()}
                   </h1>
                   {featuredProduct.description && (
-                    <p className="text-warmgray-600 text-sm md:text-base leading-snug md:leading-relaxed">
+                    <p className="text-warmgray-600 text-xs md:text-sm leading-snug">
                       {featuredProduct.description}
                     </p>
                   )}
@@ -361,7 +329,7 @@ export default function MenuPageContent({
                         {featuredProduct.variants.map((variant) => (
                           <label
                             key={variant.id}
-                            className={`flex items-center gap-2 md:gap-3 min-h-[44px] p-2 sm:p-2 md:p-3 border md:border md:border-transparent rounded-md cursor-pointer transition-colors ${
+                            className={`flex items-center gap-2 md:gap-3 min-h-[36px] p-1.5 sm:p-2 md:p-2 border md:border md:border-transparent rounded-md cursor-pointer transition-colors ${
                               selectedVariant?.id === variant.id
                                 ? 'border-warmgray-800 bg-background md:bg-cream-100 md:border-warmgray-300'
                                 : 'border-warmgray-300 md:hover:bg-cream-100 md:hover:border-warmgray-400 md:hover:shadow-sm'
@@ -422,7 +390,7 @@ export default function MenuPageContent({
                   <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => handleQuantityChange(-1)}
-                      className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md md:hover:bg-warmbrown-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="min-w-[36px] min-h-[36px] w-9 h-9 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md md:hover:bg-warmbrown-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       aria-label="Decrease quantity"
                       disabled={
                         featuredProduct.minQuantity
@@ -464,7 +432,7 @@ export default function MenuPageContent({
                     />
                     <button
                       onClick={() => handleQuantityChange(1)}
-                      className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md md:hover:bg-warmbrown-600 transition-colors"
+                      className="min-w-[36px] min-h-[36px] w-9 h-9 flex items-center justify-center bg-warmbrown-500 text-warmgray-800 border border-warmbrown-500 rounded-md md:hover:bg-warmbrown-600 transition-colors"
                       aria-label="Increase quantity"
                     >
                       <svg
@@ -491,7 +459,7 @@ export default function MenuPageContent({
                   )}
                 </div>
 
-                <div className="pt-1.5 border-t border-warmgray-200">
+                <div className="pt-1 border-t border-warmgray-200 flex-shrink-0">
                   {selectedVariant && (
                     <div className="flex justify-between items-center mb-1.5">
                       <span className="text-warmgray-700 font-medium text-sm">
@@ -505,7 +473,7 @@ export default function MenuPageContent({
                   <button
                     onClick={handleAddToCart}
                     disabled={!selectedVariant || addToCartSuccess}
-                    className={`w-full min-h-[44px] px-4 py-2.5 sm:py-2 border rounded-md font-medium text-base sm:text-sm disabled:cursor-not-allowed transition-colors duration-standard ease-apple ${
+                    className={`w-full min-h-[40px] px-4 py-2 border rounded-md font-medium text-sm disabled:cursor-not-allowed transition-colors duration-standard ease-apple ${
                       addToCartSuccess
                         ? 'border-sage-500 bg-sage-500 text-white'
                         : 'border-transparent bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white md:hover:opacity-90 disabled:opacity-50'
@@ -524,7 +492,7 @@ export default function MenuPageContent({
                     )}
                   </button>
                   <p
-                    className="text-xs text-warmgray-500 mt-2 leading-relaxed"
+                    className="text-[10px] md:text-xs text-warmgray-500 mt-1 leading-tight"
                     role="note"
                   >
                     * {t('menu.deliveryNote')}

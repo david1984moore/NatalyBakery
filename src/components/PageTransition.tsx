@@ -154,11 +154,17 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     }
   }, [pathname]);
 
+  const isMenuPage = pathname === '/menu' || pathname.startsWith('/menu/');
+
   return (
     <div 
       ref={wrapperRef}
       data-page-wrapper
-      style={{ minHeight: '100vh', transformOrigin: 'center center' }}
+      className={isMenuPage ? 'h-full min-h-0 flex flex-col' : undefined}
+      style={{ 
+        minHeight: isMenuPage ? undefined : '100vh', 
+        transformOrigin: 'center center' 
+      }}
     >
       {children}
     </div>

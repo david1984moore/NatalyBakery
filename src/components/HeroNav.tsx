@@ -20,7 +20,7 @@ export default function HeroNav() {
     <nav className="relative px-2 sm:px-3 md:px-4 lg:px-5 py-2 sm:py-3 md:py-4 lg:py-5 safe-top safe-right">
       {/* Desktop - Vertical links on right (original layout) */}
       <div className="hidden md:flex flex-col items-center gap-3 md:gap-3.5">
-        <LanguageToggle />
+        <LanguageToggle variant="menu" />
         {navLinks.map((link) => (
           <SmoothLink
             key={link.labelKey}
