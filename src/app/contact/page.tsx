@@ -11,7 +11,7 @@ export default function ContactPage() {
 
   return (
     <div className="page-content-wrapper">
-    <main data-scrollable className="min-h-screen min-h-[100dvh]" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
+    <main data-scrollable className="min-h-screen min-h-[100dvh] md:min-h-[calc(100vh+1px)]" style={{ background: 'linear-gradient(135deg, #FCF8F4 0%, #F6EFE6 100%)' }}>
       {/* Spacer so content is not under fixed PageHeader */}
       <div className="h-[52px] md:h-0 md:min-h-0 shrink-0" aria-hidden />
 

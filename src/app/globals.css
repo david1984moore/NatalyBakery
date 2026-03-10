@@ -8,6 +8,14 @@ body {
   background-image: none;
 }
 
+/* Restore tan background on mobile for overscroll and status bar fill */
+@media (hover: none) and (pointer: coarse) {
+  html,
+  body {
+    background-color: #d6b88a;
+  }
+}
+
 html {
   overflow-x: hidden;
   width: 100%;

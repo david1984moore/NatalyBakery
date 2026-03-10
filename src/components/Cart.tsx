@@ -115,7 +115,7 @@ export default function Cart() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-md"
+              className="fixed inset-0 bg-black/40 z-[998] max-md:z-[2147483646] backdrop-blur-md"
               onClick={() => setIsOpen(false)}
               aria-hidden="true"
             />
@@ -124,7 +124,7 @@ export default function Cart() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={cartTransition}
-              className="fixed inset-0 z-[999] flex items-center justify-center p-4 pointer-events-none"
+              className="fixed inset-0 z-[999] max-md:z-[2147483647] flex items-center max-md:items-start max-md:pt-[calc(52px+env(safe-area-inset-top,0px)+0.5rem)] justify-center p-4 pointer-events-none"
               aria-hidden="true"
             >
               <div
@@ -132,7 +132,7 @@ export default function Cart() {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="cart-title"
-                className="w-full max-w-md max-h-[calc(100vh-2rem)] bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto safe-top safe-bottom"
+                className="w-full max-w-md max-h-[calc(100vh-2rem)] max-md:max-h-[calc(100dvh-52px-env(safe-area-inset-top,0px)-1rem)] bg-white rounded-lg shadow-2xl border-4 border-warmgray-200 overflow-hidden flex flex-col pointer-events-auto safe-top safe-bottom"
               >
           <div className="relative w-full flex flex-col overflow-hidden flex-1 min-h-0">
           {/* Cart Items */}
@@ -168,7 +168,10 @@ export default function Cart() {
 
           {/* Cart Items */}
             <div className="flex flex-col flex-1 min-h-0">
-              <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
+              <div
+                className="flex-1 min-h-0 overflow-y-auto px-6 py-4"
+                style={{ overscrollBehavior: 'contain', touchAction: 'pan-y', WebkitOverflowScrolling: 'touch' }}
+              >
                 <div className="space-y-4">
                   {items.map((item, index) => (
                 <div key={`${item.productName}-${item.variantName || ''}-${index}`} className="flex items-start gap-4 pb-4 border-b border-warmgray-100 last:border-0">

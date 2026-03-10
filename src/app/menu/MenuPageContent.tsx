@@ -275,7 +275,7 @@ export default function MenuPageContent({
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 items-center w-full min-h-0 flex-1">
-              <div className="relative w-full min-h-[160px] max-w-full md:aspect-[3/4] md:h-auto md:min-h-[200px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0 flex-shrink-0">
+              <div className="relative w-full h-[calc(100svh-132px-180px)] min-h-[200px] max-w-full md:h-auto md:aspect-[3/4] md:min-h-[200px] md:max-w-md mx-auto rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg md:mt-0 flex-shrink-0">
                 {PRODUCTS_WITH_REAL_PHOTOS.includes(featuredProduct.name) ? (
                   featuredProduct.images && featuredProduct.images.length > 0 ? (
                     <ProductImageGallery
