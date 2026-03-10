@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -106,10 +106,10 @@ export default function Cart() {
   }, [isMenuPage, openCartOnNextPage, setOpenCartOnNextPage])
 
   /* Mobile: measure header bottom via getBoundingClientRect when cart opens; apply top/left/right/height as inline styles.
+   * useLayoutEffect runs before paint so first render has correct dimensions — no layout shift.
    * Abandons CSS variables for reliability across devices/orientations. Desktop unchanged. */
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isOpen) return
-
     const isTouchDevice =
       typeof window !== 'undefined' &&
       window.matchMedia('(hover: none) and (pointer: coarse)').matches
@@ -118,7 +118,6 @@ export default function Cart() {
     const measure = () => {
       const header = document.querySelector('[data-cart-header-ref]') as HTMLElement | null
       if (!header) return
-
       const { bottom } = header.getBoundingClientRect()
       setMobileCartStyle({
         position: 'fixed',
@@ -127,14 +126,13 @@ export default function Cart() {
         right: 0,
         height: `${window.innerHeight - bottom}px`,
         zIndex: 2147483647,
+        pointerEvents: 'auto',
       })
     }
 
     measure()
-
     window.addEventListener('orientationchange', measure)
     window.addEventListener('resize', measure)
-
     return () => {
       window.removeEventListener('orientationchange', measure)
       window.removeEventListener('resize', measure)
@@ -161,7 +159,7 @@ export default function Cart() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={cartTransition}
-              className="pointer-events-none md:fixed md:inset-0 md:z-[999] md:flex md:items-center md:justify-center md:p-4"
+              className="pointer-events-none md:fixed md:inset-0 md:z-[999] md:flex md:items-center md:justify-center md:p-4 max-md:pointer-events-none"
               style={
                 typeof window !== 'undefined' &&
                 window.matchMedia('(hover: none) and (pointer: coarse)').matches
