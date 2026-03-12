@@ -86,6 +86,10 @@ export type TranslationKey =
   | 'contact.placeholder.message'
   | 'contact.responseTime'
   | 'contact.urgent'
+  | 'contact.urgentPrefix'
+  | 'contact.callUs'
+  | 'contact.urgentSuffix'
+  | 'contact.callModal'
   
   // Success
   | 'success.orderConfirmed'
@@ -225,6 +229,10 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'contact.placeholder.message': 'Tell us more about your inquiry...',
     'contact.responseTime': 'We typically respond within 24-48 hours.',
     'contact.urgent': 'For urgent matters, please call us directly.',
+    'contact.urgentPrefix': 'For urgent matters, please ',
+    'contact.callUs': 'call us',
+    'contact.urgentSuffix': ' directly.',
+    'contact.callModal': 'call (302) 383-4536',
     
     // Success
     'success.orderConfirmed': 'Order Confirmed!',
@@ -363,6 +371,10 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'contact.placeholder.message': 'Cuéntanos más sobre tu consulta...',
     'contact.responseTime': 'Normalmente respondemos dentro de 24-48 horas.',
     'contact.urgent': 'Para asuntos urgentes, por favor llámanos directamente.',
+    'contact.urgentPrefix': 'Para asuntos urgentes, por favor ',
+    'contact.callUs': 'llámanos',
+    'contact.urgentSuffix': ' directamente.',
+    'contact.callModal': 'llamar (302) 383-4536',
     
     // Success
     'success.orderConfirmed': '¡Pedido Confirmado!',
