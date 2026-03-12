@@ -39,14 +39,14 @@ export default function ContactPage() {
               {t('contact.urgentPrefix')}
               <a
                 href={PHONE_SMS}
-                className="hover:text-warmgray-700 font-medium text-warmgray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-warmgray-400 focus-visible:ring-offset-1 rounded"
+                className="underline hover:text-warmgray-700 font-medium text-warmgray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-warmgray-400 focus-visible:ring-offset-1 rounded"
               >
                 {t('contact.textUs')}
               </a>
               {t('contact.urgentOr')}
               <a
                 href={PHONE_TEL}
-                className="hover:text-warmgray-700 font-medium text-warmgray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-warmgray-400 focus-visible:ring-offset-1 rounded"
+                className="underline hover:text-warmgray-700 font-medium text-warmgray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-warmgray-400 focus-visible:ring-offset-1 rounded"
               >
                 {t('contact.callUs')}
               </a>
