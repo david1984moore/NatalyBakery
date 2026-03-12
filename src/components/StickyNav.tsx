@@ -39,18 +39,35 @@ export default function StickyNav() {
       return
     }
 
-    // Check initial state immediately
+    // Check initial state immediately.
+    // Guard window.scrollY > 0: on fresh page loads the IntersectionObserver
+    // can fire with isIntersecting=false before layout settles, making the
+    // desktop nav flash at scroll-position 0. Only show if actually scrolled.
     const rect = sentinel.getBoundingClientRect()
-    setIsVisible(rect.bottom <= 0)
+    setIsVisible(rect.bottom <= 0 && window.scrollY > 0)
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // When the sentinel re-enters the viewport, always hide regardless of
+        // any stale state (fixes "stays visible after scrolling back to top").
         setIsVisible(!entry.isIntersecting)
       },
       { threshold: 0, rootMargin: '0px' }
     )
     observer.observe(sentinel)
-    return () => observer.disconnect()
+
+    // Belt-and-suspenders: hide the desktop nav whenever the page is exactly
+    // at the top. This covers the edge-case where scroll restoration or an
+    // observer timing quirk leaves isVisible=true at scrollY=0.
+    const handleScroll = () => {
+      if (window.scrollY === 0) setIsVisible(false)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [pathname])
 
   // Mobile (touch) only: never show header on hero page for a fully immersive experience.

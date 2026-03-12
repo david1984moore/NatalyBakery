@@ -87,6 +87,8 @@ export type TranslationKey =
   | 'contact.responseTime'
   | 'contact.urgent'
   | 'contact.urgentPrefix'
+  | 'contact.textUs'
+  | 'contact.urgentOr'
   | 'contact.callUs'
   | 'contact.urgentSuffix'
   | 'contact.callModal'
@@ -230,6 +232,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'contact.responseTime': 'We typically respond within 24-48 hours.',
     'contact.urgent': 'For urgent matters, please call us directly.',
     'contact.urgentPrefix': 'For urgent matters, please ',
+    'contact.textUs': 'text',
+    'contact.urgentOr': ' or ',
     'contact.callUs': 'call us',
     'contact.urgentSuffix': ' directly.',
     'contact.callModal': 'call (302) 383-4536',
@@ -372,6 +376,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'contact.responseTime': 'Normalmente respondemos dentro de 24-48 horas.',
     'contact.urgent': 'Para asuntos urgentes, por favor llámanos directamente.',
     'contact.urgentPrefix': 'Para asuntos urgentes, por favor ',
+    'contact.textUs': 'escríbenos',
+    'contact.urgentOr': ' o ',
     'contact.callUs': 'llámanos',
     'contact.urgentSuffix': ' directamente.',
     'contact.callModal': 'llamar (302) 383-4536',
