@@ -130,6 +130,7 @@ export type TranslationKey =
   // Products
   | 'product.flan'
   | 'product.chocoFlan'
+  | 'product.conchas'
   | 'product.cinnamonRolls'
   | 'product.brownies'
   | 'product.chocolateMatildaCake'
@@ -275,6 +276,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     // Products
     'product.flan': 'Flan',
     'product.chocoFlan': 'Choco-flan',
+    'product.conchas': 'Conchas',
     'product.cinnamonRolls': 'Cinnamon Rolls',
     'product.brownies': 'Brownies',
     'product.chocolateMatildaCake': 'Chocolate Matilda Cake',
@@ -419,6 +421,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     // Products
     'product.flan': 'Flan',
     'product.chocoFlan': 'Choco-flan',
+    'product.conchas': 'Conchas',
     'product.cinnamonRolls': 'Rollos de Canela',
     'product.brownies': 'Brownies',
     'product.chocolateMatildaCake': 'Pastel Matilda de Chocolate',

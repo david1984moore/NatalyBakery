@@ -78,6 +78,19 @@ export const products: Product[] = [
     ],
   },
   {
+    name: 'Conchas',
+    image: '/Images/conchas_1.jpeg',
+    images: ['/Images/conchas_1.jpeg', '/Images/conchas_2.jpeg', '/Images/conchas_3.jpeg', '/Images/conchas_4.jpeg'],
+    hasVariants: false,
+    variants: [
+      {
+        id: 'conchas-mack',
+        name: 'Conchas',
+        price: 2,
+      },
+    ],
+  },
+  {
     name: 'Cinnamon Rolls',
     image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&h=1000&fit=crop&q=80',
     hasVariants: false,
@@ -140,7 +153,7 @@ export const products: Product[] = [
 ]
 
 /** Products that use Nataly's own photos; others show "Pics coming soon!" placeholder. */
-export const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan']
+export const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan', 'Conchas']
 
 export function getProductByName(name: string): Product | undefined {
   return products.find((p) => p.name === name)
