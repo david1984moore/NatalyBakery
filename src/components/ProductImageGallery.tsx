@@ -113,59 +113,50 @@ export default function ProductImageGallery({
         {/* Mobile hero: scroll-snap carousel - iPhone-like swipe */}
         {useMobileCarousel ? (
           <div className="md:hidden flex flex-col h-full min-h-0">
-            <div
-              ref={scrollRef}
-              className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth touch-pan-x overscroll-x-contain [-webkit-overflow-scrolling:touch] flex-1 min-h-0 scrollbar-hide"
-              style={{ scrollSnapType: 'x mandatory' }}
-              onScroll={handleScroll}
-            >
-              {images.map((src, i) => (
+            <div className="relative flex-1 min-h-0">
+              <div
+                ref={scrollRef}
+                className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth overscroll-x-contain [-webkit-overflow-scrolling:touch] h-full scrollbar-hide"
+                style={{ scrollSnapType: 'x mandatory' }}
+                onScroll={handleScroll}
+              >
+                {images.map((src, i) => (
+                  <div
+                    key={i}
+                    className="relative flex-shrink-0 w-full basis-full snap-center h-full"
+                    onClick={() => setLightboxOpen(true)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') setLightboxOpen(true)
+                    }}
+                    aria-label={`View image ${i + 1} full screen, swipe to change photo`}
+                  >
+                    <OptimizedImage
+                      src={src}
+                      alt={`${alt} ${i + 1} of ${images.length}`}
+                      fill
+                      sizes="100vw"
+                      priority={i === 0}
+                      objectFit="contain"
+                    />
+                  </div>
+                ))}
+              </div>
+              {/* Numeric position pill — bottom-right overlay, no extra height */}
+              {images.length > 1 && (
                 <div
-                  key={i}
-                  className="relative flex-shrink-0 w-full basis-full snap-center"
-                  onClick={() => setLightboxOpen(true)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') setLightboxOpen(true)
-                  }}
-                  aria-label={`View image ${i + 1} full screen, swipe to change photo`}
+                  className="absolute bottom-3 right-3 bg-black/40 text-white text-xs font-medium rounded-full px-2.5 py-1 pointer-events-none select-none"
+                  aria-live="polite"
+                  aria-label={`Image ${index + 1} of ${images.length}`}
                 >
-                  <OptimizedImage
-                    src={src}
-                    alt={`${alt} ${i + 1} of ${images.length}`}
-                    fill
-                    sizes="100vw"
-                    priority={i === 0}
-                    objectFit="contain"
-                  />
+                  {index + 1} / {images.length}
                 </div>
-              ))}
-            </div>
-            <div className="flex justify-center gap-1.5 mt-2 py-2 flex-shrink-0">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => {
-                    if (scrollRef.current) {
-                      const w = scrollRef.current.clientWidth
-                      scrollRef.current.scrollTo({ left: i * w, behavior: 'smooth' })
-                    }
-                    setIndex(i)
-                  }}
-                  className={`rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
-                    i === index ? 'w-2.5 h-2.5 bg-warmbrown-500' : 'w-2 h-2 bg-warmgray-300'
-                  }`}
-                  style={{ transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
-                  aria-label={`Go to image ${i + 1}`}
-                  aria-current={i === index ? 'true' : undefined}
-                />
-              ))}
+              )}
             </div>
           </div>
         ) : (
-          <div className={desktopMenuHero ? 'flex flex-col h-full min-h-0' : ''}>
+          <div className={desktopMenuHero ? 'flex flex-col h-full min-h-0' : 'relative'}>
             {/* Desktop: click zones - left half = prev, right half = next */}
             <div className="hidden md:grid md:grid-cols-2 absolute inset-0 z-10">
               <button type="button" onClick={goPrev} className="cursor-pointer focus:outline-none" aria-label="Previous image" />
@@ -174,21 +165,18 @@ export default function ProductImageGallery({
 
             {/* Image container - desktop or non-hero mobile; on desktop menu hero: flex-1 to fill card */}
             <div
-              className={`relative w-full overflow-hidden select-none ${useMobileHero ? 'min-h-full rounded-none cursor-pointer md:rounded-2xl' : 'rounded-2xl'} ${desktopMenuHero ? 'flex-1 min-h-0' : ''} ${isMobile && !mobileHero ? 'touch-pan-y cursor-pointer' : ''}`}
+              className={`relative w-full overflow-hidden select-none ${useMobileHero ? 'min-h-full rounded-none cursor-pointer md:rounded-2xl' : 'rounded-2xl'} ${desktopMenuHero ? 'flex-1 min-h-0' : ''} ${isMobile && !mobileHero ? 'cursor-pointer' : ''}`}
               style={{ aspectRatio: desktopMenuHero ? undefined : (useMobileHero ? undefined : aspectRatio) }}
-              onClick={useMobileHero ? () => setLightboxOpen(true) : undefined}
-              onTouchStart={isMobile && !mobileHero ? onTouchStart : undefined}
-              onTouchMove={isMobile && !mobileHero ? onTouchMove : undefined}
-              onTouchEnd={isMobile && !mobileHero ? onTouchEnd : undefined}
-              role={isMobile || useMobileHero ? 'button' : undefined}
-              tabIndex={isMobile || useMobileHero ? 0 : undefined}
+              onClick={() => setLightboxOpen(true)}
+              role="button"
+              tabIndex={0}
               onKeyDown={(e) => {
-                if ((isMobile || useMobileHero) && (e.key === 'Enter' || e.key === ' ')) {
+                if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
                   setLightboxOpen(true)
                 }
               }}
-              aria-label={isMobile || useMobileHero ? 'Tap to view full screen, swipe to change photo' : undefined}
+              aria-label="Tap to view full screen"
             >
               <div key={index} className={`absolute inset-0 ${useMobileHero ? '' : 'animate-fade-in'}`}>
                 <OptimizedImage
@@ -203,25 +191,16 @@ export default function ProductImageGallery({
               </div>
             </div>
 
-            {/* Dots indicator - desktop and non-carousel mobile */}
-            <div className={`flex justify-center gap-1.5 mt-2 ${desktopMenuHero ? 'flex-shrink-0' : ''}`}>
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => {
-                    setIndex(i)
-                    setAspectRatio(4 / 3)
-                  }}
-                  className={`rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-warmbrown-500 focus:ring-offset-1 ${
-                    i === index ? 'w-2.5 h-2.5 bg-warmbrown-500' : 'w-2 h-2 bg-warmgray-300 hover:bg-warmgray-400'
-                  }`}
-                  style={{ transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
-                  aria-label={`Go to image ${i + 1}`}
-                  aria-current={i === index ? 'true' : undefined}
-                />
-              ))}
-            </div>
+            {/* Desktop: numeric pill indicator overlaid bottom-right */}
+            {images.length > 1 && (
+              <div
+                className="hidden md:flex absolute bottom-3 right-3 bg-black/40 text-white text-xs font-medium rounded-full px-2.5 py-1 pointer-events-none select-none"
+                aria-live="polite"
+                aria-label={`Image ${index + 1} of ${images.length}`}
+              >
+                {index + 1} / {images.length}
+              </div>
+            )}
           </div>
         )}
       </div>

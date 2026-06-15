@@ -10,6 +10,17 @@ import {
   type Product,
   type ProductVariant,
 } from '@/data/products'
+
+/** Splits variants into two independent dimensions when ALL names follow "X - Y" format. */
+function parseVariantDimensions(variants: ProductVariant[]) {
+  const parts = variants.map((v) => v.name.split(' - '))
+  if (!parts.every((p) => p.length === 2)) return null
+  const sizes = [...new Set(parts.map((p) => p[0]))]
+  const options = [...new Set(parts.map((p) => p[1]))]
+  const find = (size: string, option: string) =>
+    variants.find((v) => v.name === `${size} - ${option}`) ?? null
+  return { sizes, options, find }
+}
 import { useCart } from '@/contexts/CartContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { formatCurrency } from '@/lib/utils'
@@ -44,6 +55,8 @@ export default function MenuPageContent({
   const [featuredProduct, setFeaturedProduct] = useState<Product | null>(null)
   const [selectedVariant, setSelectedVariant] =
     useState<ProductVariant | null>(null)
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
+  const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [quantity, setQuantity] = useState(1)
   const isManualUpdate = useRef(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -149,6 +162,8 @@ export default function MenuPageContent({
     if (targetProduct && (!featuredProduct || featuredProduct.name !== targetProduct.name)) {
       setFeaturedProduct(targetProduct)
       setQuantity(targetProduct.minQuantity ? targetProduct.minQuantity : 1)
+      setSelectedSize(null)
+      setSelectedOption(null)
       // When coming from URL, preselect variant; on first load with no URL param, leave no variant selected
       const hasMultipleVariants = targetProduct.hasVariants && targetProduct.variants.length > 1
       if (product || !hasMultipleVariants) {
@@ -159,6 +174,8 @@ export default function MenuPageContent({
     } else if (!featuredProduct && products.length > 0) {
       setFeaturedProduct(products[0])
       setQuantity(products[0].minQuantity ? products[0].minQuantity : 1)
+      setSelectedSize(null)
+      setSelectedOption(null)
       const hasMultipleVariants = products[0].hasVariants && products[0].variants.length > 1
       if (!hasMultipleVariants) {
         setSelectedVariant(getDefaultVariant(products[0]))
@@ -217,6 +234,8 @@ export default function MenuPageContent({
       isManualUpdate.current = true
       setFeaturedProduct(product)
       setSelectedVariant(getDefaultVariant(product))
+      setSelectedSize(null)
+      setSelectedOption(null)
       setQuantity(product.minQuantity ? product.minQuantity : 1)
     }
     router.replace(
@@ -326,49 +345,155 @@ export default function MenuPageContent({
                 </div>
 
                 {featuredProduct.hasVariants &&
-                  featuredProduct.variants.length > 1 && (
-                    <div>
-                      <label className="block text-warmgray-700 font-medium mb-1 text-sm">
-                        {t('menu.selectOption')}
-                      </label>
-                      <div className="space-y-1">
-                        {featuredProduct.variants.map((variant) => (
-                          <label
-                            key={variant.id}
-                            className={`flex items-center gap-2 md:gap-3 min-h-[36px] p-1.5 sm:p-2 md:p-2 border md:border md:border-transparent rounded-md cursor-pointer transition-colors ${
-                              selectedVariant?.id === variant.id
-                                ? 'border-warmgray-800 bg-background md:bg-cream-100 md:border-warmgray-300'
-                                : 'border-warmgray-300 md:hover:bg-cream-100 md:hover:border-warmgray-400 md:hover:shadow-sm'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name="variant"
-                              value={variant.id}
-                              checked={selectedVariant?.id === variant.id}
-                              onChange={() => handleVariantChange(variant)}
-                              className="w-3.5 h-3.5 md:w-5 md:h-5 text-warmgray-800 focus:ring-warmgray-800 cursor-pointer"
-                            />
-                            <div className="flex-1">
-                              <span className="text-warmgray-800 font-medium text-sm md:text-base">
-                                {(() => {
-                                  const translationKey =
-                                    getVariantTranslationKey(variant.name)
-                                  return translationKey.startsWith('variant.') ||
-                                    translationKey.startsWith('product.')
-                                    ? t(translationKey as any)
-                                    : variant.name
-                                })()}
-                              </span>
-                            </div>
-                            <span className="text-warmgray-700 font-semibold text-sm md:text-base">
-                              {formatCurrency(variant.price)}
-                            </span>
-                          </label>
-                        ))}
+                  featuredProduct.variants.length > 1 && (() => {
+                    const dims = parseVariantDimensions(featuredProduct.variants)
+
+                    /* ── MOBILE: pill selectors ── */
+                    const MobilePills = dims ? (
+                      <div className="md:hidden space-y-3">
+                        {/* Size row */}
+                        <div>
+                          <p className="text-xs text-warmgray-500 mb-1.5 font-medium uppercase tracking-wide">
+                            Size
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {dims.sizes.map((size) => {
+                              const isActive = selectedSize === size
+                              const tk = getVariantTranslationKey(size)
+                              const label = tk.startsWith('variant.') || tk.startsWith('product.')
+                                ? t(tk as any) : size
+                              return (
+                                <button
+                                  key={size}
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedSize(size)
+                                    const found = dims.find(size, selectedOption ?? '')
+                                    if (found) handleVariantChange(found)
+                                  }}
+                                  className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-medium border-2 transition-colors duration-150 ${
+                                    isActive
+                                      ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] border-transparent text-white'
+                                      : 'bg-background border-warmgray-300 text-warmgray-700'
+                                  }`}
+                                >
+                                  {label}
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Option row */}
+                        <div>
+                          <p className="text-xs text-warmgray-500 mb-1.5 font-medium uppercase tracking-wide">
+                            Garnish
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {dims.options.map((opt) => {
+                              const isActive = selectedOption === opt
+                              const tk = getVariantTranslationKey(opt)
+                              const label = tk.startsWith('variant.') || tk.startsWith('product.')
+                                ? t(tk as any) : opt
+                              return (
+                                <button
+                                  key={opt}
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedOption(opt)
+                                    const found = dims.find(selectedSize ?? '', opt)
+                                    if (found) handleVariantChange(found)
+                                  }}
+                                  className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-medium border-2 transition-colors duration-150 ${
+                                    isActive
+                                      ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] border-transparent text-white'
+                                      : 'bg-background border-warmgray-300 text-warmgray-700'
+                                  }`}
+                                >
+                                  {label}
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      /* Flat pill fallback (non-"X - Y" variants) */
+                      <div className="md:hidden">
+                        <p className="text-xs text-warmgray-500 mb-1.5 font-medium uppercase tracking-wide">
+                          {t('menu.selectOption')}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {featuredProduct.variants.map((variant) => {
+                            const isActive = selectedVariant?.id === variant.id
+                            const tk = getVariantTranslationKey(variant.name)
+                            const label = tk.startsWith('variant.') || tk.startsWith('product.')
+                              ? t(tk as any) : variant.name
+                            return (
+                              <button
+                                key={variant.id}
+                                type="button"
+                                onClick={() => handleVariantChange(variant)}
+                                className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-medium border-2 transition-colors duration-150 ${
+                                  isActive
+                                    ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] border-transparent text-white'
+                                    : 'bg-background border-warmgray-300 text-warmgray-700'
+                                }`}
+                              >
+                                {label}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )
+
+                    /* ── DESKTOP: original radio list ── */
+                    const DesktopRadios = (
+                      <div className="hidden md:block">
+                        <label className="block text-warmgray-700 font-medium mb-1 text-sm">
+                          {t('menu.selectOption')}
+                        </label>
+                        <div className="space-y-1">
+                          {featuredProduct.variants.map((variant) => (
+                            <label
+                              key={variant.id}
+                              className={`flex items-center gap-3 min-h-[36px] p-2 border border-transparent rounded-md cursor-pointer transition-colors ${
+                                selectedVariant?.id === variant.id
+                                  ? 'bg-cream-100 border-warmgray-300'
+                                  : 'hover:bg-cream-100 hover:border-warmgray-400 hover:shadow-sm'
+                              }`}
+                            >
+                              <input
+                                type="radio"
+                                name="variant"
+                                value={variant.id}
+                                checked={selectedVariant?.id === variant.id}
+                                onChange={() => handleVariantChange(variant)}
+                                className="w-5 h-5 text-warmgray-800 focus:ring-warmgray-800 cursor-pointer"
+                              />
+                              <div className="flex-1">
+                                <span className="text-warmgray-800 font-medium text-base">
+                                  {(() => {
+                                    const translationKey = getVariantTranslationKey(variant.name)
+                                    return translationKey.startsWith('variant.') ||
+                                      translationKey.startsWith('product.')
+                                      ? t(translationKey as any)
+                                      : variant.name
+                                  })()}
+                                </span>
+                              </div>
+                              <span className="text-warmgray-700 font-semibold text-base">
+                                {formatCurrency(variant.price)}
+                              </span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )
+
+                    return <>{MobilePills}{DesktopRadios}</>
+                  })()}
 
                 {!featuredProduct.hasVariants && selectedVariant && (
                   <div className="flex items-baseline gap-3">

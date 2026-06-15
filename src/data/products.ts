@@ -79,8 +79,8 @@ export const products: Product[] = [
   },
   {
     name: 'Conchas',
-    image: '/Images/conchas_1.jpeg',
-    images: ['/Images/conchas_1.jpeg', '/Images/conchas_2.jpeg', '/Images/conchas_3.jpeg', '/Images/conchas_4.jpeg'],
+    image: '/Images/IMG_9028.png',
+    images: ['/Images/IMG_9028.png', '/Images/IMG_9025.png'],
     hasVariants: false,
     variants: [
       {
@@ -104,7 +104,8 @@ export const products: Product[] = [
   },
   {
     name: 'Brownies',
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=800&h=1000&fit=crop&q=80',
+    image: '/Images/IMG_9081.png',
+    images: ['/Images/IMG_9081.png', '/Images/IMG_9057.png', '/Images/IMG_9062.png'],
     hasVariants: false,
     variants: [
       {
@@ -115,37 +116,26 @@ export const products: Product[] = [
     ],
   },
   {
-    name: 'Chocolate Matilda Cake',
-    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=1000&fit=crop&q=80',
+    name: 'Apple Cheesecake',
+    image: '/Images/IMG_9465.png',
+    images: ['/Images/IMG_9465.png', '/Images/IMG_9445.png'],
     hasVariants: false,
     variants: [
       {
-        id: 'matilda-cake',
-        name: 'Chocolate Matilda Cake',
-        price: 45,
-      },
-    ],
-  },
-  {
-    name: 'Chocolate Cheesecake',
-    image: 'https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=800&h=1000&fit=crop&q=80',
-    hasVariants: false,
-    variants: [
-      {
-        id: 'chocolate-cheesecake',
-        name: 'Chocolate Cheesecake',
+        id: 'apple-cheesecake',
+        name: 'Apple Cheesecake',
         price: 55,
       },
     ],
   },
   {
-    name: 'Lemon Charlotte',
-    image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&h=1000&fit=crop&q=80',
+    name: 'Lemon Charlotte Cake',
+    image: '/Images/IMG_8157.png',
     hasVariants: false,
     variants: [
       {
-        id: 'lemon-charlotte',
-        name: 'Lemon Charlotte',
+        id: 'lemon-charlotte-cake',
+        name: 'Lemon Charlotte Cake',
         price: 45,
       },
     ],
@@ -153,7 +143,14 @@ export const products: Product[] = [
 ]
 
 /** Products that use Nataly's own photos; others show "Pics coming soon!" placeholder. */
-export const PRODUCTS_WITH_REAL_PHOTOS = ['Flan', 'Choco-flan', 'Conchas']
+export const PRODUCTS_WITH_REAL_PHOTOS = [
+  'Flan',
+  'Choco-flan',
+  'Conchas',
+  'Brownies',
+  'Apple Cheesecake',
+  'Lemon Charlotte Cake',
+]
 
 export function getProductByName(name: string): Product | undefined {
   return products.find((p) => p.name === name)

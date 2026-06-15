@@ -42,11 +42,21 @@ export default function Hero() {
               markTimeline="hero"
             />
           </div>
-          <div id="brand-name-wrapper" className="absolute top-[18%] landscape:top-[12%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-4 px-8 py-6 sm:px-10 sm:py-8 landscape:px-4 landscape:py-2">
-          <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none landscape:text-4xl landscape:sm:text-5xl">
-            Caramel & Jo
-          </h1>
-        </div>
+          <div id="brand-name-wrapper" className="absolute top-[38%] landscape:top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-3 px-8 sm:px-10 landscape:px-4">
+            <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none landscape:text-4xl landscape:sm:text-5xl">
+              Caramel & Jo
+            </h1>
+            <p className="font-sans text-sm sm:text-base text-white/90 tracking-widest uppercase pointer-events-none landscape:text-xs">
+              From our kitchen to yours
+            </p>
+            <SmoothLink
+              href="/menu"
+              prefetch={true}
+              className="mt-1 landscape:mt-0 min-h-[44px] flex items-center justify-center px-7 py-2.5 text-white text-base sm:text-lg font-medium border-2 border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] rounded-full transition-opacity duration-200 landscape:text-sm landscape:px-5 landscape:py-1.5"
+            >
+              {t('nav.order')}
+            </SmoothLink>
+          </div>
         </div>
         {/* Shadow gradient above footer */}
         <div

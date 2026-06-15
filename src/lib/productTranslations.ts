@@ -9,9 +9,8 @@ export const productNameToTranslationKey: Record<string, string> = {
   'Conchas': 'product.conchas',
   'Cinnamon Rolls': 'product.cinnamonRolls',
   'Brownies': 'product.brownies',
-  'Chocolate Matilda Cake': 'product.chocolateMatildaCake',
-  'Chocolate Cheesecake': 'product.chocolateCheesecake',
-  'Lemon Charlotte': 'product.lemonCharlotte',
+  'Apple Cheesecake': 'product.appleCheesecake',
+  'Lemon Charlotte Cake': 'product.lemonCharlotteCake',
 }
 
 /**
@@ -27,9 +26,8 @@ export const variantNameToTranslationKey: Record<string, string> = {
   '10" pan': 'variant.pan10',
   // Product names that appear as variant names
   'Conchas': 'product.conchas',
-  'Chocolate Matilda Cake': 'product.chocolateMatildaCake',
-  'Chocolate Cheesecake': 'product.chocolateCheesecake',
-  'Lemon Charlotte': 'product.lemonCharlotte',
+  'Apple Cheesecake': 'product.appleCheesecake',
+  'Lemon Charlotte Cake': 'product.lemonCharlotteCake',
 }
 
 export function getProductTranslationKey(productName: string): string {

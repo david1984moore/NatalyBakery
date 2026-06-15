@@ -133,9 +133,8 @@ export type TranslationKey =
   | 'product.conchas'
   | 'product.cinnamonRolls'
   | 'product.brownies'
-  | 'product.chocolateMatildaCake'
-  | 'product.chocolateCheesecake'
-  | 'product.lemonCharlotte'
+  | 'product.appleCheesecake'
+  | 'product.lemonCharlotteCake'
   
   // Variants
   | 'variant.smallPlain'
@@ -279,9 +278,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'product.conchas': 'Conchas',
     'product.cinnamonRolls': 'Cinnamon Rolls',
     'product.brownies': 'Brownies',
-    'product.chocolateMatildaCake': 'Chocolate Matilda Cake',
-    'product.chocolateCheesecake': 'Chocolate Cheesecake',
-    'product.lemonCharlotte': 'Lemon Charlotte',
+    'product.appleCheesecake': 'Apple Cheesecake',
+    'product.lemonCharlotteCake': 'Lemon Charlotte Cake',
     
     // Variants
     'variant.smallPlain': 'Small (6") - Plain',
@@ -424,9 +422,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     'product.conchas': 'Conchas',
     'product.cinnamonRolls': 'Rollos de Canela',
     'product.brownies': 'Brownies',
-    'product.chocolateMatildaCake': 'Pastel Matilda de Chocolate',
-    'product.chocolateCheesecake': 'Pastel de Queso de Chocolate',
-    'product.lemonCharlotte': 'Charlotte de Limón',
+    'product.appleCheesecake': 'Pastel de Queso de Manzana',
+    'product.lemonCharlotteCake': 'Pastel Charlotte de Limón',
     
     // Variants
     'variant.smallPlain': 'Pequeño (6") - Simple',
