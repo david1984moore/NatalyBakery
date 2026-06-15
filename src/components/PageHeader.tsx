@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, Suspense } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import SmoothLink from '@/components/SmoothLink';
 import LanguageToggle from '@/components/LanguageToggle';
 import { MenuHeaderTabs } from '@/components/MenuHeaderTabs';
@@ -10,6 +10,47 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, UtensilsCrossed } from 'lucide-react';
 
 const NON_HERO_PATHS = ['/menu', '/contact', '/checkout'];
+
+/**
+ * Shows the menu (utensils) icon in the header.
+ * - On non-menu pages: always shown (links to /menu)
+ * - On /menu with ?product= (detail view): shown (links back to /menu grid)
+ * - On /menu without ?product= (grid view): hidden
+ * Wrapped in Suspense by the parent because useSearchParams opts into dynamic rendering.
+ */
+function MenuIconLink({ mobile }: { mobile: boolean }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { t } = useLanguage();
+
+  const isMenuPage = pathname === '/menu';
+  const hasProduct = isMenuPage && !!searchParams.get('product');
+  const showOnOtherPage = !isMenuPage && NON_HERO_PATHS.some((p) => pathname.startsWith(p));
+
+  if (!hasProduct && !showOnOtherPage) return null;
+
+  if (mobile) {
+    return (
+      <SmoothLink
+        href="/menu"
+        aria-label={t('nav.menu')}
+        className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+      >
+        <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" />
+      </SmoothLink>
+    );
+  }
+
+  return (
+    <SmoothLink
+      href="/menu"
+      aria-label={t('nav.menu')}
+      className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
+    >
+      <UtensilsCrossed className="w-5 h-5" strokeWidth={2} />
+    </SmoothLink>
+  );
+}
 
 export function PageHeader() {
   const pathname = usePathname();
@@ -74,7 +115,6 @@ export function PageHeader() {
 
   if (!isNonHeroPage) return null;
 
-  const showMenuLink = pathname !== '/menu';
   const showContactLink = pathname !== '/contact';
 
   return (
@@ -101,20 +141,9 @@ export function PageHeader() {
           </SmoothLink>
           <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
             <LanguageToggle variant="mobileHeader" />
-            {showMenuLink && (
-              <SmoothLink
-                href="/menu"
-                aria-label={t('nav.menu')}
-                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
-              >
-                <UtensilsCrossed
-                  className="w-6 h-6 text-white shrink-0"
-                  strokeWidth={2.5}
-                  stroke="white"
-                  fill="white"
-                />
-              </SmoothLink>
-            )}
+            <Suspense fallback={null}>
+              <MenuIconLink mobile={true} />
+            </Suspense>
             {showContactLink && (
               <SmoothLink
                 href="/contact"
@@ -180,15 +209,9 @@ export function PageHeader() {
             <div className="flex-1 min-w-0" aria-hidden />
           )}
           <div className="flex items-center gap-6 lg:gap-8 flex-shrink-0">
-            {showMenuLink && (
-              <SmoothLink
-                href="/menu"
-                aria-label={t('nav.menu')}
-                className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
-              >
-                <UtensilsCrossed className="w-5 h-5" strokeWidth={2} />
-              </SmoothLink>
-            )}
+            <Suspense fallback={null}>
+              <MenuIconLink mobile={false} />
+            </Suspense>
             {showContactLink && (
               <SmoothLink
                 href="/contact"

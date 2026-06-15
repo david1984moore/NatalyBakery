@@ -3,7 +3,6 @@
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import {
-  products,
   getProductByName,
   getDefaultVariant,
   getProductPriceRange,
@@ -32,12 +31,9 @@ import {
 } from '@/lib/productTranslations'
 import Cart from '@/components/Cart'
 import CartPreviewModal from '@/components/CartPreviewModal'
-import ProductImageGallery from '@/components/ProductImageGallery'
-import ProductImage from '@/components/ProductImage'
+import SimpleProductGallery from '@/components/SimpleProductGallery'
 import { OptimizedImage } from '@/components/OptimizedImage'
 import { usePageHeroHeader } from '@/hooks/usePageHeroHeader'
-import SmoothLink from '@/components/SmoothLink'
-import { ChevronLeft } from 'lucide-react'
 
 interface MenuPageContentProps {
   products: Product[]
@@ -72,7 +68,6 @@ function ProductGrid({
                 onClick={() => onSelect(product.name)}
                 className="group text-left bg-cream-50 rounded-2xl overflow-hidden flex flex-col shadow-sm active:scale-[0.98] transition-transform duration-150"
               >
-                {/* Image */}
                 <div className="relative aspect-[4/3] w-full bg-warmgray-100">
                   {hasPhoto ? (
                     <OptimizedImage
@@ -88,8 +83,6 @@ function ProductGrid({
                     </div>
                   )}
                 </div>
-
-                {/* Info */}
                 <div className="px-3 py-2.5">
                   <p className="font-playfair text-sm font-semibold text-warmgray-800 leading-snug">
                     {translatedName}
@@ -109,15 +102,15 @@ function ProductGrid({
 
 // ─── Product detail view ──────────────────────────────────────────────────────
 
-function ProductDetail({
-  product,
-  onBack,
-}: {
-  product: Product
-  onBack: () => void
-}) {
-  const { addItem, items } = useCart()
+function ProductDetail({ product }: { product: Product }) {
+  const { addItem } = useCart()
   const { t } = useLanguage()
+
+  const dims =
+    product.hasVariants && product.variants.length > 1
+      ? parseVariantDimensions(product.variants)
+      : null
+
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
     () => {
       const hasMultiple = product.hasVariants && product.variants.length > 1
@@ -136,27 +129,28 @@ function ProductDetail({
   } | null>(null)
   const addToCartTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
-
-  const translationKey =
-    productNameToTranslationKey[product.name] || product.name
-  const translatedName = translationKey.startsWith('product.')
-    ? t(translationKey as any)
-    : product.name
-
-  const dims =
-    product.hasVariants && product.variants.length > 1
-      ? parseVariantDimensions(product.variants)
-      : null
-
-  const handleVariantChange = (variant: ProductVariant) => {
-    setSelectedVariant(variant)
-  }
+  const handleVariantChange = (variant: ProductVariant) => setSelectedVariant(variant)
 
   const handleQuantityChange = (delta: number) => {
-    setQuantity((prev) =>
-      Math.max(product.minQuantity ?? 1, prev + delta)
-    )
+    setQuantity((prev) => Math.max(product.minQuantity ?? 1, prev + delta))
+  }
+
+  const handleSizeTap = (size: string) => {
+    setSelectedSize(size)
+    // Auto-select the first garnish option so a price always appears immediately
+    const optToUse = selectedOption ?? (dims ? dims.options[0] : '')
+    if (!selectedOption && dims) setSelectedOption(optToUse)
+    const found = dims ? dims.find(size, optToUse) : null
+    if (found) handleVariantChange(found)
+  }
+
+  const handleOptionTap = (opt: string) => {
+    setSelectedOption(opt)
+    // Auto-select the first size so a price always appears immediately
+    const sizeToUse = selectedSize ?? (dims ? dims.sizes[0] : '')
+    if (!selectedSize && dims) setSelectedSize(sizeToUse)
+    const found = dims ? dims.find(sizeToUse, opt) : null
+    if (found) handleVariantChange(found)
   }
 
   const handleAddToCart = () => {
@@ -181,44 +175,26 @@ function ProductDetail({
     }, 2000)
   }
 
+  // Gather all image sources for the gallery (deduplicated)
+  const galleryImages: string[] = product.images && product.images.length > 0
+    ? product.images
+    : [product.image]
+
   return (
     <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
-      {/* Back button row */}
-      <div className="shrink-0 px-3 pt-2 pb-1 flex items-center">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-1 text-warmgray-600 text-sm font-medium min-h-[44px] px-1 -ml-1"
-          aria-label="Back to menu"
-        >
-          <ChevronLeft className="w-5 h-5 shrink-0" strokeWidth={2} />
-          <span>{t('nav.menu') ?? 'Menu'}</span>
-        </button>
-      </div>
-
       {/* Scrollable content */}
       <div className="flex-1 min-h-0 overflow-y-auto safe-bottom">
-        <div className="max-w-7xl mx-auto px-0 md:px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 items-start w-full">
 
             {/* Image */}
-            <div className="relative w-full h-[55vw] min-h-[240px] max-h-[420px] md:h-auto md:aspect-[3/4] md:max-h-none md:max-w-md mx-auto md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg flex-shrink-0">
+            <div className="relative w-full h-[60vw] min-h-[260px] max-h-[440px] md:h-auto md:aspect-[3/4] md:max-h-none md:max-w-md mx-auto md:rounded-2xl overflow-hidden border-0 md:border border-white/60 shadow-lg flex-shrink-0">
               {PRODUCTS_WITH_REAL_PHOTOS.includes(product.name) ? (
-                product.images && product.images.length > 0 ? (
-                  <ProductImageGallery
-                    images={product.images}
-                    alt={product.name}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 240px, 400px"
-                    mobileHero
-                  />
-                ) : (
-                  <ProductImage
-                    key={product.name}
-                    src={product.image}
-                    alt={product.name}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 240px, 400px"
-                    mobileHero
-                  />
-                )
+                <SimpleProductGallery
+                  images={galleryImages}
+                  alt={product.name}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 240px, 400px"
+                />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center bg-warmgray-100 text-warmgray-600 font-medium text-center px-4 py-6 text-sm md:text-base">
                   Pics coming soon!
@@ -231,7 +207,6 @@ function ProductDetail({
 
               {/* Variant selectors */}
               {product.hasVariants && product.variants.length > 1 && (() => {
-                /* ── MOBILE: pill selectors ── */
                 const MobilePills = dims ? (
                   <div className="md:hidden space-y-3">
                     <div>
@@ -250,11 +225,7 @@ function ProductDetail({
                             <button
                               key={size}
                               type="button"
-                              onClick={() => {
-                                setSelectedSize(size)
-                                const found = dims.find(size, selectedOption ?? '')
-                                if (found) handleVariantChange(found)
-                              }}
+                              onClick={() => handleSizeTap(size)}
                               className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-medium border-2 transition-colors duration-150 ${
                                 isActive
                                   ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] border-transparent text-white'
@@ -284,11 +255,7 @@ function ProductDetail({
                             <button
                               key={opt}
                               type="button"
-                              onClick={() => {
-                                setSelectedOption(opt)
-                                const found = dims.find(selectedSize ?? '', opt)
-                                if (found) handleVariantChange(found)
-                              }}
+                              onClick={() => handleOptionTap(opt)}
                               className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-medium border-2 transition-colors duration-150 ${
                                 isActive
                                   ? 'bg-gradient-to-r from-[#8a7160] to-[#75604f] border-transparent text-white'
@@ -334,7 +301,6 @@ function ProductDetail({
                   </div>
                 )
 
-                /* ── DESKTOP: radio list ── */
                 const DesktopRadios = (
                   <div className="hidden md:block">
                     <label className="block text-warmgray-700 font-medium mb-1 text-sm">
@@ -380,16 +346,8 @@ function ProductDetail({
                 return <>{MobilePills}{DesktopRadios}</>
               })()}
 
-              {/* Price display for single-variant products */}
-              {!product.hasVariants && selectedVariant && (
-                <div className="flex items-baseline gap-3">
-                  <span className="text-xl md:text-2xl font-serif text-warmgray-800">
-                    {formatCurrency(selectedVariant.price)}
-                  </span>
-                </div>
-              )}
-
-              {product.hasVariants && selectedVariant && (
+              {/* Price */}
+              {selectedVariant && (
                 <div className="flex items-baseline gap-3">
                   <span className="text-xl md:text-2xl font-serif text-warmgray-800">
                     {formatCurrency(selectedVariant.price)}
@@ -399,10 +357,7 @@ function ProductDetail({
 
               {/* Quantity */}
               <div className="flex items-center gap-x-2 gap-y-1 flex-wrap">
-                <label
-                  htmlFor="quantity"
-                  className="text-warmgray-700 font-medium text-sm"
-                >
+                <label htmlFor="quantity" className="text-warmgray-700 font-medium text-sm">
                   {t('menu.quantity')}
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -448,9 +403,7 @@ function ProductDetail({
               <div className="pt-1 border-t border-warmgray-200 flex-shrink-0">
                 {selectedVariant && (
                   <div className="flex justify-between items-center mb-1.5">
-                    <span className="text-warmgray-700 font-medium text-sm">
-                      {t('cart.total')}
-                    </span>
+                    <span className="text-warmgray-700 font-medium text-sm">{t('cart.total')}</span>
                     <span className="text-lg font-serif text-warmgray-800">
                       {formatCurrency(selectedVariant.price * quantity)}
                     </span>
@@ -516,10 +469,6 @@ export default function MenuPageContent({ products }: MenuPageContentProps) {
     router.push(`${window.location.pathname}?product=${encodeURIComponent(name)}`)
   }
 
-  const handleBack = () => {
-    router.push(window.location.pathname)
-  }
-
   return (
     <div className="h-full min-h-0 flex flex-col overflow-hidden bg-background relative w-full max-w-full min-w-0">
       {/* Spacer so content is not under fixed PageHeader */}
@@ -529,7 +478,7 @@ export default function MenuPageContent({ products }: MenuPageContentProps) {
       />
 
       {activeProduct ? (
-        <ProductDetail product={activeProduct} onBack={handleBack} />
+        <ProductDetail product={activeProduct} />
       ) : (
         <ProductGrid products={products} onSelect={handleSelect} />
       )}
