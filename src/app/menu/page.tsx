@@ -24,7 +24,7 @@ export default function MenuPage() {
           </div>
         }
       >
-        <main data-scrollable className="flex-1 min-h-0 w-full max-w-full min-w-0 overflow-hidden flex flex-col" style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}>
+        <main data-scrollable className="flex-1 min-h-0 w-full max-w-full min-w-0 overflow-hidden flex flex-col bg-background">
           <MenuPageContent products={products} />
         </main>
       </Suspense>

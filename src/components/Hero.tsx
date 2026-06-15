@@ -28,12 +28,11 @@ export default function Hero() {
   return (
     <section
       className="relative h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden md:overflow-visible shrink-0"
-      style={{ background: 'linear-gradient(135deg, #F8ECDF 0%, #EFE2D2 100%)' }}
     >
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
 
-      {/* ========== MOBILE: centered brand, footer bar, mobile hero image (unchanged) ========== */}
+      {/* ========== MOBILE: full-bleed image, top nav bar, brand name under cake ========== */}
       <div className="flex md:hidden absolute inset-0 z-[1] flex-col w-full min-w-0">
         <div data-hero-content className="relative flex-1 w-full min-w-0 min-h-0">
           <div className="absolute inset-0" data-hero-image style={{ transformOrigin: 'center center' }}>
@@ -47,65 +46,70 @@ export default function Hero() {
               markTimeline="hero"
             />
           </div>
-          <div id="brand-name-wrapper" className="absolute top-[38%] landscape:top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-3 px-8 sm:px-10 landscape:px-4">
-            <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none landscape:text-4xl landscape:sm:text-5xl">
-              Caramel & Jo
-            </h1>
-            <SmoothLink
-              href="/menu"
-              prefetch={true}
-              className="mt-1 landscape:mt-0 min-h-[44px] flex items-center justify-center px-7 py-2.5 text-white text-base sm:text-lg font-medium border-2 border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] rounded-full transition-opacity duration-200 landscape:text-sm landscape:px-5 landscape:py-1.5"
-            >
-              {t('nav.order')}
-            </SmoothLink>
-          </div>
-        </div>
-        {/* Shadow gradient above footer */}
-        <div
-          className="absolute bottom-0 left-0 right-0 z-[5] h-24 landscape:h-16 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 100%)',
-          }}
-          aria-hidden
-        />
-        <footer
-          className="absolute bottom-0 left-0 right-0 z-10 min-h-[72px] landscape:min-h-[56px] flex items-center justify-center px-3 sm:px-5 landscape:px-[max(0.5rem,env(safe-area-inset-left))] landscape:pr-[max(0.5rem,env(safe-area-inset-right))] pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-hero-footer-gradient hero-footer-bar-mobile shadow-[0_-20px_40px_rgba(0,0,0,0.4),0_-36px_72px_rgba(0,0,0,0.32),0_-8px_24px_rgba(0,0,0,0.25)]"
-          aria-label="Navigation"
-        >
-          <nav className="flex items-center w-full max-w-md landscape:max-w-none mx-auto landscape:mx-0 min-h-[56px] landscape:min-h-[48px]">
-            <div className="flex items-center justify-start flex-1 min-w-0 pl-4 sm:pl-6 pr-2">
+          {/* Top gradient for nav button readability */}
+          <div
+            className="absolute top-0 left-0 right-0 z-[5] h-36 landscape:h-24 pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.22) 55%, transparent 100%)' }}
+            aria-hidden
+          />
+          {/* Bottom gradient for brand name readability */}
+          <div
+            className="absolute bottom-0 left-0 right-0 z-[5] h-44 landscape:h-32 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.28) 50%, transparent 100%)' }}
+            aria-hidden
+          />
+          {/* Top nav bar — transparent, floats over the image */}
+          <nav
+            className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-3 sm:px-5 landscape:px-[max(0.5rem,env(safe-area-inset-left))] landscape:pr-[max(0.5rem,env(safe-area-inset-right))] pb-3 landscape:pb-2"
+            style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0.75rem))' }}
+            aria-label="Navigation"
+          >
+            <div className="flex items-center justify-start">
               <LanguageToggle variant="heroFooter" />
             </div>
-            <div className="flex items-center justify-center gap-4 sm:gap-6 landscape:gap-3 shrink-0">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 landscape:gap-3 shrink-0">
               <SmoothLink
                 href="/menu"
                 prefetch={true}
-                className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex items-center justify-center border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-2xl md:hover:opacity-90 transition-colors duration-200"
+                className="hero-btn-header hero-footer-btn-taper w-11 h-11 sm:w-12 sm:h-12 landscape:w-10 landscape:h-10 flex items-center justify-center bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-2xl md:hover:opacity-90 transition-colors duration-200"
               >
-                <UtensilsCrossed className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+                <UtensilsCrossed className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
               </SmoothLink>
               {heroFooterLinks.map((link) => (
                 <SmoothLink
                   key={link.labelKey}
                   href={link.href}
                   prefetch={true}
-                  className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex items-center justify-center border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-2xl md:hover:opacity-90 transition-colors duration-200"
+                  className="hero-btn-header hero-footer-btn-taper w-11 h-11 sm:w-12 sm:h-12 landscape:w-10 landscape:h-10 flex items-center justify-center bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-2xl md:hover:opacity-90 transition-colors duration-200"
                 >
-                  <Mail className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
+                  <Mail className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
                 </SmoothLink>
               ))}
             </div>
-            <div className="flex items-center justify-end flex-1 min-w-0 pl-2 pr-4 sm:pr-6">
+            <div className="flex items-center justify-end">
               <SmoothLink
                 href="/menu"
                 prefetch={true}
-                className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-14 w-[6rem] sm:h-16 sm:w-[6.5rem] landscape:h-12 landscape:w-[5.5rem] flex items-center justify-center px-2.5 py-1.5 landscape:px-2 landscape:py-1 text-white text-lg font-medium border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl md:hover:opacity-90 transition-colors duration-200"
+                className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-11 w-[5.5rem] sm:h-12 sm:w-[6rem] landscape:h-10 landscape:w-[5rem] flex items-center justify-center px-2 py-1.5 landscape:py-1 text-white text-base font-medium bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl md:hover:opacity-90 transition-colors duration-200"
               >
                 {t('nav.order')}
               </SmoothLink>
             </div>
           </nav>
-        </footer>
+          {/* Brand name — repositioned lower, under the cake */}
+          <div id="brand-name-wrapper" className="absolute top-[66%] landscape:top-[56%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-3 px-8 sm:px-10 landscape:px-4">
+            <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none landscape:text-4xl landscape:sm:text-5xl">
+              Caramel & Jo
+            </h1>
+            <SmoothLink
+              href="/menu"
+              prefetch={true}
+              className="hero-order-btn hero-footer-btn-taper mt-1 landscape:mt-0 min-h-[44px] flex items-center justify-center px-7 py-2.5 text-white text-base sm:text-lg font-medium bg-gradient-to-r from-[#8a7160] to-[#75604f] rounded-full transition-opacity duration-200 landscape:text-sm landscape:px-5 landscape:py-1.5"
+            >
+              {t('nav.order')}
+            </SmoothLink>
+          </div>
+        </div>
       </div>
 
       {/* ========== DESKTOP: original layout – brand left, HeroNav right, single image, no footer ========== */}

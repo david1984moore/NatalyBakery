@@ -60,10 +60,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${roboto.variable} ${playfairDisplay.variable}`}>
       <head>
-        {/* Status bar + iOS overscroll: header brown so status bar and overscroll bounce match header gradient */}
-        <meta name="theme-color" content="#d6b88a" />
-        <meta name="theme-color" content="#d6b88a" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#d6b88a" media="(prefers-color-scheme: dark)" />
+        {/* Status bar + iOS overscroll: cream so status bar and overscroll bounce match page background */}
+        <meta name="theme-color" content="#faf7f2" />
+        <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: dark)" />
         {/* LCP: preload hero image so the browser starts fetching before parsing body (AVIF = first source in picture) */}
         <link
           rel="preload"

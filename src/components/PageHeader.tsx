@@ -34,7 +34,7 @@ function MenuIconLink({ mobile }: { mobile: boolean }) {
       <SmoothLink
         href="/menu"
         aria-label={t('nav.menu')}
-        className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+        className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
       >
         <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" />
       </SmoothLink>
@@ -121,10 +121,10 @@ export function PageHeader() {
     <div
       ref={headerRef}
       data-cart-header-ref
-      className="fixed inset-x-0 top-0 mobile-header-hero-fill max-md:bg-hero-footer-gradient max-md:shadow-none md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] isolate"
+      className="fixed inset-x-0 top-0 mobile-header-hero-fill max-md:shadow-none md:bg-background md:backdrop-blur-sm md:shadow-[0_4px_14px_0_rgba(0,0,0,0.08)] isolate"
       style={{ zIndex: 2147483647, width: '100%' }}
     >
-      <div className="mobile-header-hero-fill max-md:bg-hero-footer-gradient flex flex-col min-h-[52px] md:min-h-[80px] md:bg-transparent md:border-b-0">
+      <div className="mobile-header-hero-fill flex flex-col min-h-[52px] md:min-h-[80px] md:bg-transparent md:border-b-0">
         {/* Mobile */}
         <div
           className="md:hidden flex flex-1 items-center justify-between gap-1 min-h-[52px] min-w-0 max-w-full pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))]"
@@ -135,7 +135,7 @@ export function PageHeader() {
             className="flex-shrink min-w-0 max-w-[45%] flex items-center h-full overflow-visible"
             aria-label="Home"
           >
-            <span className="text-white font-nav-playfair text-xl font-extrabold brand-header-shadow block overflow-visible">
+            <span className="text-warmgray-800 font-nav-playfair text-xl font-extrabold block overflow-visible">
               Caramel & Jo
             </span>
           </SmoothLink>
@@ -148,7 +148,7 @@ export function PageHeader() {
               <SmoothLink
                 href="/contact"
                 aria-label={t('nav.contact')}
-                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] max-md:w-[38px] max-md:h-[38px] px-1.5 md:px-2.5 py-1.5 text-xs border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] max-md:w-[38px] max-md:h-[38px] px-1.5 md:px-2.5 py-1.5 text-xs bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
               >
                 <Mail
                   className="w-6 h-6 shrink-0 text-white"
@@ -162,7 +162,7 @@ export function PageHeader() {
               onClick={() =>
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }
-              className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
+              className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative"
               aria-label="Shopping cart"
             >
               <svg

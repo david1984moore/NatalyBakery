@@ -8,11 +8,11 @@ body {
   background-image: none;
 }
 
-/* Restore tan background on mobile for overscroll and status bar fill */
+/* Restore background on mobile for overscroll and status bar fill */
 @media (hover: none) and (pointer: coarse) {
   html,
   body {
-    background-color: #d6b88a;
+    background-color: #faf7f2;
   }
 }
 
@@ -458,12 +458,12 @@ select:not([class*="transition"]) {
   .hero-footer-bar-mobile {
     background: var(--hero-footer-gradient);
   }
-  /* Mobile page headers (menu, contact, checkout): same fill as hero footer.
-   * Extend fill above viewport so overscroll/bounce shows the same gradient (no white).
+  /* Mobile page headers (menu, contact, checkout): match page background.
+   * Extend fill above viewport so overscroll/bounce shows the same color (no flash).
    * Do NOT use z-index: -1 on ::before – on iOS it can escape the stacking context
    * and sit behind the root, so overscroll content can draw over the header. */
   .mobile-header-hero-fill {
-    background: var(--hero-footer-gradient);
+    background: var(--background);
   }
   /* Fixed header bar: always on top during overscroll/pull-to-refresh (iOS stacking).
    * !important overrides Tailwind z-[100] so nothing can ever paint over the header. */
@@ -484,7 +484,7 @@ select:not([class*="transition"]) {
     right: 0;
     top: -300px;
     height: 300px;
-    background-color: #d6b88a;
+    background-color: var(--background);
   }
 }
 
