@@ -15,8 +15,13 @@ export default function Hero() {
 
   useEffect(() => {
     document.body.classList.add('hero-page')
+    // Dark wood color matching the top of the hero image — prevents white gap
+    // during pull-to-refresh on iOS (html background shows above the viewport)
+    const prev = document.documentElement.style.backgroundColor
+    document.documentElement.style.backgroundColor = '#1e1410'
     return () => {
       document.body.classList.remove('hero-page')
+      document.documentElement.style.backgroundColor = prev
     }
   }, [])
 
@@ -46,9 +51,6 @@ export default function Hero() {
             <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none landscape:text-4xl landscape:sm:text-5xl">
               Caramel & Jo
             </h1>
-            <p className="font-sans text-sm sm:text-base text-white/90 tracking-widest uppercase pointer-events-none landscape:text-xs">
-              From our kitchen to yours
-            </p>
             <SmoothLink
               href="/menu"
               prefetch={true}
