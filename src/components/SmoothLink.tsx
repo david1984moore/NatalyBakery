@@ -41,6 +41,15 @@ export default function SmoothLink({
     }
     
     onClick?.();
+
+    // Same-route navigation (only query params differ, e.g. /menu?product=X → /menu):
+    // skip the page transition entirely — the page never unmounts so the fade-out
+    // opacity would never be restored by the page-ready event.
+    const targetPathname = href.split('?')[0]
+    if (pathname === targetPathname) {
+      startTransition(() => router.push(href))
+      return
+    }
     
     const isFromHero = pathname === '/';
     const isToHero = href === '/';
