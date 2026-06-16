@@ -1,17 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
 import { OptimizedImage } from '@/components/OptimizedImage'
 import HeroNav from '@/components/HeroNav'
-import HeroMenuSheet from '@/components/HeroMenuSheet'
-
 export default function Hero() {
   const { t } = useLanguage()
-  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     document.body.classList.add('hero-page')
@@ -58,7 +55,7 @@ export default function Hero() {
             />
           </div>
           {/* Brand name — centered below the cake */}
-          <div id="brand-name-wrapper" className="absolute top-[54%] landscape:top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center px-8 sm:px-10 landscape:px-4 pointer-events-none">
+          <div id="brand-name-wrapper" className="absolute top-[38%] landscape:top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center px-8 sm:px-10 landscape:px-4 pointer-events-none">
             <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap landscape:text-4xl landscape:sm:text-5xl">
               Caramel &amp; Jo
             </h1>
@@ -67,8 +64,8 @@ export default function Hero() {
           <div
             className="absolute bottom-0 left-0 right-0 z-[5] pointer-events-none"
             style={{
-              height: '38%',
-              background: 'linear-gradient(to bottom, transparent 0%, rgba(250,247,242,0.55) 55%, #faf7f2 100%)',
+              height: '28%',
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(250,247,242,0.35) 50%, #faf7f2 100%)',
             }}
             aria-hidden
           />
@@ -85,40 +82,42 @@ export default function Hero() {
           </div>
 
           <div className="flex items-center justify-center gap-3 sm:gap-4 landscape:gap-3 shrink-0">
-            {/* Menu icon — opens menu sheet */}
-            <button
-              onClick={() => setMenuOpen(true)}
-              aria-label="Open menu"
-              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex items-center justify-center border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
+            {/* Menu icon — navigates to menu page */}
+            <SmoothLink
+              href="/menu"
+              prefetch={true}
+              aria-label="Menu"
+              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex flex-col items-center justify-center gap-0.5 border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
             >
-              <UtensilsCrossed className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-            </button>
+              <UtensilsCrossed className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+              <span className="text-[10px] landscape:text-[9px] font-medium leading-none tracking-wide">menu</span>
+            </SmoothLink>
 
             {/* Contact icon — navigates to contact page */}
             <SmoothLink
               href="/contact"
               prefetch={true}
-              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex items-center justify-center border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
+              aria-label="Contact"
+              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex flex-col items-center justify-center gap-0.5 border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
             >
-              <Mail className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
+              <Mail className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
+              <span className="text-[10px] landscape:text-[9px] font-medium leading-none tracking-wide">contact</span>
             </SmoothLink>
           </div>
 
           <div className="flex items-center justify-end">
-            {/* Order button — opens menu sheet */}
-            <button
-              onClick={() => setMenuOpen(true)}
+            {/* Order button — navigates to menu page */}
+            <SmoothLink
+              href="/menu"
+              prefetch={true}
               aria-label="Order"
               className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-14 w-[6rem] sm:h-16 sm:w-[6.5rem] landscape:h-12 landscape:w-[5.5rem] flex items-center justify-center px-2.5 py-1.5 landscape:px-2 landscape:py-1 text-white text-lg landscape:text-base font-medium border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] rounded-2xl active:opacity-90 transition-opacity duration-200"
             >
               {t('nav.order')}
-            </button>
+            </SmoothLink>
           </div>
         </nav>
       </div>
-
-      {/* Menu sheet — shown when menu or order button is tapped */}
-      <HeroMenuSheet isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       {/* ========== DESKTOP: original layout – brand left, HeroNav right, single image, no footer ========== */}
       <div className="hidden md:block absolute inset-0 z-[1] pointer-events-none">

@@ -152,6 +152,51 @@ function SlideToggle({
   )
 }
 
+function HeroFooterLangToggle() {
+  const { language, setLanguage } = useLanguage()
+  return (
+    <div
+      role="group"
+      aria-label="Language"
+      className="hero-btn-header hero-footer-btn-taper h-14 sm:h-16 landscape:h-12 w-[5.5rem] sm:w-[6rem] landscape:w-[5rem] flex overflow-hidden rounded-2xl border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f]"
+    >
+      <button
+        type="button"
+        onClick={() => setLanguage('en')}
+        aria-pressed={language === 'en'}
+        aria-label="English"
+        className={`flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors duration-200 ${
+          language === 'en' ? 'bg-white/20' : ''
+        }`}
+      >
+        <span className={`text-sm landscape:text-xs font-bold leading-none tracking-wide transition-colors duration-200 ${
+          language === 'en' ? 'text-white' : 'text-white/55'
+        }`}>EN</span>
+        <span className={`text-[8px] landscape:text-[7px] leading-none tracking-widest uppercase transition-colors duration-200 ${
+          language === 'en' ? 'text-white/80' : 'text-white/35'
+        }`}>eng</span>
+      </button>
+      <div className="w-px self-stretch bg-white/30 my-2" aria-hidden />
+      <button
+        type="button"
+        onClick={() => setLanguage('es')}
+        aria-pressed={language === 'es'}
+        aria-label="Español"
+        className={`flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors duration-200 ${
+          language === 'es' ? 'bg-white/20' : ''
+        }`}
+      >
+        <span className={`text-sm landscape:text-xs font-bold leading-none tracking-wide transition-colors duration-200 ${
+          language === 'es' ? 'text-white' : 'text-white/55'
+        }`}>ES</span>
+        <span className={`text-[8px] landscape:text-[7px] leading-none tracking-widest uppercase transition-colors duration-200 ${
+          language === 'es' ? 'text-white/80' : 'text-white/35'
+        }`}>esp</span>
+      </button>
+    </div>
+  )
+}
+
 export default function LanguageToggle({ variant = 'desktop' }: LanguageToggleProps) {
   if (variant === 'mobile') {
     return (
@@ -186,11 +231,7 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
   }
 
   if (variant === 'heroFooter') {
-    return (
-      <div className="hero-btn-header hero-footer-btn-taper rounded-2xl">
-        <SlideToggle variant="headerButton" size="heroFooter" />
-      </div>
-    )
+    return <HeroFooterLangToggle />
   }
 
   if (variant === 'menu') {
