@@ -34,7 +34,7 @@ function MenuIconLink({ mobile }: { mobile: boolean }) {
       <SmoothLink
         href="/menu"
         aria-label={t('nav.menu')}
-        className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+        className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] px-1.5 md:px-2.5 py-1.5 text-xs bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center border-[3px] border-white"
       >
         <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" />
       </SmoothLink>
@@ -148,7 +148,7 @@ export function PageHeader() {
               <SmoothLink
                 href="/contact"
                 aria-label={t('nav.contact')}
-                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] max-md:w-[38px] max-md:h-[38px] px-1.5 md:px-2.5 py-1.5 text-xs bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center"
+                className="hero-btn-header hero-footer-btn-taper min-h-[38px] md:min-h-[44px] min-w-[38px] max-md:w-[38px] max-md:h-[38px] px-1.5 md:px-2.5 py-1.5 text-xs bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-xl md:hover:opacity-90 transition-colors duration-200 font-medium flex items-center justify-center border-[3px] border-white"
               >
                 <Mail
                   className="w-6 h-6 shrink-0 text-white"
@@ -162,7 +162,7 @@ export function PageHeader() {
               onClick={() =>
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }
-              className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative"
+              className="hero-btn-header hero-footer-btn-taper min-w-[38px] min-h-[38px] md:min-w-[44px] md:min-h-[44px] bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-full p-1.5 md:p-2 flex items-center justify-center md:hover:opacity-90 transition-colors duration-200 relative border-[3px] border-white"
               aria-label="Shopping cart"
             >
               <svg

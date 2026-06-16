@@ -55,7 +55,7 @@ export default function Hero() {
             />
           </div>
           {/* Brand name — centered below the cake */}
-          <div id="brand-name-wrapper" className="absolute top-[38%] landscape:top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center px-8 sm:px-10 landscape:px-4 pointer-events-none">
+          <div id="brand-name-wrapper" className="absolute top-[12%] landscape:top-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center px-8 sm:px-10 landscape:px-4 pointer-events-none">
             <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap landscape:text-4xl landscape:sm:text-5xl">
               Caramel &amp; Jo
             </h1>
@@ -87,7 +87,7 @@ export default function Hero() {
               href="/menu"
               prefetch={true}
               aria-label="Menu"
-              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex flex-col items-center justify-center gap-0.5 border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
+              className="hero-btn-header hero-footer-btn-taper w-16 h-14 sm:w-[4.5rem] sm:h-16 landscape:w-14 landscape:h-12 flex flex-col items-center justify-center gap-0.5 border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
             >
               <UtensilsCrossed className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
               <span className="text-[10px] landscape:text-[9px] font-medium leading-none tracking-wide">menu</span>
@@ -98,7 +98,7 @@ export default function Hero() {
               href="/contact"
               prefetch={true}
               aria-label="Contact"
-              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex flex-col items-center justify-center gap-0.5 border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
+              className="hero-btn-header hero-footer-btn-taper w-16 h-14 sm:w-[4.5rem] sm:h-16 landscape:w-14 landscape:h-12 flex flex-col items-center justify-center gap-0.5 border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
             >
               <Mail className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
               <span className="text-[10px] landscape:text-[9px] font-medium leading-none tracking-wide">contact</span>

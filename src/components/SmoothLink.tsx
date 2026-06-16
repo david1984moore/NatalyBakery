@@ -30,7 +30,12 @@ export default function SmoothLink({
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     
-    if (pathname === href) {
+    // Compare full URL (path + search) so navigating from /menu?product=X to
+    // /menu is treated as a real navigation, not a same-page no-op.
+    const currentFull = typeof window !== 'undefined'
+      ? window.location.pathname + window.location.search
+      : pathname;
+    if (currentFull === href) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
