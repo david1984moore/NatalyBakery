@@ -1,27 +1,37 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import SmoothLink from '@/components/SmoothLink'
 import { Mail, UtensilsCrossed } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import LanguageToggle from '@/components/LanguageToggle'
 import { OptimizedImage } from '@/components/OptimizedImage'
 import HeroNav from '@/components/HeroNav'
-
-const heroFooterLinks = [{ href: '/contact', labelKey: 'nav.contact' as const }]
+import HeroMenuSheet from '@/components/HeroMenuSheet'
 
 export default function Hero() {
   const { t } = useLanguage()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     document.body.classList.add('hero-page')
-    // Dark wood color matching the top of the hero image — prevents white gap
-    // during pull-to-refresh on iOS (html background shows above the viewport)
-    const prev = document.documentElement.style.backgroundColor
-    document.documentElement.style.backgroundColor = '#1e1410'
+    // Set the html background to the hero image so pull-to-refresh reveals
+    // the picture instead of any background color
+    const el = document.documentElement
+    const prevBg = el.style.backgroundColor
+    const prevBgImg = el.style.backgroundImage
+    const prevBgSize = el.style.backgroundSize
+    const prevBgPos = el.style.backgroundPosition
+    el.style.backgroundColor = 'transparent'
+    el.style.backgroundImage = "url('/Images/new_hero_1.jpeg')"
+    el.style.backgroundSize = 'cover'
+    el.style.backgroundPosition = 'top center'
     return () => {
       document.body.classList.remove('hero-page')
-      document.documentElement.style.backgroundColor = prev
+      el.style.backgroundColor = prevBg
+      el.style.backgroundImage = prevBgImg
+      el.style.backgroundSize = prevBgSize
+      el.style.backgroundPosition = prevBgPos
     }
   }, [])
 
@@ -32,8 +42,9 @@ export default function Hero() {
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
 
-      {/* ========== MOBILE: full-bleed image, top nav bar, brand name under cake ========== */}
+      {/* ========== MOBILE: full-bleed image fading to light nav bar at bottom ========== */}
       <div className="flex md:hidden absolute inset-0 z-[1] flex-col w-full min-w-0">
+        {/* Image area — fills all space above the nav bar */}
         <div data-hero-content className="relative flex-1 w-full min-w-0 min-h-0">
           <div className="absolute inset-0" data-hero-image style={{ transformOrigin: 'center center' }}>
             <OptimizedImage
@@ -46,71 +57,68 @@ export default function Hero() {
               markTimeline="hero"
             />
           </div>
-          {/* Top gradient for nav button readability */}
-          <div
-            className="absolute top-0 left-0 right-0 z-[5] h-36 landscape:h-24 pointer-events-none"
-            style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.22) 55%, transparent 100%)' }}
-            aria-hidden
-          />
-          {/* Bottom gradient for brand name readability */}
-          <div
-            className="absolute bottom-0 left-0 right-0 z-[5] h-44 landscape:h-32 pointer-events-none"
-            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.28) 50%, transparent 100%)' }}
-            aria-hidden
-          />
-          {/* Top nav bar — transparent, floats over the image */}
-          <nav
-            className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-3 sm:px-5 landscape:px-[max(0.5rem,env(safe-area-inset-left))] landscape:pr-[max(0.5rem,env(safe-area-inset-right))] pb-3 landscape:pb-2"
-            style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0.75rem))' }}
-            aria-label="Navigation"
-          >
-            <div className="flex items-center justify-start">
-              <LanguageToggle variant="heroFooter" />
-            </div>
-            <div className="flex items-center justify-center gap-3 sm:gap-4 landscape:gap-3 shrink-0">
-              <SmoothLink
-                href="/menu"
-                prefetch={true}
-                className="hero-btn-header hero-footer-btn-taper w-11 h-11 sm:w-12 sm:h-12 landscape:w-10 landscape:h-10 flex items-center justify-center bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-2xl md:hover:opacity-90 transition-colors duration-200"
-              >
-                <UtensilsCrossed className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
-              </SmoothLink>
-              {heroFooterLinks.map((link) => (
-                <SmoothLink
-                  key={link.labelKey}
-                  href={link.href}
-                  prefetch={true}
-                  className="hero-btn-header hero-footer-btn-taper w-11 h-11 sm:w-12 sm:h-12 landscape:w-10 landscape:h-10 flex items-center justify-center bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm text-white rounded-2xl md:hover:opacity-90 transition-colors duration-200"
-                >
-                  <Mail className="w-6 h-6 sm:w-7 sm:h-7 landscape:w-5 landscape:h-5 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
-                </SmoothLink>
-              ))}
-            </div>
-            <div className="flex items-center justify-end">
-              <SmoothLink
-                href="/menu"
-                prefetch={true}
-                className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-11 w-[5.5rem] sm:h-12 sm:w-[6rem] landscape:h-10 landscape:w-[5rem] flex items-center justify-center px-2 py-1.5 landscape:py-1 text-white text-base font-medium bg-gradient-to-r from-[#8a7160] to-[#75604f] backdrop-blur-sm rounded-2xl md:hover:opacity-90 transition-colors duration-200"
-              >
-                {t('nav.order')}
-              </SmoothLink>
-            </div>
-          </nav>
-          {/* Brand name — repositioned lower, under the cake */}
-          <div id="brand-name-wrapper" className="absolute top-[66%] landscape:top-[56%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center flex flex-col items-center gap-3 px-8 sm:px-10 landscape:px-4">
-            <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap pointer-events-none landscape:text-4xl landscape:sm:text-5xl">
-              Caramel & Jo
+          {/* Brand name — centered below the cake */}
+          <div id="brand-name-wrapper" className="absolute top-[54%] landscape:top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-brand-playfair text-center px-8 sm:px-10 landscape:px-4 pointer-events-none">
+            <h1 className="text-5xl sm:text-6xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap landscape:text-4xl landscape:sm:text-5xl">
+              Caramel &amp; Jo
             </h1>
-            <SmoothLink
-              href="/menu"
-              prefetch={true}
-              className="hero-order-btn hero-footer-btn-taper mt-1 landscape:mt-0 min-h-[44px] flex items-center justify-center px-7 py-2.5 text-white text-base sm:text-lg font-medium bg-gradient-to-r from-[#8a7160] to-[#75604f] rounded-full transition-opacity duration-200 landscape:text-sm landscape:px-5 landscape:py-1.5"
+          </div>
+          {/* Bottom fade: image melts seamlessly into the nav bar background */}
+          <div
+            className="absolute bottom-0 left-0 right-0 z-[5] pointer-events-none"
+            style={{
+              height: '38%',
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(250,247,242,0.55) 55%, #faf7f2 100%)',
+            }}
+            aria-hidden
+          />
+        </div>
+
+        {/* Bottom nav bar — light background, white-bordered buttons */}
+        <nav
+          className="relative z-10 bg-[#faf7f2] flex items-center justify-between px-3 sm:px-5 landscape:px-[max(0.75rem,env(safe-area-inset-left))] landscape:pr-[max(0.75rem,env(safe-area-inset-right))] pt-3 landscape:pt-2"
+          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}
+          aria-label="Navigation"
+        >
+          <div className="flex items-center justify-start">
+            <LanguageToggle variant="heroFooter" />
+          </div>
+
+          <div className="flex items-center justify-center gap-3 sm:gap-4 landscape:gap-3 shrink-0">
+            {/* Menu icon — opens menu sheet */}
+            <button
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex items-center justify-center border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
             >
-              {t('nav.order')}
+              <UtensilsCrossed className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0" strokeWidth={2.5} fill="white" stroke="white" aria-hidden />
+            </button>
+
+            {/* Contact icon — navigates to contact page */}
+            <SmoothLink
+              href="/contact"
+              prefetch={true}
+              className="hero-btn-header hero-footer-btn-taper w-14 h-14 sm:w-16 sm:h-16 landscape:w-12 landscape:h-12 flex items-center justify-center border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-2xl active:opacity-90 transition-opacity duration-200"
+            >
+              <Mail className="w-8 h-8 sm:w-9 sm:h-9 landscape:w-6 landscape:h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
             </SmoothLink>
           </div>
-        </div>
+
+          <div className="flex items-center justify-end">
+            {/* Order button — opens menu sheet */}
+            <button
+              onClick={() => setMenuOpen(true)}
+              aria-label="Order"
+              className="hero-btn-header hero-footer-btn-taper font-nav-playfair h-14 w-[6rem] sm:h-16 sm:w-[6.5rem] landscape:h-12 landscape:w-[5.5rem] flex items-center justify-center px-2.5 py-1.5 landscape:px-2 landscape:py-1 text-white text-lg landscape:text-base font-medium border-[4px] landscape:border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] rounded-2xl active:opacity-90 transition-opacity duration-200"
+            >
+              {t('nav.order')}
+            </button>
+          </div>
+        </nav>
       </div>
+
+      {/* Menu sheet — shown when menu or order button is tapped */}
+      <HeroMenuSheet isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       {/* ========== DESKTOP: original layout – brand left, HeroNav right, single image, no footer ========== */}
       <div className="hidden md:block absolute inset-0 z-[1] pointer-events-none">
