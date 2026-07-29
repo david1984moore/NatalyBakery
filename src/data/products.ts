@@ -30,22 +30,22 @@ export const products: Product[] = [
       {
         id: 'flan-small-plain',
         name: 'Small (6") - Plain',
-        price: 30,
+        price: 25,
       },
       {
         id: 'flan-small-berries',
         name: 'Small (6") - With Fresh Berry Garnish',
-        price: 36,
+        price: 30,
       },
       {
         id: 'flan-large-plain',
         name: 'Large (10") - Plain',
-        price: 40,
+        price: 35,
       },
       {
         id: 'flan-large-berries',
         name: 'Large (10") - With Fresh Berry Garnish',
-        price: 46,
+        price: 40,
       },
     ],
   },
@@ -63,7 +63,7 @@ export const products: Product[] = [
       {
         id: 'choco-flan-small-berries',
         name: 'Small (6") - With Fresh Berry Garnish',
-        price: 36,
+        price: 40,
       },
       {
         id: 'choco-flan-large-plain',
