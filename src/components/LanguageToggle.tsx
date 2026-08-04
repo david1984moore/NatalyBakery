@@ -7,7 +7,7 @@ const SWIPE_THRESHOLD = 40
 const SWIPE_HORIZONTAL_RATIO = 1.5 // horizontal must be this much larger than vertical
 
 interface LanguageToggleProps {
-  variant?: 'desktop' | 'mobile' | 'mobileHeader' | 'menu' | 'menuHeader' | 'mobileMenu' | 'heroFooter'
+  variant?: 'desktop' | 'mobile' | 'mobileHeader' | 'menu' | 'menuHeader' | 'mobileMenu' | 'heroFooter' | 'desktopHero'
 }
 
 function SlideToggle({
@@ -15,7 +15,7 @@ function SlideToggle({
   size = 'default',
 }: {
   variant: 'hero' | 'light' | 'dark' | 'mobile' | 'headerButton'
-  size?: 'default' | 'compact' | 'heroFooter' | 'header'
+  size?: 'default' | 'compact' | 'heroFooter' | 'header' | 'desktopHero'
 }) {
   const { language, setLanguage } = useLanguage()
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
@@ -97,11 +97,13 @@ function SlideToggle({
   const sizeClasses =
     size === 'heroFooter'
       ? 'h-14 w-[5.5rem] sm:h-16 sm:w-[6rem] landscape:h-12 landscape:w-[5rem] text-sm'
-      : size === 'header'
-        ? 'h-[38px] min-w-[4.5rem] text-xs'
-        : size === 'compact'
-          ? 'h-9 min-w-[4.5rem] text-xs'
-          : 'h-11 min-w-[5rem] text-sm'
+      : size === 'desktopHero'
+        ? 'h-12 w-[7rem] text-sm'
+        : size === 'header'
+          ? 'h-[38px] min-w-[4.5rem] text-xs'
+          : size === 'compact'
+            ? 'h-9 min-w-[4.5rem] text-xs'
+            : 'h-11 min-w-[5rem] text-sm'
 
   return (
     <div
@@ -145,6 +147,46 @@ function SlideToggle({
         }`}
         aria-pressed={language === 'es'}
         aria-label="Español"
+      >
+        ES
+      </button>
+    </div>
+  )
+}
+
+/** Frosted glass language toggle for desktop landing hero (matches HeroNav buttons). */
+function DesktopHeroLangToggle() {
+  const { language, setLanguage } = useLanguage()
+  return (
+    <div
+      role="group"
+      aria-label="Language"
+      className="relative flex h-11 w-[6.75rem] overflow-hidden rounded-xl border border-white/85 bg-white/20 backdrop-blur-md shadow-[0_2px_14px_rgba(0,0,0,0.2)]"
+    >
+      <div
+        className="absolute top-1 bottom-1 w-[calc(50%-6px)] rounded-lg bg-white/45 transition-all duration-200 ease-out z-0"
+        style={{ left: language === 'en' ? '4px' : 'calc(50% + 2px)' }}
+        aria-hidden
+      />
+      <button
+        type="button"
+        onClick={() => setLanguage('en')}
+        aria-pressed={language === 'en'}
+        aria-label="English"
+        className={`relative z-10 flex-1 flex items-center justify-center text-sm font-medium tracking-wide transition-colors duration-200 ${
+          language === 'en' ? 'text-white' : 'text-white/70 hover:text-white/90'
+        }`}
+      >
+        EN
+      </button>
+      <button
+        type="button"
+        onClick={() => setLanguage('es')}
+        aria-pressed={language === 'es'}
+        aria-label="Español"
+        className={`relative z-10 flex-1 flex items-center justify-center text-sm font-medium tracking-wide transition-colors duration-200 ${
+          language === 'es' ? 'text-white' : 'text-white/70 hover:text-white/90'
+        }`}
       >
         ES
       </button>
@@ -205,6 +247,10 @@ export default function LanguageToggle({ variant = 'desktop' }: LanguageTogglePr
         <SlideToggle variant="headerButton" size="header" />
       </div>
     )
+  }
+
+  if (variant === 'desktopHero') {
+    return <DesktopHeroLangToggle />
   }
 
   if (variant === 'mobileMenu') {

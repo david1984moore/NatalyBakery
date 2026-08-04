@@ -160,7 +160,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     <div 
       ref={wrapperRef}
       data-page-wrapper
-      className={isMenuPage ? 'h-full min-h-0 flex flex-col' : undefined}
+      className={isMenuPage ? 'h-full min-h-0 flex flex-col md:h-auto' : undefined}
       style={{ 
         minHeight: isMenuPage ? undefined : '100vh', 
         transformOrigin: 'center center' 

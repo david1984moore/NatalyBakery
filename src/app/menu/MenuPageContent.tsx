@@ -51,9 +51,10 @@ function ProductGrid({
   const { t } = useLanguage()
 
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto safe-bottom">
-      <div className="max-w-2xl mx-auto px-4 pt-4 pb-8">
-        <div className="grid grid-cols-2 gap-3 md:gap-4">
+    <div className="flex-1 min-h-0 overflow-y-auto safe-bottom md:overflow-visible md:flex-none">
+      {/* Mobile: narrow 2-col scroll. Desktop: wide horizontal grid so all items fit without scrolling. */}
+      <div className="max-w-2xl mx-auto px-4 pt-4 pb-8 md:max-w-6xl lg:max-w-7xl md:px-6 lg:px-8 md:pt-5 md:pb-6">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 lg:gap-5">
           {products.map((product) => {
             const translationKey =
               productNameToTranslationKey[product.name] || product.name
@@ -68,26 +69,26 @@ function ProductGrid({
                 onClick={() => onSelect(product.name)}
                 className="group text-left bg-cream-50 rounded-2xl overflow-hidden flex flex-col shadow-sm active:scale-[0.98] transition-transform duration-150"
               >
-                <div className="relative aspect-[4/3] w-full bg-warmgray-100">
+                <div className="relative aspect-[4/3] w-full bg-warmgray-100 md:aspect-[5/4]">
                   {hasPhoto ? (
                     <OptimizedImage
                       src={product.image}
                       alt={translatedName}
                       fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
+                      sizes="(max-width: 640px) 50vw, (hover: hover) and (pointer: fine) 25vw, 280px"
                       objectFit="cover"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-warmgray-400 text-xs text-center px-2">
+                    <div className="absolute inset-0 flex items-center justify-center text-warmgray-400 text-xs text-center px-2 md:text-sm">
                       Coming soon
                     </div>
                   )}
                 </div>
-                <div className="px-3 py-2.5">
-                  <p className="font-playfair text-sm font-semibold text-warmgray-800 leading-snug">
+                <div className="px-3 py-2.5 md:px-3.5 md:py-3">
+                  <p className="font-playfair text-sm font-semibold text-warmgray-800 leading-snug md:font-sans md:font-medium md:text-[15px] md:tracking-normal">
                     {translatedName}
                   </p>
-                  <p className="font-sans text-xs text-warmgray-500 mt-0.5">
+                  <p className="font-sans text-xs text-warmgray-500 mt-0.5 md:text-sm md:text-warmgray-600">
                     {getProductPriceRange(product)}
                   </p>
                 </div>
@@ -181,9 +182,9 @@ function ProductDetail({ product }: { product: Product }) {
     : [product.image]
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
-      {/* Scrollable content */}
-      <div className="flex-1 min-h-0 overflow-y-auto safe-bottom">
+    <div className="flex-1 min-h-0 flex flex-col overflow-hidden md:overflow-visible md:flex-none">
+      {/* Scrollable content — on desktop, #scroll-root owns vertical scroll */}
+      <div className="flex-1 min-h-0 overflow-y-auto safe-bottom md:overflow-visible md:flex-none">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 items-start w-full">
 
@@ -470,7 +471,7 @@ export default function MenuPageContent({ products }: MenuPageContentProps) {
   }
 
   return (
-    <div className="h-full min-h-0 flex flex-col overflow-hidden bg-background relative w-full max-w-full min-w-0">
+    <div className="h-full min-h-0 flex flex-col overflow-hidden bg-background relative w-full max-w-full min-w-0 md:h-auto md:overflow-visible">
       {/* Spacer so content is not under fixed PageHeader */}
       <div
         className="h-[calc(52px+env(safe-area-inset-top,0px))] md:h-[calc(5rem+env(safe-area-inset-top,0px))] shrink-0 bg-background"

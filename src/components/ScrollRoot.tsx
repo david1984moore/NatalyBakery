@@ -8,7 +8,7 @@ export default function ScrollRoot({ children }: { children: React.ReactNode }) 
   return (
     <div
       id="scroll-root"
-      className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain scroll-smooth"
+      className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain scroll-smooth md:[scrollbar-gutter:stable]"
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
       {children}

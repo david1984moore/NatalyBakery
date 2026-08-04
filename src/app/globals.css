@@ -25,6 +25,16 @@ html {
   overscroll-behavior-y: none;
 }
 
+/* Desktop: body is the height lock; #scroll-root is the only scroller.
+ * Setting overflow-x:hidden alone makes overflow-y compute to auto on html,
+ * which paints a ghost scrollbar that never moves. Hide both axes on md+. */
+@media (min-width: 768px) {
+  html {
+    overflow: hidden;
+    scrollbar-gutter: auto;
+  }
+}
+
 body {
   overflow-x: hidden;
   width: 100%;
@@ -45,6 +55,13 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
+}
+
+/* Desktop: let #scroll-root own vertical scroll (avoid nested overflow traps). */
+@media (min-width: 768px) {
+  .page-content-wrapper {
+    min-height: 0;
+  }
 }
 
 @media (hover: none) and (pointer: coarse) {

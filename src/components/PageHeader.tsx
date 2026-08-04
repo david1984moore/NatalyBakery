@@ -4,10 +4,12 @@ import { useRef, useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import SmoothLink from '@/components/SmoothLink';
 import LanguageToggle from '@/components/LanguageToggle';
-import { MenuHeaderTabs } from '@/components/MenuHeaderTabs';
 import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, UtensilsCrossed } from 'lucide-react';
+
+const DESKTOP_NAV_BTN =
+  'hero-btn-header hero-footer-btn-taper min-h-[44px] min-w-[44px] px-2.5 py-1.5 border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-xl hover:opacity-90 transition-opacity duration-200 font-medium flex items-center justify-center'
 
 const NON_HERO_PATHS = ['/menu', '/contact', '/checkout'];
 
@@ -45,9 +47,9 @@ function MenuIconLink({ mobile }: { mobile: boolean }) {
     <SmoothLink
       href="/menu"
       aria-label={t('nav.menu')}
-      className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
+      className={DESKTOP_NAV_BTN}
     >
-      <UtensilsCrossed className="w-5 h-5" strokeWidth={2} />
+      <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" />
     </SmoothLink>
   );
 }
@@ -201,14 +203,8 @@ export function PageHeader() {
               Caramel & Jo
             </span>
           </SmoothLink>
-          {pathname === '/menu' ? (
-            <Suspense fallback={<div className="flex-1 min-w-0" />}>
-              <MenuHeaderTabs />
-            </Suspense>
-          ) : (
-            <div className="flex-1 min-w-0" aria-hidden />
-          )}
-          <div className="flex items-center gap-6 lg:gap-8 flex-shrink-0">
+          <div className="flex-1 min-w-0" aria-hidden />
+          <div className="flex items-center gap-3 lg:gap-4 flex-shrink-0">
             <Suspense fallback={null}>
               <MenuIconLink mobile={false} />
             </Suspense>
@@ -216,29 +212,29 @@ export function PageHeader() {
               <SmoothLink
                 href="/contact"
                 aria-label={t('nav.contact')}
-                className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
+                className={DESKTOP_NAV_BTN}
               >
-                <Mail className="w-5 h-5" strokeWidth={2} />
+                <Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
               </SmoothLink>
             )}
-            <LanguageToggle variant="menu" />
+            <LanguageToggle variant="mobileHeader" />
             <button
               onClick={() =>
                 window.dispatchEvent(new CustomEvent('cart:toggle'))
               }
-              className="min-w-[44px] min-h-[44px] p-2 flex items-center justify-center text-warmgray-700 hover:bg-warmbrown-500 hover:text-white rounded-full border border-transparent hover:border-warmbrown-500 transition-colors duration-200 relative"
+              className={`${DESKTOP_NAV_BTN} rounded-full relative`}
               aria-label="Shopping cart"
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6 text-white"
                 fill="none"
-                stroke="currentColor"
+                stroke="white"
                 viewBox="0 0 24 24"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={2.5}
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>

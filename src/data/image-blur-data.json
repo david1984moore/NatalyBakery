@@ -402,13 +402,13 @@
   "IMG_9465": {
     "original": "/Images/IMG_9465.png",
     "sizes": {
-      "-sm": {
-        "webp": "/optimized/IMG_9465-sm.webp",
-        "avif": "/optimized/IMG_9465-sm.avif"
-      },
       "-md": {
         "webp": "/optimized/IMG_9465-md.webp",
         "avif": "/optimized/IMG_9465-md.avif"
+      },
+      "-sm": {
+        "webp": "/optimized/IMG_9465-sm.webp",
+        "avif": "/optimized/IMG_9465-sm.avif"
       },
       "-lg": {
         "webp": "/optimized/IMG_9465-lg.webp",

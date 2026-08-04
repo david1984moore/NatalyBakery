@@ -12,27 +12,43 @@ const navLinks = [
   { href: '/menu', labelKey: 'nav.menu' as const },
 ]
 
+/**
+ * Desktop landing hero only — frosted glass over the photo.
+ * Same footprint/structure as site buttons; lighter treatment so it sits on the caramel image.
+ */
+const DESKTOP_HERO_BTN =
+  'font-ui w-[6.75rem] h-11 rounded-xl border border-white/85 bg-white/20 backdrop-blur-md text-white text-sm font-medium tracking-wide lowercase shadow-[0_2px_14px_rgba(0,0,0,0.2)] hover:bg-white/35 transition-colors duration-200 flex items-center justify-center gap-1.5'
+
 export default function HeroNav() {
   const [isOpen, setIsOpen] = useState(false)
   const { t } = useLanguage()
 
   return (
-    <nav className="relative px-2 sm:px-3 md:px-4 lg:px-5 py-2 sm:py-3 md:py-4 lg:py-5 safe-top safe-right">
-      {/* Desktop - Vertical links on right (original layout) */}
-      <div className="hidden md:flex flex-col items-center gap-3 md:gap-3.5">
-        <LanguageToggle variant="menu" />
-        {navLinks.map((link) => (
-          <SmoothLink
-            key={link.labelKey}
-            href={link.href}
-            prefetch={true}
-            aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
-            className="font-ui text-xl md:text-2xl text-white hover:text-white transition-all duration-300 tracking-wide lowercase relative group px-4 py-1.5 rounded-full md:rounded-xl border border-transparent bg-transparent hover:border-white/50 hover:bg-tan flex items-center justify-center"
-            style={{ fontWeight: 500 }}
-          >
-            {t(link.labelKey)}
-          </SmoothLink>
-        ))}
+    <nav className="relative mt-5 lg:mt-6">
+      {/* Desktop — centered horizontal row under brand */}
+      <div className="hidden md:flex flex-row items-center justify-center gap-2.5 lg:gap-3">
+        <LanguageToggle variant="desktopHero" />
+        {navLinks.map((link) => {
+          const isContact = link.href === '/contact'
+          const isMenu = link.labelKey === 'nav.menu'
+          return (
+            <SmoothLink
+              key={link.labelKey}
+              href={link.href}
+              prefetch={true}
+              aria-label={isContact ? t('nav.contact') : t(link.labelKey)}
+              className={DESKTOP_HERO_BTN}
+            >
+              {isContact && (
+                <Mail className="w-4 h-4 shrink-0 text-white" strokeWidth={2.25} stroke="white" aria-hidden />
+              )}
+              {isMenu && (
+                <UtensilsCrossed className="w-4 h-4 shrink-0 text-white" strokeWidth={2.25} stroke="white" fill="white" aria-hidden />
+              )}
+              <span className="leading-none">{t(link.labelKey)}</span>
+            </SmoothLink>
+          )
+        })}
       </div>
 
       {/* Mobile - Hamburger (only visible if HeroNav ever used on mobile; desktop Hero block is hidden on mobile) */}

@@ -34,7 +34,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden md:overflow-visible shrink-0"
+      className="relative h-[100dvh] w-full min-w-0 flex flex-col overflow-hidden md:h-screen md:overflow-hidden shrink-0"
     >
       {/* Sentinel for sticky nav - when this scrolls out of view, show sticky bar */}
       <div id="nav-sentinel" className="absolute top-0 left-0 right-0 h-1 pointer-events-none" aria-hidden />
@@ -119,7 +119,7 @@ export default function Hero() {
         </nav>
       </div>
 
-      {/* ========== DESKTOP: original layout – brand left, HeroNav right, single image, no footer ========== */}
+      {/* ========== DESKTOP: brand + horizontal nav stacked on left, single image ========== */}
       <div className="hidden md:block absolute inset-0 z-[1] pointer-events-none">
         <div data-hero-content className="absolute inset-0">
           <div className="absolute inset-0" data-hero-image style={{ transformOrigin: 'center center' }}>
@@ -135,15 +135,16 @@ export default function Hero() {
             <div className="absolute inset-0 bg-black/10" />
           </div>
           <div className="relative z-10 w-full h-full px-4 sm:px-6 lg:px-8">
-          <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-4 md:right-6 lg:right-8 pointer-events-auto">
-            <HeroNav />
+            <div
+              id="brand-name-wrapper-desktop"
+              className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 lg:left-8 font-brand-playfair pointer-events-auto flex flex-col items-center"
+            >
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap text-center">
+                Caramel & Jo
+              </h1>
+              <HeroNav />
+            </div>
           </div>
-          <div id="brand-name-wrapper-desktop" className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 lg:left-8 font-brand-playfair">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white leading-tight text-hero-brand whitespace-nowrap">
-              Caramel & Jo
-            </h1>
-          </div>
-        </div>
         </div>
       </div>
     </section>

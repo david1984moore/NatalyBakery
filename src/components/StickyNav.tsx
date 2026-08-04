@@ -31,6 +31,7 @@ export default function StickyNav() {
     }
 
     const sentinel = document.getElementById('nav-sentinel')
+    const scrollRoot = document.getElementById('scroll-root')
 
     // No sentinel = not on a page with a hero
     // Set invisible and let page-specific headers handle it
@@ -39,34 +40,41 @@ export default function StickyNav() {
       return
     }
 
+    const getScrollTop = () =>
+      scrollRoot ? scrollRoot.scrollTop : window.scrollY
+
     // Check initial state immediately.
-    // Guard window.scrollY > 0: on fresh page loads the IntersectionObserver
+    // Guard scrollTop > 0: on fresh page loads the IntersectionObserver
     // can fire with isIntersecting=false before layout settles, making the
     // desktop nav flash at scroll-position 0. Only show if actually scrolled.
     const rect = sentinel.getBoundingClientRect()
-    setIsVisible(rect.bottom <= 0 && window.scrollY > 0)
+    setIsVisible(rect.bottom <= 0 && getScrollTop() > 0)
 
+    // Observe against #scroll-root when present (body scroll is locked).
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // When the sentinel re-enters the viewport, always hide regardless of
-        // any stale state (fixes "stays visible after scrolling back to top").
-        setIsVisible(!entry.isIntersecting)
+        // Only show after the hero sentinel leaves AND we've actually scrolled.
+        setIsVisible(!entry.isIntersecting && getScrollTop() > 0)
       },
-      { threshold: 0, rootMargin: '0px' }
+      {
+        threshold: 0,
+        rootMargin: '0px',
+        root: scrollRoot,
+      }
     )
     observer.observe(sentinel)
 
-    // Belt-and-suspenders: hide the desktop nav whenever the page is exactly
-    // at the top. This covers the edge-case where scroll restoration or an
-    // observer timing quirk leaves isVisible=true at scrollY=0.
+    // Hide whenever the scroll container is exactly at the top.
     const handleScroll = () => {
-      if (window.scrollY === 0) setIsVisible(false)
+      if (getScrollTop() <= 0) setIsVisible(false)
+      else if (sentinel.getBoundingClientRect().bottom <= 0) setIsVisible(true)
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    const scrollTarget: HTMLElement | Window = scrollRoot ?? window
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => {
       observer.disconnect()
-      window.removeEventListener('scroll', handleScroll)
+      scrollTarget.removeEventListener('scroll', handleScroll)
     }
   }, [pathname])
 
@@ -138,27 +146,41 @@ export default function StickyNav() {
         </div>
       </div>
 
-      {/* Desktop: white bar with horizontal links */}
-      <div className="hidden md:flex justify-between items-center px-4 sm:px-6 lg:px-8 h-14 md:h-16">
+      {/* Desktop: cream bar with mobile-style brown gradient nav buttons */}
+      <div className="hidden md:flex justify-between items-center px-4 sm:px-6 lg:px-8 h-14 md:h-20">
         <SmoothLink
           href="/"
           className="font-nav-playfair text-lg sm:text-xl md:text-2xl font-bold text-gray-900 hover:text-gray-700 whitespace-nowrap"
         >
           Caramel & Jo
         </SmoothLink>
-        <div className="flex items-center gap-8 lg:gap-11">
-          {navLinks.map((link) => (
-            <SmoothLink
-              key={link.labelKey}
-              href={link.href}
-              prefetch={true}
-              aria-label={link.href === '/contact' ? t('nav.contact') : link.href === '/menu' ? t(link.labelKey) : undefined}
-              className="font-ui px-3 py-1.5 rounded-md border border-transparent bg-transparent text-warmgray-700 font-medium text-sm tracking-wide hover:bg-warmbrown-500 hover:border-warmbrown-500 hover:text-white transition-colors duration-200 flex items-center justify-center"
-            >
-              {link.href === '/contact' ? <Mail className="w-5 h-5" strokeWidth={2} /> : t(link.labelKey)}
-            </SmoothLink>
-          ))}
-          <LanguageToggle variant="menu" />
+        <div className="flex items-center gap-3 lg:gap-4">
+          {navLinks.map((link) => {
+            const isContact = link.href === '/contact'
+            const isOrder = link.labelKey === 'nav.order'
+            return (
+              <SmoothLink
+                key={link.labelKey}
+                href={link.href}
+                prefetch={true}
+                aria-label={isContact ? t('nav.contact') : t(link.labelKey)}
+                className={
+                  isOrder
+                    ? 'hero-btn-header hero-footer-btn-taper font-nav-playfair min-h-[44px] min-w-[6.5rem] px-3 py-1.5 text-base border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-xl hover:opacity-90 transition-opacity duration-200 font-medium flex items-center justify-center'
+                    : 'hero-btn-header hero-footer-btn-taper min-h-[44px] min-w-[44px] px-2.5 py-1.5 border-[3px] border-white bg-gradient-to-r from-[#8a7160] to-[#75604f] text-white rounded-xl hover:opacity-90 transition-opacity duration-200 font-medium flex items-center justify-center'
+                }
+              >
+                {isContact ? (
+                  <Mail className="w-6 h-6 shrink-0 text-white" strokeWidth={2.5} stroke="white" aria-hidden />
+                ) : isOrder ? (
+                  t(link.labelKey)
+                ) : (
+                  <UtensilsCrossed className="w-6 h-6 text-white shrink-0" strokeWidth={2.5} stroke="white" fill="white" aria-hidden />
+                )}
+              </SmoothLink>
+            )
+          })}
+          <LanguageToggle variant="mobileHeader" />
         </div>
       </div>
     </nav>

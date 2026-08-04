@@ -7,7 +7,7 @@ import ImagePreloader from '@/components/ImagePreloader'
 
 export default function MenuPage() {
   return (
-    <div className="page-content-wrapper h-full min-h-0 overflow-hidden flex flex-col">
+    <div className="page-content-wrapper h-full min-h-0 overflow-hidden flex flex-col md:h-auto md:min-h-0 md:overflow-visible">
       <ImagePreloader images={[
         '/Images/new_hero_1.jpeg',  // Hero mobile - for back navigation
         '/Images/IMG_7616.jpeg',    // Hero desktop - for back navigation
@@ -24,7 +24,7 @@ export default function MenuPage() {
           </div>
         }
       >
-        <main data-scrollable className="flex-1 min-h-0 w-full max-w-full min-w-0 overflow-hidden flex flex-col bg-background">
+        <main data-scrollable className="flex-1 min-h-0 w-full max-w-full min-w-0 overflow-hidden flex flex-col bg-background md:overflow-visible md:flex-none">
           <MenuPageContent products={products} />
         </main>
       </Suspense>
